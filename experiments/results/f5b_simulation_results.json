@@ -1,0 +1,1242 @@
+{
+  "smoke": [
+    {
+      "text": "오류 발생",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견|확인|해결|수정)\\b"
+    },
+    {
+      "text": "빌드 실패",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(빌드|테스트|배포|연결|설치|실행)(가|를|는|은|도)?\\s*(실패|오류|에러)\\b"
+    },
+    {
+      "text": "오류 해결",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견|확인|해결|수정)\\b"
+    },
+    {
+      "text": "버그 수정",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견|확인|해결|수정)\\b"
+    },
+    {
+      "text": "파싱 오류",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.7,
+      "pat": "(파싱|구문|문법|타입|인코딩)\\s*(오류|에러)\\b"
+    },
+    {
+      "text": "파일 저장 오류",
+      "expect": "error",
+      "actual": "context",
+      "conf": 0.3,
+      "pat": "[\\uac00-\\ud7af]+[\\s.,!?~]*$"
+    },
+    {
+      "text": "오류 발생: Connection refused (port 8080)",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견|확인|해결|수정)\\b"
+    },
+    {
+      "text": "빌드가 실패했어",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.72,
+      "pat": "(실패)(했|되었|됐|했다|했었)"
+    },
+    {
+      "text": "오류가 발생했어",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.75,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생했|발생해|났어|났다|났는데|떴어|떴다|생겼어|생겼다|생겼"
+    },
+    {
+      "text": "오류가 해결됐어",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.72,
+      "pat": "(버그|결함|오류)(가|를|는|은|도)?\\s*(있었|있어서|발견됐|수정됐|고쳐졌|해결됐)"
+    },
+    {
+      "text": "버그를 수정하세요. test_calc.py는 수정하지 마세요",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.82,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "text": "오류 발생 시 재시도해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "text": "오류 확인 부탁해",
+      "expect": "context",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견|확인|해결|수정)\\b"
+    },
+    {
+      "text": "파일을 저장해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "text": "테스트를 실행해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "text": "빌드를 실행해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "text": "Error: File not found. 파일 경로를 다시 확인해줘",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.7,
+      "pat": "(?<![A-Za-z0-9_])(error|bug|issue|problem|failure|crash)(?!["
+    },
+    {
+      "text": "오류 발생: Connection refused. 재시도해줘",
+      "expect": "error",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "text": "경로 C:/Users/x/abc.py를 찾을 수 없습니다. 다시 확인해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "text": "버그리포트를 작성할 것이다",
+      "expect": "fact",
+      "actual": "fact",
+      "conf": 0.68,
+      "pat": "[\\uac00-\\ud7af]+(이다|ㄴ다)[\\s.,!?~]*$"
+    },
+    {
+      "text": "이 버그는 middleware 버그야",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.55,
+      "pat": "[\\uac00-\\ud7af]+(어|아|지|죠|네요|군요|야|이야)[\\s.,!?~]*$"
+    }
+  ],
+  "db_changes": [
+    {
+      "id": "a68b370287d1892f",
+      "content": "사용자는 한국어와 영어를 혼용해서 대화한다",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.7,
+      "pat": "[간갠갼걘건겐견곈곤관괜괸굔군권궨귄균근긘긴깐깬꺈꺤껀껜껸꼔꼰꽌꽨꾄꾠꾼꿘꿴뀐뀬끈끤낀난낸냔냰넌넨년녠논놘놴뇐뇬눈눤뉀뉜"
+    },
+    {
+      "id": "72f149d62c9b1c53",
+      "content": "[USER] 좋아 진행해둬",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.3,
+      "pat": "[\\uac00-\\ud7af]+[\\s.,!?~]*$"
+    },
+    {
+      "id": "70d278ec0b1d9338",
+      "content": "[USER] 1번으로 해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "e31e5001f41494ac",
+      "content": "[USER] 이어서 조사해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "7524c5595ce9d017",
+      "content": "[USER] 권장사항을 처리해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "0719b54012e31d8d",
+      "content": "[USER] 좋아 확인해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "add14048d53ddfc7",
+      "content": "[USER] 네가 대신 실행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "6df0fb35a6e798c2",
+      "content": "[USER] 이번 작업은 단발성에 가까워서 스킬로 저장해 두기는 애매하고, 므네모슈네 메모리에 저장해 두면 나중에 오류 발생 시 참고할 수 있지 않을까?",
+      "from": "context",
+      "to": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견|확인|해결|수정)\\b"
+    },
+    {
+      "id": "dc632ed8424ef7eb",
+      "content": "[USER] 한번 추출해줘봐",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "d9035612ff33a86f",
+      "content": "[USER] browser_navigate 도구로 https://example.com 을 연 뒤, browser_console로 document.title 을 평가해 페이지 제목을 확인하고, browser_snapshot으로 본문 첫 줄을 보고해줘. 각 단계의 실제 반환값(JSON)을 그대로 인용해서 보고. 마지막에 'HEADLESS_OK' 또는 'WIND",
+      "from": "artifact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "2c2ce7669d87a853",
+      "content": "[USER] 1번을 수행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "493fee7c288e0036",
+      "content": "[USER] [System note: Your previous turn was interrupted mid-run — the app or its backend process stopped before the turn could finish. Some of the work may already be complete; check the current state",
+      "from": "instruction",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "e07e5a777fb0dabb",
+      "content": "[USER] A로 진행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "b4b6fd5a2a41ea8c",
+      "content": "[USER] 좋아 계속 진행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "b5f5672a2446d4e8",
+      "content": "Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 \"reap orphan gateways at startup\") 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKTOP=1) 부팅 시 web_server.py lifespan(~line 253)이 `_reap_unsupervised_gateway_orphan",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(version|v)\\s*\\d+\\.?\\d*(?![A-Za-z0-9_-])"
+    },
+    {
+      "id": "903c3f204032d290",
+      "content": "[USER] 2번을 하고 싶어.",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.55,
+      "pat": "[\\uac00-\\ud7af]+(어|아|지|죠|네요|군요|야|이야)[\\s.,!?~]*$"
+    },
+    {
+      "id": "d51bf1b875f55d08",
+      "content": "[codex session] task: 현재 모델 구동 상태를 점검해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-15\\d\nturns: 1\noutcome: 점검 완료했습니다. 결과를 정리하면 다음과 같습니다. **모델 구동 상태: 정상** - 현재 이 세션을 구동 중인 모델은 `deepseek-v4-flash`입니",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "a8bd58135a957295",
+      "content": "[codex session] task: 현재 모델 구동 상태를 점검해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-15\\d\nturns: 2\noutcome: 확인 완료했습니다. **현재 추론 레벨: `xhigh`** 로컬 설정 [config.toml](/C:/Users/mandu/.codex/config.toml)에",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "8f29956602d89f77",
+      "content": "[codex session] task: 현재 모델 구동 상태를 점검해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-15\\d\nturns: 3\noutcome: 레지스트리에서 `camelai` 항목이 없어서 사용자 커스텀 프로바이더인지 확인됐어요. 이제 정확히 정리할 수 있는 충분한 근거를 확보했습니다. 결론부터 말하면",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "a25351a676e5978d",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "b982595c5c7f6977",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "03ab4caa78b3cd56",
+      "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "66078e4c4296de19",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "f3a0899102837950",
+      "content": "[codex session] task: 현재 모델 구동 상태를 점검해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-15\\d\nturns: 5\noutcome: `ultra`로 설정하면 이 세션 경로(`camelai/deepseek-v4-flash`)에서는 **wire로 `max`가 전송**됩니다. 근거는 라우팅 코드 ",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "263b312c0312d129",
+      "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8500000000000001,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "1eb523a94992fb8c",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "f5f85146e2e46356",
+      "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할",
+      "from": "instruction",
+      "to": "error",
+      "conf": 0.7,
+      "pat": "(?<![A-Za-z0-9_])(workaround|hotfix|patch|kludge)(?![A-Za-z0"
+    },
+    {
+      "id": "480ac174d3895652",
+      "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "bf01d99e80956e68",
+      "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "92705415bf9f84f8",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "973948f30d0fd04e",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "13d87dfcd7d2c912",
+      "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "7d7ea43d9729e280",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "de377235957504cc",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "980ee3072e9333f4",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "201b256f5e237263",
+      "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "419383c5d896e070",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "2554a78ba36bc7df",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "6b3a695a8a6ad0de",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "69059e82dd743f8e",
+      "content": "[USER] 좋아 저장해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "0bb865391baf5229",
+      "content": "[codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 codex, opencodex의 모델별 adapter 설정 변화 전후로, Camel 요청이 'Openai-chat'이 아닌 Openai-respons",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.62,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "3ab5d1c48c49e34c",
+      "content": "[codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 codex, opencodex의 모델별 adapter 설정 변화 전후로, Camel 요청이 'Openai-chat'이 아닌 Openai-respons",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "8e52a97916e1869a",
+      "content": "[codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 codex, opencodex의 모델별 adapter 설정 변화 전후로, Camel 요청이 'Openai-chat'이 아닌 Openai-respons",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "b96546d8d25baad6",
+      "content": "[codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 codex, opencodex의 모델별 adapter 설정 변화 전후로, Camel 요청이 'Openai-chat'이 아닌 Openai-respons",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "9fa49f5e7a8347b3",
+      "content": "[USER] 좋아 이어서 검증해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "d8ceeb606f4f894f",
+      "content": "[USER] 좋아 반영해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "92f416d0daa22e7e",
+      "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-16\\new-chat\nturns: 1\noutcome: 방금 확인한 실측치 요약을 정리해서 답변할게요. 프록시 헬스도 정상이고 세션 요청 로그도 ",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "d57dae97af6e64cd",
+      "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-16\\new-chat\nturns: 2\noutcome: 점검 완료입니다. 엔드포인트가 실제로 바뀐 게 맞고, 현재 상태는 이렇습니다. **변경 확",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "c19e6287defe1544",
+      "content": "[USER] 전체라고 하면, 통계자료가 끝없이 쌓이는 것 아닐까? 굳이 그 정도까지 보존할 필요는 없고, 6개월 정도까지만 보여주고 그 이후로는 자료를 없애는 쪽이 나을 것 같아. 그리고 queue timeout은 600s로 상향해줘.",
+      "from": "context",
+      "to": "error",
+      "conf": 0.8,
+      "pat": "(?<![A-Za-z0-9_])(exception|timeout|crash|hang|freeze)(?![A-"
+    },
+    {
+      "id": "8f2597cb0670e4bc",
+      "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-16\\new-chat\nturns: 9\noutcome: 정리하면, 262144도 384K도 `defaultMaxOutputTokens`로 쓰면 안",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "4fb3c1d9787748b7",
+      "content": "[USER] 그래 확인해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "148e6cf739219675",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "0b69fece3a1019dd",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "626a016e77e26808",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "fact",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "32f2af4ee60b0614",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "288949cb8281e279",
+      "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 33\noutcome: 중지합니다. 이번 턴에서 도구 호출 하나가 실패했기 때문에 더 이상 패치/테스트를 진행하지 않았습니다. 실패 원인: 읽기 전용 확인 명령 중 ",
+      "from": "context",
+      "to": "error",
+      "conf": 0.72,
+      "pat": "(실패)(했|되었|됐|했다|했었)"
+    },
+    {
+      "id": "b1bbd4f66f0d1cf5",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "fact",
+      "to": "error",
+      "conf": 0.75,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생했|발생해|났어|났다|났는데|떴어|떴다|생겼어|생겼다|생겼"
+    },
+    {
+      "id": "df2427c6633beca3",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "fact",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "761bdee8290422b0",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "error",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "723382072a107127",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "ac6b11080109c3fe",
+      "content": "camelai-serial-proxy start_proxy.cmd 재부팅 후 실행 실패 원인: 배치 파일이 UTF-8 인코딩 + LF 줄바꿈으로 저장돼 있어 Windows cmd(CP949/OEM)가 한글 rem 주석을 깨먹고 명령으로 오인 → 실행 실패. 수정: ASCII 주석만 + CRLF로 재작성, pythonw 대신 python.exe + `>> p",
+      "from": "context",
+      "to": "error",
+      "conf": 0.68,
+      "pat": "(빌드|테스트|배포|연결|설치|실행)(가|를|는|은|도)?\\s*(실패|오류|에러)\\b"
+    },
+    {
+      "id": "85ffd017a5c1d6ad",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "error",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "242a4f40cf9169af",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "error",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "56ffb2840ad24acc",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "error",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "38f4510ddfa934ff",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "105d31e9dcc32609",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "2bfb2624e726dcb4",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "e08586b7c5241ca9",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "b7dbcbfc2edebf1f",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "fact",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "61bf06edb78cd766",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "fact",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "255b9d0a8d9b6ae8",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "c0380ccf3ff473fd",
+      "content": "[codex session] task: 이 세션은 test-a 세션이야. 별도의 명령을 대기해 줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 1\noutcome: test-a 세션이 준비되었습니다. 명령을 기다리겠습니다.",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "424783789ebd4e86",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "5dd6175adee3c8e8",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "502789473c8a32c5",
+      "content": "[codex session] task: 이 세션은 test-a 세션이야. 별도의 명령을 대기해 줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 6\noutcome: 성공: 4999 / 실패: 0 (즉, `Get-Date -Format o`를 도구로 실행했고, 도구 호출이 성공했습니다. 날짜 문",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "842da046b8c158eb",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "a40f6cdbdd22bf5d",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "3dd226535ec3b54a",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "0192afce46680d1c",
+      "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provide",
+      "from": "context",
+      "to": "relationship",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(manages?|reports?\\s+to|supervises?|leads?)"
+    },
+    {
+      "id": "645b637b0a899345",
+      "content": "[USER] 좋아 그대로 진행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "54f16aa674d1def6",
+      "content": "[USER] 그런데 최근 opencode v2 버전이 있다는 이야기를 들었어. 이건 어떤 버전을 뜻하는 거야?",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.66,
+      "pat": "[간갠갼걘건겐견곈곤관괜괸굔군권궨귄균근긘긴깐깬꺈꺤껀껜껸꼔꼰꽌꽨꾄꾠꾼꿘꿴뀐뀬끈끤낀난낸냔냰넌넨년녠논놘놴뇐뇬눈눤뉀뉜"
+    },
+    {
+      "id": "be070cb8cd8c8ec2",
+      "content": "[USER] v2 버전은 openchamber와 같이 사용할 수 있을까?",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.72,
+      "pat": "[갈갤걀걜걸겔결곌골괄괠괼굘굴궐궬귈귤글긜길깔깰꺌꺨껄껠껼꼘꼴꽐꽬꾈꾤꿀꿜꿸뀔뀰끌끨낄날낼냘냴널넬녈녤놀놜놸뇔뇰눌눨뉄뉠"
+    },
+    {
+      "id": "0a8e1d6bb208cbe7",
+      "content": "[USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면, readme에 이런 내용이 있어.\n\n---\n\nPython SDK (any agent):\r\n\r\nfrom mnemosyne import remember, recall\r\n\r\nremember(\"User prefers dark mode interf",
+      "from": "preference",
+      "to": "artifact",
+      "conf": 0.9500000000000001,
+      "pat": "(?<![A-Za-z0-9_])(README|CHANGELOG|LICENSE|CONTRIBUTING)(?!["
+    },
+    {
+      "id": "93b35851040918f2",
+      "content": "[USER] @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Space-Capability-Realization-Report` 이 깃허브의 내용을 파악해줘\n\n--- Context Warnings ---\n- @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Sp",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "8ae7bd66eb4a5313",
+      "content": "[USER] 그래 진행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "1927f33c9ec5b4c5",
+      "content": "[USER] # 지시문: 로컬 LLM 프록시의 `llm-verifier` 호환성 문제 해결\n\n이 세션은 이전 세션의 상황을 전혀 모른다. 아래 내용만으로 독립적으로 작업하라.\n모든 경로/증상/데이터는 실측으로 재확인한 뒤 진행하라. 추측이나 이전 요약을 맹신하지 말 것.\n\n## 1. 배경 / 목표\n\n`llm-verifier`(LLM-as-a-Verifier",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.6,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "22b0a7ae73c420d9",
+      "content": "[USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데, 실제 효과가 있는 구조인지 실험이 필요해\n\n---\n\n이 리포지토리는 꽤 중요합니다. 오히려 지금까지 이야기한 J-Space와 함께 놓고 보면, **둘은 경쟁 관계라기보다 서로 다른 문제를 해",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.72,
+      "pat": "[간갠갼걘건겐견곈곤관괜괸굔군권궨귄균근긘긴깐깬꺈꺤껀껜껸꼔꼰꽌꽨꾄꾠꾼꿘꿴뀐뀬끈끤낀난낸냔냰넌넨년녠논놘놴뇐뇬눈눤뉀뉜"
+    },
+    {
+      "id": "20d75633ca8501a4",
+      "content": "[USER] # 지시문: camelai-serial-proxy SSE keepalive `: ping` 경쟁 → openai SDK `str` 반환 해결\n\n이 세션은 이전 맥락을 모른다. 아래만으로 독립적으로 실측·수정·검증하라.\n\n## 1. 배경 / 증상 (실측 확정)\n`llm-verifier`(LLM-as-a-Verifier 0.2.0)를 로컬 프록시 ",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.7,
+      "pat": "[간갠갼걘건겐견곈곤관괜괸굔군권궨귄균근긘긴깐깬꺈꺤껀껜껸꼔꼰꽌꽨꾄꾠꾼꿘꿴뀐뀬끈끤낀난낸냔냰넌넨년녠논놘놴뇐뇬눈눤뉀뉜"
+    },
+    {
+      "id": "0ba9505950731a52",
+      "content": "[USER] 다른 ai에서 이런 답변이 나왔어. 확인해줘.\n\n---\n\n네. **이번 4차 답변도 전체적으로는 합리적이고, 지금까지 중 가장 실전적인 설계에 가까워졌습니다.** 다만 저는 두 가지를 분명히 수정하겠습니다.\r\n\r\n첫째, `drawdown + 절대수준` 조합은 좋은 heuristic이지만 아직 “확정 규칙”이라고 부르기에는 데이터가 너무 적습니다",
+      "from": "context",
+      "to": "artifact",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(README|CHANGELOG|LICENSE|CONTRIBUTING)(?!["
+    },
+    {
+      "id": "1b798c109b05601d",
+      "content": "[USER] 다른 ai에서 이런 답변이 나왔어. 확인해줘.\n\n---\n\n네. 이번 5차 답변은 **상당히 합리적이고, 이제 실제 실험을 시작해도 될 정도로 설계가 구체화됐습니다.** 다만 저는 그대로 실행하기 전에 4가지는 수정하겠습니다.\r\n\r\n가장 중요한 수정은 이것입니다. 현재까지의 synthetic back-test는 “어떤 heuristic이 6개 t",
+      "from": "context",
+      "to": "artifact",
+      "conf": 0.9,
+      "pat": "(?<![A-Za-z0-9_])(README|CHANGELOG|LICENSE|CONTRIBUTING)(?!["
+    },
+    {
+      "id": "06db62bec177132b",
+      "content": "[USER] 다른 ai의 답변은 이거야. 확인해줘\n\n---\n\n네. 이번 7차 답변은 **구조적으로 거의 맞고, 실제 구현으로 넘어가도 되는 단계**입니다. 특히 6차에서 발견한 `DB elapsed`의 한계를 확인하고, 34초/38초 지연을 proxy queue와 backend processing으로 분리해야 한다는 방향을 잡은 것은 정확합니다.\r\n\r\n다만",
+      "from": "observation",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "0c913fda8ea1932e",
+      "content": "[USER] 다른 ai에서 이런 답변이 나왔어.\n\n---\n\n네. 이번 10차는 이전 단계보다 훨씬 좋아졌습니다. 특히 v2 back-test 결과는 “warmup과 peak-established가 실제 오발의 상당 부분을 제거했다”는 것을 보여주므로, 9차에서 제안했던 수정 방향은 실측으로 어느 정도 검증됐습니다.\r\n\r\n다만 여기서 Hermes가 한 문장에",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.72,
+      "pat": "[간갠갼걘건겐견곈곤관괜괸굔군권궨귄균근긘긴깐깬꺈꺤껀껜껸꼔꼰꽌꽨꾄꾠꾼꿘꿴뀐뀬끈끤낀난낸냔냰넌넨년녠논놘놴뇐뇬눈눤뉀뉜"
+    },
+    {
+      "id": "3516914ee9cee0fc",
+      "content": "[USER] 다른 ai의 답변이야. 확인해줘.\n\n---\n\n15차 결과는 지금까지의 실험에서 상당히 중요한 분기점입니다. 다만 이번에도 “R1 확정”이라고 부르면 11차의 실수를 반복할 가능성이 있습니다. 현재 확정된 것은 정확히 말하면 **R1이 step 15에서 가장 높은 재현성을 보였다**는 것뿐입니다. `0.05 × 25`가 실제로 강한 “미완료” 판",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "4bd23f7527a1ed34",
+      "content": "[USER] 다른 ai에서 이런 답변을 얻었어\n\n---\n\n17차 결과는 16차의 “계단형” 가정을 반증했지만, 더 중요한 것은 R1의 정체를 한 단계 더 정확하게 정의할 수 있게 되었다는 점입니다. 현재 데이터는 R1이 단순한 binary completion detector도, 연속적인 progress meter도 아니라는 쪽을 가리킵니다. **R1은 현재",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.62,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "ae544633c292617e",
+      "content": "[USER] 18차 지시문을 작성해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "af5d291255333c96",
+      "content": "[USER] 20차 지시문을 작성해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "ea0a7ff945a7fcf0",
+      "content": "[USER] 21차 지시문을 작성해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "65a2d2e303367481",
+      "content": "[USER] 다른 ai에게서 이런 답변이 나왔어\n\n---\n\n전체적으로 24차 설계는 이전 단계보다 상당히 정리됐습니다. 다만 지금 시점에서 가장 중요한 것은 “R1의 점수 패턴을 더 세밀하게 해석하는 것”보다, 이미 확인된 V/E 계층을 실제 controller의 결정 근거로 고정하고 R1은 보조적인 evidence sensor로 격하하는 것입니다. 특히 ",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.62,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "d148ce2e62524f1f",
+      "content": "[USER] 다른 ai에서 이런 답변이 나왔어\n\n---\n\n29차 결과는 방향이 상당히 명확해졌습니다. 특히 R4에서 `1.00 → 0.90 → 0.20`이 나온 것은 중요한 분기입니다. 이제 R1을 “early regression detector”로 더 실험할 이유는 거의 없고, **objective failure가 확인된 뒤 recovery diagnos",
+      "from": "goal",
+      "to": "error",
+      "conf": 0.7,
+      "pat": "(?<![A-Za-z0-9_])(error|bug|issue|problem|failure|crash)(?!["
+    },
+    {
+      "id": "47125286a76327a8",
+      "content": "[USER] 그래 확인해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "852865882b4858d1",
+      "content": "[USER] 현재 우리 작업의 발동 기준인 pytest를 통과하지 못했다, 연결에 실패했다 등의 사건이 발생할 경우, 이런 사건에 대한 대처는 이렇게 거창한 알고리즘 없이도 1회 재시도하거나 llm이 원인을 알아서 찾는 정도로도 해결되는 경우가 대부분이야. 토큰을 몇배로 소모할 가치까지는 없다고 보여. 다만 네가 추천해준 별도 품질 게이트에 대해서는 어떤 ",
+      "from": "context",
+      "to": "error",
+      "conf": 0.72,
+      "pat": "(실패)(했|되었|됐|했다|했었)"
+    },
+    {
+      "id": "f2421b7b489858bb",
+      "content": "verifier-pilot 프로젝트의 진짜 목표는 \"코딩 품질\"이 아니라 \"더 나은 답변 품질\"(도메인 비한정 — 코드·텍스트·분석·문서 등 모든 산출물). 품질 게이트는 코딩 산출물에 한정되면 안 되며, 필요하면 품질 평가에 LLM 호출 사용을 허용한다.",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.7,
+      "pat": "[간갠갼걘건겐견곈곤관괜괸굔군권궨귄균근긘긴깐깬꺈꺤껀껜껸꼔꼰꽌꽨꾄꾠꾼꿘꿴뀐뀬끈끤낀난낸냔냰넌넨년녠논놘놴뇐뇬눈눤뉀뉜"
+    },
+    {
+      "id": "4a30d2b6f4337371",
+      "content": "[USER] 다시 시도해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "2d553b7daa62eab0",
+      "content": "[USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 나온 것 중에서는 상당히 좋은 편입니다. 특히 24~49차에서 만든 recovery controller를 다시 “연구의 중심”으로 끌어올리지 않고, 실제 Hermes workload에서 shadow로 검증하겠다는 방향은 타당합니다.\r\n\r\n다만 저는 55차 문서를 그대로 확",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "2391679160f2f8f6",
+      "content": "[USER] 다른 ai가 이런 답변을 줬어\n\n---\n\n이번 62차는 지금까지의 수정 중에서는 상당히 잘 정리되었습니다. 특히 61차에서 발견한 두 가지 오류, 즉 “D-original-only−B2를 recovery의 원본 개선 효과로 해석한 것”과 “O2를 비용 절감으로 정의한 것”을 폐기한 것은 맞습니다.\r\n\r\n다만 62차를 그대로 실행하기 전에 저는 ",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "37fc983d2bf46efd",
+      "content": "[USER] 이제 원래의 주제로 돌아와서, 다른 ai는 이런 의견을 주었어.\n\n---\n\n네. 이번에는 지금까지의 연구를 모두 반영해서, **“새로운 verifier를 설계하지 않고, 정말 마지막으로 `Single trajectory`와 `Best-of-5`의 end-to-end 품질 차이만 검증하는 실험**으로 지시하는 것이 좋습니다.\r\n\r\n특히 이번 실험",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.8,
+      "pat": "[갑갭걉걥겁겝겹곕곱괍괩굅굡굽궙궵귑귭급긥깁깝깹꺕꺱껍껩꼅꼡꼽꽙꽵꾑꾭꿉꿥뀁뀝뀹끕끱낍납냅냡냽넙넵녑녭놉놥뇁뇝뇹눕눱뉍뉩"
+    },
+    {
+      "id": "19adf2d2951693ad",
+      "content": "[USER] 좋아 실행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "e27ce1a2593d2483",
+      "content": "[USER] 다른 ai가 이렇게 답변했어. 그대로 하면 돼.\n\n---\n\n실행을 시작해도 된다. 현재 준비된 10개 task × ON/OFF 총 20회 pilot을 그대로 실행하라.\n\n실행 중에는 task, prompt, model, StateM commit, runbook, tool availability, ON/OFF 조건을 변경하지 마라. 실패한 run",
+      "from": "context",
+      "to": "error",
+      "conf": 0.7,
+      "pat": "(?<![A-Za-z0-9_])(error|bug|issue|problem|failure|crash)(?!["
+    },
+    {
+      "id": "992bb66e2d862019",
+      "content": "[USER] web_extract를 점검해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "9d4feaccfa1020b4",
+      "content": "web_extract 키리스 해결 (2026-08-21): v0.20.4부터 plugins/web/keyless_mcp.py 키리스 티어 존재 (web.keyless_fallback 기본 true, provider_tier free/paid/auto). web.extract_backend=tavily 설정 → 키 없이 extract 동작 (ddgs sear",
+      "from": "fact",
+      "to": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견|확인|해결|수정)\\b"
+    },
+    {
+      "id": "bbd5a7398ca8c0d1",
+      "content": "[USER] 그리고 헤르메스 데스크탑을 터미널에서 실행 후 계속 아래와 같은 오류 메세지가 터미널에서 보이는데 뭐가 문제일까?\n\nInvalid value supplied for custom binary, restricted characters must be removed or supply the unsafe.allowUnsafeCustomBinary opt",
+      "from": "instruction",
+      "to": "context",
+      "conf": 0.72,
+      "pat": "[갈갤걀걜걸겔결곌골괄괠괼굘굴궐궬귈귤글긜길깔깰꺌꺨껄껠껼꼘꼴꽐꽬꾈꾤꿀꿜꿸뀔뀰끌끨낄날낼냘냴널넬녈녤놀놜놸뇔뇰눌눨뉄뉠"
+    },
+    {
+      "id": "bbfeee0713cf3552",
+      "content": "[USER] 방법 2번을 실행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "95eebd66eba56467",
+      "content": "[USER] 테스트를 18080프록시의 deepseek v4 flash를 사용하는 형태로 진행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "4d2b596ac231354d",
+      "content": "[USER] 작업 디렉토리에 의도적으로 버그가 있는 `calc.py`와 테스트 파일 `test_calc.py`가 있습니다.\n`python -m pytest test_calc.py -q`를 실행하면 실패하는 테스트가 있습니다.\n버그를 찾아 `calc.py`를 수정하고, 모든 테스트가 통과하도록 하세요.\n주의: test_calc.py 자체는 수정하지 마세요. ",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.82,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "e1b4d8072a21da96",
+      "content": "[USER] 다음 주제를 웹에서 조사하고 보고서를 작성하세요:\n주제: '2025년 한국 아파트 분양가 상승률과 주요 원인'\n요구사항:\n1. web_search와 web_extract 도구를 사용해 최소 2개의 서로 다른 출처를 조사\n2. `research_report.md` 작성: 요약(3문장), 주요 통계(수치 포함), 출처 목록(URL 포함)\n3. 출처",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.82,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "12ccd3f9a031ae97",
+      "content": "[USER] 현재 얼마나 진행되었지?",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.6,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "0e6671c3ff193f4d",
+      "content": "[USER] 작업 디렉토리의 `server_check.py`가 실행 시 오류로 실패합니다.\n1. 먼저 `python server_check.py`를 실행해 어떤 오류가 나는지 확인하세요.\n2. 오류의 원인을 파악하고 수정하세요 (파일 누락, 디렉토리 구조, 설정 문제 등).\n3. 수정 후 `python server_check.py`가 exit code 0으",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.82,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "824558107f3233ee",
+      "content": "[USER] 현재 진행상황을 알려줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "ae6af3305e8c6069",
+      "content": "[USER] 작업 디렉토리에서 다음을 수행하세요. 시간이 충분하니 각 단계를 확실히 완료하세요:\n1. `.venv` 가상환경 생성\n2. `requests` 패키지를 .venv에 설치\n3. `fetch_status.py` 작성: requests로 https://httpbin.org/status/200 을 GET하고\n   status code가 200이면 'S",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.82,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "ab260264a8ab3ea6",
+      "content": "[USER] 다른 ai가 이런 답변을 줬어\n\n---\n\n> MB1/MB2/MB3가 모두 통과했으므로 다음 단계인 외부 Execution Controller / StateBackend prototype 설계를 진행한다.\r\n>\r\n> 단, **이번 단계에서도 Hermes core source는 수정하지 않는다.**\r\n>\r\n> 목표는 StateM을 Hermes에 통",
+      "from": "context",
+      "to": "fact",
+      "conf": 0.7,
+      "pat": "[간갠갼걘건겐견곈곤관괜괸굔군권궨귄균근긘긴깐깬꺈꺤껀껜껸꼔꼰꽌꽨꾄꾠꾼꿘꿴뀐뀬끈끤낀난낸냔냰넌넨년녠논놘놴뇐뇬눈눤뉀뉜"
+    },
+    {
+      "id": "c6fe48b1f7d67397",
+      "content": "StateM: wrapper hermes-made/statem-skill/, bench statem-bench/, commit 8c3309a(PyPI 동명이인→GitHub만). 2026-08-21 Managed Controller 확정: hermes-statem managed run/resume/verify → controller.py(spec JSON→r",
+      "from": "artifact",
+      "to": "instruction",
+      "conf": 0.6,
+      "pat": "(?<![A-Za-z0-9_])(remember\\s+to|make\\s+sure|ensure|verify)(?"
+    },
+    {
+      "id": "4ab9e79c91569c95",
+      "content": "[USER] 다른 ai의 답변이야\n\n---\n\n최종 smoke test 하나가 필요합니다\n\n이번 hardening 버전으로 실제 Managed Mode를 한 번 실행해서:\n\nhermes-statem managed run\n    ↓\n--provider custom:local-(127.0.0.1:18080)\n    ↓\nplan\n    ↓\nexecute\n    ↓",
+      "from": "instruction",
+      "to": "context",
+      "conf": 0.72,
+      "pat": "[간갠갼걘건겐견곈곤관괜괸굔군권궨귄균근긘긴깐깬꺈꺤껀껜껸꼔꼰꽌꽨꾄꾠꾼꿘꿴뀐뀬끈끤낀난낸냔냰넌넨년녠논놘놴뇐뇬눈눤뉀뉜"
+    },
+    {
+      "id": "6c2b02d3e5ef2f1d",
+      "content": "[USER] 2번을 진행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "3581b9a33901eba4",
+      "content": "StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). controller 2.0.2(08-21): TimeoutExpired 흡수 + phase별 budget 분리(plan240/exec720/repair480). 미니A/B(minab) t04 누적 R1~R3: A 2/4 vs C 5/6(C실패 2건=v2.0",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.6,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "f9d466b9cdc3cd88",
+      "content": "pi coding agent 0.84.2 설치(npm global). ~/.pi/agent/models.json에 combo(127.0.0.1:20128, 40+ 모델)·camelai(127.0.0.1:18080, deepseek-v4-flash 512K ctx) 프록시 등록 — api openai-completions, 두 프록시 모두 키 검증 없어 더미",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.3,
+      "pat": "default_long"
+    },
+    {
+      "id": "83cbc34553229eba",
+      "content": "[USER] 그래 정리해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "defd6ee560fa5f65",
+      "content": "[USER] 내가 사용하던 18080 프록시에 딥시크 말고 'auto' 모델 옵션이 새로 나왔어.  프로바이더가 내부적으로 딥시크V4 플래시, GPT5.6 루나, 뮤즈 스파크, 제미나이 3.7플래시를 돌려가며 서비스한다고 해. 우리가 수동으로 모델을 지정할 수는 없고.\n아래와 같은 형태로 사용하게 된다고 해. 프록시에 기존 deepseek와 auto를 선택",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.72,
+      "pat": "[갈갤걀걜걸겔결곌골괄괠괼굘굴궐궬귈귤글긜길깔깰꺌꺨껄껠껼꼘꼴꽐꽬꾈꾤꿀꿜꿸뀔뀰끌끨낄날낼냘냴널넬녈녤놀놜놸뇔뇰눌눨뉄뉠"
+    },
+    {
+      "id": "e481f1a2bb8f7969",
+      "content": "camelAI auto 라우팅 실험(2026-08-26, 37호출 실측): ①동일 프롬프트 반복해도 호출마다 라우팅 변동(확률적, 균등랜덤 아님—조건별 우선 모델 + ~10-25% 이탈). ②결정요인은 프롬프트 난이도: 어려운 퍼즐→gemini-3.7-flash(17/18), 사소한 프롬프트→gpt-5.6-luna(15/18). reasoning_effor",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.3,
+      "pat": "default_long"
+    },
+    {
+      "id": "098d90e014006142",
+      "content": "camelAI effort=max 모델별 실측(2026-08-26, 41호출): ①max·xhigh 전 모델 200 수용, 에러 없음—비지원 레벨은 조용한 클램프(gemini: max≈high 동일분포 1879vs1874 rtoks, 클램프 확정). ②luna는 max 인식(사소한 프롬프트에서 none/high=0토큰→max/xhigh=17~19토큰). ③",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.3,
+      "pat": "default_long"
+    },
+    {
+      "id": "26efd95898ed8fcb",
+      "content": "camelAI 모델별 스트리밍 속도 실측(2026-08-26, 18080 경유, TTFT+디코딩 분리): ①디코딩 tok/s(가시출력): gemini-3.7-flash ~360-443(최속), gpt-5.6-luna ~176-357, deepseek-v4-flash ~29(10배 느림). ②TTFT: auto 경유 3.7-6.4초(라우터 결정 비용으로 추정",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.3,
+      "pat": "default_long"
+    },
+    {
+      "id": "2c679030f0cfead0",
+      "content": "[USER] 환경변수로 지정했어.",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.55,
+      "pat": "[\\uac00-\\ud7af]+(어|아|지|죠|네요|군요|야|이야)[\\s.,!?~]*$"
+    },
+    {
+      "id": "44a9497948f0a382",
+      "content": "[USER] 좋아 진행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "e39a8c339c32aa49",
+      "content": "[USER] 좋아 그렇게 진행하자",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.78,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "01cc2b246d84ffa6",
+      "content": "[USER] 좋아 진행해줘",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘"
+    },
+    {
+      "id": "fcb6471ed8728f71",
+      "content": "[USER] 일단 2번은 바로 수정한다고 치고, 3번은 어떻게 해결해야 해?",
+      "from": "fact",
+      "to": "context",
+      "conf": 0.3,
+      "pat": "[\\uac00-\\ud7af]+[\\s.,!?~]*$"
+    },
+    {
+      "id": "8d413ec6d1651cc6",
+      "content": "[USER] typed_memory.py를 보면\n오류|에러|버그)(가|를|는|은|도)?\\\\s*(발생했|발생해|났어|났다|났는데|떴어|떴다|생겼어|생겼다|생겼는데\n이런 형태인데, 나는 문득 이런 생각이 들었어.\n'오류가 발생했어' 이런 건 가중치를 받겠지만\n단순히 '오류 발생' 이런 문장에도 올바르게 가중치를 줄 수 있어?",
+      "from": "context",
+      "to": "error",
+      "conf": 0.75,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생했|발생해|났어|났다|났는데|떴어|떴다|생겼어|생겼다|생겼"
+    }
+  ],
+  "db_total": 830
+}

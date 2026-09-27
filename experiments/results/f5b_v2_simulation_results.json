@@ -1,0 +1,189 @@
+{
+  "smoke": [
+    {
+      "text": "오류 발생",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견)(?!\\s*시\\b)"
+    },
+    {
+      "text": "빌드 실패",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(빌드|테스트|배포|연결|설치|실행)(가|를|는|은|도)?\\s*실패(?=\\s*(원인|문제|때문에|발생)|[\\s.,!?~]*$)"
+    },
+    {
+      "text": "오류 해결",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.3,
+      "pat": "[\\uac00-\\ud7af]+[\\s.,!?~]*$"
+    },
+    {
+      "text": "버그 수정",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.3,
+      "pat": "[\\uac00-\\ud7af]+[\\s.,!?~]*$"
+    },
+    {
+      "text": "파싱 오류",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.7,
+      "pat": "(파싱|구문|문법|타입|인코딩|런타임)\\s*오류\\b"
+    },
+    {
+      "text": "파일 저장 오류",
+      "expect": "error",
+      "actual": "context",
+      "conf": 0.3,
+      "pat": "[\\uac00-\\ud7af]+[\\s.,!?~]*$"
+    },
+    {
+      "text": "오류 발생: Connection refused (port 8080)",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견)(?!\\s*시\\b)"
+    },
+    {
+      "text": "빌드가 실패했어",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.72,
+      "pat": "(실패)(했|되었|됐|했다|했었)"
+    },
+    {
+      "text": "오류가 발생했어",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.75,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생했|발생해|났어|났다|났는데|떴어|떴다|생겼어|생겼다|생겼는데)"
+    },
+    {
+      "text": "camelai-serial-proxy 실행 실패 원인: 배치 파일이",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(빌드|테스트|배포|연결|설치|실행)(가|를|는|은|도)?\\s*실패(?=\\s*(원인|문제|때문에|발생)|[\\s.,!?~]*$)"
+    },
+    {
+      "text": "오류 발견",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.68,
+      "pat": "(오류|에러|버그)(가|를|는|은|도)?\\s*(발생|발견)(?!\\s*시\\b)"
+    },
+    {
+      "text": "버그를 수정하세요. test_calc.py는 수정하지 마세요",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.82,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘뉴느늬니다대댜댸더데"
+    },
+    {
+      "text": "오류 발생 시 재시도해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘뉴느늬니다대댜댸더데"
+    },
+    {
+      "text": "오류 발생 시 참고할 수 있지 않을까?",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.72,
+      "pat": "[갈갤걀걜걸겔결곌골괄괠괼굘굴궐궬귈귤글긜길깔깰꺌꺨껄껠껼꼘꼴꽐꽬꾈꾤꿀꿜꿸뀔뀰끌끨낄날낼냘냴널넬녈녤놀놜놸뇔뇰눌눨뉄뉠뉼늘늴닐달댈댤덀덜델"
+    },
+    {
+      "text": "오류 확인 부탁해",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.3,
+      "pat": "[\\uac00-\\ud7af]+[\\s.,!?~]*$"
+    },
+    {
+      "text": "파일을 저장해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘뉴느늬니다대댜댸더데"
+    },
+    {
+      "text": "테스트를 실행해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘뉴느늬니다대댜댸더데"
+    },
+    {
+      "text": "빌드를 실행해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘뉴느늬니다대댜댸더데"
+    },
+    {
+      "text": "키리스 해결 (2026-08-21): web_extract",
+      "expect": "context",
+      "actual": "fact",
+      "conf": 0.3,
+      "pat": "default_short"
+    },
+    {
+      "text": "web_extract 키리스 해결",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.3,
+      "pat": "[\\uac00-\\ud7af]+[\\s.,!?~]*$"
+    },
+    {
+      "text": "Error: File not found. 파일 경로를 다시 확인해줘",
+      "expect": "error",
+      "actual": "error",
+      "conf": 0.7,
+      "pat": "(?<![A-Za-z0-9_])(error|bug|issue|problem|failure|crash)(?![A-Za-z0-9_"
+    },
+    {
+      "text": "오류 발생: Connection refused. 재시도해줘",
+      "expect": "error",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘뉴느늬니다대댜댸더데"
+    },
+    {
+      "text": "경로 C:/Users/x/abc.py를 찾을 수 없습니다. 다시 확인해줘",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.8,
+      "pat": "[가개갸걔거게겨계고과괘괴교구궈궤귀규그긔기까깨꺄꺠꺼께껴꼐꼬꽈꽤꾀꾜꾸꿔꿰뀌뀨끄끠끼나내냐냬너네녀녜노놔놰뇌뇨누눠눼뉘뉴느늬니다대댜댸더데"
+    },
+    {
+      "text": "버그리포트를 작성할 것이다",
+      "expect": "fact",
+      "actual": "fact",
+      "conf": 0.68,
+      "pat": "[\\uac00-\\ud7af]+(이다|ㄴ다)[\\s.,!?~]*$"
+    },
+    {
+      "text": "이 버그는 middleware 버그야",
+      "expect": "context",
+      "actual": "context",
+      "conf": 0.55,
+      "pat": "[\\uac00-\\ud7af]+(어|아|지|죠|네요|군요|야|이야)[\\s.,!?~]*$"
+    }
+  ],
+  "b_changes": [
+    {
+      "id": "ac6b11080109c3fe",
+      "content": "camelai-serial-proxy start_proxy.cmd 재부팅 후 실행 실패 원인: 배치 파일이 UTF-8 인코딩 + LF 줄바꿈으로 저장돼 있어 Windows cmd(CP949/OEM)가 한글 rem 주석을 깨먹고 명령으로 오인 → 실행 실패. 수정: ASCII 주석만 + CRLF로 재작성, pythonw 대신 python.exe + `>> p",
+      "from": "context",
+      "to": "error",
+      "conf": 0.68,
+      "pat": "(빌드|테스트|배포|연결|설치|실행)(가|를|는|은|도)?\\s*실패(?=\\s*(원인|문제|때문에|발생)|[\\s.,!?~]*$)"
+    }
+  ]
+}
