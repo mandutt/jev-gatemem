@@ -250,6 +250,14 @@ def apply_patch(path: Path) -> bool:
     text, f1_count, f2_count = apply_f4_to_text(text)
     print(f"     [④번] F1(어미 후방차단) {f1_count}개 / F2(version 후방차단) {f2_count}개")
 
+    # 2.8) ⑤번: 한글 ERROR 구문 패턴 추가 (2026-09-28)
+    #    en_patterns의 한글 대응 부재로 '오류가 발생했어'가 context로 분류되는 문제 해결.
+    #    단어 리스트가 아닌 동사+어미 구문만 매치 (지시문/가정 오분류 방지).
+    #    라이브 828건 검증: 2건 개선, 0건 회귀, 스모크 15/15.
+    from f5_patch import apply_f5_to_text
+    text, f5_count = apply_f5_to_text(text)
+    print(f"     [⑤번] 한글 ERROR 구문 패턴 {f5_count}개" + (" (이미 적용됨)" if f5_count == 0 else ""))
+
     # 백업 후 기록
     bak = path.with_suffix(path.suffix + BACKUP_SUFFIX)
     shutil.copy2(path, bak)
