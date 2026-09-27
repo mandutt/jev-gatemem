@@ -1,0 +1,308 @@
+{
+ "proxy": [
+  {
+   "id": "ac6b11080109c3fe",
+   "content": "camelai-serial-proxy start_proxy.cmd 재부팅 후 실행 실패 원인: 배치 파일이 UTF-8 인코딩 + LF 줄바꿈으로 저장돼 있어 Windows cmd(CP949/OEM)가 한글 rem 주석을 깨먹고 명령으로 오인 → 실행 실패. 수정: AS",
+   "type": "context",
+   "src": "user"
+  },
+  {
+   "id": "efb4e9a38f6ee270",
+   "content": "camelai-serial-proxy 대시보드 개선 완료(2026-08-17): ① /api/shutdown 종료버튼(대시보드 \"🛑 프록시 종료\", call_later 0.5s os._exit, SECRET_PATHS에 추가) ② 설정 영속화 — /api/config ",
+   "type": "error",
+   "src": "user"
+  },
+  {
+   "id": "5e8516d6f91b46dd",
+   "content": "프록시 camelai-serial-proxy(hermes-made, 127.0.0.1:18080, streams 즉시조절, SQLite 토큰통계·캐시히트율, 180일 보존, queue_timeout 600) 검증완. opencodex camelaiprox.baseUrl",
+   "type": "fact",
+   "src": "builtin_memory_memory"
+  },
+  {
+   "id": "766fd80090690684",
+   "content": "StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). hardened(08-21): managed run/resume/verify→controller 2.0.0. 전역 config·skill mutation 제거(prov",
+   "type": "instruction",
+   "src": "builtin_memory_memory"
+  },
+  {
+   "id": "f9d466b9cdc3cd88",
+   "content": "pi coding agent 0.84.2 설치(npm global). ~/.pi/agent/models.json에 combo(127.0.0.1:20128, 40+ 모델)·camelai(127.0.0.1:18080, deepseek-v4-flash 512K ctx) 프록",
+   "type": "fact",
+   "src": "fact"
+  },
+  {
+   "id": "edf486fa0d3cd079",
+   "content": "18080 프록시 deepseek-v4-flash 도구 호출 오류 실측(2026-08-23): 과거 path→patch 키 직화(2026-08-20, 21/26 실패)는 0/32로 해결 유지 확인. 단 8시나리오 배치(S1키직화~S8장문)에서 S8 스트림 장문(~3.5",
+   "type": "error",
+   "src": "fact"
+  },
+  {
+   "id": "e5bbd0063f1356f6",
+   "content": "18080 camelai-serial-proxy에 모델 스위치(model_override)·라우팅 표시(routed_model)·추론레벨 주입(default_reasoning_effort + effort_injection_mode respect/force) 추가됨(20",
+   "type": "context",
+   "src": "tool"
+  },
+  {
+   "id": "e481f1a2bb8f7969",
+   "content": "camelAI auto 라우팅 실험(2026-08-26, 37호출 실측): ①동일 프롬프트 반복해도 호출마다 라우팅 변동(확률적, 균등랜덤 아님—조건별 우선 모델 + ~10-25% 이탈). ②결정요인은 프롬프트 난이도: 어려운 퍼즐→gemini-3.7-flash(17/",
+   "type": "fact",
+   "src": "tool"
+  },
+  {
+   "id": "098d90e014006142",
+   "content": "camelAI effort=max 모델별 실측(2026-08-26, 41호출): ①max·xhigh 전 모델 200 수용, 에러 없음—비지원 레벨은 조용한 클램프(gemini: max≈high 동일분포 1879vs1874 rtoks, 클램프 확정). ②luna는 max",
+   "type": "fact",
+   "src": "tool"
+  },
+  {
+   "id": "26efd95898ed8fcb",
+   "content": "camelAI 모델별 스트리밍 속도 실측(2026-08-26, 18080 경유, TTFT+디코딩 분리): ①디코딩 tok/s(가시출력): gemini-3.7-flash ~360-443(최속), gpt-5.6-luna ~176-357, deepseek-v4-flash ~",
+   "type": "fact",
+   "src": "tool"
+  },
+  {
+   "id": "a112c8b5932fbc1f",
+   "content": "camelAI 입력토큰·effort레벨 지연 실험(2026-08-26, 36호출): ①입력토큰→지연: 20K 토큰까지 무관 확인 — ds 직접 TTFT 23tok=1.1s vs 7811tok=1.2-1.5s(+0.2-0.4s), luna auto 경유도 스캐터만(2.1",
+   "type": "context",
+   "src": "tool"
+  },
+  {
+   "id": "c66472eaa13fd3dc",
+   "content": "[2026-08-26 재검증으로 부분 기각] camelAI auto 라우팅 플립 트리거(08-25, 24호출): 당일엔 패딩 ~242~296토큰에서 gemini→luna 전환이 결정적으로 관측됐으나, 다음날(08-26, 92호출) 미재현 — 필러 1,458~1,938p",
+   "type": "context",
+   "src": "tool"
+  },
+  {
+   "id": "7de2c1dfef632694",
+   "content": "camelAI 내부모델 고정 재검증(2026-08-26): 별칭(gemini-3.7-flash/google/gemini/gemini/gpt-5.6-luna/muse-spark) 전부 upstream 404(model_not_available) — 단 에러가 200 SS",
+   "type": "error",
+   "src": "tool"
+  },
+  {
+   "id": "618362fc6d33e3c1",
+   "content": "camelAI auto 에이전트형 대컨텍스트 라우팅 실측(2026-08-26, 92호출): 시스템프롬프트+u/a 대화로 2K/8K/32K 확대 후 마지막 발화 기준 — 어려운 과제→google/gemini-3.7-flash 17/18(94%), 사소한 마무리 요청→me",
+   "type": "context",
+   "src": "tool"
+  },
+  {
+   "id": "b2ed9f4dc0b1efea",
+   "content": "Hermes 18080 프로바이더 설정 구조(2026-08-26): $LOCALAPPDATA/hermes/config.yaml custom_providers[4] = Local (127.0.0.1:18080). models는 반드시 맵핑 형태({auto: {}, ...",
+   "type": "fact",
+   "src": "tool"
+  }
+ ],
+ "gateway": [
+  {
+   "id": "b5f5672a2446d4e8",
+   "content": "Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 \"reap orphan gateways at startup\") 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKTOP=1) 부팅 시 web_server.py lifes",
+   "type": "context",
+   "src": "insight"
+  },
+  {
+   "id": "36f843b4b1886e39",
+   "content": "Windows Hermes 데스크톱용 게이트웨이 워치독: C:\\Users\\mandu\\hermes-made\\hermes-gateway-watchdog\\ (Hermes_With_Watchdog.cmd 런처 + watchdog.ps1). 데스크톱 실행을 이 런처로 해야 워치",
+   "type": "relationship",
+   "src": "user"
+  }
+ ],
+ "browser": [
+  {
+   "id": "1928d454e0ed168b",
+   "content": "Hermes 내장 browser_* 도구 라우팅 설정 완료(2026-08-08): .env의 CAMOFOX_URL 활성 라인 제거(주석만 남음) → is_camofox_mode()=False. config: browser.engine=chrome(agent-browse",
+   "type": "context",
+   "src": "task"
+  },
+  {
+   "id": "09547ea49fc36991",
+   "content": "Hermes 브라우저 stealth 판단 기준(2026-08-08 확정): 기본 공개 정적 추출은 내장 browser_*(agent-browser, stealth 없음, webdriver=true 노출) 사용, stealth 불필요. stealth 필요 = ①로그인/세",
+   "type": "context",
+   "src": "task"
+  },
+  {
+   "id": "0ea67a3b101917e5",
+   "content": "웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이 extract. Exa 키리스는 한글 mojibake(ISO-8859-1) → tavily 권장. ①agent-browser",
+   "type": "fact",
+   "src": "builtin_memory_memory"
+  }
+ ],
+ "mnemosyne": [
+  {
+   "id": "ed3a3442d3bcbb33",
+   "content": "메모리 provider=mnemosyne(로컬 SQLite, pip, Docker 불필요, 2026-07 전환).",
+   "type": "context",
+   "src": "fact"
+  },
+  {
+   "id": "e941022a685c2be1",
+   "content": "opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/opencode/plugin/mnemosyne-session-me",
+   "type": "fact",
+   "src": "decision"
+  },
+  {
+   "id": "90b4edf612db6b2c",
+   "content": "Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='codex' 기록. hooks.json은 .disabled-",
+   "type": "error",
+   "src": "task"
+  }
+ ],
+ "pi": [
+  {
+   "id": "f9d466b9cdc3cd88",
+   "content": "pi coding agent 0.84.2 설치(npm global). ~/.pi/agent/models.json에 combo(127.0.0.1:20128, 40+ 모델)·camelai(127.0.0.1:18080, deepseek-v4-flash 512K ctx) 프록",
+   "type": "fact",
+   "src": "fact"
+  }
+ ],
+ "verifier": [
+  {
+   "id": "f2421b7b489858bb",
+   "content": "verifier-pilot 프로젝트의 진짜 목표는 \"코딩 품질\"이 아니라 \"더 나은 답변 품질\"(도메인 비한정 — 코드·텍스트·분석·문서 등 모든 산출물). 품질 게이트는 코딩 산출물에 한정되면 안 되며, 필요하면 품질 평가에 LLM 호출 사용을 허용한다.",
+   "type": "context",
+   "src": "correction"
+  },
+  {
+   "id": "2f199c68ab243ff8",
+   "content": "verifier-pilot 연구 67차 최종 실행 완료 (2026-08-20): O3 판정 — best-of-5(G3)+selective recovery(D)는 best-of-5(G3)만(B2) 대비 quality 개선 없음 (evaluator 기준 mean ΔQ=-0",
+   "type": "artifact",
+   "src": "task"
+  },
+  {
+   "id": "c6fe48b1f7d67397",
+   "content": "StateM: wrapper hermes-made/statem-skill/, bench statem-bench/, commit 8c3309a(PyPI 동명이인→GitHub만). 2026-08-21 Managed Controller 확정: hermes-statem man",
+   "type": "artifact",
+   "src": "builtin_memory_memory"
+  },
+  {
+   "id": "766fd80090690684",
+   "content": "StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). hardened(08-21): managed run/resume/verify→controller 2.0.0. 전역 config·skill mutation 제거(prov",
+   "type": "instruction",
+   "src": "builtin_memory_memory"
+  },
+  {
+   "id": "0a13cf1002bffc4c",
+   "content": "StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). hardened(08-21): controller 2.0.0 managed, provider방식(config 무변경). 33/33+MB1/2+smoke 통과. 미니A/",
+   "type": "context",
+   "src": "builtin_memory_memory"
+  },
+  {
+   "id": "19bed46211f6ffcb",
+   "content": "StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). controller 2.0.1(08-21): TimeoutExpired 흡수(timed_out/exit -9) — 실전 성공(hard-kill 런이 게이트 통과로 전환",
+   "type": "context",
+   "src": "builtin_memory_memory"
+  },
+  {
+   "id": "3581b9a33901eba4",
+   "content": "StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). controller 2.0.2(08-21): TimeoutExpired 흡수 + phase별 budget 분리(plan240/exec720/repair480). 미니A",
+   "type": "fact",
+   "src": "builtin_memory_memory"
+  }
+ ],
+ "supermemory": [
+  {
+   "id": "132fb95d922f9bc5",
+   "content": "supermemory(미사용, 실측): 200k done/260k+ stuck, 안전150k, in-memory flush→비정상종료 0-byte 유실(전환 사유), ingest=/v4/conversations.",
+   "type": "fact",
+   "src": "fact"
+  }
+ ],
+ "memory_provider": [
+  {
+   "id": "c9e4828c93bdb0a0",
+   "content": "Evidence-based only; no speculation — separate confirmed vs hypothesis w/ evidence table. Verify 'implemented' read-only before trusting. Lesson: patc",
+   "type": "learning",
+   "src": "preference"
+  },
+  {
+   "id": "132fb95d922f9bc5",
+   "content": "supermemory(미사용, 실측): 200k done/260k+ stuck, 안전150k, in-memory flush→비정상종료 0-byte 유실(전환 사유), ingest=/v4/conversations.",
+   "type": "fact",
+   "src": "fact"
+  },
+  {
+   "id": "dce5e8ceddf18db9",
+   "content": "hermes update 중단→venv 손상: 전체 종료 후 hermes-made\\hermes-repair\\ (상세: 스킬 hermes-venv-repair).",
+   "type": "context",
+   "src": "fact"
+  },
+  {
+   "id": "2ecef73164830638",
+   "content": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독",
+   "type": "context",
+   "src": "preference"
+  },
+  {
+   "id": "ed3a3442d3bcbb33",
+   "content": "메모리 provider=mnemosyne(로컬 SQLite, pip, Docker 불필요, 2026-07 전환).",
+   "type": "context",
+   "src": "fact"
+  },
+  {
+   "id": "e941022a685c2be1",
+   "content": "opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/opencode/plugin/mnemosyne-session-me",
+   "type": "fact",
+   "src": "decision"
+  },
+  {
+   "id": "90b4edf612db6b2c",
+   "content": "Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='codex' 기록. hooks.json은 .disabled-",
+   "type": "error",
+   "src": "task"
+  },
+  {
+   "id": "e6b3887395a2ac45",
+   "content": "skill_manage(action='create') 스킬 본문은 반드시 `content` 파라미터로 전달해야 함(`file_content` 아님 — file_content로 보내면 'content is required'로 계속 실패). 실수 패턴: https 스킬도 ",
+   "type": "context",
+   "src": "user"
+  },
+  {
+   "id": "9d4feaccfa1020b4",
+   "content": "web_extract 키리스 해결 (2026-08-21): v0.20.4부터 plugins/web/keyless_mcp.py 키리스 티어 존재 (web.keyless_fallback 기본 true, provider_tier free/paid/auto). web.extr",
+   "type": "fact",
+   "src": "tool"
+  },
+  {
+   "id": "edf486fa0d3cd079",
+   "content": "18080 프록시 deepseek-v4-flash 도구 호출 오류 실측(2026-08-23): 과거 path→patch 키 직화(2026-08-20, 21/26 실패)는 0/32로 해결 유지 확인. 단 8시나리오 배치(S1키직화~S8장문)에서 S8 스트림 장문(~3.5",
+   "type": "error",
+   "src": "fact"
+  },
+  {
+   "id": "e5bbd0063f1356f6",
+   "content": "18080 camelai-serial-proxy에 모델 스위치(model_override)·라우팅 표시(routed_model)·추론레벨 주입(default_reasoning_effort + effort_injection_mode respect/force) 추가됨(20",
+   "type": "context",
+   "src": "tool"
+  }
+ ],
+ "update": [
+  {
+   "id": "dce5e8ceddf18db9",
+   "content": "hermes update 중단→venv 손상: 전체 종료 후 hermes-made\\hermes-repair\\ (상세: 스킬 hermes-venv-repair).",
+   "type": "context",
+   "src": "fact"
+  },
+  {
+   "id": "2ecef73164830638",
+   "content": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독",
+   "type": "context",
+   "src": "preference"
+  },
+  {
+   "id": "c69c459c7c67c2d1",
+   "content": "Windows에서 hermes update 후 cua-driver refresh가 660s 타임아웃으로 실패하는 패턴: 근본 원인은 설치 스크립트(install.ps1)가 High-IL stale 데몬을 일반 권한으로 못 죽여 UAC 프롬프트를 띄우고 무한정 대기하는 ",
+   "type": "context",
+   "src": "insight"
+  },
+  {
+   "id": "b5f5672a2446d4e8",
+   "content": "Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 \"reap orphan gateways at startup\") 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKTOP=1) 부팅 시 web_server.py lifes",
+   "type": "context",
+   "src": "insight"
+  },
+  {
+   "id": "36f843b4b1886e39",
+   "content": "Windows Hermes 데스크톱용 게이트웨이 워치독: C:\\Users\\mandu\\hermes-made\\hermes-gateway-watchdog\\ (Hermes_With_Watchdog.cmd 런처 + watchdog.ps1). 데스크톱 실행을 이 런처로 해야 워치",
+   "type": "relationship",
+   "src": "user"
+  }
+ ]
+}

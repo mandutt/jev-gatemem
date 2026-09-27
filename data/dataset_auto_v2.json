@@ -1,0 +1,1307 @@
+[
+ {
+  "qid": "q001",
+  "query": "B는 그러면 레지스트리는 정리하지 않는 거야? 그리고 서비스 수동과 자동 사이에는 어떤 차이가 있어?",
+  "type": "factual",
+  "gold_ids": [
+   "08e66188cbc5e292",
+   "916a9003cdc617f8",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.\r\n\r\n## 배경\r\n- Hermes config",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q002",
+  "query": "프로바이더 측에서 권장한 경로는 responses야. 18080에 chat completions와 responses로 접근할 때 어떤 차이가 있는지 실험 가능할까? 속도나 도구 호출  등을 비교하면 될 것 같아",
+  "type": "factual",
+  "gold_ids": [
+   "088656755b8fe7a1",
+   "61fad2462eefca57",
+   "08e66188cbc5e292"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 ",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질"
+  ]
+ },
+ {
+  "qid": "q003",
+  "query": "그렇다면 다시 한번 과거 실험들을 돌아보자.\n기존에 했던 실험에서 A, B, C에 어떤 차이가 있었는지 정리해줘. A와 C가 차이가 있었나?",
+  "type": "factual",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "08e66188cbc5e292",
+   "57de62cba964d495"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 중간에 끊긴 것 같아. 계속 이어서 진행해줘 | [USER] 이 답변을 기반해서 다른 ai에게 문의할 지"
+  ]
+ },
+ {
+  "qid": "q004",
+  "query": "pip모듈이 직접 호출되지 않는다는 건 뭘 뜻해?",
+  "type": "factual",
+  "gold_ids": [
+   "389c1aa319b0b9bc",
+   "3d8778abd1f8c280",
+   "8eb855bb0af4d325"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 나는 인터넷등기소 페이지(@url:`https://www.iros.go.kr/index.jsp`)에서 '"
+  ]
+ },
+ {
+  "qid": "q005",
+  "query": "노션과 연동하고 싶은데 어떻게 해야 할까?",
+  "type": "factual",
+  "gold_ids": [
+   "7de7c9abedf67676",
+   "8eb855bb0af4d325",
+   "b7f460aaade6d8f4"
+  ],
+  "gold_excerpts": [
+   "[USER] 환경변수로 설정해두고 싶은데, 어떻게 해야할까?",
+   "[conversation] [USER] 나는 인터넷등기소 페이지(@url:`https://www.iros.go.kr/index.jsp`)에서 '",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 "
+  ]
+ },
+ {
+  "qid": "q006",
+  "query": "package-lock.json 이 파일은 어떤 역할을 하는 파일이야? 다른 파일보다 꽤 큰데",
+  "type": "factual",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "389c1aa319b0b9bc",
+   "b7f460aaade6d8f4"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 "
+  ]
+ },
+ {
+  "qid": "q007",
+  "query": "우아한 종료와 docker desktop에서 컨테이너의 stop 버튼을 누르는 게 어떻게 다르지?",
+  "type": "factual",
+  "gold_ids": [
+   "08e66188cbc5e292",
+   "64c6c1f4ece0cb2c",
+   "e4ede1af95af56d6"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. "
+  ]
+ },
+ {
+  "qid": "q008",
+  "query": "그리고 아까 msedgewebview2 ×31\t707 MB (private 1,261 MB)\t임베디드 앱 다수 \n이건 뭐가 이렇게 많이 차지하고 있는 거야?",
+  "type": "factual",
+  "gold_ids": [
+   "08e66188cbc5e292",
+   "916a9003cdc617f8",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.\r\n\r\n## 배경\r\n- Hermes config",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q009",
+  "query": "나는 EA 관련 게임을 안 한지가 오래되었는데, EADM은 뭘 실행하는 거야? 구체적으로 파악해줘",
+  "type": "factual",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "3d8778abd1f8c280",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q010",
+  "query": "원본이 best-of-n을 거쳐 최선의 결과를 얻어내는 방식이라면, 우리는 recovery routing을 하는데, 여기서 뭘 얻을 수 있지?",
+  "type": "factual",
+  "gold_ids": [
+   "08e66188cbc5e292",
+   "61fad2462eefca57",
+   "916a9003cdc617f8"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene",
+   "[conversation] [USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.\r\n\r\n## 배경\r\n- Hermes config"
+  ]
+ },
+ {
+  "qid": "q011",
+  "query": "75% 정확도라는 것은 구체적으로 어떤 정확도를 말하는 거지? 우리 작동 방식이 아직 미완성이라서? 아니면 알고리즘 자체의 한계로 무조건 25%의 부정확도를 가지는 거야?",
+  "type": "factual",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "61fad2462eefca57",
+   "f9e92fde72f2eccd"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따"
+  ]
+ },
+ {
+  "qid": "q012",
+  "query": "질문 3개 선택지를 못 봤는데, 어떤 걸 제시했었는지 다시 한번 보여줄래?",
+  "type": "factual",
+  "gold_ids": [
+   "389c1aa319b0b9bc",
+   "b12b7b35fc48a6ad",
+   "b7f460aaade6d8f4"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 "
+  ]
+ },
+ {
+  "qid": "q013",
+  "query": "그렇다면 내 방식과 statem의 방식 중 더 체계적이고 효과적인 건 어떤 건지 판단할 수 있을까?",
+  "type": "factual",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "088656755b8fe7a1",
+   "57de62cba964d495"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 ",
+   "[conversation] [USER] 중간에 끊긴 것 같아. 계속 이어서 진행해줘 | [USER] 이 답변을 기반해서 다른 ai에게 문의할 지"
+  ]
+ },
+ {
+  "qid": "q014",
+  "query": "아니면 statem과 현재 내 verifier의 구조를 합칠 순 없을까? 품질, 추가 토큰소모, 추가 소요시간 면에서 어떤 결과가 나올지 예측해줘",
+  "type": "factual",
+  "gold_ids": [
+   "e4ede1af95af56d6",
+   "08e66188cbc5e292",
+   "8c3be96cd7d41b74"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 헤르메스에서 web extract가 잘 작동하지 않는 경우가 있는 것 같은데 | 왜 그런지 확인하고 원인"
+  ]
+ },
+ {
+  "qid": "q015",
+  "query": "'그 세션의 문맥을 현재 텔레그램 대화에 그대로 이어 붙이는 것' 이걸 하면 기존에 있던 pc세션의 작업을 텔레그램에서 이어서 할 수 있나? 있다면 어떻게 해야 할까?",
+  "type": "factual",
+  "gold_ids": [
+   "7d60686a4ef249ae",
+   "1187d02276931ac8",
+   "1995ad75f5f4ed31"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 현재 연결된 모델의 초당 토큰 속도를 측정해줘 | [USER] 좋아 저장해줘 | [USER] 이 모델을 ",
+   "[conversation] [USER] @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Spa"
+  ]
+ },
+ {
+  "qid": "q016",
+  "query": "browser 도구 사용 시 어떤 브라우저를 사용하게 돼?",
+  "type": "preference",
+  "gold_ids": [
+   "b12b7b35fc48a6ad",
+   "9cfd5af4c41b71a2",
+   "08e66188cbc5e292"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질"
+  ]
+ },
+ {
+  "qid": "q017",
+  "query": "원래 코덱스에서 mcp를 사용할 때는 어떻게 했어? 그땐 시작프로그램에 등록되어 있지 않았는데? 자동으로 호출되지 않았나?",
+  "type": "preference",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "08e66188cbc5e292",
+   "64c6c1f4ece0cb2c"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 "
+  ]
+ },
+ {
+  "qid": "q018",
+  "query": "현재 pi는 powershell 7 버전을 이용하지 않는 것으로 보이는데, 어떻게 해야 사용하게 할 수 있을까?",
+  "type": "preference",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q019",
+  "query": "이 camelai 딥시크 api의 특징은 토큰은 무제한으로 제공되지만 단일 스트림만 지원해서 동시호출이 안 된다는 거야. 이걸 적절하게 활용할 방법이 없을까? 동시호출하면 느려지는 것 같은데.",
+  "type": "preference",
+  "gold_ids": [
+   "389c1aa319b0b9bc",
+   "7d60686a4ef249ae",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q020",
+  "query": "docker sidecar 방식이 좋아 보여. 다만 컨테이너를 하나 더 올리면 docker에서 여유공간을 더 확보하려고 램을 임의로 더 점유하려 하지 않을까?",
+  "type": "preference",
+  "gold_ids": [
+   "b12b7b35fc48a6ad",
+   "3d8778abd1f8c280",
+   "e4ede1af95af56d6"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. "
+  ]
+ },
+ {
+  "qid": "q021",
+  "query": "이 글을 일반적인 커뮤니티에서 쓰는 말투 식으로 바꿀 수 있을까? 존댓말은 유지하되 너무 격식을 차리거나 하지는 않는 식으로",
+  "type": "preference",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "b7f460aaade6d8f4",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q022",
+  "query": "슬래시memory 명령어 사용 시 memory.write_approval = off로 뜨는데, 이건 뭐야?",
+  "type": "preference",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "08e66188cbc5e292",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q023",
+  "query": "모든 엔드포인트를 v4 버전을 사용할 순 없을까?",
+  "type": "preference",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "3d8778abd1f8c280",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q024",
+  "query": "v2 버전은 openchamber와 같이 사용할 수 있을까?",
+  "type": "preference",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "64c6c1f4ece0cb2c",
+   "8c3be96cd7d41b74"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 헤르메스에서 web extract가 잘 작동하지 않는 경우가 있는 것 같은데 | 왜 그런지 확인하고 원인"
+  ]
+ },
+ {
+  "qid": "q025",
+  "query": "그렇다면 내가 statem을 사용하고 싶을 경우, 수동으로 호출해야 해? 아니면 자동으로 호출돼?",
+  "type": "preference",
+  "gold_ids": [
+   "08e66188cbc5e292",
+   "b7f460aaade6d8f4",
+   "1187d02276931ac8"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 현재 연결된 모델의 초당 토큰 속도를 측정해줘 | [USER] 좋아 저장해줘 | [USER] 이 모델을 "
+  ]
+ },
+ {
+  "qid": "q026",
+  "query": "이 조치는 pi를 업데이트한 뒤에도 유지되나?",
+  "type": "preference",
+  "gold_ids": [
+   "b12b7b35fc48a6ad",
+   "64c6c1f4ece0cb2c",
+   "b7f460aaade6d8f4"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 "
+  ]
+ },
+ {
+  "qid": "q027",
+  "query": "이번 작업으로 pi의 기본 토큰 사용량 증가는 어느 정도일까?",
+  "type": "preference",
+  "gold_ids": [
+   "389c1aa319b0b9bc",
+   "3d8778abd1f8c280",
+   "b12b7b35fc48a6ad"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호"
+  ]
+ },
+ {
+  "qid": "q028",
+  "query": "분할 방식은 좋아. 이름은 '엄마녹음백업-년도-분기'로 해줘. 그런데 일단 진행하기 전에, 압축형태 중 압축률이 가장 높은 건 어떤 형식의 압축일까?",
+  "type": "temporal",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "b7f460aaade6d8f4",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q029",
+  "query": "일반적으로 헤르메스 에이전트 관련 파일이 이렇게 몇 기가를 차지하는 게 정상적이야?",
+  "type": "temporal",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "e4ede1af95af56d6",
+   "088656755b8fe7a1"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. ",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 "
+  ]
+ },
+ {
+  "qid": "q030",
+  "query": "나는 현재 므네모슈네 메모리를 헤르메스, 코덱스, 오픈코드 모두에 연동해서 사용 중인데, 메모리에 어떤 에이전트가 기록했는지 알 수 있어?",
+  "type": "temporal",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "b7f460aaade6d8f4",
+   "389c1aa319b0b9bc"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를"
+  ]
+ },
+ {
+  "qid": "q031",
+  "query": "몇 가지 앱을 종료하거나 시작프로그램에서 제외했어. 현 시점에서 다시 한번 측정해줄래?",
+  "type": "temporal",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "08e66188cbc5e292",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q032",
+  "query": "그런데 최근 opencode v2 버전이 있다는 이야기를 들었어. 이건 어떤 버전을 뜻하는 거야?",
+  "type": "temporal",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q033",
+  "query": "나는 supermemory를 헤르메스 에이전트 외에도 코덱스와도 연결해서 사용하고 있어. 코덱스 쪽에서는 잘 작동하는 것을 확인했어. 그런데 헤르메스 에이전트에서 supermemory를 잘 활용하고 있는 상태인지는 잘 모르겠어. 점검해 줄래?",
+  "type": "temporal",
+  "gold_ids": [
+   "61fad2462eefca57",
+   "7d60686a4ef249ae",
+   "088656755b8fe7a1"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 "
+  ]
+ },
+ {
+  "qid": "q034",
+  "query": "헤르메스는 언제 supermemory에 기록해? 작동구조를 알려줘",
+  "type": "temporal",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "2180a4ecc717e697",
+   "3d8778abd1f8c280"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 현재 PC의 램 점유 상황을 파악하고 불필요한 점유가 있는지 확인 후 보고해줘 | [USER] real-",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판"
+  ]
+ },
+ {
+  "qid": "q035",
+  "query": "이미 supermemory는 사용하지 않는 상태야. 병행 필요성은 없고, mnemosyne를 설치해서 사용하고 싶어. 기존 supermemory 활용을 위해 작성했던 flush 스킬도 이제 불필요하니 나중에 참고만 하는 비활성 상태로 놔두고 싶어. 그리고 mnemosyne-memory[embeddings]을 권장했는데, 이 경우 에이전트의 llm을 같이 이용하게 될까? 어차피 나는 로컬 LLM을 활용할 계획은 근시일 내에는 없어.",
+  "type": "temporal",
+  "gold_ids": [
+   "8eb855bb0af4d325",
+   "916a9003cdc617f8",
+   "8c3be96cd7d41b74"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 인터넷등기소 페이지(@url:`https://www.iros.go.kr/index.jsp`)에서 '",
+   "[conversation] [USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.\r\n\r\n## 배경\r\n- Hermes config",
+   "[conversation] [USER] 헤르메스에서 web extract가 잘 작동하지 않는 경우가 있는 것 같은데 | 왜 그런지 확인하고 원인"
+  ]
+ },
+ {
+  "qid": "q036",
+  "query": "현재 나는 tui 상태에서 헤르메스 에이전트를 운용 중인데, 이 tui에서  헤르메스 데스크탑에서처럼 세션 목록을 좌측에 띄우거나, 파일 및 파일트리를 우측에 띄우거나 할 수는 없을까?",
+  "type": "temporal",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "3d8778abd1f8c280",
+   "389c1aa319b0b9bc"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를"
+  ]
+ },
+ {
+  "qid": "q037",
+  "query": "방금 답변에서 [내가 앞서 설명을 빠뜨렸습니다. 선택 3번째 축을 하나 더 열면 \"프로세스 잠깐만\"이 가능합니다: MCP를 통째로 끄지 않고, SSE 서버도 평소엔 안 띄우고, Codex에서 Mnemosyne이 \"필요한 순간에만\" 잠깐 띄워졌다 꺼지는 방식 — 사실 net Codex가 \"해줘\"라고 시킬 때 0.5GB가 순간 상주할 뿐, 대화 안 하면 프로세스 0. 다만 그때는 3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데, 그럼 이 선택지는 1번도 2번도 아니지 않아?",
+  "type": "temporal",
+  "gold_ids": [
+   "2fd96977e274b1bc",
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[USER] 방금 답변에서 [내가 앞서 설명을 빠뜨렸습니다. 선택 3번째 축을 하나 더 열면 \"프로세스 잠깐만\"이 가능합니다: MCP를 통째로 ",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q038",
+  "query": "내가 지금 구동 중인 18080프록시를 pi 에이전트에 연결했을 때 추론을 지원하지 않는다고 하는데, 18080프록시에서 연결하는 deepseek api는 추론을 지원하거든? 이걸 해결할 방법이 없을까?",
+  "type": "temporal",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "b7f460aaade6d8f4",
+   "f9e92fde72f2eccd"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따"
+  ]
+ },
+ {
+  "qid": "q039",
+  "query": "그렇다면 일단 sol-pi 자체는 현재 pi 에이전트에 잘 설치되어 있는 상태가 맞지?",
+  "type": "temporal",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae",
+   "088656755b8fe7a1"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 "
+  ]
+ },
+ {
+  "qid": "q040",
+  "query": "잘못 보낸 것 같은데? 월만 표시되고 아무런 데이터가 없어.\n텔레그램 리치 텍스트 관련해서는 https://github.com/NousResearch/hermes-agent/issues/44428 이 곳을 참고해 보면 어떨까",
+  "type": "temporal",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "389c1aa319b0b9bc",
+   "088656755b8fe7a1"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 "
+  ]
+ },
+ {
+  "qid": "q041",
+  "query": "현재 나는 supermemory를 헤르메스 에이전트 메모리로 사용하고 있는데, 만약 내가 헤르메스에서 다른 프로필을 만들 경우, 그 프로필도 supermemory와 연동되게 되나?",
+  "type": "temporal",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "7d60686a4ef249ae",
+   "1995ad75f5f4ed31"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Spa"
+  ]
+ },
+ {
+  "qid": "q042",
+  "query": "아까 답변 내용에서 저장 트리거 중에 '세션 전환\ton_session_switch() (L753)\t이전 세션 버퍼를 flush한 뒤 리셋' 이라고 했는데, 그럼 헤르메스 데스크탑에서 잠시 다른 세션을 보는 것만으로 flush가 일어날까?",
+  "type": "temporal",
+  "gold_ids": [
+   "57de62cba964d495",
+   "e4ede1af95af56d6",
+   "1995ad75f5f4ed31"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 중간에 끊긴 것 같아. 계속 이어서 진행해줘 | [USER] 이 답변을 기반해서 다른 ai에게 문의할 지",
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. ",
+   "[conversation] [USER] @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Spa"
+  ]
+ },
+ {
+  "qid": "q043",
+  "query": "지금 답변을 보면 방법1과 방법2, 그리고 제안 A와 제안 B가 있는데, 이게 서로 어떻게 연관이 있는거야? 좀 헷갈리는데.",
+  "type": "causal",
+  "gold_ids": [
+   "1187d02276931ac8",
+   "f9e92fde72f2eccd",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 연결된 모델의 초당 토큰 속도를 측정해줘 | [USER] 좋아 저장해줘 | [USER] 이 모델을 ",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q044",
+  "query": "나는 공공기관이나 은행을 종종 방문하곤 해. 그래서 아예 삭제하면 다시 설치하는 불편함을 감수해야 하는데, 그냥 은행이나 공공기관 접속 중에만 켜지게 할 수는 없을까? 보안프로그램들이 항상 실행중일 필요는 없어 보이는데. 그리고 대체 어떻게 실행되어 있는 거야? 시작프로그램에 들어 있나?",
+  "type": "causal",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "08e66188cbc5e292",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q045",
+  "query": "real-estate mcp는 평소에는 꺼져 있다가 헤르메스가 호출 시에만 기동하려고 했어. 그런데 왜 2개씩이나 구동되어 있는 거야?",
+  "type": "causal",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "b12b7b35fc48a6ad",
+   "64c6c1f4ece0cb2c"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 "
+  ]
+ },
+ {
+  "qid": "q046",
+  "query": "이게 왜 1기가씩이나 점유하고 있었던 거지? EA 게임이 아직 내 PC에 남아있나?",
+  "type": "causal",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q047",
+  "query": "지난번에는 8787이었는데 왜 9119로 바뀐 거야?",
+  "type": "causal",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "3d8778abd1f8c280",
+   "f9e92fde72f2eccd"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따"
+  ]
+ },
+ {
+  "qid": "q048",
+  "query": "좋습니다.\r\n\r\n마지막으로 정책 하나만 결정하십시오.\r\n\r\n현재 시스템에서\r\n\r\nManifest와 실제 backup 파일 중\r\n\r\n어느 쪽을 Source of Truth로 사용할 것입니까?\r\n\r\n둘 중 하나만 선택하십시오.\r\n\r\n① Manifest가 Source of Truth\r\n\r\n또는\r\n\r\n② 실제 backup 파일이 Source of Truth\r\n\r\n선택 이유를 설명하십시오.\r\n\r\n새로운 기능은 제안하지 마십시오.\r\n\r\n새로운 클래스도 제안하지 마십시오.\r\n\r\n현재 구조에서만 판단하십시오.\r\n\r\n마지막에\r\n\r\nAPPROVED\r",
+  "type": "causal",
+  "gold_ids": [
+   "b12b7b35fc48a6ad",
+   "389c1aa319b0b9bc",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q049",
+  "query": "그런데 60자 이하로 줄이는 이유가 있었어? 설명해줘",
+  "type": "causal",
+  "gold_ids": [
+   "7d60686a4ef249ae",
+   "3d8778abd1f8c280",
+   "088656755b8fe7a1"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 "
+  ]
+ },
+ {
+  "qid": "q050",
+  "query": "혹시 헤르메스에서 코덱스 세션 내용을 읽어오는 게가능해? 현재 진행 중인 세션 작동에 영향을 주지는 말고.",
+  "type": "causal",
+  "gold_ids": [
+   "f9e92fde72f2eccd",
+   "b7f460aaade6d8f4",
+   "088656755b8fe7a1"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 "
+  ]
+ },
+ {
+  "qid": "q051",
+  "query": "3 reps는 같은 작업을 3번 반복한다는 건데, 그럴 이유가 있을가?",
+  "type": "causal",
+  "gold_ids": [
+   "f9e92fde72f2eccd",
+   "b12b7b35fc48a6ad",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q052",
+  "query": "현재 supermemory의 작동을 위해서 stream-inject-proxy.py를 구동하게 되는데, 간단한 기능에 비해 파이썬을 사용하기 때문에 램 사용량이 늘어나는 것 같아. GO로 작성하면 좀 더 램 사용량이 줄어들지 않을까?",
+  "type": "causal",
+  "gold_ids": [
+   "08e66188cbc5e292",
+   "1187d02276931ac8",
+   "e4ede1af95af56d6"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 현재 연결된 모델의 초당 토큰 속도를 측정해줘 | [USER] 좋아 저장해줘 | [USER] 이 모델을 ",
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. "
+  ]
+ },
+ {
+  "qid": "q053",
+  "query": "방식 1로 할 경우, 헤르메스의 다른 시스템에는 영향 없이 단순히 호출할 수 있는 스킬이 될 수 있을까?",
+  "type": "causal",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "f9e92fde72f2eccd",
+   "08e66188cbc5e292"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질"
+  ]
+ },
+ {
+  "qid": "q054",
+  "query": "Phase 3 구현은 더 진행하지 말고 릴리스 준비 작업만 수행해 주세요.\n\n현재 Phase 3에서 남아 있는 기술부채(TODO, FIXME, dead config, deprecated 대상)를 모두 실제 코드 기준으로 목록화해 주세요.\n각 항목을 다음 네 가지로 분류해 주세요.\nPhase 3 커밋 전에 반드시 처리\nPhase 3 직후 Cleanup 커밋으로 처리\nPhase 4(RemoteStorage)에서 처리\nPhase 5 이후로 미뤄도 되는 항목\n각 항목에 대해 \"왜 그 시점이 가장 적절한지\"를 함께 설명해 주세요.\n마지막에는",
+  "type": "causal",
+  "gold_ids": [
+   "389c1aa319b0b9bc",
+   "b12b7b35fc48a6ad",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q055",
+  "query": "다른 건 놔두고, node_modules가 왜 저 정도 용량을 차지하고 있는지 조사해줘",
+  "type": "causal",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "b12b7b35fc48a6ad",
+   "b7f460aaade6d8f4"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 "
+  ]
+ },
+ {
+  "qid": "q056",
+  "query": "이 스킬은 추론 전에 지정되어서 추론공간에 영향을 주는 거야 아니면 추론 완료 후 디코딩 시 한국어 문맥을 다시 재추론하는 거야?",
+  "type": "causal",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "b12b7b35fc48a6ad",
+   "f9e92fde72f2eccd"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따"
+  ]
+ },
+ {
+  "qid": "q057",
+  "query": "그렇다면 이 스킬 사용 시 무조건 추론이 한글로 고정되거나, 추론성능 자체에 영향을 주거나 할 수 있을까?",
+  "type": "causal",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "f9e92fde72f2eccd",
+   "088656755b8fe7a1"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 "
+  ]
+ },
+ {
+  "qid": "q058",
+  "query": "정상적으로 작동하는 건 좋은데, VmmemWSL 메모리사용량이 많이 늘었어. 거의 2.4기가에 가까워. 이 부분은 뭔가 문제가 있는 것 같은데 원인이 뭘까?",
+  "type": "failure",
+  "gold_ids": [
+   "b12b7b35fc48a6ad",
+   "1b0de8348a3d0b84",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] @url:`https://github.com/snflkd/fluent-korean` 이 저장소를 확인 후",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q059",
+  "query": "재부팅 후에 8780 프록시가 또 작동하지 않아. start_proxy.cmd 실행해도 반응이 없는데 왜 이러지? 확실하게 원인을 파악해줘.",
+  "type": "failure",
+  "gold_ids": [
+   "916a9003cdc617f8",
+   "08e66188cbc5e292",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.\r\n\r\n## 배경\r\n- Hermes config",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q060",
+  "query": "tailscale을 사용 중인데, 이걸 사용한 뒤로 18080 프록시에서 헤르메스의 llm 라우팅 내역을 읽지 못하는 것 같아. 원인이 뭘까?",
+  "type": "failure",
+  "gold_ids": [
+   "8eb855bb0af4d325",
+   "f9e92fde72f2eccd",
+   "e4ede1af95af56d6"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 인터넷등기소 페이지(@url:`https://www.iros.go.kr/index.jsp`)에서 '",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. "
+  ]
+ },
+ {
+  "qid": "q061",
+  "query": "pi에서 codegraph를 위주로 사용하도록 설정했는데도 최근 세션에서 별로 사용되고 있는 것 같지 않은데, 뭐가 원인일까?",
+  "type": "failure",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "64c6c1f4ece0cb2c",
+   "08e66188cbc5e292"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질"
+  ]
+ },
+ {
+  "qid": "q062",
+  "query": "내가 방금 compress 명령어를 입력했음에도 /compress·error: not a quick/plugin/skill command: compress가 나왔는데 뭐가 문제일까? 헤르메스 데스크탑의 문제일까?",
+  "type": "failure",
+  "gold_ids": [
+   "33bdcb4ebd2f0503",
+   "7d60686a4ef249ae",
+   "e4ede1af95af56d6"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 헤르메스 게이트웨이 창에서 시간이 지나면 이런 메세지가 많이 보이는데 뭐가 문제일까?\n\n┌────────",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. "
+  ]
+ },
+ {
+  "qid": "q063",
+  "query": "[better-auth/magic-link] `allowedAttempts` is ignored: tokens are consumed atomically on the first verification call (GHSA-hc7v-rggr-4hvx). Any value other than `1` has no effect; remove the option to silence this warning.\n이 메세지가 아직도 계속 뜨는데, 뭐가 문제일까?",
+  "type": "failure",
+  "gold_ids": [
+   "57de62cba964d495",
+   "088656755b8fe7a1",
+   "8c3be96cd7d41b74"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 중간에 끊긴 것 같아. 계속 이어서 진행해줘 | [USER] 이 답변을 기반해서 다른 ai에게 문의할 지",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 ",
+   "[conversation] [USER] 헤르메스에서 web extract가 잘 작동하지 않는 경우가 있는 것 같은데 | 왜 그런지 확인하고 원인"
+  ]
+ },
+ {
+  "qid": "q064",
+  "query": "이상하게 업데이트 시 cua-driver refresh가 멈추는 경우가 많은데, 뭐가 문제일까? 지난번에도 한번 그랬었는데",
+  "type": "failure",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "1b0de8348a3d0b84",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] @url:`https://github.com/snflkd/fluent-korean` 이 저장소를 확인 후",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q065",
+  "query": "헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데, 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질 않아. 뭐가 문제일까?",
+  "type": "failure",
+  "gold_ids": [
+   "389c1aa319b0b9bc",
+   "e4ede1af95af56d6",
+   "1995ad75f5f4ed31"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. ",
+   "[conversation] [USER] @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Spa"
+  ]
+ },
+ {
+  "qid": "q066",
+  "query": "지금 일단 codex창을 닫았어. 그런데 codex를 열 때마다 저렇게 python이 크게 나온다면 그건 좀 문제가 있는 것 같아. 헤르메스도 mnemosyne를 사용 중인데 왜 codex 사용 시에만 문제가 생길까?",
+  "type": "failure",
+  "gold_ids": [
+   "7d60686a4ef249ae",
+   "8eb855bb0af4d325",
+   "1995ad75f5f4ed31"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 나는 인터넷등기소 페이지(@url:`https://www.iros.go.kr/index.jsp`)에서 '",
+   "[conversation] [USER] @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Spa"
+  ]
+ },
+ {
+  "qid": "q067",
+  "query": "현재 chatgpt 앱을 띄워놧는데도 이런 오류 메세지가 보이는데, 왜 그럴까?\n\n2026-08-17 22:03:54,662 WARNING codex 감지 실패: No module named 'psutil'",
+  "type": "failure",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "916a9003cdc617f8",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.\r\n\r\n## 배경\r\n- Hermes config",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q068",
+  "query": "그리고 헤르메스 데스크탑을 터미널에서 실행 후 계속 아래와 같은 오류 메세지가 터미널에서 보이는데 뭐가 문제일까?\n\nInvalid value supplied for custom binary, restricted characters must be removed or supply the unsafe.allowUnsafeCustomBinary option",
+  "type": "failure",
+  "gold_ids": [
+   "a51787c819c67f92",
+   "42c9d37bb1161655",
+   "1f0bc57b23a79be6"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 같은 절차에 따라 다시 지금 시점에서 데이터를 읽어와줘. 종합적으로 전체 등기율을 조사하고 | 동별 등기",
+   "[conversation] [USER] @url:`https://news.hada.io/topic?id=32310` 이 페이지에 보면 윈도우의 ",
+   "[conversation] [USER] 작업 디렉토리에 두 개의 실패하는 스크립트가 있습니다:\n1. `check_env.py` — 환경 설정 파"
+  ]
+ },
+ {
+  "qid": "q069",
+  "query": "그렇다면 이 텔레그램 게이트웨이 문제를 완전히 해결하려면 어떻게 해야 할까?",
+  "type": "failure",
+  "gold_ids": [
+   "d37b9f49dbeb4d05",
+   "08e66188cbc5e292",
+   "1187d02276931ac8"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 중간에 끊긴 것 같은데 | 다시 이어서 해줘 | [USER] 헤르메스 게이트웨이를 재시작했어. 그렇다면 ",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 현재 연결된 모델의 초당 토큰 속도를 측정해줘 | [USER] 좋아 저장해줘 | [USER] 이 모델을 "
+  ]
+ },
+ {
+  "qid": "q070",
+  "query": "로컬에서 web ui에 127.0.0.1:8787로 접근하면 web ui에 접근이 되지만 안드로이드폰에서 tailscale을 통해 100.94.115.98:8787접근 시도하면 접속이 되지 않아. 뭐가 문제일까?",
+  "type": "failure",
+  "gold_ids": [
+   "3d8778abd1f8c280",
+   "b12b7b35fc48a6ad",
+   "64c6c1f4ece0cb2c"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 "
+  ]
+ },
+ {
+  "qid": "q071",
+  "query": "우리가 무턱대고 어려운 태스크를 찾기보다는, 프론티어 SOTA 모델들이 어떤 벤치마크에서 실패하는지 검색해서 그 벤치마크의 문제 중 짧은 시간이 걸리는 것들을 택하는 게 좋지 않을까? 현재의 세션을 복잡하게 하기는 싫으니 이런 검색작업은 다른 세션에서 진행 후 결과만 이 세션으로 가져와서 다시 이어가자",
+  "type": "failure",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae",
+   "f9e92fde72f2eccd"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따"
+  ]
+ },
+ {
+  "qid": "q072",
+  "query": "paseo를 써보려고 설치했는데 실행하면 창은 뜨지만 초기 로딩화면에서 너무 길게 끌어. 아주 오래 기다리면 켜지지만 다음에는 또 똑같아. 뭐가 문제일까?",
+  "type": "failure",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "389c1aa319b0b9bc",
+   "b12b7b35fc48a6ad"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 일단 구현 전에 | 헤르메스나 코덱스의 일반적인 작동 시 호출 패턴은 동시 호출하는 경우가 많나? 동시호"
+  ]
+ },
+ {
+  "qid": "q073",
+  "query": "코딩을 코덱스에 위임하려면 어떻게 설정해야 해?",
+  "type": "project",
+  "gold_ids": [
+   "e4ede1af95af56d6",
+   "7d60686a4ef249ae",
+   "08e66188cbc5e292"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] start_proxy.cmd를 실행해 봤는데 | 또 안되는데? | [USER] 좋아 스킬로 저장해 둬. ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질"
+  ]
+ },
+ {
+  "qid": "q074",
+  "query": "헤르메스의 artifacts 기능은 뭘까?",
+  "type": "project",
+  "gold_ids": [
+   "91f49b881189aeeb",
+   "2180a4ecc717e697",
+   "8eb855bb0af4d325"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 프록시 작동이 이상한 것 같은데 점검해줘. | [USER] 이제 프록시를 경유하도록 헤르메스를 설정했어.",
+   "[conversation] [USER] 현재 PC의 램 점유 상황을 파악하고 불필요한 점유가 있는지 확인 후 보고해줘 | [USER] real-",
+   "[conversation] [USER] 나는 인터넷등기소 페이지(@url:`https://www.iros.go.kr/index.jsp`)에서 '"
+  ]
+ },
+ {
+  "qid": "q075",
+  "query": "현재 헤르메스의 인터넷 접근은 어떤 걸 사용하도록 되어 있어? 헤르메스 기본 브라우저? 아니면 camofox? 평소에 camofox를 무조건 사용 시도하는 건 docker에 항상 컨테이너를 올려두고 있으면서 램 용량을 낭비하는 것 같은데, 차라리 헤르메스 기본 브라우저를 무조건 쓰게 해 두고, 그 접근이 막혔을 때만 camofox를 컨테이너에 올려서 쓴 뒤 시간이 지나도 camofox 활용이 없으면 다시 컨테이너를 내려두는 그런 운용이 좋을 것 같아. 이 방식을 어떻게 평가해?",
+  "type": "project",
+  "gold_ids": [
+   "916a9003cdc617f8",
+   "b7f460aaade6d8f4",
+   "c3a54f58e5c489f6"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.\r\n\r\n## 배경\r\n- Hermes config",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[USER] 헤르메스 게이트웨이를 재시작했어. 그렇다면 이제부터 헤르메스가 인터넷 접근이 필요할 경우 이 루트를 통하게 될까?"
+  ]
+ },
+ {
+  "qid": "q076",
+  "query": "supermemory가 notion과 작동하게 하려면 어떻게 해야 할까?",
+  "type": "project",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae",
+   "1995ad75f5f4ed31"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Spa"
+  ]
+ },
+ {
+  "qid": "q077",
+  "query": "만약 네가 말한 대로 진행한다고 하자. 나중에 저 깃허브에 업데이트되면 그건 어떻게 다시 재반영할 수 있을까? 내가 깃허브 업데이트를 반영해서 스킬을 재구성하라고 하면 될까?",
+  "type": "project",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "f9e92fde72f2eccd",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q078",
+  "query": "원래 헤르메스에서 장문을 supermemory에 flush 할 때 기본적으로는 어떤 식으로 구현되어 있어?",
+  "type": "project",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "3d8778abd1f8c280",
+   "9cfd5af4c41b71a2"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판",
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 "
+  ]
+ },
+ {
+  "qid": "q079",
+  "query": "현재 docker의 VmmemWSL 프로세스가 거의 1.9기가를 차지하고 있는데, 이 부분을 어떻게 할 수 없을까? 점차 줄어들긴 하지만 supermemory 작동 시 너무 커지는 것 같아",
+  "type": "project",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae",
+   "91f49b881189aeeb"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 프록시 작동이 이상한 것 같은데 점검해줘. | [USER] 이제 프록시를 경유하도록 헤르메스를 설정했어."
+  ]
+ },
+ {
+  "qid": "q080",
+  "query": "현재 이 헤르메스에 작동중인 mcp는 뭐가 있어?",
+  "type": "project",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "64c6c1f4ece0cb2c",
+   "f9e92fde72f2eccd"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따"
+  ]
+ },
+ {
+  "qid": "q081",
+  "query": "이 프록시를 코덱스에 연결하려면 엔드포인트 주소가 어떻게 돼?",
+  "type": "project",
+  "gold_ids": [
+   "8c3be96cd7d41b74",
+   "08e66188cbc5e292",
+   "8eb855bb0af4d325"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 헤르메스에서 web extract가 잘 작동하지 않는 경우가 있는 것 같은데 | 왜 그런지 확인하고 원인",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] 나는 인터넷등기소 페이지(@url:`https://www.iros.go.kr/index.jsp`)에서 '"
+  ]
+ },
+ {
+  "qid": "q082",
+  "query": "이제 프록시가 실행되어 있는데, 이 상황에서 해당 프록시를 통해 동시호출을 한번 시도해볼래? 어떤 결과가 나오는지 궁금해",
+  "type": "project",
+  "gold_ids": [
+   "b7f460aaade6d8f4",
+   "088656755b8fe7a1",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 ",
+   "[conversation] [USER] 다시 시도해줘 | [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n이번 55차 답변은 지금까지 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q083",
+  "query": "나는 대부분의 경우 한국어 출력이 필요해. 하지만 그렇다고 매 턴마다 1500토큰이 증가하는 메모리 저장 방식은 쓰기 싫어. 어떻게 하는 게 좋을까? 스킬로 등록하면 내가 매 세션마다 수동으로 로딩해야하지 않아?",
+  "type": "project",
+  "gold_ids": [
+   "f9e92fde72f2eccd",
+   "08e66188cbc5e292",
+   "7d60686a4ef249ae"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] 헤르메스 에이전트에서 텔레그램으로 메세지는 보내는데 | 내가 텔레그램으로 헤르메스에 지시해도 답변이 오질",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —"
+  ]
+ },
+ {
+  "qid": "q084",
+  "query": "원래 프로바이더 측에서 실제 어떤 모델을 라우팅하는지 정보를 보여줬었는데, 이제는 안 보이나?",
+  "type": "project",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "389c1aa319b0b9bc",
+   "61fad2462eefca57"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를",
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene"
+  ]
+ },
+ {
+  "qid": "q085",
+  "query": "몇 가지 궁금한 점이 있어.\nmax_tokens가 굳이 코드에 필요한가? 모델의 자유로운 추론을 오히려 방해하는 거 아니야? 그리고 timeout또한 30초는 너무 짧은 게 아닌가? 긴 추론일 경우 30초가 아니라 분 단위로 소요되지 않나?",
+  "type": "project",
+  "gold_ids": [
+   "61fad2462eefca57",
+   "8c3be96cd7d41b74",
+   "42c9d37bb1161655"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 므네모슈네 메모리 작동 상태를 점검해줘 | [USER] 권장사항을 처리해줘 | [USER] hygiene",
+   "[conversation] [USER] 헤르메스에서 web extract가 잘 작동하지 않는 경우가 있는 것 같은데 | 왜 그런지 확인하고 원인",
+   "[conversation] [USER] @url:`https://news.hada.io/topic?id=32310` 이 페이지에 보면 윈도우의 "
+  ]
+ },
+ {
+  "qid": "q086",
+  "query": "그리고 실험이 계속 성공하고 있는데, 현재 실험에 사용되는 모델의 추론레벨 수준은 어떻게 돼?",
+  "type": "project",
+  "gold_ids": [
+   "9cfd5af4c41b71a2",
+   "f9e92fde72f2eccd",
+   "3d8778abd1f8c280"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 ",
+   "[conversation] [USER] 나는 StateM을 헤르메스와 연동시키는 방법을 다른 ai에게 물어보았어. 아래는 그 답변이야. 이에 따",
+   "[conversation] [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판"
+  ]
+ },
+ {
+  "qid": "q087",
+  "query": "환경변수로 설정해두고 싶은데, 어떻게 해야할까?",
+  "type": "project",
+  "gold_ids": [
+   "64c6c1f4ece0cb2c",
+   "7d60686a4ef249ae",
+   "b7f460aaade6d8f4"
+  ],
+  "gold_excerpts": [
+   "[conversation] [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.\n\n---\n\n20차 결과에서 ",
+   "[conversation] [USER] [System note: Your previous turn was interrupted mid-run —",
+   "[conversation] [USER] 다른 ai에서 이런 답변을 받았어\n\n---\n\n전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 "
+  ]
+ }
+]

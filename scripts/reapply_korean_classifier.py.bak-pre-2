@@ -1,0 +1,201 @@
+"""Mnemosyne typed_memory.py — 한국어 어미 분류 패치 재적용 스크립트.
+
+용도: Mnemosyne 업데이트로 `mnemosyne/core/typed_memory.py`가 원본으로
+덮어써진 뒤, 한국어 어미 분류 패치를 다시 적용한다.
+
+사용법:
+  python scripts/reapply_korean_classifier.py [--target path/to/typed_memory.py]
+
+동작:
+  1. 대상 파일이 이미 패치 적용 상태인지 확인 (마커 문자열 검색)
+  2. 미적용이면 한국어 블록을 주입 (EN 패턴 뒤)
+  3. 검증: 한국어/영어 스모크 케이스 실행
+
+안전장치: 파일을 직접 바꾸기 전 .bak 백업. 검증 실패 시 롤백.
+"""
+import argparse
+import re
+import shutil
+import sys
+from pathlib import Path
+
+MARKER = "# --- Korean Syllable Classes (28 jongsung) ---"
+BACKUP_SUFFIX = ".bak-ko-classifier"
+
+# 주입할 한국어 블록 (typed_memory.py의 CONFIDENCE_BOOSTERS 앞에 삽입)
+# 주의: 이 블록은 _EN_PATTERNS(영어 패턴 리스트) 다음, CONFIDENCE_BOOSTERS 앞에 온다.
+KOREAN_BLOCK = r'''# --- Korean Syllable Classes (28 jongsung) ---
+# Hangul syllables are finite: (19 choseong) x (21 jungseong) x (28 jongseong) = 11,172.
+# Build per-jongseong character classes once so ending-morpheme patterns can
+# match any syllable carrying that final consonant (or none). This covers
+# plain AND compound finals (ㅄ, ㄵ, ㄺ, ㅆ, ...) without enumerating words.
+# Jongseong index order (verified against U+AC00..): 0:none 1:ㄱ 2:ㄲ 3:ㄳ
+# 4:ㄴ 5:ㄵ 6:ㄶ 7:ㄷ 8:ㄹ 9:ㄺ 10:ㄻ 11:ㄼ 12:ㄽ 13:ㄾ 14:ㄿ 15:ㅀ 16:ㅁ
+# 17:ㅂ 18:ㅄ 19:ㅅ 20:ㅆ 21:ㅇ 22:ㅈ 23:ㅊ 24:ㅋ 25:ㅌ 26:ㅍ 27:ㅎ
+_GA = 0xAC00
+_KO_CLASS: Dict[int, str] = {
+    jong: ''.join(
+        chr(_GA + i * 588 + m * 28 + jong)
+        for i in range(19) for m in range(21)
+    )
+    for jong in range(28)
+}
+_KO_NO_FINAL = _KO_CLASS[0]
+_KO_FIN_N = _KO_CLASS[4]    # ㄴ
+_KO_FIN_NJ = _KO_CLASS[5]   # ㄵ (앉)
+_KO_FIN_L = _KO_CLASS[8]    # ㄹ
+_KO_FIN_M = _KO_CLASS[16]   # ㅁ
+_KO_FIN_B = _KO_CLASS[17]   # ㅂ
+_KO_FIN_BS = _KO_CLASS[18]  # ㅄ (없)
+_KO_FIN_S = _KO_CLASS[19]   # ㅅ
+_KO_FIN_SS = _KO_CLASS[20]  # ㅆ (었/있/했)
+_KO_FIN_NG = _KO_CLASS[21]  # ㅇ
+_KO_FIN_H = _KO_CLASS[27]   # ㅎ
+
+# Korean ending-morpheme patterns (applied AFTER English patterns).
+_KO_QUESTION = (
+    (f"[{_KO_FIN_N}]지", MemoryType.CONTEXT, 0.72, "high"),      # ~ㄴ지 (맞는지)
+    (f"[{_KO_FIN_L}]까", MemoryType.CONTEXT, 0.72, "high"),      # ~ㄹ까 (할까)
+    (f"[{_KO_FIN_N}]가", MemoryType.CONTEXT, 0.68, "high"),      # ~ㄴ가 (맞는가)
+    (f"[{_KO_NO_FINAL}]나", MemoryType.CONTEXT, 0.60, "high"),   # ~냐/~나 (뭐냐)
+    (f"[{_KO_FIN_N}]데", MemoryType.CONTEXT, 0.66, "high"),      # ~ㄴ데 (없는데)
+    (f"[{_KO_FIN_L}]게", MemoryType.CONTEXT, 0.60, "high"),      # ~ㄹ게 (앉을게)
+)
+_KO_REQUEST = (
+    (f"[{_KO_NO_FINAL}]줘", MemoryType.CONTEXT, 0.80, "high"),   # ~줘 (해줘)
+    (f"[{_KO_NO_FINAL}]자", MemoryType.CONTEXT, 0.78, "high"),   # ~자 (가자)
+    (f"[{_KO_NO_FINAL}]게", MemoryType.CONTEXT, 0.62, "high"),   # ~게 (보게)
+    (f"[{_KO_NO_FINAL}]세요", MemoryType.CONTEXT, 0.82, "high"), # ~세요
+    (f"[{_KO_FIN_S}]세요", MemoryType.CONTEXT, 0.80, "high"),    # ~었세요
+)
+_KO_STATEMENT = (
+    (f"[{_KO_FIN_SS}]다", MemoryType.FACT, 0.74, "stable"),      # 있었다/먹었다/했다 (ㅆ)
+    (f"[{_KO_FIN_BS}]다", MemoryType.FACT, 0.78, "stable"),      # 없다/값다 (ㅄ)
+    (f"[{_KO_FIN_NJ}]다", MemoryType.FACT, 0.78, "stable"),      # 앉다/얹다 (ㄵ)
+    (f"[{_KO_FIN_N}]다", MemoryType.FACT, 0.70, "stable"),       # 간다/본다 (ㄴ)
+    (f"[{_KO_FIN_L}]다", MemoryType.FACT, 0.70, "stable"),       # 살다/알다 (ㄹ)
+    (f"[{_KO_FIN_H}]다", MemoryType.FACT, 0.70, "stable"),       # 좋다/많다 (ㅎ)
+    (f"[{_KO_FIN_B}]다", MemoryType.FACT, 0.72, "stable"),       # 쉽다/밉다 (ㅂ)
+    (f"[{_KO_FIN_M}]니다", MemoryType.FACT, 0.76, "stable"),     # 남니다/감니다 (ㅁ+니다)
+    (f"[{_KO_FIN_B}]니다", MemoryType.FACT, 0.80, "stable"),     # 합니다/있습니다 (ㅂ+니다)
+    (f"[{_KO_FIN_NG}]니다", MemoryType.FACT, 0.72, "stable"),    # 공입니다 (ㅇ+니다)
+    (r"[\uac00-\ud7af]+(이다|ㄴ다)[\s.,!?~]*$", MemoryType.FACT, 0.68, "stable"),  # 사실이다/간다
+)
+_KO_DEFAULT = (
+    (r"[\uac00-\ud7af]+[\s.,!?~]*$", MemoryType.CONTEXT, 0.30, "high"),
+    (r"[\uac00-\ud7af]+(?:어|아|지|죠|네요|군요|야|이야)[\s.,!?~]*$", MemoryType.CONTEXT, 0.55, "high"),
+)
+
+# Merge into the main pattern table (after English patterns).
+_KO_PATTERNS: List[Tuple[str, MemoryType, float, str]] = (
+    _KO_QUESTION + _KO_REQUEST + _KO_STATEMENT + _KO_DEFAULT
+)
+TYPE_PATTERNS: List[Tuple[str, MemoryType, float, str]] = (
+    _EN_PATTERNS + list(_KO_PATTERNS)
+)
+
+'''
+
+SMOKE_KO = [
+    ("좋아 진행해줘", "context"), ("없다", "fact"), ("앉다", "fact"),
+    ("먹었다", "fact"), ("맞는지", "context"), ("할까", "context"),
+    ("합니다", "fact"), ("있습니다", "fact"), ("그래", "context"),
+]
+SMOKE_EN = [
+    "The API endpoint is at https://api.example.com/v2",
+    "I prefer dark mode for all my applications",
+    "Always validate user input before processing",
+]
+
+
+def find_target() -> Path:
+    """Hercules 설치 venv에서 typed_memory.py 위치 탐색."""
+    cands = list(Path.home().glob(
+        "AppData/Local/hermes/installs/*/environments/*/venv/Lib/site-packages/"
+        "mnemosyne/core/typed_memory.py"))
+    if cands:
+        return cands[0]
+    raise FileNotFoundError("typed_memory.py를 찾을 수 없습니다. --target으로 지정하세요.")
+
+
+def is_applied(path: Path) -> bool:
+    return MARKER in path.read_text(encoding="utf-8")
+
+
+def apply_patch(path: Path) -> bool:
+    text = path.read_text(encoding="utf-8")
+    if MARKER in text:
+        print(f"[skip] 이미 적용됨: {path}")
+        return False
+
+    # CONFIDENCE_BOOSTERS 앞에 삽입
+    anchor = "CONFIDENCE_BOOSTERS: Dict[MemoryType, List[str]] = {"
+    if anchor not in text:
+        raise RuntimeError(f"앵커({anchor!r})를 찾을 수 없음 — 파일 구조가 바뀌었을 수 있음")
+
+    # 1) 원본 영어 패턴 리스트 이름을 _EN_PATTERNS로 변경 (KO 병합이 참조)
+    #    원본 형태: "TYPE_PATTERNS: List[Tuple[str, MemoryType, float, str]] = ["
+    en_decl = "TYPE_PATTERNS: List[Tuple[str, MemoryType, float, str]] = ["
+    if en_decl not in text:
+        raise RuntimeError(f"영어 패턴 선언({en_decl!r})을 찾을 수 없음")
+    text = text.replace(en_decl, "_EN_PATTERNS: List[Tuple[str, MemoryType, float, str]] = [", 1)
+
+    # 2) KO 블록 삽입 + TYPE_PATTERNS 병합 (블록 자체에 병합 포함)
+    text = text.replace(anchor, KOREAN_BLOCK + "\n" + anchor, 1)
+
+    # 백업 후 기록
+    bak = path.with_suffix(path.suffix + BACKUP_SUFFIX)
+    shutil.copy2(path, bak)
+    path.write_text(text, encoding="utf-8")
+    print(f"[ok] 패치 적용: {path}\n     백업: {bak}")
+    return True
+
+
+def verify(path: Path) -> bool:
+    import importlib.util
+
+    # 파일을 모듈로 직접 로드 (설치된 패키지가 아니라 패치 대상 파일 검증)
+    spec = importlib.util.spec_from_file_location("_tm_verify", path)
+    tm = importlib.util.module_from_spec(spec)
+    # 동일 디렉토리의 mnemosyne 패키지가 필요할 수 있지만 typed_memory는
+    # re/dataclass/enum 외 의존이 없으므로 단독 로드 가능
+    spec.loader.exec_module(tm)
+
+    ok = True
+    for s, exp in SMOKE_KO:
+        got = tm.classify_memory(s).memory_type.value
+        if got != exp:
+            print(f"  [FAIL] {s!r}: 기대 {exp}, 실제 {got}")
+            ok = False
+    for s in SMOKE_EN:
+        got = tm.classify_memory(s).memory_type.value
+        if got == "unknown":
+            print(f"  [FAIL] {s!r}: unknown")
+            ok = False
+    if ok:
+        print("[ok] 검증 통과 (한국어/영어 스모크)")
+    else:
+        print("[FAIL] 검증 실패 — 백업에서 복원하세요:", BACKUP_SUFFIX)
+    return ok
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--target", help="typed_memory.py 경로 (기본: Hermes 설치 자동 탐색)")
+    ap.add_argument("--verify-only", action="store_true")
+    args = ap.parse_args()
+
+    target = Path(args.target) if args.target else find_target()
+    if args.verify_only:
+        sys.exit(0 if verify(target) else 1)
+
+    if is_applied(target):
+        print(f"[info] 이미 적용됨 → 검증만 실행: {target}")
+        sys.exit(0 if verify(target) else 1)
+
+    apply_patch(target)
+    sys.exit(0 if verify(target) else 1)
+
+
+if __name__ == "__main__":
+    main()

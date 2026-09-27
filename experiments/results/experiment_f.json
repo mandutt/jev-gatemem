@@ -1,0 +1,59 @@
+{
+  "query": "웹 페이지를 추출할 때 stealth 브라우저가 필요한 경우는 언제야? 로그인이나 캡차 같은 경우인가?",
+  "qid": "q101",
+  "pool_size": 5,
+  "modes": {
+    "healthy_control": {
+      "ok": true,
+      "raised": null,
+      "j1_lift_applied": true,
+      "note": "order change is idx-dependent (idx=0 keeps order); look for 'Jev choice' line with idx populated",
+      "latency_s": 0.298
+    },
+    "timeout": {
+      "ok": true,
+      "raised": null,
+      "order_preserved": true,
+      "calls": 1,
+      "latency_s": 0.0
+    },
+    "http_5xx": {
+      "ok": true,
+      "raised": null,
+      "order_preserved": true,
+      "calls": 1,
+      "latency_s": 0.0
+    },
+    "network_disconnect": {
+      "ok": true,
+      "raised": null,
+      "order_preserved": true,
+      "calls": 1,
+      "latency_s": 0.0
+    },
+    "auth_error_live": {
+      "ok": true,
+      "raised": null,
+      "order_preserved": true,
+      "latency_s": 0.152,
+      "note": "live call to api.typesafe.ai with invalid key — expect HTTP 401 logged as 'Jev choice HTTP 401'"
+    },
+    "jev_off": {
+      "ok": true,
+      "raised": null,
+      "order_preserved": true,
+      "latency_s": 0.0
+    }
+  },
+  "cross_mode": {
+    "fallback_modes": [
+      "timeout",
+      "http_5xx",
+      "network_disconnect",
+      "auth_error_live",
+      "jev_off"
+    ],
+    "all_match_pool_order": true,
+    "pass": true
+  }
+}

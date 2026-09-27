@@ -1,0 +1,428 @@
+[
+ {
+  "qid": "q101",
+  "query": "웹 페이지를 추출할 때 stealth 브라우저가 필요한 경우는 언제야? 로그인이나 캡차 같은 경우인가?",
+  "type": "factual",
+  "gold_ids": [
+   "09547ea49fc36991"
+  ]
+ },
+ {
+  "qid": "q102",
+  "query": "헤르메스에서 브라우저 도구를 쓰면 기본적으로 어떤 브라우저가 실행돼? camofox는 안 쓰는 거야?",
+  "type": "project",
+  "gold_ids": [
+   "1928d454e0ed168b"
+  ]
+ },
+ {
+  "qid": "q103",
+  "query": "웹 추출 백엔드는 지금 어떻게 설정되어 있어? API 키 없이도 되는 거야?",
+  "type": "factual",
+  "gold_ids": [
+   "0ea67a3b101917e5",
+   "9d4feaccfa1020b4"
+  ]
+ },
+ {
+  "qid": "q104",
+  "query": "Exa 키리스로 웹 추출하면 한글이 깨지는데 왜 그래?",
+  "type": "failure",
+  "gold_ids": [
+   "0ea67a3b101917e5",
+   "9d4feaccfa1020b4"
+  ]
+ },
+ {
+  "qid": "q105",
+  "query": "텔레그램 게이트웨이가 자꾸 죽는데 자동으로 복구되게 하려면 어떻게 해?",
+  "type": "project",
+  "gold_ids": [
+   "36f843b4b1886e39"
+  ]
+ },
+ {
+  "qid": "q106",
+  "query": "데스크톱 앱을 켜면 텔레그램 게이트웨이가 멈추는 문제가 있어. 원인이 뭐야?",
+  "type": "causal",
+  "gold_ids": [
+   "b5f5672a2446d4e8"
+  ]
+ },
+ {
+  "qid": "q107",
+  "query": "게이트웨이 워치독을 쓰면 수명이 어떻게 되는 거야? 상주 프로세스야?",
+  "type": "factual",
+  "gold_ids": [
+   "36f843b4b1886e39"
+  ]
+ },
+ {
+  "qid": "q108",
+  "query": "camelai-serial-proxy는 뭐 하는 프록시야? 어느 포트를 쓰지?",
+  "type": "factual",
+  "gold_ids": [
+   "5e8516d6f91b46dd"
+  ]
+ },
+ {
+  "qid": "q109",
+  "query": "재부팅 후 start_proxy.cmd를 실행해도 프록시가 안 뜨는데 왜 그럴까?",
+  "type": "failure",
+  "gold_ids": [
+   "ac6b11080109c3fe"
+  ]
+ },
+ {
+  "qid": "q110",
+  "query": "18080 프록시에 모델 목록을 설정할 때 왜 맵핑 형태로 유지해야 해?",
+  "type": "causal",
+  "gold_ids": [
+   "b2ed9f4dc0b1efea"
+  ]
+ },
+ {
+  "qid": "q111",
+  "query": "camelAI에서 특정 모델(예: gemini)을 고정해서 쓸 수 있어?",
+  "type": "project",
+  "gold_ids": [
+   "7de2c1dfef632694"
+  ]
+ },
+ {
+  "qid": "q112",
+  "query": "camelAI auto 라우팅은 어떤 기준으로 모델을 고르는 거야? 어려운 과제면 뭘로 가?",
+  "type": "causal",
+  "gold_ids": [
+   "e481f1a2bb8f7969",
+   "618362fc6d33e3c1"
+  ]
+ },
+ {
+  "qid": "q113",
+  "query": "deepseek-v4-flash로 도구 호출하면 가끔 JSON이 깨지는 문제가 있었잖아, 지금은 해결됐어?",
+  "type": "failure",
+  "gold_ids": [
+   "edf486fa0d3cd079"
+  ]
+ },
+ {
+  "qid": "q114",
+  "query": "18080 프록시에서 모델 스위치나 라우팅 표시 같은 기능이 추가됐다고 들었는데 확인해줘",
+  "type": "project",
+  "gold_ids": [
+   "e5bbd0063f1356f6"
+  ]
+ },
+ {
+  "qid": "q115",
+  "query": "camelAI의 reasoning effort 파라미터는 어떤 역할을 해? max로 하면 뭐가 달라져?",
+  "type": "factual",
+  "gold_ids": [
+   "098d90e014006142"
+  ]
+ },
+ {
+  "qid": "q116",
+  "query": "camelAI에서 deepseek는 왜 이렇게 느린 거야? 다른 모델보다 10배 느리다며?",
+  "type": "causal",
+  "gold_ids": [
+   "26efd95898ed8fcb"
+  ]
+ },
+ {
+  "qid": "q117",
+  "query": "camelAI에 입력 토큰이 많아지면 응답이 느려진다는 얘기가 있는데 사실이야?",
+  "type": "factual",
+  "gold_ids": [
+   "a112c8b5932fbc1f"
+  ]
+ },
+ {
+  "qid": "q118",
+  "query": "camelAI 라우팅이 프롬프트 크기에 따라 바뀐다는 실험 결과가 있었잖아, 결론이 뭐였어?",
+  "type": "temporal",
+  "gold_ids": [
+   "c66472eaa13fd3dc",
+   "618362fc6d33e3c1"
+  ]
+ },
+ {
+  "qid": "q119",
+  "query": "프록시 대시보드에서 프록시를 종료하는 버튼이 있어? 설정도 저장되나?",
+  "type": "project",
+  "gold_ids": [
+   "efb4e9a38f6ee270"
+  ]
+ },
+ {
+  "qid": "q120",
+  "query": "지금 헤르메스 메모리 provider는 뭐로 설정되어 있어?",
+  "type": "factual",
+  "gold_ids": [
+   "ed3a3442d3bcbb33"
+  ]
+ },
+ {
+  "qid": "q121",
+  "query": "코덱스 CLI에서도 Mnemosyne 메모리를 자동으로 쓰게 하려면 어떻게 설정해야 해?",
+  "type": "project",
+  "gold_ids": [
+   "90b4edf612db6b2c"
+  ]
+ },
+ {
+  "qid": "q122",
+  "query": "opencode에서도 Mnemosyne에 자동 기록되게 하는 플러그인 있어?",
+  "type": "project",
+  "gold_ids": [
+   "e941022a685c2be1"
+  ]
+ },
+ {
+  "qid": "q123",
+  "query": "supermemory는 왜 사용을 중단했어? 어떤 문제가 있었지?",
+  "type": "causal",
+  "gold_ids": [
+   "132fb95d922f9bc5"
+  ]
+ },
+ {
+  "qid": "q124",
+  "query": "verifier-pilot 연구에서 best-of-5에 selective recovery를 더한 방식은 효과가 있었어?",
+  "type": "temporal",
+  "gold_ids": [
+   "2f199c68ab243ff8"
+  ]
+ },
+ {
+  "qid": "q125",
+  "query": "verifier-pilot 프로젝트의 진짜 목표가 뭐야? 코딩 품질 개선 아니야?",
+  "type": "factual",
+  "gold_ids": [
+   "f2421b7b489858bb"
+  ]
+ },
+ {
+  "qid": "q126",
+  "query": "StateM은 어디에 설치되어 있고 어떤 커밋을 쓰고 있어?",
+  "type": "factual",
+  "gold_ids": [
+   "c6fe48b1f7d67397",
+   "766fd80090690684"
+  ]
+ },
+ {
+  "qid": "q127",
+  "query": "StateM의 managed controller에서 타임아웃이 나면 어떻게 처리해?",
+  "type": "project",
+  "gold_ids": [
+   "19bed46211f6ffcb",
+   "3581b9a33901eba4"
+  ]
+ },
+ {
+  "qid": "q128",
+  "query": "statem 미니A/B 실험에서 C 방식이 A보다 좋았어?",
+  "type": "temporal",
+  "gold_ids": [
+   "0a13cf1002bffc4c",
+   "19bed46211f6ffcb",
+   "3581b9a33901eba4"
+  ]
+ },
+ {
+  "qid": "q129",
+  "query": "StateM을 쓸 때 workspace 경로를 지시문에 포함해야 하는 이유가 뭐야?",
+  "type": "causal",
+  "gold_ids": [
+   "c6fe48b1f7d67397"
+  ]
+ },
+ {
+  "qid": "q130",
+  "query": "pi 코딩 에이전트가 사용하는 모델 프록시는 어떻게 등록되어 있어?",
+  "type": "factual",
+  "gold_ids": [
+   "f9d466b9cdc3cd88"
+  ]
+ },
+ {
+  "qid": "q131",
+  "query": "pi에서 18080 camelai 프록시를 쓸 때 apiKey는 어떻게 해? 검증 안 하는 거야?",
+  "type": "project",
+  "gold_ids": [
+   "f9d466b9cdc3cd88"
+  ]
+ },
+ {
+  "qid": "q132",
+  "query": "hermes 업데이트 후 cua-driver refresh가 계속 멈추는데 원인이 뭐야?",
+  "type": "failure",
+  "gold_ids": [
+   "c69c459c7c67c2d1"
+  ]
+ },
+ {
+  "qid": "q133",
+  "query": "헤르메스 업데이트가 중단되면 venv가 손상될 수 있다며? 복구는 어떻게 해?",
+  "type": "failure",
+  "gold_ids": [
+   "dce5e8ceddf18db9"
+  ]
+ },
+ {
+  "qid": "q134",
+  "query": "헤르메스가 만든 스크립트는 어디에 저장해야 해? 홈 폴더 바로 아래는 안 되지?",
+  "type": "preference",
+  "gold_ids": [
+   "2ecef73164830638"
+  ]
+ },
+ {
+  "qid": "q135",
+  "query": "작업 스케줄러를 써도 되는 거야? 아니면 다른 방식으로 시작 프로그램을 관리해야 해?",
+  "type": "preference",
+  "gold_ids": [
+   "2ecef73164830638"
+  ]
+ },
+ {
+  "qid": "q136",
+  "query": "실험 결과를 판정할 때 어떤 원칙을 따라야 해? 추측하지 말고?",
+  "type": "preference",
+  "gold_ids": [
+   "c9e4828c93bdb0a0"
+  ]
+ },
+ {
+  "qid": "q137",
+  "query": "skill_manage로 스킬을 만들 때 본문은 어떤 파라미터로 넘겨야 해?",
+  "type": "failure",
+  "gold_ids": [
+   "e6b3887395a2ac45"
+  ]
+ },
+ {
+  "qid": "q138",
+  "query": "camelAI 라우팅 실험들에서 쓰인 호출 수가 어떻게 돼? 37호출이랑 92호출이 있던데",
+  "type": "temporal",
+  "gold_ids": [
+   "e481f1a2bb8f7969",
+   "618362fc6d33e3c1"
+  ]
+ },
+ {
+  "qid": "q139",
+  "query": "2026-08-26에 camelAI 모델별 스트리밍 속도를 실측했었다며? 결론이 뭐였어?",
+  "type": "temporal",
+  "gold_ids": [
+   "26efd95898ed8fcb"
+  ]
+ },
+ {
+  "qid": "q140",
+  "query": "camelAI effort 실험에서 deepseek는 effort 없을 때랑 max일 때 응답 구조가 어떻게 달라?",
+  "type": "temporal",
+  "gold_ids": [
+   "098d90e014006142"
+  ]
+ },
+ {
+  "qid": "q141",
+  "query": "cua-driver refresh 타임아웃 문제를 진단하는 명령이 뭐였지?",
+  "type": "temporal",
+  "gold_ids": [
+   "c69c459c7c67c2d1"
+  ]
+ },
+ {
+  "qid": "q142",
+  "query": "왜 헤르메스 데스크톱 serve 부팅이 게이트웨이를 죽이는 거야? 어느 커밋부터야?",
+  "type": "causal",
+  "gold_ids": [
+   "b5f5672a2446d4e8"
+  ]
+ },
+ {
+  "qid": "q143",
+  "query": "Exa 키리스 extract가 한글을 깨뜨리는 근본 원인이 뭐야?",
+  "type": "causal",
+  "gold_ids": [
+   "9d4feaccfa1020b4",
+   "0ea67a3b101917e5"
+  ]
+ },
+ {
+  "qid": "q144",
+  "query": "리뷰/감사 산출물을 만들 때 내가 원하는 형식이 뭐였지?",
+  "type": "preference",
+  "gold_ids": [
+   "a13019e1f438960c"
+  ]
+ },
+ {
+  "qid": "q145",
+  "query": "커밋 거버넌스 규칙이 뭐야? 리뷰만 하는 턴에는 커밋하면 안 되지?",
+  "type": "preference",
+  "gold_ids": [
+   "9150f1246613b092"
+  ]
+ },
+ {
+  "qid": "q146",
+  "query": "헤르메스에서 18080 프로바이더를 쓰려면 config.yaml models를 어떻게 둬야 해?",
+  "type": "project",
+  "gold_ids": [
+   "b2ed9f4dc0b1efea"
+  ]
+ },
+ {
+  "qid": "q147",
+  "query": "codex에서 Mnemosyne hooks를 다시 활성화하려면 어떻게 해?",
+  "type": "project",
+  "gold_ids": [
+   "90b4edf612db6b2c"
+  ]
+ },
+ {
+  "qid": "q148",
+  "query": "opencode Mnemosyne 플러그인이 수집하는 세션 이벤트는 뭐야?",
+  "type": "factual",
+  "gold_ids": [
+   "e941022a685c2be1"
+  ]
+ },
+ {
+  "qid": "q149",
+  "query": "게이트웨이 워치독의 Hermes_Gateway 태스크는 언제 게이트웨이를 시작해?",
+  "type": "factual",
+  "gold_ids": [
+   "36f843b4b1886e39"
+  ]
+ },
+ {
+  "qid": "q150",
+  "query": "camelAI auto 라우팅에서 이탈된 호출이 max_tokens를 다 태우면 본문이 0자가 될 수 있다며?",
+  "type": "failure",
+  "gold_ids": [
+   "e481f1a2bb8f7969"
+  ]
+ },
+ {
+  "qid": "q151",
+  "query": "18080 프록시에서 responses API로 effort를 넘기면 어떤 형식이어야 해?",
+  "type": "failure",
+  "gold_ids": [
+   "e5bbd0063f1356f6"
+  ]
+ },
+ {
+  "qid": "q152",
+  "query": "헤르메스에서 skill_manage로 스킬 생성이 계속 실패하는데 file_content로 보내면 안 되나?",
+  "type": "failure",
+  "gold_ids": [
+   "e6b3887395a2ac45"
+  ]
+ }
+]

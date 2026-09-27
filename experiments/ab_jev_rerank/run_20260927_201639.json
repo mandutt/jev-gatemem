@@ -1,0 +1,234 @@
+{
+  "generated_at": "2026-09-27T20:16:39+0900",
+  "n_queries": 12,
+  "pairs": [
+    {
+      "idx": 0,
+      "query": "jev_rerank 실사용 a/b 평가는 어떻게 할 수 있어?",
+      "disagree": false,
+      "off_ids": [
+        "801a615849e0450d"
+      ],
+      "on_ids": [
+        "801a615849e0450d"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt",
+      "on_block": "## Mnemosyne Context\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt",
+      "jev_choice": "801a615849e0"
+    },
+    {
+      "idx": 1,
+      "query": "gateway.py retrieve API를 완성시키자",
+      "disagree": true,
+      "off_ids": [
+        "90b4edf612db6b2c",
+        "b5f5672a2446d4e8",
+        "c925fb27f99d9dc3",
+        "b96546d8d25baad6",
+        "ecdd9e896aa7f3e4"
+      ],
+      "on_ids": [
+        "b5f5672a2446d4e8",
+        "90b4edf612db6b2c",
+        "c925fb27f99d9dc3",
+        "b96546d8d25baad6",
+        "ecdd9e896aa7f3e4"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='cod\n  [2026-08-14 06:21:26] (importance 0.60, source insight) Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 \"reap orphan gateways at startup\") 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKT\n  [2026-08-17 03:58:30] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-15 16:38:34] (importance 0.60, source codex) [codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 cod\n  [2026-08-15 16:36:37] (importance 0.60, source codex) [codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 cod",
+      "on_block": "## Mnemosyne Context\n  [2026-08-14 06:21:26] (importance 0.60, source insight) Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 \"reap orphan gateways at startup\") 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKT\n  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='cod\n  [2026-08-17 03:58:30] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-15 16:38:34] (importance 0.60, source codex) [codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 cod\n  [2026-08-15 16:36:37] (importance 0.60, source codex) [codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 cod",
+      "jev_choice": "b5f5672a2446"
+    },
+    {
+      "idx": 2,
+      "query": "그렇다면 당초 계획에서 어디까지 구현된 거야 지금은?",
+      "disagree": false,
+      "off_ids": [
+        "148e6cf739219675"
+      ],
+      "on_ids": [
+        "148e6cf739219675"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-08-16 13:07:27] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+      "on_block": "## Mnemosyne Context\n  [2026-08-16 13:07:27] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+      "jev_choice": "148e6cf73921"
+    },
+    {
+      "idx": 3,
+      "query": "J1 rerank 런타임 재검증: 이 세션 prefetch가 J1으로 돌았는지 agent.log의 'Jev choice' 라인으로 확인해줘. 지금 턴에 주입된 ## Mnemosyne Context 블록 있으면 첫 항목 100자 요약",
+      "disagree": true,
+      "off_ids": [
+        "90b4edf612db6b2c",
+        "801a615849e0450d",
+        "a40f6cdbdd22bf5d",
+        "424783789ebd4e86",
+        "1eb523a94992fb8c"
+      ],
+      "on_ids": [
+        "7de2c1dfef632694",
+        "90b4edf612db6b2c",
+        "801a615849e0450d",
+        "a40f6cdbdd22bf5d",
+        "424783789ebd4e86"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='cod\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt\n  [2026-08-17 08:39:45] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-17 08:15:32] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-14 17:14:49] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+      "on_block": "## Mnemosyne Context\n  [2026-08-25 04:49:42] (importance 0.60, source tool) camelAI 내부모델 고정 재검증(2026-08-26): 별칭(gemini-3.7-flash/google/gemini/gemini/gpt-5.6-luna/muse-spark) 전부 upstream 404(model\n  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='cod\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt\n  [2026-08-17 08:39:45] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-17 08:15:32] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+      "jev_choice": "7de2c1dfef63"
+    },
+    {
+      "idx": 4,
+      "query": "J1 rerank 검증 쿼리",
+      "disagree": false,
+      "off_ids": [
+        "5a3ebc06a87940da"
+      ],
+      "on_ids": [
+        "5a3ebc06a87940da"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-07-31 05:44:05] (importance 0.90, source preference) 설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/AP",
+      "on_block": "## Mnemosyne Context\n  [2026-07-31 05:44:05] (importance 0.90, source preference) 설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/AP",
+      "jev_choice": "5a3ebc06a879"
+    },
+    {
+      "idx": 5,
+      "query": "지금 주입된 '## Mnemosyne Context' 블록의 첫 항목을 120자로 요약해줘. 블록이 없으면 '블록 없음'.",
+      "disagree": false,
+      "off_ids": [
+        "e941022a685c2be1",
+        "90b4edf612db6b2c",
+        "801a615849e0450d",
+        "2ca92dd831e60e95",
+        "85ccad5197964577"
+      ],
+      "on_ids": [
+        "e941022a685c2be1",
+        "90b4edf612db6b2c",
+        "801a615849e0450d",
+        "2ca92dd831e60e95",
+        "85ccad5197964577"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='cod\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt\n  [2026-08-15 03:51:55] (importance 0.60, source codex) [codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목\n  [2026-08-17 05:57:51] (importance 0.60, source codex) [codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+      "on_block": "## Mnemosyne Context\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='cod\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt\n  [2026-08-15 03:51:55] (importance 0.60, source codex) [codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목\n  [2026-08-17 05:57:51] (importance 0.60, source codex) [codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+      "jev_choice": "e941022a685c"
+    },
+    {
+      "idx": 6,
+      "query": "인쇄: env TYPESAFE 유무",
+      "disagree": false,
+      "off_ids": [],
+      "on_ids": [],
+      "off_block": "## Mnemosyne Context",
+      "on_block": "## Mnemosyne Context",
+      "jev_choice": null
+    },
+    {
+      "idx": 7,
+      "query": "너의 memory prefetch가 지금 J1(Jev rerank)으로 동작하는지 알려줘. 지금 턴에 주입된 '## Mnemosyne Context' 블록이 있다면 그 안의 첫 번째 항목 내용을 120자로 요약해줘. 블록이 없으면 '블록 없음'이라고만 답해.",
+      "disagree": false,
+      "off_ids": [
+        "e941022a685c2be1",
+        "801a615849e0450d",
+        "ef3d9670463aea79"
+      ],
+      "on_ids": [
+        "e941022a685c2be1",
+        "801a615849e0450d",
+        "ef3d9670463aea79"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt\n  [2026-08-17 10:38:11] (importance 0.60, source codex) [codex session] task: 최근 코덱스앱이 지나치게 PC 성능을 저하시키면서 마우스 포인터까지 버벅거리게 만들고 있어. 뭐가 원인인지 조사해서 알려줘. 실제로 조치를 취하지는 말고.\nproject: C:",
+      "on_block": "## Mnemosyne Context\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt\n  [2026-08-17 10:38:11] (importance 0.60, source codex) [codex session] task: 최근 코덱스앱이 지나치게 PC 성능을 저하시키면서 마우스 포인터까지 버벅거리게 만들고 있어. 뭐가 원인인지 조사해서 알려줘. 실제로 조치를 취하지는 말고.\nproject: C:",
+      "jev_choice": "e941022a685c"
+    },
+    {
+      "idx": 8,
+      "query": "system prompt에서 지금 '## Mnemosyne Context' 블록이 보이니? 있다면 상위 3개 항목만 말해줘. 없으면 '블록 없음'이라고만 답해.",
+      "disagree": false,
+      "off_ids": [
+        "90b4edf612db6b2c",
+        "801a615849e0450d",
+        "980ee3072e9333f4",
+        "2d376eca076db5a3"
+      ],
+      "on_ids": [
+        "90b4edf612db6b2c",
+        "801a615849e0450d",
+        "980ee3072e9333f4",
+        "2d376eca076db5a3"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='cod\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt\n  [2026-08-15 10:37:11] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-16 14:10:57] (importance 0.60, source codex) [codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 34\noutcome:",
+      "on_block": "## Mnemosyne Context\n  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='cod\n  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-17\\gus\nt\n  [2026-08-15 10:37:11] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-16 14:10:57] (importance 0.60, source codex) [codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 34\noutcome:",
+      "jev_choice": "90b4edf612db"
+    },
+    {
+      "idx": 9,
+      "query": "이 세션의 memory prefetch가 J1(Jev rerank)으로 동작했는지 실측으로 확인해줘.",
+      "disagree": false,
+      "off_ids": [
+        "e941022a685c2be1",
+        "725f3f0f7780ee0e",
+        "8e69435d7fc24f1a",
+        "92f416d0daa22e7e",
+        "8f2597cb0670e4bc"
+      ],
+      "on_ids": [
+        "e941022a685c2be1",
+        "725f3f0f7780ee0e",
+        "8e69435d7fc24f1a",
+        "92f416d0daa22e7e",
+        "8f2597cb0670e4bc"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-16 10:25:13] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-\n  [2026-08-16 10:42:48] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-\n  [2026-08-16 05:43:45] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-\n  [2026-08-16 10:31:13] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+      "on_block": "## Mnemosyne Context\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-16 10:25:13] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-\n  [2026-08-16 10:42:48] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-\n  [2026-08-16 05:43:45] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-\n  [2026-08-16 10:31:13] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+      "jev_choice": "e941022a685c"
+    },
+    {
+      "idx": 10,
+      "query": "그렇다면 데스크톱 재시작 후 새 세션에서 어떤 명령을 내려야 할까?",
+      "disagree": true,
+      "off_ids": [
+        "e941022a685c2be1",
+        "36f843b4b1886e39",
+        "b5f5672a2446d4e8",
+        "f9d466b9cdc3cd88",
+        "dc70778edea6c04f"
+      ],
+      "on_ids": [
+        "36f843b4b1886e39",
+        "e941022a685c2be1",
+        "b5f5672a2446d4e8",
+        "f9d466b9cdc3cd88",
+        "dc70778edea6c04f"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-14 08:25:56] (importance 0.60, source user) Windows Hermes 데스크톱용 게이트웨이 워치독: C:\\Users\\mandu\\hermes-made\\hermes-gateway-watchdog\\ (Hermes_With_Watchdog.cmd 런처 + watch\n  [2026-08-14 06:21:26] (importance 0.60, source insight) Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 \"reap orphan gateways at startup\") 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKT\n  [2026-08-22 02:28:13] (importance 0.60, source fact) pi coding agent 0.84.2 설치(npm global). ~/.pi/agent/models.json에 combo(127.0.0.1:20128, 40+ 모델)·camelai(127.0.0.1:18080, \n  [2026-08-17 04:48:08] (importance 0.60, source codex) [codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+      "on_block": "## Mnemosyne Context\n  [2026-08-14 08:25:56] (importance 0.60, source user) Windows Hermes 데스크톱용 게이트웨이 워치독: C:\\Users\\mandu\\hermes-made\\hermes-gateway-watchdog\\ (Hermes_With_Watchdog.cmd 런처 + watch\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-14 06:21:26] (importance 0.60, source insight) Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 \"reap orphan gateways at startup\") 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKT\n  [2026-08-22 02:28:13] (importance 0.60, source fact) pi coding agent 0.84.2 설치(npm global). ~/.pi/agent/models.json에 combo(127.0.0.1:20128, 40+ 모델)·camelai(127.0.0.1:18080, \n  [2026-08-17 04:48:08] (importance 0.60, source codex) [codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+      "jev_choice": "36f843b4b188"
+    },
+    {
+      "idx": 11,
+      "query": "memory prefetch 실사용 검증용 쿼리: Jev rerank 파이프라인이 이 쿼리에 대해 동작하는지 확인해줘. Hermes memory provider plugin 검증 테스트",
+      "disagree": true,
+      "off_ids": [
+        "2ecef73164830638",
+        "e941022a685c2be1",
+        "6b3a695a8a6ad0de",
+        "242a4f40cf9169af",
+        "36f843b4b1886e39"
+      ],
+      "on_ids": [
+        "b2ed9f4dc0b1efea",
+        "2ecef73164830638",
+        "e941022a685c2be1",
+        "6b3a695a8a6ad0de",
+        "242a4f40cf9169af"
+      ],
+      "off_block": "## Mnemosyne Context\n  [2026-07-31 05:44:05] (importance 0.90, source preference) 사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-15 13:17:46] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-17 03:18:08] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-14 08:25:56] (importance 0.60, source user) Windows Hermes 데스크톱용 게이트웨이 워치독: C:\\Users\\mandu\\hermes-made\\hermes-gateway-watchdog\\ (Hermes_With_Watchdog.cmd 런처 + watch",
+      "on_block": "## Mnemosyne Context\n  [2026-08-25 05:52:46] (importance 0.60, source tool) Hermes 18080 프로바이더 설정 구조(2026-08-26): $LOCALAPPDATA/hermes/config.yaml custom_providers[4] = Local (127.0.0.1:18080). mo\n  [2026-07-31 05:44:05] (importance 0.90, source preference) 사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프\n  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco\n  [2026-08-15 13:17:46] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr\n  [2026-08-17 03:18:08] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+      "jev_choice": "b2ed9f4dc0b1"
+    }
+  ],
+  "stats": {
+    "disagree_count": 4,
+    "disagree_rate": 0.3333333333333333,
+    "avg_off_n": 6.5,
+    "avg_on_n": 6.5
+  }
+}

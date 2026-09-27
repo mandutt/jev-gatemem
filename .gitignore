@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 로컬 DB 스냅샷/스크래치 (재생성 가능 + 개인 메모리 데이터)
+data/snapshots/
+data/state_scratch.db
+data/*.db
+
+# Hermes/런타임 관련
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# 실험 임시 산출물 (재생성 가능)
+experiments/tmp/

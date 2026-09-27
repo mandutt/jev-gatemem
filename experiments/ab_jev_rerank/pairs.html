@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+    <html lang="ko"><head><meta charset="utf-8">
+    <title>JEV_RERANK A/B — 블라인드 비교</title>
+    <style>
+      body { font-family: system-ui; margin: 24px; background: #fafafa; color: #222; }
+      h1 { font-size: 20px; }
+      .sub { color: #666; font-size: 13px; margin-bottom: 16px; }
+      .card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-bottom: 16px; }
+      .card.disagree { border-color: #e8a13a; }
+      .qh { font-weight: 600; margin-bottom: 8px; }
+      .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 4px; margin-right: 6px; background: #eee; }
+      .tag.disagree { background: #fde9d2; color: #a05a00; }
+      .cols { display: flex; gap: 12px; }
+      .blk { flex: 1; }
+      .lbl { font-size: 12px; font-weight: 700; color: #555; margin-bottom: 4px; }
+      pre { background: #f5f5f5; border: 1px solid #eee; padding: 8px; font-size: 11px; white-space: pre-wrap; word-break: break-all; min-height: 60px; }
+      .judge { margin-top: 8px; }
+      .jbtn { font-size: 12px; padding: 4px 10px; margin-right: 6px; border: 1px solid #ccc; border-radius: 4px; background: #fff; cursor: pointer; }
+      .jbtn.sel { background: #cfe8ff; border-color: #4a9; }
+      .note { font-size: 12px; color: #666; margin-left: 8px; }
+      #summary { margin-top: 20px; padding: 12px; background: #eef; border-radius: 8px; font-size: 13px; }
+    </style></head><body>
+    <h1>JEV_RERANK 실사용 A/B — 블라인드 비교</h1>
+    <div class="sub">각 카드: 같은 쿼리에 대한 OFF(베이스)와 ON(J1) 블록을 랜덤 순서로 표시. A/B 라벨은 무작위. 판정 후 저장 버튼을 누르세요.</div>
+    
+<div class="card same" data-idx="0" data-query="jev_rerank 실사용 a/b 평가는 어떻게 할 수 있어?">
+  <div class="qh"><span class="tag">same</span> jev_rerank 실사용 a/b 평가는 어떻게 할 수 있어?</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t</pre></div>
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card disagree" data-idx="1" data-query="gateway.py retrieve API를 완성시키자">
+  <div class="qh"><span class="tag">disagree</span> gateway.py retrieve API를 완성시키자</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;cod
+  [2026-08-14 06:21:26] (importance 0.60, source insight) Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 &quot;reap orphan gateways at startup&quot;) 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKT
+  [2026-08-17 03:58:30] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-15 16:38:34] (importance 0.60, source codex) [codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 cod
+  [2026-08-15 16:36:37] (importance 0.60, source codex) [codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 cod</pre></div>
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-08-14 06:21:26] (importance 0.60, source insight) Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 &quot;reap orphan gateways at startup&quot;) 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKT
+  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;cod
+  [2026-08-17 03:58:30] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-15 16:38:34] (importance 0.60, source codex) [codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 cod
+  [2026-08-15 16:36:37] (importance 0.60, source codex) [codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 cod</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card same" data-idx="2" data-query="그렇다면 당초 계획에서 어디까지 구현된 거야 지금은?">
+  <div class="qh"><span class="tag">same</span> 그렇다면 당초 계획에서 어디까지 구현된 거야 지금은?</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-08-16 13:07:27] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr</pre></div>
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-08-16 13:07:27] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card disagree" data-idx="3" data-query="J1 rerank 런타임 재검증: 이 세션 prefetch가 J1으로 돌았는지 agent.log의 &#x27;Jev choice&#x27; 라인으로 확인해줘. 지금 턴에 주입된 ## Mnemosyne Context 블록 있으면 첫 항목 100자 요약">
+  <div class="qh"><span class="tag">disagree</span> J1 rerank 런타임 재검증: 이 세션 prefetch가 J1으로 돌았는지 agent.log의 &#x27;Jev choice&#x27; 라인으로 확인해줘. 지금 턴에 주입된 ## Mnemosyne Context 블록 있으면 첫 항목 100자 요약</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;cod
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t
+  [2026-08-17 08:39:45] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-17 08:15:32] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-14 17:14:49] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr</pre></div>
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-08-25 04:49:42] (importance 0.60, source tool) camelAI 내부모델 고정 재검증(2026-08-26): 별칭(gemini-3.7-flash/google/gemini/gemini/gpt-5.6-luna/muse-spark) 전부 upstream 404(model
+  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;cod
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t
+  [2026-08-17 08:39:45] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-17 08:15:32] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card same" data-idx="4" data-query="J1 rerank 검증 쿼리">
+  <div class="qh"><span class="tag">same</span> J1 rerank 검증 쿼리</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-07-31 05:44:05] (importance 0.90, source preference) 설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/AP</pre></div>
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-07-31 05:44:05] (importance 0.90, source preference) 설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/AP</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card same" data-idx="5" data-query="지금 주입된 &#x27;## Mnemosyne Context&#x27; 블록의 첫 항목을 120자로 요약해줘. 블록이 없으면 &#x27;블록 없음&#x27;.">
+  <div class="qh"><span class="tag">same</span> 지금 주입된 &#x27;## Mnemosyne Context&#x27; 블록의 첫 항목을 120자로 요약해줘. 블록이 없으면 &#x27;블록 없음&#x27;.</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;cod
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t
+  [2026-08-15 03:51:55] (importance 0.60, source codex) [codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목
+  [2026-08-17 05:57:51] (importance 0.60, source codex) [codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해
+project: C:\Users\mandu\Documents\opencode\testproject
+turns</pre></div>
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;cod
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t
+  [2026-08-15 03:51:55] (importance 0.60, source codex) [codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목
+  [2026-08-17 05:57:51] (importance 0.60, source codex) [codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해
+project: C:\Users\mandu\Documents\opencode\testproject
+turns</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card same" data-idx="6" data-query="인쇄: env TYPESAFE 유무">
+  <div class="qh"><span class="tag">same</span> 인쇄: env TYPESAFE 유무</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context</pre></div>
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card same" data-idx="7" data-query="너의 memory prefetch가 지금 J1(Jev rerank)으로 동작하는지 알려줘. 지금 턴에 주입된 &#x27;## Mnemosyne Context&#x27; 블록이 있다면 그 안의 첫 번째 항목 내용을 120자로 요약해줘. 블록이 없으면 &#x27;블록 없음&#x27;이라고만 답해.">
+  <div class="qh"><span class="tag">same</span> 너의 memory prefetch가 지금 J1(Jev rerank)으로 동작하는지 알려줘. 지금 턴에 주입된 &#x27;## Mnemosyne Context&#x27; 블록이 있다면 그 안의 첫 번째 항목 내용을 120자로 요약해줘. 블록이 없으면 &#x27;블록 없음&#x27;이라고만 답해.</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t
+  [2026-08-17 10:38:11] (importance 0.60, source codex) [codex session] task: 최근 코덱스앱이 지나치게 PC 성능을 저하시키면서 마우스 포인터까지 버벅거리게 만들고 있어. 뭐가 원인인지 조사해서 알려줘. 실제로 조치를 취하지는 말고.
+project: C:</pre></div>
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t
+  [2026-08-17 10:38:11] (importance 0.60, source codex) [codex session] task: 최근 코덱스앱이 지나치게 PC 성능을 저하시키면서 마우스 포인터까지 버벅거리게 만들고 있어. 뭐가 원인인지 조사해서 알려줘. 실제로 조치를 취하지는 말고.
+project: C:</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card same" data-idx="8" data-query="system prompt에서 지금 &#x27;## Mnemosyne Context&#x27; 블록이 보이니? 있다면 상위 3개 항목만 말해줘. 없으면 &#x27;블록 없음&#x27;이라고만 답해.">
+  <div class="qh"><span class="tag">same</span> system prompt에서 지금 &#x27;## Mnemosyne Context&#x27; 블록이 보이니? 있다면 상위 3개 항목만 말해줘. 없으면 &#x27;블록 없음&#x27;이라고만 답해.</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;cod
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t
+  [2026-08-15 10:37:11] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-16 14:10:57] (importance 0.60, source codex) [codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 34
+outcome:</pre></div>
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-08-07 12:42:37] (importance 0.75, source task) Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;cod
+  [2026-08-17 14:42:48] (importance 0.60, source codex) [codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+t
+  [2026-08-15 10:37:11] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-16 14:10:57] (importance 0.60, source codex) [codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 34
+outcome:</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card same" data-idx="9" data-query="이 세션의 memory prefetch가 J1(Jev rerank)으로 동작했는지 실측으로 확인해줘.">
+  <div class="qh"><span class="tag">same</span> 이 세션의 memory prefetch가 J1(Jev rerank)으로 동작했는지 실측으로 확인해줘.</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-16 10:25:13] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등
+project: C:\Users\mandu\Documents\Codex\2026-08-
+  [2026-08-16 10:42:48] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등
+project: C:\Users\mandu\Documents\Codex\2026-08-
+  [2026-08-16 05:43:45] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등
+project: C:\Users\mandu\Documents\Codex\2026-08-
+  [2026-08-16 10:31:13] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등
+project: C:\Users\mandu\Documents\Codex\2026-08-</pre></div>
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-16 10:25:13] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등
+project: C:\Users\mandu\Documents\Codex\2026-08-
+  [2026-08-16 10:42:48] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등
+project: C:\Users\mandu\Documents\Codex\2026-08-
+  [2026-08-16 05:43:45] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등
+project: C:\Users\mandu\Documents\Codex\2026-08-
+  [2026-08-16 10:31:13] (importance 0.60, source codex) [codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등
+project: C:\Users\mandu\Documents\Codex\2026-08-</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card disagree" data-idx="10" data-query="그렇다면 데스크톱 재시작 후 새 세션에서 어떤 명령을 내려야 할까?">
+  <div class="qh"><span class="tag">disagree</span> 그렇다면 데스크톱 재시작 후 새 세션에서 어떤 명령을 내려야 할까?</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-08-14 08:25:56] (importance 0.60, source user) Windows Hermes 데스크톱용 게이트웨이 워치독: C:\Users\mandu\hermes-made\hermes-gateway-watchdog\ (Hermes_With_Watchdog.cmd 런처 + watch
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-14 06:21:26] (importance 0.60, source insight) Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 &quot;reap orphan gateways at startup&quot;) 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKT
+  [2026-08-22 02:28:13] (importance 0.60, source fact) pi coding agent 0.84.2 설치(npm global). ~/.pi/agent/models.json에 combo(127.0.0.1:20128, 40+ 모델)·camelai(127.0.0.1:18080, 
+  [2026-08-17 04:48:08] (importance 0.60, source codex) [codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해
+project: C:\Users\mandu\Documents\opencode\testproject
+turns</pre></div>
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-14 08:25:56] (importance 0.60, source user) Windows Hermes 데스크톱용 게이트웨이 워치독: C:\Users\mandu\hermes-made\hermes-gateway-watchdog\ (Hermes_With_Watchdog.cmd 런처 + watch
+  [2026-08-14 06:21:26] (importance 0.60, source insight) Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 &quot;reap orphan gateways at startup&quot;) 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKT
+  [2026-08-22 02:28:13] (importance 0.60, source fact) pi coding agent 0.84.2 설치(npm global). ~/.pi/agent/models.json에 combo(127.0.0.1:20128, 40+ 모델)·camelai(127.0.0.1:18080, 
+  [2026-08-17 04:48:08] (importance 0.60, source codex) [codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해
+project: C:\Users\mandu\Documents\opencode\testproject
+turns</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+<div class="card disagree" data-idx="11" data-query="memory prefetch 실사용 검증용 쿼리: Jev rerank 파이프라인이 이 쿼리에 대해 동작하는지 확인해줘. Hermes memory provider plugin 검증 테스트">
+  <div class="qh"><span class="tag">disagree</span> memory prefetch 실사용 검증용 쿼리: Jev rerank 파이프라인이 이 쿼리에 대해 동작하는지 확인해줘. Hermes memory provider plugin 검증 테스트</div>
+  <div class="cols">
+    <div class="blk"><div class="lbl">B</div><pre>## Mnemosyne Context
+  [2026-08-25 05:52:46] (importance 0.60, source tool) Hermes 18080 프로바이더 설정 구조(2026-08-26): $LOCALAPPDATA/hermes/config.yaml custom_providers[4] = Local (127.0.0.1:18080). mo
+  [2026-07-31 05:44:05] (importance 0.90, source preference) 사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-15 13:17:46] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-17 03:18:08] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr</pre></div>
+    <div class="blk"><div class="lbl">A</div><pre>## Mnemosyne Context
+  [2026-07-31 05:44:05] (importance 0.90, source preference) 사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프
+  [2026-07-31 10:20:51] (importance 0.80, source decision) opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/openco
+  [2026-08-15 13:17:46] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-17 03:18:08] (importance 0.60, source codex) [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testpr
+  [2026-08-14 08:25:56] (importance 0.60, source user) Windows Hermes 데스크톱용 게이트웨이 워치독: C:\Users\mandu\hermes-made\hermes-gateway-watchdog\ (Hermes_With_Watchdog.cmd 런처 + watch</pre></div>
+  </div>
+  <div class="judge">
+    <button class="jbtn" data-v="left">A 가 낫다</button>
+    <button class="jbtn" data-v="right">B 가 낫다</button>
+    <button class="jbtn" data-v="tie">비슷하다</button>
+    <button class="jbtn" data-v="none">둘 다 무의미</button>
+    <span class="note"></span>
+  </div>
+</div>
+    <div id="summary">판정 없음</div>
+    <script>
+    const JUDGE_KEY = 'jev_ab_judgments';
+    let judgments = {};
+    try { judgments = JSON.parse(localStorage.getItem(JUDGE_KEY) || '{}'); } catch(e) {}
+
+    document.querySelectorAll('.card').forEach(card => {
+      const idx = card.dataset.idx;
+      const saved = judgments[idx];
+      if (saved) {
+        card.querySelectorAll('.jbtn').forEach(b => {
+          if (b.dataset.v === saved) b.classList.add('sel');
+        });
+        card.querySelector('.note').textContent = '(저장됨)';
+      }
+      card.querySelectorAll('.jbtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          card.querySelectorAll('.jbtn').forEach(b => b.classList.remove('sel'));
+          btn.classList.add('sel');
+          judgments[idx] = btn.dataset.v;
+          localStorage.setItem(JUDGE_KEY, JSON.stringify(judgments));
+          card.querySelector('.note').textContent = '(저장됨)';
+          updateSummary();
+        });
+      });
+    });
+
+    function updateSummary() {
+      const total = document.querySelectorAll('.card').length;
+      const done = Object.keys(judgments).length;
+      const counts = {};
+      Object.values(judgments).forEach(v => counts[v] = (counts[v]||0) + 1);
+      document.getElementById('summary').textContent =
+        '판정 ' + done + '/' + total + ' — A승 ' + (counts['left']||0) + ' · B승 ' + (counts['right']||0) + ' · 비슷 ' + (counts['tie']||0) + ' · 무의미 ' + (counts['none']||0) + '  (브라우저 localStorage에 저장됨)';
+    }
+    updateSummary();
+    </script></body></html>
