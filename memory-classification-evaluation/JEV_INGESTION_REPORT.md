@@ -109,6 +109,24 @@ v5의 약점(commitment FN 17: 시간 명시 예약/계획을 NO_STORE/goal로, 
 - 58건(commitment/learning 오분류) 재분류: **34건 교정, 0건 퇴행**
 - **최종 파일: `JEV_ALL1975_V6.jsonl`** (전체 적용 — 영구)
 
+### 2.1f relationship/instruction 경계 개선 — 프롬프트 v7 (최종)
+
+v6의 약점(relationship FN 11: 관계 서술을 fact로, FP 8: 감정·의견을 relationship으로 / instruction FP 30: 명령형 어미만 보고 과분류)을 v7로 보강:
+- relationship = **정적인 사람 간 연결·소속·직업만** (감정·칭찬·애정은 preference/NO_STORE)
+- instruction = **반복 규칙·명시적 과제 지시만** (안내문·즉흥 조언·일회성 명령은 NO_STORE)
+
+| 지표 | v6 | **v7** |
+|---|---|---|
+| **정확도** | 0.8344 | **0.8451** |
+| relationship F1 | 0.424 | **0.690** |
+| instruction F1 | 0.562 | **0.734** |
+| fact F1 | 0.739 | **0.749** |
+| NO_STORE F1 | 0.913 | **0.919** |
+| store 결합 F1 | 0.840 | **0.849** (FP 179) |
+
+- 57건(relationship/instruction 오분류) 재분류: **21건 교정, 0건 퇴행**
+- **최종 파일: `JEV_ALL1975_V7.jsonl`** (전체 적용 — 영구)
+
 ### 2.2 should_store
 
 | 규칙 | acc | prec | rec | F1 | FP | FN |
