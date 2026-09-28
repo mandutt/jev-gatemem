@@ -127,6 +127,25 @@ v6의 약점(relationship FN 11: 관계 서술을 fact로, FP 8: 감정·의견�
 - 57건(relationship/instruction 오분류) 재분류: **21건 교정, 0건 퇴행**
 - **최종 파일: `JEV_ALL1975_V7.jsonl`** (전체 적용 — 영구)
 
+### 2.1g decision/goal/context 경계 개선 — 프롬프트 v8 (최종)
+
+v7의 약점(decision FN 5: "~을 사용하자"를 instruction으로, context FN 11: 현재 상태·완료 공지를 event/NO_STORE로)을 v8로 보강:
+- decision = **HOW에 대한 확정 선택** ("이 구조를 사용하자", "pytest로 작성하자") — 희망·바람은 goal/preference
+- goal = **바라는 결과·의도** (시간/장소 확정 없음)
+- context = **현재 진행 상태·방금 완료 상태** ("방금 리허설을 마쳤어요", "예약 완료됨")
+
+| 지표 | v7 | **v8** |
+|---|---|---|
+| **정확도** | 0.8451 | **0.8491** |
+| decision F1 | 0.594 | **0.700** |
+| context F1 | 0.574 | **0.630** |
+| preference F1 | 0.765 | **0.773** |
+| event F1 | 0.693 | **0.703** |
+| store 결합 F1 | 0.849 | **0.851** |
+
+- 94건(decision/goal/context 오분류) 재분류: **8건 교정, 0건 퇴행** (잔여 FP 41건은 gold 경계 철학 차이)
+- **최종 파일: `JEV_ALL1975_V8.jsonl`** (전체 적용 — 영구)
+
 ### 2.2 should_store
 
 | 규칙 | acc | prec | rec | F1 | FP | FN |
