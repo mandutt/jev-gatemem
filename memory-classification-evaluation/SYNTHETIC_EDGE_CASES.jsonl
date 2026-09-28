@@ -1,0 +1,85 @@
+{"id": "syn000", "category": "A", "utterance": "좋아 진행해줘.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "지시문 25번 핵심 예시"}
+{"id": "syn001", "category": "A", "utterance": "그걸로 해줘.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "일회성"}
+{"id": "syn002", "category": "A", "utterance": "다음 단계로 넘어가.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "일회성"}
+{"id": "syn003", "category": "A", "utterance": "이것도 해줘.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "일회성"}
+{"id": "syn004", "category": "A", "utterance": "그대로 적용해.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "일회성"}
+{"id": "syn005", "category": "A", "utterance": "확인해줘.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "일회성"}
+{"id": "syn006", "category": "A", "utterance": "계속 진행해.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "일회성"}
+{"id": "syn007", "category": "B", "utterance": "앞으로 항상 한국어로 답해줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "반복 규칙"}
+{"id": "syn008", "category": "B", "utterance": "코드는 가능한 한 간단하게 작성해줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "반복 규칙"}
+{"id": "syn009", "category": "B", "utterance": "이 프로젝트에서는 Mnemosyne 내부를 직접 수정하지 마.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "제약 규칙 ~하지마"}
+{"id": "syn010", "category": "B", "utterance": "앞으로 Windows PowerShell을 우선 사용해.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "도구 규칙"}
+{"id": "syn011", "category": "B", "utterance": "앞으로 표로 정리해줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "형식 규칙"}
+{"id": "syn012", "category": "B", "utterance": "앞으로 이 프로젝트의 테스트는 pytest로 작성해.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "기술 규칙"}
+{"id": "syn013", "category": "C", "utterance": "나는 표 형태로 정리하는 걸 선호해.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "선호 키워드 존재"}
+{"id": "syn014", "category": "C", "utterance": "복잡한 설명보다는 구체적인 예제가 좋다.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "좋다=선호"}
+{"id": "syn015", "category": "C", "utterance": "가능하면 Docker는 사용하지 않는 편이 좋다.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "편이 좋다=선호"}
+{"id": "syn016", "category": "C", "utterance": "표로 보는 게 편해.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "키워드 없음 선호"}
+{"id": "syn017", "category": "C", "utterance": "긴 답변은 별로 좋아하지 않아.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "부정 선호"}
+{"id": "syn018", "category": "C", "utterance": "되도록 간단한 방식을 사용하자.", "gold_type": "preference", "gold_should_store": true, "ambiguity": true, "note": "~하자지만 선호 의미"}
+{"id": "syn019", "category": "C", "utterance": "나는 YAML보다 JSON이 읽기 편해.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "기술 선호"}
+{"id": "syn020", "category": "C", "utterance": "나는 이런 구조를 좋아해.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "일반 선호"}
+{"id": "syn021", "category": "D", "utterance": "이제 PostgreSQL로 결정했어.", "gold_type": "decision", "gold_should_store": true, "ambiguity": false, "note": "확정"}
+{"id": "syn022", "category": "D", "utterance": "이 프로젝트는 Rust로 가기로 했어.", "gold_type": "decision", "gold_should_store": true, "ambiguity": false, "note": "확정"}
+{"id": "syn023", "category": "D", "utterance": "그 방법으로 확정하자.", "gold_type": "decision", "gold_should_store": true, "ambiguity": false, "note": "~하자지만 결정"}
+{"id": "syn024", "category": "D", "utterance": "앞으로는 이 구조를 사용하자.", "gold_type": "decision", "gold_should_store": true, "ambiguity": true, "note": "decision vs preference"}
+{"id": "syn025", "category": "D", "utterance": "좋아, 그걸로 가자.", "gold_type": "decision", "gold_should_store": true, "ambiguity": false, "note": "구어체 결정"}
+{"id": "syn026", "category": "D", "utterance": "그 방향으로 진행하자.", "gold_type": "decision", "gold_should_store": true, "ambiguity": false, "note": "구어체 결정"}
+{"id": "syn027", "category": "D", "utterance": "이 방식으로 결정하자.", "gold_type": "decision", "gold_should_store": true, "ambiguity": false, "note": "명시적 결정"}
+{"id": "syn028", "category": "E", "utterance": "오류가 발생했어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "F5 직접"}
+{"id": "syn029", "category": "E", "utterance": "에러가 또 났어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "반복 오류"}
+{"id": "syn030", "category": "E", "utterance": "버그가 생겼다.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "과거형"}
+{"id": "syn031", "category": "E", "utterance": "수정했는데 여전히 안 돼.", "gold_type": "error", "gold_should_store": true, "ambiguity": true, "note": "error vs observation"}
+{"id": "syn032", "category": "E", "utterance": "Docker 때문에 프로그램이 죽었어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "원인 포함"}
+{"id": "syn033", "category": "E", "utterance": "이 방법은 실패했어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "실패 보고"}
+{"id": "syn034", "category": "E", "utterance": "이 오류는 지난번에도 발생했어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "반복 오류"}
+{"id": "syn035", "category": "E", "utterance": "계속 같은 에러가 나.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "진행형 오류"}
+{"id": "syn036", "category": "E", "utterance": "다음부터 이 방법은 사용하지 마.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "오류 후 규칙"}
+{"id": "syn037", "category": "E", "utterance": "이 방법 때문에 문제가 생겼고 결국 다른 방식으로 바꿨어.", "gold_type": "learning", "gold_should_store": true, "ambiguity": true, "note": "error+decision 혼합"}
+{"id": "syn038", "category": "F", "utterance": "이 방법을 써보니 Windows에서는 문제가 생긴다는 걸 알았어.", "gold_type": "learning", "gold_should_store": true, "ambiguity": false, "note": "교훈"}
+{"id": "syn039", "category": "F", "utterance": "결국 이 라이브러리는 이런 환경에서 잘 안 맞더라.", "gold_type": "learning", "gold_should_store": true, "ambiguity": false, "note": "경험 교훈"}
+{"id": "syn040", "category": "F", "utterance": "지난번에 확인해보니 이 설정이 원인이었어.", "gold_type": "learning", "gold_should_store": true, "ambiguity": false, "note": "원인 규명"}
+{"id": "syn041", "category": "F", "utterance": "이렇게 하면 안 된다는 걸 알았어.", "gold_type": "learning", "gold_should_store": true, "ambiguity": false, "note": "교훈"}
+{"id": "syn042", "category": "G", "utterance": "이 문제가 자꾸 반복돼.", "gold_type": "observation", "gold_should_store": true, "ambiguity": false, "note": "패턴"}
+{"id": "syn043", "category": "G", "utterance": "매번 이 단계에서 느려지는 것 같아.", "gold_type": "observation", "gold_should_store": true, "ambiguity": false, "note": "패턴"}
+{"id": "syn044", "category": "G", "utterance": "이런 현상이 계속 보이네.", "gold_type": "observation", "gold_should_store": true, "ambiguity": false, "note": "패턴"}
+{"id": "syn045", "category": "G", "utterance": "Windows에서 유난히 자주 발생하는 것 같아.", "gold_type": "observation", "gold_should_store": true, "ambiguity": false, "note": "조건부 패턴"}
+{"id": "syn046", "category": "G", "utterance": "이 오류는 Windows에서 자꾸 반복돼.", "gold_type": "observation", "gold_should_store": true, "ambiguity": true, "note": "error vs observation"}
+{"id": "syn047", "category": "H", "utterance": "지금 인증 모듈을 작업하고 있어.", "gold_type": "context", "gold_should_store": true, "ambiguity": false, "note": "진행 상황"}
+{"id": "syn048", "category": "H", "utterance": "현재 이 단계에서 막혀 있어.", "gold_type": "context", "gold_should_store": true, "ambiguity": false, "note": "진행 상황"}
+{"id": "syn049", "category": "H", "utterance": "지금 Docker를 사용하고 있어.", "gold_type": "context", "gold_should_store": true, "ambiguity": false, "note": "진행 상황"}
+{"id": "syn050", "category": "H", "utterance": "현재 프로젝트는 테스트 단계야.", "gold_type": "context", "gold_should_store": true, "ambiguity": false, "note": "단계"}
+{"id": "syn051", "category": "H", "utterance": "지금은 잠깐 쉬는 중이야.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "일시 상태, 저장 가치 없음"}
+{"id": "syn052", "category": "P", "utterance": "나는 표 형태를 선호해.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "~해"}
+{"id": "syn053", "category": "P", "utterance": "표로 정리된 답변이 더 좋아.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "~아"}
+{"id": "syn054", "category": "P", "utterance": "답변은 표로 보는 게 편해.", "gold_type": "preference", "gold_should_store": true, "ambiguity": false, "note": "~해"}
+{"id": "syn055", "category": "P", "utterance": "가능하면 표 형식으로 보여줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "~줘 (규칙성)"}
+{"id": "syn056", "category": "P", "utterance": "오류가 발생했어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "~했어"}
+{"id": "syn057", "category": "P", "utterance": "에러가 났어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "~어"}
+{"id": "syn058", "category": "P", "utterance": "버그가 생겼어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "~어"}
+{"id": "syn059", "category": "P", "utterance": "문제가 발생했어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "~어"}
+{"id": "syn060", "category": "P", "utterance": "실행 중에 계속 실패해.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "~해"}
+{"id": "syn061", "category": "P", "utterance": "실행 중에 계속 실패합니다.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "~합니다"}
+{"id": "syn062", "category": "P", "utterance": "실행 중에 계속 실패했다.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "~했다"}
+{"id": "syn063", "category": "P", "utterance": "실행 중에 계속 실패했는데.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "~했는데"}
+{"id": "syn064", "category": "CTX", "utterance": "좋아 그렇게 해줘.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": true, "note": "문맥 필요"}
+{"id": "syn065", "category": "CTX", "utterance": "그걸로 가자.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": true, "note": "문맥 필요 (것=?)"}
+{"id": "syn066", "category": "CTX", "utterance": "앞으로는 그렇게 하자.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": true, "note": "앞으로=규칙성"}
+{"id": "syn067", "category": "CTX", "utterance": "그건 하지 마.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": true, "note": "금지 규칙"}
+{"id": "syn068", "category": "CTX", "utterance": "이것도 기억해줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": true, "note": "기억 지시"}
+{"id": "syn069", "category": "CTX", "utterance": "그 방법으로 해줘.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": true, "note": "일회성 (문맥 없이는 모호)"}
+{"id": "syn070", "category": "END", "utterance": "진행해줘.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "~줘 NO_STORE"}
+{"id": "syn071", "category": "END", "utterance": "앞으로 그렇게 해줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "~줘 instruction"}
+{"id": "syn072", "category": "END", "utterance": "이거 표로 정리해줘.", "gold_type": "NO_STORE", "gold_should_store": false, "ambiguity": false, "note": "~줘 일회성"}
+{"id": "syn073", "category": "END", "utterance": "앞으로는 항상 표로 정리해줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "~줘 규칙"}
+{"id": "syn074", "category": "END", "utterance": "나는 표로 정리해줘 하는 게 좋아.", "gold_type": "preference", "gold_should_store": true, "ambiguity": true, "note": "~좋아 선호 (어색하나 의미는 선호)"}
+{"id": "syn075", "category": "S", "utterance": "어제 적용한 패치 때문에 빌드가 깨졌어.", "gold_type": "error", "gold_should_store": true, "ambiguity": false, "note": "원인+결과"}
+{"id": "syn076", "category": "S", "utterance": "지난번에 이 방법으로 해결했어.", "gold_type": "learning", "gold_should_store": true, "ambiguity": false, "note": "경험/해법"}
+{"id": "syn077", "category": "S", "utterance": "이제부터 테스트는 전부 pytest로 작성하자.", "gold_type": "decision", "gold_should_store": true, "ambiguity": true, "note": "decision vs instruction"}
+{"id": "syn078", "category": "S", "utterance": "저장할 때마다 자동으로 백업해줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "반복 동작 규칙"}
+{"id": "syn079", "category": "S", "utterance": "매일 아침 9시에 리포트를 보내줘.", "gold_type": "instruction", "gold_should_store": true, "ambiguity": false, "note": "주기적 동작"}
+{"id": "syn080", "category": "S", "utterance": "이번 주 금요일까지 배포해야 해.", "gold_type": "commitment", "gold_should_store": true, "ambiguity": false, "note": "기한"}
+{"id": "syn081", "category": "S", "utterance": "다음 달까지 사용자 1000명을 모으는 게 목표야.", "gold_type": "goal", "gold_should_store": true, "ambiguity": false, "note": "목표"}
+{"id": "syn082", "category": "S", "utterance": "나랑 같이 일하는 건 지훈이야.", "gold_type": "relationship", "gold_should_store": true, "ambiguity": false, "note": "관계"}
+{"id": "syn083", "category": "S", "utterance": "config.yaml은 여기 있어.", "gold_type": "artifact", "gold_should_store": true, "ambiguity": false, "note": "파일 위치"}
+{"id": "syn084", "category": "S", "utterance": "이 레포는 GitHub에 있어.", "gold_type": "artifact", "gold_should_store": true, "ambiguity": false, "note": "위치"}
