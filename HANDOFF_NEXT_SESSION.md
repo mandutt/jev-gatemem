@@ -158,7 +158,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 **★ 쓰기 게이트 실장 (2026-09-28) — 구현 완료, 적용 승인 대기**
 - `gateway/write_gate.py` — G-qual 평가 (P8 스토어/분류 지시문, 킬스위치 `JEV_WRITE_GATE=0`, 실패→KEEP, SKIP만 trace)
 - `harnesses/wg_access.py` — 섀도잉 안전 accessor (alias → repo fallback)
-- `harnesses/hermes_j1.py` — `JevRerankProvider.sync_turn` 오버라이드: user 발화만 게이트 (SKIP 시 `_sync_turn_without_user`로 assistant만 저장), assistant는 무게이트, 실패→base
+- `harnesses/hermes_j1.py` — `JevRerankProvider.sync_turn` 오버라이드: user 발화만 게이트 (SKIP 시 `_sync_turn_without_user`로 저장), assistant는 무게이트, 실패→base. **주의: `_sync_roles` 기본값은 `{"user"}`** — 기본 환경에선 user 발화만 저장되므로 게이트 실효 범위는 "user 발화 SKIP" 하나로 한정 (assistant 저장은 sync_roles에 assistant 추가 시에만)
 - **검증**: `harnesses/smoke_write_gate.py` 4/4 PASS (SKIP/KEEP/킬스위치/JEV실패), 실 JEV API로 SKIP(좋아 진행해줘) vs KEEP(내일까지 보고서) 판정 확인, trace 로그 기록 확인
 - ⏳ **남은 일**: 데스크톱 재시작(플러그인 새 코드 로드) 후 실사용 확인 → 장기 관측
 

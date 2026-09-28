@@ -95,9 +95,8 @@ G-qual 규칙 (최종 채택):
 ## 6. 쓰기 게이트 실장 (P8 + G-qual) — 2026-09-28
 
 **실제 쓰기 경로 확인 (코드 실측)**:
-- Hermes 턴 종료 → `mnemosyne_hermes.MnemosyneMemoryProvider.sync_turn()`이
-  `[USER] {발화}` (importance 0.5) + `[ASSISTANT] {응답}` (importance 0.15)를 **무조건 2건 저장** (len>5, 필터 통과 시)
-- `harnesses/hermes_j1.py`는 prefetch(읽기)만 오버라이드 — 쓰기는 base 그대로 → **과다저장의 실체**
+- Hermes 턴 종료 → `mnemosyne_hermes.MnemosyneMemoryProvider.sync_turn()`이 저장. 단, **`_sync_roles` 기본값은 `{"user"}`** — 실제로는 `[USER] {발화}` (importance 0.5)만 기본 저장되고, `[ASSISTANT] {응답}` (importance 0.15)는 `sync_roles`에 `"assistant"` 추가 시에만 저장됨 (len>5, 필터 통과 시)
+- `harnesses/hermes_j1.py`는 prefetch(읽기)만 오버라이드 — 쓰기는 base 그대로 → **과다저장의 실체** (user 발화가 100% 저장)
 
 **적용 위치**: `harnesses/hermes_j1.py`의 `JevRerankProvider.sync_turn()` 오버라이드 (옵션 A)
 - user 발화: `[USER] ` 접두사 제거 → JEV store/type 분류 1회 → **G-qual** → SKIP 시 remember 생략
