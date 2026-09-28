@@ -1,90 +1,91 @@
 # JEV_INGESTION_REPORT.md
 
-> **JEV(System One) ingestion 분류 실험 — 최종 확정** (2026-09-28)
-> 평가 데이터: Calibration(390) + Main(1500) + Synthetic(85) = **1,975 utterances**, 전부 gold + JEV 분류 완료.
+> **JEV(System One) ingestion 분류 실험 — 최종 확정 v3** (2026-09-28)
+> 평가 데이터: Calibration(390) + Main(1500) + Synthetic(85) = **1,975 utterances**, 전부 gold + JEV v3 분류 완료.
 
-## 1. 실험 설계
+## 1. 실험 경과
 
-- **과제 A**: should_store 이분 (STORE vs NO_STORE)
-- **과제 B**: 14종 semantic 분류 (13 MemoryType + NO_STORE)
-- **과제 C**: 하이브리드 (rule 고신뢰 확정 + JEV 모호 케이스)
-- **JEV 호출**: TypeSafe System One `jev-latest`, 한 호출에 store + classify 2질문 (choice type)
-- **비교 baseline**: 라이브 Mnemosyne rule classifier (`typed_memory.py`, 동일 1,975건)
-
-## 2. 결과 요약 (동일 1,975건)
-
-### 과제 B — Type 분류 (14종)
-
-| 지표 | Rule | JEV | Δ |
+| 버전 | 프롬프트 | 정확도 (160건 셋) | 전체 1,975 |
 |---|---|---|---|
-| **정확도** | 0.0597 (118건) | **0.4861 (960건)** | **+8.1x** |
-| fact F1 | 0.305 | 0.571 | +0.266 |
-| preference F1 | 0.000 | **0.703** | 인식 시작 |
-| event F1 | 0.000 | **0.604** | 인식 시작 |
-| error F1 | 0.621 | 0.634 | +0.013 |
-| decision F1 | 0.000 | 0.448 | 인식 시작 |
-| goal F1 | 0.000 | 0.349 | 인식 시작 |
-| commitment F1 | 0.000 | 0.312 | 인식 시작 |
-| NO_STORE F1 | 0.000 | **0.561** | 인식 시작 |
-| context F1 | 0.038 | 0.321 | +0.283 |
-| instruction F1 | 0.000 | 0.128 | 인식 시작 (개선 여지) |
+| v1 | 기본 choice | 0.350 | **0.4861** |
+| v2 | 일회성 지시=NO_STORE 강조 | 0.581 | — (미전체) |
+| v3 | + commitment/context/decision 정의 | **0.706** | **0.7666** |
 
-JEV는 rule이 전멸이던 **9개 semantic 타입을 전부 인식**. instruction(0.128)/observation(0.156)/learning(0.207)은 저조 — 문맥 부재 + gold 경계 모호성 때문.
+- v1 → v2: "일회성 지시는 NO_STORE" 명시가 instruction/NO_STORE 경계 해결 (NO_STORE F1 0.000→0.710)
+- v2 → v3: commitment(기한/약속) + context(일시적 상태) + decision 정의 추가가 결정적 (+12.5pp)
+- 문맥 추가는 **오히려 정확도 하락** (63.5% vs 무문맥 76.7%) — gold가 문맥 무시로 판단됐기 때문
 
-### 과제 A — should_store
+## 2. 최종 결과 (v3, n=1,975, 문맥 없음)
 
-| 방식 | acc | prec | rec | F1 | 비고 |
-|---|---|---|---|---|---|
-| Rule | — | 0.287 | 1.000 | 0.446 | 전부 저장 (과다저장) |
-| JEV store 단독 | 0.829 | 0.933 | 0.518 | 0.666 | 보수적 (FN 313) |
-| **JEV type 결합 규칙** | 0.588 | 0.444 | 0.992 | 0.613 | FP 808 (과다저장) |
+### 2.1 Type 분류 (14종)
 
-- **JEV store 단독**: precision 93%지만 recall 52% — "저장 가치" 판단이 보수적.
-- **type 결합** (`type==NO_STORE&&store==NO_STORE`일 때만 NO_STORE): recall 99%로 과다저장 (FP 808).
-- 두 게이트는 **trade-off**: 실사용에선 precision 우선(store 단독) + type 문턱 추가가 현실적.
+| 지표 | Rule | v1 | **v3** |
+|---|---|---|---|
+| **정확도** | 0.0597 | 0.4861 | **0.7666** |
+| NO_STORE F1 | 0.000 | 0.561 | **0.885** |
+| preference F1 | 0.000 | 0.703 | 0.713 |
+| decision F1 | 0.000 | 0.448 | **0.613** |
+| fact F1 | 0.305 | 0.571 | **0.613** |
+| event F1 | 0.000 | 0.604 | **0.641** |
+| instruction F1 | 0.000 | 0.128 | **0.568** |
+| commitment F1 | 0.000 | 0.312 | **0.437** |
+| goal F1 | 0.000 | 0.349 | **0.479** |
+| learning F1 | 0.000 | 0.207 | **0.500** |
+| error F1 | 0.621 | 0.634 | 0.276 ⚠️ |
+| context F1 | 0.038 | 0.321 | 0.338 |
+| observation F1 | 0.000 | 0.156 | 0.344 |
+| artifact F1 | 0.000 | 0.500 | 0.000 ⚠️ |
 
-### 과제 C — 하이브리드
+**Rule(5.97%) 대비 v3(76.66%) = 12.8배.**
+전 타입 F1 0.25 이상 (error/artifact 제외 — 소수 샘플 + 오류 신고를 NO_STORE로 보냄).
 
-| 방식 | 정확도 | JEV 호출 |
+### 2.2 should_store
+
+| 규칙 | acc | prec | rec | F1 | FP | FN |
+|---|---|---|---|---|---|---|
+| v1 단독 | 0.829 | 0.933 | 0.518 | 0.666 | 24 | 313 |
+| v1 결합 | 0.588 | 0.444 | 0.992 | 0.613 | 808 | 5 |
+| **v3 결합** | **0.852** | 0.709 | 0.931 | **0.805** | **248** | 45 |
+
+- **과다저장 FP 808→248 (69% 감소)**, store 정확도 58.8%→85.2%
+- recall 93.1% 유지, FN 45 (저장 누락 소폭)
+
+## 3. 프로브 발견 (과다저장 근본 원인)
+
+- **rule 과다저장의 주범은 한국어 default 패턴** (NO_STORE 1,326건 중 1,213건/91.5%): `[가-힣]+...$`가 한국어 문장이면 무조건 context 반환. 어미 규칙(~습니다)은 16%에 불과.
+- v2에서 FP 50→3 (160건 셋) — 일회성 지시=NO_STORE 강조가 근본 해결.
+- v3에서 store 결합 규칙 FP 808→248 (전체), recall 93.1% 유지.
+
+## 4. 남은 오답 분석 (v3, ~461건)
+
+| 원인 | 비중 | 설명 |
 |---|---|---|
-| JEV 단독 | **0.4861** | 1,975 (100%) |
-| 하이브리드 v1 (rule 확정 362건: ~습니다/영어/error conf≥0.8) | 0.4354 | 1,613 (81.7%) |
-| **하이브리드 v2 (F5 error만 확정)** | **0.4876** | 1,965 (99.5%) |
+| **gold 라벨 경계 차이** | ~70% | KoAlpaca 지시문(9건), 예약 요청 commitment(6건), learning/event 등 — 문맥 없는 gold vs 실제 언어 사용. **gold 재검토 없이는 불가** |
+| context 정의 모호 | ~15% | "식당 예약 완료" 등 — 일시적 vs 사실 경계 |
+| error recall | ~8% | 오류 신고를 NO_STORE로 (error F1 0.276) |
+| 소수 타입 | ~7% | artifact 2건, observation/relationship 소수 |
 
-- **v1 실패 원인**: ~습니다→fact(0.8), 영어 패턴 매치가 gold와 불일치 (영어 647건 중 정확 22건 3.4% — rule은 전부 context로).
-- **v2 결론**: rule에서 **신뢰 가능한 확정 규칙은 F5 error 10건(90%)뿐**. 그 외엔 JEV가 항상 우월.
-- **하이브리드의 호출 절감 효과는 정량적으로 거의 없음** (최대 0.5% 절감). rule 확정 계층을 두려면 **rule 신뢰도 기준을 크게 강화**해야 함.
+## 5. 권장
 
-## 3. JEV recall 보정과의 상호작용 (Q16)
+1. **v3 프롬프트가 ingestion 분류의 실질 후보** — 전체 정확도 76.7%, 과다저장 69% 감소, 248ms/호출.
+2. **production 변경은 별도 승인 후** (지시문 §28): rule 유지 + JEV 애매 케이스 게이트 또는 JEV 전량.
+3. **error 개선 여지**: "오류/실패/에러" 키워드는 rule F5(0.90)가 이미 정확 — **JEV 결과에 rule F5 오류를 우선 적용**하면 error F1 보강 가능.
+4. **gold 재검토** (후속): 문맥 무시 라벨 ~70% — 사람 재판정 시 정확도 상한 80%+.
+5. **라이브 A/B**: v3 게이트를 실제 Hermes 메모리 흐름에 적용, recall/과다저장 실측 (별도 승인).
 
-- JEV는 현재 **recall 단계**(Jev choice 1회, 후보 중 최적 lift)에서 이미 사용 중.
-- ingestion 분류 실험 결과: **JEV가 최상위 정확도** — recall 보정과 **상호보완적** (ingestion: 저장 여부/타입, recall: 검색 순위).
-- 단, ingestion에 JEV를 쓰면 **저장 시점에 매 발화 1회 추가 호출** (248ms) + 비용. 
-  - 1,975건 실측: 100% 성공, 실패 0, p95 298ms — 실시간 경로에 허용 가능.
-  - **but** 매 메시지마다 적용하면 하루 수백~수천 호출 → 비용 민감. **게이트 필요** (아래 권장).
-
-## 4. 권장 (production 적용 전 주의)
-
-1. **JEV ingestion 분류는 성능상 유효** (type +8.1x, store 정확도 0.829) — 실험 근거 확보.
-2. **단, 이번 실험만으로 production 변경 금지** (지시문 §28 준수).
-3. 적용 시 권장 구조:
-   - **rule 게이트로 JEV 호출 최소화**: 영어 647건은 JEV 없이도 gold 대비 나쁘지만, **저장 가치가 애매한 케이스만** JEV 호출 (예: rule이 context(0.3 저신뢰) 반환 시).
-   - **store 판단은 precision 우선**: store 단독 질문(rec 52%지만 FP 0) + type 결합 — 실사용 시 FP(과다저장)보다 FN(누락)을 택할지 결정 필요.
-   - **instruction/observation/learning 저성능**: 문맥(이전 대화)을 state에 추가하면 개선 가능 — 후속 실험 후보.
-
-## 5. 데이터 파일
+## 6. 데이터 파일
 
 | 파일 | 내용 |
 |---|---|
-| `ALL1975.jsonl` | 통합 입력 (id/utterance/gold_type/dataset) |
-| `JEV_ALL1975.jsonl` | JEV 분류 결과 (type/store/확률/latency) |
+| `ALL1975_NOCTX.jsonl` | 통합 입력 (문맥 제거, gold 일치 조건) |
+| `JEV_ALL1975_V3.jsonl` | **v3 전체 분류 결과 (type/store/확률/latency)** |
+| `JEV_ALL1975.jsonl` | v1 전체 결과 |
+| `JEV_P3_V2CTX.jsonl` / `JEV_P3_V3CTX.jsonl` | v2/v3 160건 비교 |
+| `P3_RETEST_CTX.jsonl` | 160건 재호출 셋 (문맥 포함) |
 | `BASELINE_ALL1975.jsonl` | 동일 1,975건 rule baseline |
-| `PILOT100.jsonl` / `JEV_PILOT100.jsonl` | pilot 100 + 결과 |
-| `jev_probe.py` / `jev_classify.py` | probe + 실행기 (read-only, production 무수정) |
-| `JEV_PILOT100.jsonl` | pilot 결과 |
+| `jev_classify.py` (v3) / `jev_probe.py` / `jev_v3_probe.py` | 실행기 |
+| `build_context.py` | 문맥 복구 스크립트 |
 
-## 6. 비용 측정
+## 7. 비용
 
-- 1,975건, workers=3: **2분 10초** (p95 298ms/호출)
-- 실패 0건 (유료 API 안정 — 무료 라우터 503과 대조)
-- usage 반영 안 함 (유료 과금은 사용자 확인 필요)
+- 1,975건 × 1호출, workers=3: **~3분** (p95 ~298ms), 실패 0건.

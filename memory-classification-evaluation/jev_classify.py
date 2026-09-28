@@ -47,17 +47,37 @@ STORE_INSTRUCTIONS = (
 
 CLASSIFY_INSTRUCTIONS = (
     "Classify the speaker's utterance into exactly one memory type from the "
-    "given criteria, based on meaning and intent, NOT grammar or sentence "
-    "ending. NO_STORE means no long-term memory value. Pick exactly one."
+    "criteria, based on meaning and intent, NOT grammar or sentence ending.\n"
+    "\n"
+    "Key distinctions:\n"
+    "- commitment: a promise, deadline, or obligation (e.g. 'I need to submit "
+    "the report by tomorrow', 'I'll call you at 3pm'). Time-bound duties.\n"
+    "- decision: a settled choice ('let's go with X').\n"
+    "- context: a TEMPORARY state or ongoing situation ('I'm currently working "
+    "on X', 'it's raining now'). If the utterance describes a transient "
+    "situation rather than a lasting fact, it is context.\n"
+    "- instruction: a RULE to apply REPEATEDLY from now on (e.g. 'from now on "
+    "always format answers as a table'). A one-off request or acknowledgment "
+    "(e.g. 'ok go ahead') is NOT instruction — it is NO_STORE.\n"
+    "- NO_STORE: one-off filler, acknowledgment, small request, small talk, "
+    "question without lasting value.\n"
+    "- preference: durable like/dislike.\n"
+    "- observation: recurring pattern ('keeps happening').\n"
+    "- learning: lesson learned.\n"
+    "\n"
+    "If conversation context is provided, use it to judge one-off vs lasting. "
+    "Pick exactly one."
 )
 
 
-def jev_classify(utterance: str, timeout: float = 60.0) -> dict:
+def jev_classify(utterance: str, context: str = "", timeout: float = 60.0) -> dict:
     """One JEV call: returns {store, store_prob, type, type_prob, probs, latency_ms, usage}."""
     state = {
         "utterance": utterance,
         "candidates": [{"id": f"t{i}", "label": t} for i, t in enumerate(TYPES)],
     }
+    if context:
+        state["context"] = context
     questions = {
         "store": {
             "type": "choice",
@@ -142,7 +162,7 @@ def main():
     def process(row):
         for attempt in range(3):
             try:
-                res = jev_classify(row["utterance"])
+                res = jev_classify(row["utterance"], row.get("context", ""))
                 return {
                     "id": row["id"],
                     "dataset": row.get("dataset"),
