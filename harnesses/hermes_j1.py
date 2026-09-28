@@ -25,6 +25,7 @@ from mnemosyne_hermes import MnemosyneMemoryProvider
 # process because hermes-agent's own top-level `gateway` package shadows the
 # middleware repo's package on sys.path.
 from harnesses.j1_access import j1_pipeline as _j1_pipeline
+from harnesses.wg_access import write_gate as _wg
 
 log = logging.getLogger(__name__)
 
@@ -54,6 +55,68 @@ class JevRerankProvider(MnemosyneMemoryProvider):
             log.warning("J1 prefetch failed (%s); falling back to Mnemosyne base", exc)
             return base
         return block if (block or "").strip() else base
+
+    # -- write gate override (P8+G-qual, 2026-09-28) ----------------------
+    def sync_turn(self, user_content: str, assistant_content: str, *, session_id: str = "", messages=None) -> None:
+        """Persist the turn to Mnemosyne, applying the JEV write gate to the
+        user utterance. G-qual: SKIP iff store==NO_STORE && type==NO_STORE &&
+        store_conf>=0.6. Assistant content is stored as before (unchanged).
+        Any JEV failure / kill switch -> base behavior (KEEP, no data loss).
+        """
+        wg = _wg()
+        if wg is None:
+            # accessor failed — never lose data, fall back to base
+            return super().sync_turn(user_content, assistant_content, session_id=session_id, messages=messages)
+        gate = wg.evaluate(user_content) if (user_content or "").strip() and len(user_content) > 5 else None
+        skip = bool(gate and gate.get("keep") is False)
+        if skip:
+            log.info(
+                "write-gate SKIP user utterance (store=%s conf=%.2f type=%s conf=%.2f reason=%s)",
+                gate.get("store"), gate.get("store_conf"),
+                gate.get("type"), gate.get("type_conf"), gate.get("reason"),
+            )
+            # user utterance gated out — persist only the assistant side
+            return self._sync_turn_without_user(assistant_content, session_id=session_id, messages=messages)
+        return super().sync_turn(user_content, assistant_content, session_id=session_id, messages=messages)
+
+    def _sync_turn_without_user(self, assistant_content: str, *, session_id: str = "", messages=None) -> None:
+        """Persist only the assistant side of a turn (user side was gated out).
+
+        Mirrors the base sync_turn shape: beam-scoped, ledger-aware, identity
+        capture skipped (it keys on user content), assistant stored with
+        importance 0.15 as before. Any failure is logged, never raised.
+        """
+        try:
+            self._maybe_retry_init()
+            if not self._beam or self._agent_context in getattr(self, "_skip_contexts", set()):
+                return
+            ledger = getattr(self, "_verbatim_ledger", None)
+            active_session = getattr(self, "_active_session_id", "")
+            ticket = (ledger.begin(str(session_id or "").strip(), messages)
+                      if ledger and active_session == str(session_id or "").strip() else None)
+            with self._beam_session_scope(session_id) as beam:
+                if beam is None:
+                    return
+                if "assistant" not in self._sync_roles:
+                    return
+                if not (assistant_content and len(assistant_content) > 10 and not self._should_filter(assistant_content)):
+                    return
+                ac = assistant_content
+                from mnemosyne_hermes import _sync_turn_assistant_limit
+                limit = _sync_turn_assistant_limit()
+                if limit > 0:
+                    ac = ac[:limit]
+                capture = ledger.capture if ledger else None
+                remember = (lambda **kw: capture(str(session_id or "").strip(), ticket, beam, ac, **kw)) if capture else beam.remember
+                remember(
+                    content=f"[ASSISTANT] {ac}",
+                    source="conversation",
+                    importance=0.15,
+                    scope=self._default_scope,
+                    extract_entities=True,
+                )
+        except Exception as e:
+            log.debug("sync_turn_without_user failed: %s", e)
 
 
 # ---------------------------------------------------------------------------

@@ -151,9 +151,16 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 
 ## 8. 다음 단계 (남은 작업 우선순위)
 
-> **2026-09-28 갱신 — JEV 생성 분류(Ingestion Classification) 평가 완료**. 최종: **P8 + G0.6**
-> 명명 규칙: **P{번호}** = JEV 프롬프트 버전 (P8 = 84.9%, 채택) / **G{신뢰도}** = 저장 게이트 (G0.6 = store==NO_STORE && conf≥0.6 → SKIP). 조합 표기가 곧 최종 ("v12"는 P8+G0.6의 옛 이름).
-> 상세: `memory-classification-evaluation/JEV_INGESTION_REPORT.md`, `AB_WRITE_GATE_REPORT.md`. 다음 후보: ①**P8+G0.6 실제 적용** (provider 게이트 구성 — 별도 승인) ②gold 재검토 ③v8 전체 재호출 (history context 포함)
+> **2026-09-28 갱신 — JEV 생성 분류(Ingestion Classification) 평가 + 쓰기 게이트 구현 완료**. 최종: **P8 + G-qual**
+> 명명 규칙: **P{번호}** = JEV 프롬프트 버전 (P8 = 84.9%, 채택) / **G{규칙}** = 저장 게이트 (G-qual = store==NO_STORE && type==NO_STORE && conf≥0.6 → SKIP, type rescue 포함). 조합 표기가 곧 최종.
+> 상세: `memory-classification-evaluation/JEV_INGESTION_REPORT.md`, `AB_WRITE_GATE_REPORT.md`.
+
+**★ 쓰기 게이트 실장 (2026-09-28) — 구현 완료, 적용 승인 대기**
+- `gateway/write_gate.py` — G-qual 평가 (P8 스토어/분류 지시문, 킬스위치 `JEV_WRITE_GATE=0`, 실패→KEEP, SKIP만 trace)
+- `harnesses/wg_access.py` — 섀도잉 안전 accessor (alias → repo fallback)
+- `harnesses/hermes_j1.py` — `JevRerankProvider.sync_turn` 오버라이드: user 발화만 게이트 (SKIP 시 `_sync_turn_without_user`로 assistant만 저장), assistant는 무게이트, 실패→base
+- **검증**: `harnesses/smoke_write_gate.py` 4/4 PASS (SKIP/KEEP/킬스위치/JEV실패), 실 JEV API로 SKIP(좋아 진행해줘) vs KEEP(내일까지 보고서) 판정 확인, trace 로그 기록 확인
+- ⏳ **남은 일**: 데스크톱 재시작(플러그인 새 코드 로드) 후 실사용 확인 → 장기 관측
 
 - [x] **데스크톱 재시작 후 실사용 검증** — 2026-09-27 밤 세션: `Jev choice: idx=0 latency=226ms pool=1` 실측 (agent.log)
 - [~] **JEV_RERANK=0 vs 1 실사용 A/B — 1차 완료(보류)** — 12쿼리 페어와이즈: 5/9 완전 동일, 4/9 순서 변경(대부분 1↔2 스왑). 사용자 체감 차이 없음 → **메모리 2,000+ rows 후 재평가**. 산출물: ab_jev_rerank/AB_REPORT.md + run 스냅샷 + pairs.html
@@ -182,6 +189,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 | 평가셋 | `data/dataset_curated.json` (52쿼리, 6유형, gold 16자리 ID) |
 | 로그 | `C:\Users\mandu\AppData\Local\hermes\logs\agent.log` (`grep "Jev choice"`) |
 | **Jev trace 로그** | `C:\Users\mandu\AppData\Local\hermes\logs\jev_trace.log` (ring buffer 512KB, `JEV_TRACE_PATH`로 경로 변경 가능) |
+| **쓰기 게이트** | `JEV_WRITE_GATE=0` → 비활성(KEEP). SKIP 이벤트만 `jev_trace.log`에 `write-gate` 기록 |
 
 ## 10. 세션 전환 방법
 
