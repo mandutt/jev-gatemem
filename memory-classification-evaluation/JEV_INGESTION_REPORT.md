@@ -39,6 +39,22 @@
 **Rule(5.97%) 대비 v3(76.66%) = 12.8배.**
 전 타입 F1 0.25 이상 (error/artifact 제외 — 소수 샘플 + 오류 신고를 NO_STORE로 보냄).
 
+### 2.1b error 개선 — rule F5 override (최종)
+
+JEV v3의 약점(error F1=0.276, recall 0.211)을 rule F5(error 패턴, conf≥0.5) override로 보강:
+
+| 지표 | v3 단독 | **v3 + rule F5 override** |
+|---|---|---|
+| error F1 | 0.276 | **0.556** |
+| error recall | 0.211 | **0.526** |
+| error precision | 0.400 | **0.588** |
+| 전체 정확도 | 0.7666 | **0.7696** |
+| store 결합 F1 | 0.805 | 0.805 |
+
+- override 7건: 6건 정확(error TP), 1건만 오답(learning/error 경계 모호 "이 방법 때문에 문제가 생겼고...")
+- rule F5가 이미 conf≥0.7로만 예측 → threshold 불필요, rule 매치 자체가 결정
+- **최종 파일: `JEV_ALL1975_V3_F5.jsonl`**
+
 ### 2.2 should_store
 
 | 규칙 | acc | prec | rec | F1 | FP | FN |
