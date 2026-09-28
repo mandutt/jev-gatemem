@@ -151,6 +151,10 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 
 ## 8. 다음 단계 (남은 작업 우선순위)
 
+> **2026-09-28 갱신 — JEV 생성 분류(Ingestion Classification) 평가 완료**. 최종: **P8 + G0.6**
+> 명명 규칙: **P{번호}** = JEV 프롬프트 버전 (P8 = 84.9%, 채택) / **G{신뢰도}** = 저장 게이트 (G0.6 = store==NO_STORE && conf≥0.6 → SKIP). 조합 표기가 곧 최종 ("v12"는 P8+G0.6의 옛 이름).
+> 상세: `memory-classification-evaluation/JEV_INGESTION_REPORT.md`, `AB_WRITE_GATE_REPORT.md`. 다음 후보: ①**P8+G0.6 실제 적용** (provider 게이트 구성 — 별도 승인) ②gold 재검토 ③v8 전체 재호출 (history context 포함)
+
 - [x] **데스크톱 재시작 후 실사용 검증** — 2026-09-27 밤 세션: `Jev choice: idx=0 latency=226ms pool=1` 실측 (agent.log)
 - [~] **JEV_RERANK=0 vs 1 실사용 A/B — 1차 완료(보류)** — 12쿼리 페어와이즈: 5/9 완전 동일, 4/9 순서 변경(대부분 1↔2 스왑). 사용자 체감 차이 없음 → **메모리 2,000+ rows 후 재평가**. 산출물: ab_jev_rerank/AB_REPORT.md + run 스냅샷 + pairs.html
 - [x] **gateway.py의 retrieve_candidates/retrieve 완성** — J1 파이프라인(lane pool→gate→Jev lift) 기반 MemoryGateway 완성. use_j1=False로 Phase 0 surface 유지, fallback §19, j1_access 경유 섀도잉 안전. 검증: verify_gateway_api.py pass + 런타임 venv smoke PASS (+ JEV_RERANK=0 킬스위치 존중 버그 수정)
