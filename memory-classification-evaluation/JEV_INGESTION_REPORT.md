@@ -92,13 +92,22 @@ G-qual 규칙 (최종 채택):
 - 원칙: **JEV가 확신(conf≥0.6)할 때만 SKIP, 의심되면 KEEP** (누락보다 과다저장이 안전)
 - G-type&store (구 v4게이트)는 type도 NO_STORE만 SKIP이라 너무 많이 걸러 누락 14건 — 폐기
 
-## 5. 최종 적용 (P8 + G-qual)
+## 6. 쓰기 게이트 실장 (P8 + G-qual) — 2026-09-28
 
-```
-프롬프트: P8 (type 분류 — 84.9% 정확도 유지)
-게이트:   G-qual (store==NO_STORE && type==NO_STORE && 신뢰도≥0.6 → SKIP, 그 외 KEEP)
-기대:     store recall 0.951 (+45%) + type 정확도 84.9% 유지 + live 누락 0
-```
+**실제 쓰기 경로 확인 (코드 실측)**:
+- Hermes 턴 종료 → `mnemosyne_hermes.MnemosyneMemoryProvider.sync_turn()`이
+  `[USER] {발화}` (importance 0.5) + `[ASSISTANT] {응답}` (importance 0.15)를 **무조건 2건 저장** (len>5, 필터 통과 시)
+- `harnesses/hermes_j1.py`는 prefetch(읽기)만 오버라이드 — 쓰기는 base 그대로 → **과다저장의 실체**
+
+**적용 위치**: `harnesses/hermes_j1.py`의 `JevRerankProvider.sync_turn()` 오버라이드 (옵션 A)
+- user 발화: `[USER] ` 접두사 제거 → JEV store/type 분류 1회 → **G-qual** → SKIP 시 remember 생략
+- assistant 발화: 게이트 없이 base 그대로 (정책 변경 아님)
+- JEV 실패/타임아웃/비활성 → KEEP (기존 저장, 누락 방지)
+- 킬스위치 `JEV_WRITE_GATE=0` → base sync_turn (기존 100% 저장)
+- 로깅: `jev_trace.log`에 `write-gate SKIP/KEEP conf type`
+- Hermes core / Mnemosyne core 무수정 (기존 원칙 유지)
+
+**설계 근거**: P8+G-qual 실측 (store recall 0.951, live 누락 0, 과다 5)
 
 **한계**:
 - 판정이 context 없이 단독 발화 기준 — 실제 운용(history context 주입)과 차이 가능
