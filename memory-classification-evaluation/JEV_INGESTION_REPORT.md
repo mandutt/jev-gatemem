@@ -10,6 +10,7 @@
 | v1 | 기본 choice | 0.350 | **0.4861** |
 | v2 | 일회성 지시=NO_STORE 강조 | 0.581 | — (미전체) |
 | v3 | + commitment/context/decision 정의 | **0.706** | **0.7666** |
+| v4 | + fact/event/relationship/artifact 정의 | — | **0.7868** |
 
 - v1 → v2: "일회성 지시는 NO_STORE" 명시가 instruction/NO_STORE 경계 해결 (NO_STORE F1 0.000→0.710)
 - v2 → v3: commitment(기한/약속) + context(일시적 상태) + decision 정의 추가가 결정적 (+12.5pp)
@@ -55,6 +56,24 @@ JEV v3의 약점(error F1=0.276, recall 0.211)을 rule F5(error 패턴, conf≥0
 - rule F5가 이미 conf≥0.7로만 예측 → threshold 불필요, rule 매치 자체가 결정
 - **최종 파일: `JEV_ALL1975_V3_F5.jsonl`**
 
+### 2.1c artifact/event/relationship 개선 — 프롬프트 v4 (최종)
+
+v3의 약점(fact로의 과수집: NO_STORE→fact 56, preference→fact 20, event→fact 15, relationship→fact 7, artifact F1=0.000)을 프롬프트 v4로 보강:
+- fact = **검증 가능한 사실** (like/event/관계 아님) 명시
+- event = **특정 시점에 발생한 사건**, relationship = **사람 간 관계**, artifact = **파일/레포/문서 위치** 정의 추가
+
+| 지표 | v3+F5 | **v4** |
+|---|---|---|
+| **정확도** | 0.7696 | **0.7868** |
+| artifact F1 | 0.000 | **1.000** (2/2) |
+| fact F1 | 0.613 | **0.743** |
+| event F1 | 0.659 | **0.694** |
+| relationship F1 | 0.250 | **0.400** |
+| store 결합 F1 | 0.805 | **0.813** |
+
+- 107건(fact 오분류 + artifact 전체) 재분류: 34건 교정
+- **최종 파일: `JEV_ALL1975_V4.jsonl`** (프롬프트 v4 전체 적용 — 영구)
+
 ### 2.2 should_store
 
 | 규칙 | acc | prec | rec | F1 | FP | FN |
@@ -94,7 +113,8 @@ JEV v3의 약점(error F1=0.276, recall 0.211)을 rule F5(error 패턴, conf≥0
 | 파일 | 내용 |
 |---|---|
 | `ALL1975_NOCTX.jsonl` | 통합 입력 (문맥 제거, gold 일치 조건) |
-| `JEV_ALL1975_V3.jsonl` | **v3 전체 분류 결과 (type/store/확률/latency)** |
+| `JEV_ALL1975_V3_F5.jsonl` | v3 + error rule F5 override |
+| `JEV_ALL1975_V4.jsonl` | **v4 최종 (프롬프트 v4 전체)** |
 | `JEV_ALL1975.jsonl` | v1 전체 결과 |
 | `JEV_P3_V2CTX.jsonl` / `JEV_P3_V3CTX.jsonl` | v2/v3 160건 비교 |
 | `P3_RETEST_CTX.jsonl` | 160건 재호출 셋 (문맥 포함) |
