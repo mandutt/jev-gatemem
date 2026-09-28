@@ -164,7 +164,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 
 **★ assistant 발화 저장 게이트 (G-AS) — 2026-09-28 설계 완료, 구현 전**
 - **문제**: Mnemosyne 기본 `_sync_roles={"user"}` → assistant 결과물(작업 핵심)이 메모리에 안 남음. 사용자 지적: "지시만 저장하면 작업 내용을 기억 못 함"
-- **실측**: 최근 21일 assistant 3,715건 중 200건 분류 → **79% 저장 가치** (유저와 정반대). gold50 인간 판정 → **G-AS 채택** (`store==STORE && type!=context → KEEP`, precision 0.744 / recall 0.935 / F1 0.829)
+- **실측**: 최근 21일 assistant 3,715건 중 200건 분류 → **79% 저장 가치** (유저와 정반대). gold50 인간 판정 → **G-AS 채택** (`store==STORE && type!=context → KEEP`, precision 0.744 / recall 0.935 / F1 0.829). **context 필터 전수 검증: 17건 gold → 오분류 0건** (결과물 손실 0, G-AS 확정)
 - **폐기된 대안**: conf 임계값(결과물 conf 0.59~0.97 분산 → recall 폭락), commitment 필터(TP 6건 손실), P8-AS 전용 프롬프트(recall 0.355), 정규식 next-step 필터(FP 2/9만 매치)
 - **주의**: JEV 호출은 반드시 TypeSafe 직접 API (`api.typesafe.ai/v1/systemone`, jev-latest) — 9router(localhost:20128)는 간헐적 400 반환
 - **구현 전제**: `sync_roles: ["user","assistant"]` 활성화 + `hermes_j1.py` sync_turn에 assistant 게이트 분기
