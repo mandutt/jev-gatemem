@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import os
 import sys
+from contextlib import contextmanager
 from pathlib import Path
 
 _REPO = Path(r"C:\Users\mandu\hermes-made\jev-memory-middleware")
@@ -59,8 +60,6 @@ def _make_provider(mock_beam, sync_roles=("user", "assistant")):
 
 def _run(provider, user, assistant, session_id="smoke-session"):
     # monkeypatch _beam_session_scope to a contextmanager yielding the mock beam
-    from contextlib import contextmanager
-
     @contextmanager
     def _scope(_sid):
         yield provider._beam
@@ -75,10 +74,10 @@ def main() -> int:
     # -- 1. SKIP 발화 --------------------------------------------------------
     beam = _make_beam("skip")
     p = _make_provider(beam)
-    _run(p, "좋아 진행해줘", "네, 바로 진행하도록 하겠습니다. 구체적인 내용을 알려주시면 처리해드릴게요.")
+    _run(p, "내일까지 보고서 제출해야 해", "네, 알겠습니다. 이제 해당 부분을 확인해보도록 하겠습니다.")
     user_saved = [r for r in beam.remembered if "[USER]" in r.get("content", "")]
     asst_saved = [r for r in beam.remembered if "[ASSISTANT]" in r.get("content", "")]
-    ok1 = len(user_saved) == 0 and len(asst_saved) == 1
+    ok1 = len(user_saved) == 1 and len(asst_saved) == 0
     print(f"[1] SKIP 발화: user_saved={len(user_saved)} asst_saved={len(asst_saved)} -> {'PASS' if ok1 else 'FAIL'}")
     if not ok1:
         failures.append("1: SKIP 발화 시 user가 저장됨")
@@ -124,6 +123,38 @@ def main() -> int:
     finally:
         if saved_key is not None:
             os.environ["TYPESAFE_API_KEY"] = saved_key
+
+    # -- 5. G-AS: assistant SKIP 발화 (진행 중 발언) -> user만 저장 -----------
+    beam = _make_beam("as-skip")
+    p = _make_provider(beam)
+    _run(p, "내일까지 보고서 제출해야 해", "이제 전체 세션을 스캔해서 powershell 호출의 오류 패턴을 분석한다. 마지막 검증 몇 개만 하면 된다.")
+    user_saved = [r for r in beam.remembered if "[USER]" in r.get("content", "")]
+    asst_saved = [r for r in beam.remembered if "[ASSISTANT]" in r.get("content", "")]
+    ok5 = len(user_saved) == 1 and len(asst_saved) == 0
+    print(f"[5] G-AS SKIP (진행 중): user_saved={len(user_saved)} asst_saved={len(asst_saved)} -> {'PASS' if ok5 else 'FAIL'}")
+    if not ok5:
+        failures.append("5: G-AS SKIP 발화 시 assistant가 저장됨")
+
+    # -- 6. G-AS: assistant KEEP 발화 (결과물) -> user+assistant 모두 저장 -----
+    beam = _make_beam("as-keep")
+    p = _make_provider(beam)
+    _run(p, "내일까지 보고서 제출해야 해", "보고서는 40페이지 분량으로 작성했습니다. 서버 에러는 재시작으로 해결되었고, 이제 정상 작동합니다.")
+    user_saved = [r for r in beam.remembered if "[USER]" in r.get("content", "")]
+    asst_saved = [r for r in beam.remembered if "[ASSISTANT]" in r.get("content", "")]
+    ok6 = len(user_saved) == 1 and len(asst_saved) == 1
+    print(f"[6] G-AS KEEP (결과물): user_saved={len(user_saved)} asst_saved={len(asst_saved)} -> {'PASS' if ok6 else 'FAIL'}")
+    if not ok6:
+        failures.append("6: G-AS KEEP 발화 시 저장 누락")
+
+    # -- 7. G-AS: sync_roles에 assistant 없으면 게이트 우회 (base 동작) -------
+    beam = _make_beam("as-off")
+    p = _make_provider(beam, sync_roles=("user",))
+    _run(p, "진행해줘", "이제 다음 단계로 넘어갑니다.")
+    asst_saved = [r for r in beam.remembered if "[ASSISTANT]" in r.get("content", "")]
+    ok7 = len(asst_saved) == 0
+    print(f"[7] sync_roles user만: asst_saved={len(asst_saved)} -> {'PASS' if ok7 else 'FAIL'}")
+    if not ok7:
+        failures.append("7: sync_roles에 assistant 없는데 저장됨")
 
     print("=" * 50)
     if failures:

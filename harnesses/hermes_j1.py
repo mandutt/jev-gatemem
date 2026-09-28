@@ -57,26 +57,56 @@ class JevRerankProvider(MnemosyneMemoryProvider):
         return block if (block or "").strip() else base
 
     # -- write gate override (P8+G-qual, 2026-09-28) ----------------------
+    # G-qual (user): SKIP iff store==NO_STORE && type==NO_STORE && store_conf>=0.6
+    # G-AS   (assistant): SKIP iff store==NO_STORE | (store==STORE && type==context)
+    #   (gold50 precision 0.744/recall 0.935/F1 0.829 + ctx17 전수 검증 0오류, 2026-09-28)
+    # Any JEV failure / kill switch -> base behavior (KEEP, no data loss).
     def sync_turn(self, user_content: str, assistant_content: str, *, session_id: str = "", messages=None) -> None:
         """Persist the turn to Mnemosyne, applying the JEV write gate to the
-        user utterance. G-qual: SKIP iff store==NO_STORE && type==NO_STORE &&
-        store_conf>=0.6. Assistant content is stored as before (unchanged).
+        user utterance (G-qual) and the assistant utterance (G-AS).
+        G-qual: SKIP iff store==NO_STORE && type==NO_STORE && store_conf>=0.6.
+        G-AS:   SKIP iff store==NO_STORE | (store==STORE && type==context).
+        Four-way branch: both KEEP -> base; user SKIP -> assistant only;
+        assistant SKIP -> user only; both SKIP -> nothing.
         Any JEV failure / kill switch -> base behavior (KEEP, no data loss).
         """
         wg = _wg()
         if wg is None:
             # accessor failed — never lose data, fall back to base
             return super().sync_turn(user_content, assistant_content, session_id=session_id, messages=messages)
-        gate = wg.evaluate(user_content) if (user_content or "").strip() and len(user_content) > 5 else None
-        skip = bool(gate and gate.get("keep") is False)
-        if skip:
+
+        # -- user gate (G-qual) ------------------------------------------
+        user_gate = (wg.evaluate(user_content)
+                     if (user_content or "").strip() and len(user_content) > 5 else None)
+        user_skip = bool(user_gate and user_gate.get("keep") is False)
+        if user_skip:
             log.info(
                 "write-gate SKIP user utterance (store=%s conf=%.2f type=%s conf=%.2f reason=%s)",
-                gate.get("store"), gate.get("store_conf"),
-                gate.get("type"), gate.get("type_conf"), gate.get("reason"),
+                user_gate.get("store"), user_gate.get("store_conf"),
+                user_gate.get("type"), user_gate.get("type_conf"), user_gate.get("reason"),
             )
-            # user utterance gated out — persist only the assistant side
+
+        # -- assistant gate (G-AS) ---------------------------------------
+        asst_gate = None
+        asst_skip = False
+        if "assistant" in self._sync_roles:
+            asst_gate = (wg.evaluate_assistant(assistant_content)
+                         if (assistant_content or "").strip() and len(assistant_content) > 10 else None)
+            asst_skip = bool(asst_gate and asst_gate.get("keep") is False)
+            if asst_skip:
+                log.info(
+                    "write-gate SKIP assistant utterance (store=%s conf=%.2f type=%s conf=%.2f reason=%s)",
+                    asst_gate.get("store"), asst_gate.get("store_conf"),
+                    asst_gate.get("type"), asst_gate.get("type_conf"), asst_gate.get("reason"),
+                )
+
+        # -- four-way branch ---------------------------------------------
+        if user_skip and asst_skip:
+            return  # both gated out — nothing to persist
+        if user_skip:
             return self._sync_turn_without_user(assistant_content, session_id=session_id, messages=messages)
+        if asst_skip:
+            return self._sync_turn_without_assistant(user_content, session_id=session_id, messages=messages)
         return super().sync_turn(user_content, assistant_content, session_id=session_id, messages=messages)
 
     def _sync_turn_without_user(self, assistant_content: str, *, session_id: str = "", messages=None) -> None:
@@ -117,6 +147,46 @@ class JevRerankProvider(MnemosyneMemoryProvider):
                 )
         except Exception as e:
             log.debug("sync_turn_without_user failed: %s", e)
+
+    def _sync_turn_without_assistant(self, user_content: str, *, session_id: str = "", messages=None) -> None:
+        """Persist only the user side of a turn (assistant side was gated out).
+
+        Mirrors the base sync_turn user branch: beam-scoped, ledger-aware,
+        identity capture included, user stored with importance 0.5 as before.
+        Any failure is logged, never raised.
+        """
+        try:
+            self._maybe_retry_init()
+            if not self._beam or self._agent_context in getattr(self, "_skip_contexts", set()):
+                return
+            ledger = getattr(self, "_verbatim_ledger", None)
+            active_session = getattr(self, "_active_session_id", "")
+            ticket = (ledger.begin(str(session_id or "").strip(), messages)
+                      if ledger and active_session == str(session_id or "").strip() else None)
+            with self._beam_session_scope(session_id) as beam:
+                if beam is None:
+                    return
+                if "user" not in self._sync_roles:
+                    return
+                if not (user_content and len(user_content) > 5 and not self._should_filter(user_content)):
+                    return
+                uc = user_content
+                from mnemosyne_hermes import _sync_turn_user_limit
+                limit = _sync_turn_user_limit()
+                if limit > 0:
+                    uc = uc[:limit]
+                capture = ledger.capture if ledger else None
+                remember = (lambda **kw: capture(str(session_id or "").strip(), ticket, beam, uc, **kw)) if capture else beam.remember
+                remember(
+                    content=f"[USER] {uc}",
+                    source="conversation",
+                    importance=0.5,
+                    scope=self._default_scope,
+                    extract_entities=True,
+                )
+                self._capture_identity_signals(uc)
+        except Exception as e:
+            log.debug("sync_turn_without_assistant failed: %s", e)
 
 
 # ---------------------------------------------------------------------------

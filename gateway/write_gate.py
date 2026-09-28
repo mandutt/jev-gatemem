@@ -1,14 +1,15 @@
 """JEV write gate — G-qual 규칙 (P8+G-qual, 2026-09-28 실측 채택).
 
-- SKIP = store==NO_STORE && type==NO_STORE && store_confidence>=0.6
-- KEEP = 그 외 (store==STORE | type 저장타입 | 저신뢰 NO_STORE)
-- JEV 호출 실패/타임아웃/비활성/키 없음 → KEEP (기존 저장, 누락 방지)
+- SKIP (user, G-qual) = store==NO_STORE && type==NO_STORE && store_confidence>=0.6
+- SKIP (assistant, G-AS) = store==NO_STORE | (store==STORE && type==context)
+- KEEP = 그 외 | 파싱 실패 | JEV 호출 실패/타임아웃/비활성/키 없음 (누락 방지)
 - 킬스위치: JEV_WRITE_GATE=0 → KEEP (게이트 비활성)
+- 타임아웃 15s + 1회 재시도 (5xx/시간초과) — 실측 latency 0.24~1.9s 꼬리 23s
 
-실측 근거 (memory-classification-evaluation/JEV_INGESTION_REPORT.md):
-- store recall 0.951 (+45% vs G0.6 0.656)
-- live 142건: 누락 0, 과다 5
-- store 오분류 근본 원인 = store 지시문 편향 → type 이중확인으로 해결 (P11 실험)
+실측 근거 (memory-classification-evaluation/):
+- user: store recall 0.951 (+45% vs G0.6 0.656), live 142건 누락 0
+- assistant: gold50 precision 0.744 / recall 0.935 / F1 0.829
+- assistant context 필터: 17건 전수 gold → 오분류 0건 (결과물 손실 0)
 """
 from __future__ import annotations
 
@@ -20,7 +21,11 @@ from typing import Dict, Optional
 log = logging.getLogger(__name__)
 
 JEV_WRITE_GATE_ENV = "JEV_WRITE_GATE"
-JEV_WRITE_GATE_TIMEOUT_S = 5.0  # rerank와 동일한 하드 캡
+# 실측 (2026-09-28): JEV API latency 0.24~1.9s (대부분 <0.5s), 서버 오류 503/520
+# 간헐 + 상위 꼬리 23s. 5s 하드캡은 잦은 실패(→전부 KEEP)를 유발해 게이트 무력화.
+# 15s + 1회 재시도로 상향: 대부분 즉시 통과, 서버 오류는 재시도로 흡수.
+JEV_WRITE_GATE_TIMEOUT_S = 15.0
+JEV_WRITE_GATE_RETRIES = 1
 
 API_URL = "https://api.typesafe.ai/v1/systemone"
 MODEL = "jev-latest"
@@ -126,6 +131,53 @@ def _collect(answers: Dict, key: str):
         return None, None
 
 
+def _post_systemone(client, *, utterance: str, timeout: float) -> tuple:
+    """POST /v1/systemone with retry on transient server errors.
+
+    Returns (status_code, answers_dict). Retries up to JEV_WRITE_GATE_RETRIES
+    on HTTP 5xx (503/520) — observed intermittently on the live API.
+    Never raises for transient failures; network exceptions surface to the
+    caller's try/except (-> KEEP).
+    """
+    import httpx
+
+    utterance_cut = (utterance or "")[:1500]
+    state = {
+        "utterance": utterance_cut,
+        "candidates": [{"id": f"t{i}", "label": t} for i, t in enumerate(TYPES)],
+    }
+    questions = {
+        "store": {
+            "type": "choice",
+            "instructions": STORE_INSTRUCTIONS,
+            "criteria": {"c0": "STORE", "c1": "NO_STORE"},
+        },
+        "classify": {
+            "type": "choice",
+            "instructions": CLASSIFY_INSTRUCTIONS,
+            "criteria": {f"c{i}": t for i, t in enumerate(TYPES)},
+        },
+    }
+    body = {"state": state, "questions": questions, "model": MODEL}
+    last_status = None
+    last_answers = {}
+    attempts = 1 + JEV_WRITE_GATE_RETRIES
+    for attempt in range(attempts):
+        try:
+            resp = client.post(API_URL, json=body, timeout=timeout)
+        except httpx.TimeoutException:
+            if attempt < attempts - 1:
+                continue  # transient timeout — retry
+            raise
+        last_status = resp.status_code
+        if resp.status_code == 200:
+            return 200, (resp.json().get("answers") or {})
+        if resp.status_code >= 500 and attempt < attempts - 1:
+            continue  # server error (503/520) — retry
+        return resp.status_code, {}
+    return last_status or 0, last_answers
+
+
 def evaluate(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIMEOUT_S) -> Dict:
     """G-qual 게이트 평가. 반환: {keep, store, store_conf, type, type_conf, reason, latency_ms}.
 
@@ -152,38 +204,16 @@ def evaluate(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIM
                 "Content-Type": "application/json",
             },
         )
-        state = {
-            "utterance": utterance,
-            "candidates": [{"id": f"t{i}", "label": t} for i, t in enumerate(TYPES)],
-        }
-        questions = {
-            "store": {
-                "type": "choice",
-                "instructions": STORE_INSTRUCTIONS,
-                "criteria": {"c0": "STORE", "c1": "NO_STORE"},
-            },
-            "classify": {
-                "type": "choice",
-                "instructions": CLASSIFY_INSTRUCTIONS,
-                "criteria": {f"c{i}": t for i, t in enumerate(TYPES)},
-            },
-        }
         t0 = time.perf_counter()
         try:
-            resp = c.post(
-                API_URL,
-                json={"state": state, "questions": questions, "model": MODEL},
-                timeout=timeout,
-            )
+            status_code, answers = _post_systemone(c, utterance=utterance, timeout=timeout)
         finally:
             if own_client:
                 c.close()
         lat_ms = (time.perf_counter() - t0) * 1000
-        if resp.status_code != 200:
-            log.info("write-gate HTTP %s -> KEEP", resp.status_code)
-            return {"keep": True, "reason": f"http-{resp.status_code}"}
-
-        answers = resp.json().get("answers") or {}
+        if status_code != 200:
+            log.info("write-gate HTTP %s -> KEEP", status_code)
+            return {"keep": True, "reason": f"http-{status_code}"}
         store_idx, store_conf = _collect(answers, "store")
         type_idx, type_conf = _collect(answers, "classify")
         store = "STORE" if store_idx == 0 else ("NO_STORE" if store_idx == 1 else None)
@@ -230,6 +260,94 @@ def evaluate(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIM
         return {"keep": True, "reason": "error", "error": str(exc)[:120]}
 
 
+def evaluate_assistant(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIMEOUT_S) -> Dict:
+    """G-AS 게이트 평가 (assistant 발화 전용, 2026-09-28 확정).
+
+    규칙 (jev_classify_AS.gate_keep와 동일):
+      - KEEP  = store==STORE && type != context  (저장 가치 있는 결과물)
+      - SKIP  = store==NO_STORE | (store==STORE && type==context)
+      - 파싱 실패(store=None)만 KEEP — 누락 방지
+    입력은 1500자로 truncation (HTTP 400 회피 — 200건 분석에서 검증된 cut).
+
+    절대 raise하지 않음 — 실패 시 keep=True (KEEP, 누락 방지).
+    """
+    if not (utterance or "").strip():
+        return {"keep": True, "reason": "empty"}
+    if not gate_enabled():
+        return {"keep": True, "reason": "killswitch-off"}
+
+    key = os.environ.get("TYPESAFE_API_KEY") or ""
+    if not key:
+        log.debug("write-gate-as: no TYPESAFE_API_KEY -> KEEP")
+        return {"keep": True, "reason": "no-key"}
+
+    try:
+        import httpx
+
+        own_client = client is None
+        c = client or httpx.Client(
+            timeout=httpx.Timeout(timeout, connect=timeout),
+            headers={
+                "Authorization": f"Bearer {key}",
+                "Content-Type": "application/json",
+            },
+        )
+        t0 = time.perf_counter()
+        try:
+            status_code, answers = _post_systemone(c, utterance=utterance, timeout=timeout)
+        finally:
+            if own_client:
+                c.close()
+        lat_ms = (time.perf_counter() - t0) * 1000
+        if status_code != 200:
+            log.info("write-gate-as HTTP %s -> KEEP", status_code)
+            return {"keep": True, "reason": f"http-{status_code}"}
+        store_idx, store_conf = _collect(answers, "store")
+        type_idx, type_conf = _collect(answers, "classify")
+        store = "STORE" if store_idx == 0 else ("NO_STORE" if store_idx == 1 else None)
+        mtype = TYPES[type_idx] if type_idx is not None and 0 <= type_idx < len(TYPES) else None
+        store_conf = store_conf if store_conf is not None else 0.0
+        type_conf = type_conf if type_conf is not None else 0.0
+
+        # G-AS 규칙 (gold50 + ctx17 전수 검증으로 채택, jev_classify_AS.gate_keep와 동일)
+        #   KEEP  = store==STORE && type!=context
+        #   SKIP  = (store==STORE && type==context) | store==NO_STORE
+        #   파싱 실패(store=None)만 KEEP — 누락 방지
+        if store == "STORE" and mtype != "context":
+            keep = True
+            reason = "store"
+        elif store in ("STORE", "NO_STORE"):
+            keep = False
+            reason = "context" if mtype == "context" else "no-store"
+        else:
+            keep = True
+            reason = "parse-fail"
+
+        if not keep:
+            _jtrace("write-gate-as", {
+                "keep": "skip",
+                "store": store,
+                "store_conf": f"{store_conf:.2f}",
+                "type": mtype,
+                "type_conf": f"{type_conf:.2f}",
+                "reason": reason,
+                "lat_ms": f"{lat_ms:.0f}",
+                "utterance": (utterance or "")[:100],
+            })
+        return {
+            "keep": keep,
+            "store": store,
+            "store_conf": store_conf,
+            "type": mtype,
+            "type_conf": type_conf,
+            "reason": reason,
+            "latency_ms": round(lat_ms, 1),
+        }
+    except Exception as exc:
+        log.info("write-gate-as failed (%s) -> KEEP", type(exc).__name__)
+        return {"keep": True, "reason": "error", "error": str(exc)[:120]}
+
+
 def gate_enabled() -> bool:
     """JEV_WRITE_GATE: '0'/'false'/'off' -> 비활성 (KEEP). 기본 활성."""
     raw = (os.environ.get(JEV_WRITE_GATE_ENV) or "").strip().lower()
@@ -238,4 +356,4 @@ def gate_enabled() -> bool:
     return True
 
 
-__all__ = ["evaluate", "gate_enabled", "STORE_INSTRUCTIONS", "CLASSIFY_INSTRUCTIONS", "TYPES"]
+__all__ = ["evaluate", "evaluate_assistant", "gate_enabled", "STORE_INSTRUCTIONS", "CLASSIFY_INSTRUCTIONS", "TYPES"]
