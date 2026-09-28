@@ -100,13 +100,13 @@ G-qual 규칙 (최종 채택):
 
 **적용 위치**: `harnesses/hermes_j1.py`의 `JevRerankProvider.sync_turn()` 오버라이드 (옵션 A)
 - user 발화: `[USER] ` 접두사 제거 → JEV store/type 분류 1회 → **G-qual** → SKIP 시 remember 생략
-- assistant 발화: 게이트 없이 base 그대로 (정책 변경 아님)
+- assistant 발화: **G-AS** (`store!=STORE || type==context → SKIP`) — `ASSISTANT_GATE_REPORT.md` (2026-09-28 실측)
 - JEV 실패/타임아웃/비활성 → KEEP (기존 저장, 누락 방지)
 - 킬스위치 `JEV_WRITE_GATE=0` → base sync_turn (기존 100% 저장)
 - 로깅: `jev_trace.log`에 `write-gate SKIP/KEEP conf type`
 - Hermes core / Mnemosyne core 무수정 (기존 원칙 유지)
 
-**설계 근거**: P8+G-qual 실측 (store recall 0.951, live 누락 0, 과다 5)
+**설계 근거**: P8+G-qual 실측 (store recall 0.951, live 누락 0, 과다 5) + G-AS 실측 (gold50 precision 0.744, recall 0.935)
 
 **한계**:
 - 판정이 context 없이 단독 발화 기준 — 실제 운용(history context 주입)과 차이 가능

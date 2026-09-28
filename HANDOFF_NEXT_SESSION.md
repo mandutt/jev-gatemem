@@ -162,6 +162,14 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - **검증**: `harnesses/smoke_write_gate.py` 4/4 PASS (SKIP/KEEP/킬스위치/JEV실패), 실 JEV API로 SKIP(좋아 진행해줘) vs KEEP(내일까지 보고서) 판정 확인, trace 로그 기록 확인
 - ⏳ **남은 일**: 데스크톱 재시작(플러그인 새 코드 로드) 후 실사용 확인 → 장기 관측
 
+**★ assistant 발화 저장 게이트 (G-AS) — 2026-09-28 설계 완료, 구현 전**
+- **문제**: Mnemosyne 기본 `_sync_roles={"user"}` → assistant 결과물(작업 핵심)이 메모리에 안 남음. 사용자 지적: "지시만 저장하면 작업 내용을 기억 못 함"
+- **실측**: 최근 21일 assistant 3,715건 중 200건 분류 → **79% 저장 가치** (유저와 정반대). gold50 인간 판정 → **G-AS 채택** (`store==STORE && type!=context → KEEP`, precision 0.744 / recall 0.935 / F1 0.829)
+- **폐기된 대안**: conf 임계값(결과물 conf 0.59~0.97 분산 → recall 폭락), commitment 필터(TP 6건 손실), P8-AS 전용 프롬프트(recall 0.355), 정규식 next-step 필터(FP 2/9만 매치)
+- **주의**: JEV 호출은 반드시 TypeSafe 직접 API (`api.typesafe.ai/v1/systemone`, jev-latest) — 9router(localhost:20128)는 간헐적 400 반환
+- **구현 전제**: `sync_roles: ["user","assistant"]` 활성화 + `hermes_j1.py` sync_turn에 assistant 게이트 분기
+- 산출물: `memory-classification-evaluation/ASSISTANT_GATE_REPORT.md`, `data/ab_assistant_gold50*`
+
 - [x] **데스크톱 재시작 후 실사용 검증** — 2026-09-27 밤 세션: `Jev choice: idx=0 latency=226ms pool=1` 실측 (agent.log)
 - [~] **JEV_RERANK=0 vs 1 실사용 A/B — 1차 완료(보류)** — 12쿼리 페어와이즈: 5/9 완전 동일, 4/9 순서 변경(대부분 1↔2 스왑). 사용자 체감 차이 없음 → **메모리 2,000+ rows 후 재평가**. 산출물: ab_jev_rerank/AB_REPORT.md + run 스냅샷 + pairs.html
 - [x] **gateway.py의 retrieve_candidates/retrieve 완성** — J1 파이프라인(lane pool→gate→Jev lift) 기반 MemoryGateway 완성. use_j1=False로 Phase 0 surface 유지, fallback §19, j1_access 경유 섀도잉 안전. 검증: verify_gateway_api.py pass + 런타임 venv smoke PASS (+ JEV_RERANK=0 킬스위치 존중 버그 수정)

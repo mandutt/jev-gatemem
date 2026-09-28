@@ -77,3 +77,17 @@ SKIP = store==NO_STORE && store_confidence >= 0.6  (type 무관)
 3. **실제 적용은 별도 승인 후** — provider 활성화(`memory.provider: jev-mem-write`)는 다음 단계
 4. **기대 효과**: 저장량 142→110건 (23% 감소) + 누락 0 + recall 품질(리랭크 풀) 개선
 5. **한계**: 판정이 context 없이 단독 발화 기준 — 실제 운용(history context 주입)과 차이 있을 수 있음
+
+## 6. assistant 발화 게이트 (G-AS) — 2026-09-28 추가
+
+위 게이트는 **user 발화 전용**. assistant 발화는 Mnemosyne 기본 `_sync_roles={"user"}`로 자동 저장되지 않으며,
+별도 실측(`ASSISTANT_GATE_REPORT.md`) 결과 assistant는 **G-AS** (`store==STORE && type!=context → KEEP`) 사용:
+
+| 구분 | 게이트 | 근거 |
+|---|---|---|
+| user | G-qual (`store==NO_STORE && type==NO_STORE && conf≥0.6 → SKIP`) | 142건 A/B (0 누락) |
+| assistant | G-AS (`store!=STORE \|\| type==context → SKIP`) | gold50 (precision 0.744, recall 0.935) |
+
+- assistant 저장 활성화 시 `sync_roles: ["user","assistant"]` 필요
+- conf 임계값은 assistant에서 **부적합** (결과물 conf가 0.59~0.97 분산 → recall 폭락)
+- 전용 프롬프트(P8-AS)는 recall 0.355로 폐기 — **P8 원본 그대로 + type 필터**가 최적

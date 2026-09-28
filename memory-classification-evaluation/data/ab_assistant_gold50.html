@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>assistant 발화 메모리 저장 가치 판정 (gold 50)</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 2rem auto; max-width: 720px; padding: 0 1rem; }
+  h1 { font-size: 1.2rem; }
+  .progress { background:#eee; border-radius:8px; padding:4px 10px; margin: 8px 0; font-size: .9rem; }
+  .card { border:1px solid #ccc; border-radius:10px; padding:14px 16px; margin:10px 0; }
+  .card .meta { color:#888; font-size:.8rem; margin-bottom:6px; }
+  .card .text { font-size:1rem; line-height:1.5; white-space:pre-wrap; }
+  .btns { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+  .btns button { padding:8px 16px; border-radius:8px; border:1px solid #ccc; cursor:pointer; font-size:.9rem; }
+  .store { background:#e6f4ea; }
+  .store.active { background:#34a853; color:#fff; }
+  .nostore { background:#fce8e6; }
+  .nostore.active { background:#ea4335; color:#fff; }
+  .summary { margin:16px 0; padding:12px; background:#f8f9fa; border-radius:10px; }
+  .export { padding:10px 20px; background:#1a73e8; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+</style>
+</head>
+<body>
+<h1>assistant 발화 메모리 저장 가치 판정 (50건)</h1>
+<div class="progress" id="progress">0 / 50 판정됨</div>
+<div class="summary">
+  <b>판정 기준</b>: 이 assistant 발화가 장기 메모리에 저장할 가치가 있나요?<br/>
+  🟢 <b>STORE</b> = 장기적으로 기억할 가치 있음 (결과물·결정·원인·요약·중요 사실 등)<br/>
+  🔴 <b>NO_STORE</b> = 일회성 진행 중 발언, 임시 작업 단계, 저장 불필요<br/>
+  <i>내용이 길면 끝까지 읽고 판정해 주세요. "작업 진행 중 요약"도 결과가 나왔으면 STORE가 맞습니다.</i>
+</div>
+<div id="cards"></div>
+<div style="margin:20px 0"><button class="export" onclick="exportJSON()">판정 결과 내보내기 (JSON)</button></div>
+<script>
+const CARDS = __CARDS__;
+const store = JSON.parse(localStorage.getItem('ab_assistant_gold50') || '{}');
+let current = 0;
+
+function render() {
+  const c = CARDS[current];
+  const prog = document.getElementById('progress');
+  const judged = Object.keys(store).length;
+  prog.textContent = judged + ' / ' + CARDS.length + ' 판정됨';
+  const div = document.getElementById('cards');
+  const v = store[c.i];
+  div.innerHTML = `
+    <div class="card">
+      <div class="meta">#${c.i + 1} / ${CARDS.length} · JEV: ${c.jev_store}/${c.jev_type} (conf ${c.jev_store_conf.toFixed(2)})</div>
+      <div class="text"></div>
+      <div class="btns">
+        <button class="store ${v === 'store' ? 'active' : ''}" onclick="judge('store')">🟢 STORE (저장 가치 있음)</button>
+        <button class="nostore ${v === 'nostore' ? 'active' : ''}" onclick="judge('nostore')">🔴 NO_STORE (저장 불필요)</button>
+        <button onclick="next()">다음 →</button>
+      </div>
+    </div>`;
+  div.querySelector('.text').textContent = c.text;
+}
+function judge(v) {
+  store[CARDS[current].i] = v;
+  localStorage.setItem('ab_assistant_gold50', JSON.stringify(store));
+  next();
+}
+function next() {
+  if (current < CARDS.length - 1) { current++; render(); }
+  else { document.getElementById('cards').innerHTML = '<p style="font-size:1.2rem">🎉 모든 카드 판정 완료! 내보내기 버튼으로 결과 저장.</p>'; }
+  render();
+}
+function exportJSON() {
+  const out = { judged_at: new Date().toISOString(), verdicts: store };
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ab_assistant_gold50.json';
+  a.click();
+}
+render();
+</script>
+</body>
+</html>
