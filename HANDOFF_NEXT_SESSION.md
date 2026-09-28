@@ -200,12 +200,22 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
    ```
    $LOCALAPPDATA/hermes/logs/jev_trace.log  (tail)
    # keep=skip ... reason=no-store / reason=context  → 게이트 정상 SKIP
+   # reason=commitment-fp-v4  → commitment FP 필터 v4 동작 (2026-09-28 추가)
    # 이벤트 없음 → JEV_WRITE_GATE=0 확인 / TYPESAFE_API_KEY 확인
    ```
+3b. **commitment FP 필터 v4** (2026-09-28 실험→라이브 반영):
+   - 규칙: `gateway/write_gate.py` `_as_commitment_fp_filter` (KNOWLEDGE 보호 + TRANSITION×OPERATION/INTENT SKIP)
+   - 실측: gold50 precision 0.744→0.806, recall 유지 0.935, 회귀 0, FP 43% 감소, 비용 0
+   - 상세: `ASSISTANT_GATE_REPORT.md` §7, 실험: `experiments/exp2_*_rule_v*.py`
 4. **롤백 방법** (문제 시):
    - 게이트만 끄기: `JEV_WRITE_GATE=0` (환경변수) → 전부 KEEP
    - assistant 저장 끄기: `hermes config unset memory.mnemosyne.sync_roles` → user만
 5. **장기 관측 후 리포트 갱신**: 1~2주 후 `[ASSISTANT]` 저장량·recall 영향 → `ASSISTANT_GATE_REPORT.md`에 실측 반영
+5b. **v4 필터 실측 기준선/관측** (2026-09-28 협의 — gold50 50건은 추정치, 운용 데이터로 검증):
+   - 기준선: `grep -c 'commitment-fp-v4' $LOCALAPPDATA/hermes/logs/jev_trace.log` (적용 직후 0건)
+   - 관측: 1~2주 후 `grep 'commitment-fp-v4' ... | wc -l` + SKIP된 utterance(로그에 100자까지)를 gold 판정
+   - 판정 기준: SKIP 중 실제 NO_STORE(FP) 비율 = live precision; **TP를 버린 회귀 1건이라도 발견 시 즉시 필터 비활성화 보고**
+   - 결과를 `ASSISTANT_GATE_REPORT.md` §7 실측 표에 반영 (추정치 → 운용치 갱신)
 
 **알려진 주의**:
 - 실제 Hermes 홈 = `C:\Users\mandu\AppData\Local\hermes` (**`.hermes/` 아님**) — config 수정은 `hermes config set` 사용 (agent 직접 편집은 차단됨)

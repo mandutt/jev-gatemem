@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 import time
 from typing import Dict, Optional
 
@@ -35,6 +36,38 @@ TYPES = [
     "instruction", "relationship", "context", "learning", "observation",
     "error", "artifact", "NO_STORE",
 ]
+
+# G-AS commitment FP 필터 v4 (2026-09-28 실험 확정):
+#   gold50: 회귀 0, FP 43% 감소 (precision 0.744→0.806, F1 0.829→0.866)
+#   트레이드오프: 지식작업 보호(KNOWLEDGE) ↔ 실행작업 전환 포착(TRANSITION+OPERATION)
+_AS_KNOWLEDGE = re.compile(
+    r"(검증|확인|조사|분석|테스트|정밀|확정|검토|추정|판단|파악|실측|분해|라이브|확보)"
+)
+_AS_OPERATION = re.compile(
+    r"(백업|설치|스왑|설정|복구|적용|구축|등록|이관|모니터링|cron)"
+)
+_AS_TRANSITION = re.compile(
+    r"(정상|감지|동작|완료|완성|등록|파악).{0,40}(이제|다음|그럼)"
+)
+_AS_INTENT = re.compile(
+    r"(진행하겠|만들겠|구축하|정리하|작성하겠|등록하겠|돌릴게|할게|해볼게|적용하겠|시작하겠|세겠습니다)"
+)
+
+
+def _as_commitment_fp_filter(utterance: str) -> bool:
+    """G-AS commitment 추가 필터 v4 — True면 SKIP (저장 생략).
+
+    KNOWLEDGE(지식작업) 있으면 KEEP (TP 보호),
+    TRANSITION(결과→이제/다음) && OPERATION(실행작업) → SKIP,
+    INTENT(순수 진행 의지) → SKIP.
+    """
+    if _AS_KNOWLEDGE.search(utterance[:200]):
+        return False
+    if _AS_TRANSITION.search(utterance) and _AS_OPERATION.search(utterance):
+        return True
+    if _AS_INTENT.search(utterance):
+        return True
+    return False
 
 STORE_INSTRUCTIONS = (
     "Does this utterance have long-term memory value worth storing? "
@@ -313,9 +346,14 @@ def evaluate_assistant(utterance: str, *, client=None, timeout: float = JEV_WRIT
         #   KEEP  = store==STORE && type!=context
         #   SKIP  = (store==STORE && type==context) | store==NO_STORE
         #   파싱 실패(store=None)만 KEEP — 누락 방지
+        #   + commitment FP 필터 v4: KEEP 중 "진행 전환/순수 진행 의지" → SKIP
         if store == "STORE" and mtype != "context":
-            keep = True
-            reason = "store"
+            if mtype == "commitment" and _as_commitment_fp_filter(utterance or ""):
+                keep = False
+                reason = "commitment-fp-v4"
+            else:
+                keep = True
+                reason = "store"
         elif store in ("STORE", "NO_STORE"):
             keep = False
             reason = "context" if mtype == "context" else "no-store"
