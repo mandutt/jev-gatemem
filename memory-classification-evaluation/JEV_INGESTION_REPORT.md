@@ -91,6 +91,24 @@ v4의 약점(observation FP 50, context FP ~81: 잡담·일반론·일회성 사
 - 145건(observation/context 오분류) 재분류: **60건 교정, 0건 퇴행**
 - **최종 파일: `JEV_ALL1975_V5.jsonl`** (전체 적용 — 영구)
 
+### 2.1e commitment/learning 경계 개선 — 프롬프트 v6 (최종)
+
+v5의 약점(commitment FN 17: 시간 명시 예약/계획을 NO_STORE/goal로, learning FN 8: 깨달음을 event로)을 v6로 보강:
+- commitment = **시간·장소 명시된 예약/스케줄/여행 계획 포함** (단, 상대방 서비스 공지 "확인 이메일 발송"·일반 의무 "~해야 해요"는 NO_STORE/context)
+- learning = **깨달음·발견·교훈·접근법 변경** (과거 사건 형식으로 말해도 learning)
+
+| 지표 | v5 | **v6** |
+|---|---|---|
+| **정확도** | 0.8172 | **0.8344** |
+| commitment F1 | 0.455 | **0.828** |
+| learning F1 | 0.500 | **0.815** |
+| preference F1 | 0.752 | **0.758** |
+| NO_STORE F1 | 0.906 | **0.913** |
+| store 결합 F1 | 0.830 | **0.840** (FP 199→189) |
+
+- 58건(commitment/learning 오분류) 재분류: **34건 교정, 0건 퇴행**
+- **최종 파일: `JEV_ALL1975_V6.jsonl`** (전체 적용 — 영구)
+
 ### 2.2 should_store
 
 | 규칙 | acc | prec | rec | F1 | FP | FN |
