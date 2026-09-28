@@ -71,31 +71,33 @@
 
 ## 4. 게이트 규칙 (G) — live A/B 검증 (state.db 142건, 사용자 판정 83건)
 
-| 게이트 | SKIP | KEEP(저장) | 누락(bad) | 과다(ok) |
+| 게이트 | SKIP 조건 | store recall (1975) | live 누락(bad) | live 과다(ok) |
 |---|---|---|---|---|
-| 게이트 없음 (rule 현행) | 0 | 142 (100%) | 0 | 많음 |
-| G-type&store (P4 기준) | 83 | 59 (42%) | 14건 ❌ | 0 |
-| G0.6 (P10 기준) | 5 | 137 (96%) | 0 | 5 |
-| **G0.6 (P8 기준) = 최종** | **32** | **110 (77%)** | **0건** ✅ | **11건** |
+| G0.6 | store NO & conf≥0.6 | 0.656 | 0 | 11 |
+| **G-qual** | store NO & type NO & conf≥0.6 | **0.951** | **0건** ✅ | **5건** |
+| G-qual2 | store NO & type NO (conf 무관) | 0.945 | 0 | 5 |
 
 ```
-G0.6 규칙:
-  store==NO_STORE && store_confidence >= 0.6  → SKIP (저장 생략)
-  그 외                                        → KEEP (저장)
+G-qual 규칙 (최종 채택):
+  store==STORE                              → KEEP
+  type이 저장타입 (≠NO_STORE)                → KEEP (type 이중확인)
+  store==NO_STORE && type==NO_STORE && conf<0.6 → KEEP (저신뢰 보존)
+  store==NO_STORE && type==NO_STORE && conf≥0.6 → SKIP (저장 생략)
 ```
 
 **채택 사유**:
-- 누락 0건: 사용자 bad 14건(기술 질문) 전부 KEEP
-- 과다저장 11건만: SKIP 32건 모두 판정 ok (오분류 0)
+- **G-qual vs G-qual2**: live 142건 동일(SKIP 5, 누락 0, 과다 5). 1975건에서 G-qual이 recall +0.6pp (0.951 vs 0.945). conf 조건 제거(G-qual2)는 저신뢰 NO_STORE까지 SKIP해 recall을 약간 깎음 → **G-qual의 저신뢰 KEEP 보수성이 recall을 살림**
+- store recall 0.656→**0.951** (+45%): P11이 규명한 store 지시문 편향을 type 이중확인으로 해결 (추가 호출 0)
+- 누락 0건: 사용자 bad 14건 전부 KEEP
 - 원칙: **JEV가 확신(conf≥0.6)할 때만 SKIP, 의심되면 KEEP** (누락보다 과다저장이 안전)
-- G-type&store (구 v4게이트)는 너무 많이 걸러 누락 14건 — 폐기
+- G-type&store (구 v4게이트)는 type도 NO_STORE만 SKIP이라 너무 많이 걸러 누락 14건 — 폐기
 
-## 5. 최종 적용 (P8 + G0.6)
+## 5. 최종 적용 (P8 + G-qual)
 
 ```
 프롬프트: P8 (type 분류 — 84.9% 정확도 유지)
-게이트:   G0.6 (store==NO_STORE && 신뢰도≥0.6 → SKIP)
-기대:     저장량 142→110건 (23% 감소) + type 정확도 84.9% 유지 + 누락 0
+게이트:   G-qual (store==NO_STORE && type==NO_STORE && 신뢰도≥0.6 → SKIP, 그 외 KEEP)
+기대:     store recall 0.951 (+45%) + type 정확도 84.9% 유지 + live 누락 0
 ```
 
 **한계**:
