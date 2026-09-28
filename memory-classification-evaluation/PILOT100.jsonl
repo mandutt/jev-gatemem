@@ -1,0 +1,100 @@
+{"id": "13_00091#0", "utterance": "알렉스 켄드릭 감독이 연출하고 에린 라이트-톰슨이 출연한 드라마 영화를 찾아보고 싶어요.", "dataset": "ko_sgd", "gold_type": "NO_STORE", "should_store": false}
+{"id": "synth#하자#0", "utterance": "테스트는 pytest로 작성하자.", "dataset": "synthetic", "gold_type": "instruction", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#5720#4", "utterance": "아니면 침대를 정리해줄 수도 있어요.", "dataset": "ko_dialog", "gold_type": "NO_STORE", "should_store": false}
+{"id": "response_selection/empathetic_dialogues/test.jsonl#4222#0", "utterance": "방금 쏘우 영화를 다 봤어요.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "3_00070#7", "utterance": "10분만 더 기다려 주시기 바랍니다.", "dataset": "ko_sgd", "gold_type": "NO_STORE", "should_store": false}
+{"id": "5_00004#10", "utterance": "좋아요, 종점이 어디였죠?", "dataset": "ko_sgd", "gold_type": "NO_STORE", "should_store": false}
+{"id": "response_selection/personachat/test.jsonl#7555#6", "utterance": "네, 뉴저지의 작은 마을에서 자랐어요.", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#2#2", "utterance": "중국 음식이요. 나 배고픈데 이 근처에 테이크아웃 식당이 있어요. 배달 시켜서 먹는 동안 TV로 뉴스를 볼 수 있습니다.", "dataset": "ko_dialog", "gold_type": "NO_STORE", "should_store": false}
+{"id": "response_selection/socialdial/test.jsonl#5889#0", "utterance": "늦어서 죄송합니다.", "dataset": "ko_dialog", "gold_type": "NO_STORE", "should_store": false}
+{"id": "9_00072#10", "utterance": "그래, 그걸로 하자.", "dataset": "ko_sgd", "gold_type": "decision", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#1#1", "utterance": "피곤하고 스트레스가 많아요 . 이 결혼식 때문에 두통이 심해요 .", "dataset": "ko_dialog", "gold_type": "context", "should_store": true}
+{"id": "dialogue_comprehension/fact/empathetic_dialogues/test.jsonl#2307#3", "utterance": "가끔 사람들이 이해가 안 돼요. 누가 그런 짓을 하겠어요.", "dataset": "ko_dialog", "gold_type": "NO_STORE", "should_store": false}
+{"id": "25_00119#2", "utterance": "좋네요, 다행입니다.", "dataset": "ko_sgd", "gold_type": "NO_STORE", "should_store": false}
+{"id": "response_selection/personachat/test.jsonl#2889#5", "utterance": "정말 좋은 운동이죠.", "dataset": "ko_dialog", "gold_type": "NO_STORE", "should_store": false}
+{"id": "15_00018#15", "utterance": "해당 아파트에는 차고가 있으며 사무실 연락처는 866-472-2645입니다.", "dataset": "ko_sgd", "gold_type": "fact", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#5907#1", "utterance": "스티브! 오랜만이야! 얼마나 됐어?", "dataset": "ko_dialog", "gold_type": "NO_STORE", "should_store": false}
+{"id": "koalpaca#7649", "utterance": "다음 단어를 배열하여 의미 있는 문장을 만드세요: 분자, 단백질, 부착, 분자.", "dataset": "ko_alpaca", "gold_type": "NO_STORE", "should_store": false}
+{"id": "response_selection/empathetic_dialogues/test.jsonl#5278#0", "utterance": "어젯밤 밖에서 이상한 소음이 들렸습니다. 아내와 저는 정말 무서웠어요.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "21_00093#7", "utterance": "몇 좌석이 필요하신지와 원하시는 탑승 유형을 알려 주시기 바랍니다 그리고 일반이나 럭셔리 또는 다른 유형으로 선택하실 수 있습니다.", "dataset": "ko_sgd", "gold_type": "NO_STORE", "should_store": false}
+{"id": "response_selection/personachat/test.jsonl#5313#3", "utterance": "내가 제일 좋아하는 색은 초록색이에요, 돌라돌라 지폐를 위해서요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#1153#2", "utterance": "잘됐네요. 그럼 자기소개를 해주세요.", "dataset": "ko_dialog", "gold_type": "NO_STORE", "should_store": false}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#32#4", "utterance": "고마워요 . 오늘 아침은 좀 춥지 않나요 , 그렇죠?", "dataset": "ko_dialog", "gold_type": "NO_STORE", "should_store": false}
+{"id": "20_00099#12", "utterance": "감사합니다, 입장료 없는 유아 친화적인 공원 같은 명소를 좀 찾아주실 수 있을까요?", "dataset": "ko_sgd", "gold_type": "NO_STORE", "should_store": false}
+{"id": "response_selection/personachat/test.jsonl#3268#7", "utterance": "저는 독일에서 막 미국으로 이주했어요.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "response_selection/empathetic_dialogues/test.jsonl#2516#0", "utterance": "첫 직장을 구하고 첫 주 동안 소매업이었기 때문에 정말 열심히 일했던 기억이 납니다.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "1_00117#0", "utterance": "여행 가는데 호텔 방 하나 필요해.", "dataset": "ko_sgd", "gold_type": "context", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#997#4", "utterance": "저는 홈 오피스가 있어요. 저는 기계 공학을 전공했어요.", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "dialogue_comprehension/fact/personachat/test.jsonl#965#2", "utterance": "괜찮아요, 요리 쇼를 보고 있었어요, 그런 거 좋아해요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#68#3", "utterance": "기꺼이요 . 당신은 자주 춤을 추는 것 같군요 .", "dataset": "ko_dialog", "gold_type": "observation", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#2433#1", "utterance": "안녕하세요 저는 기독교인이고 트랙터를 운전할 수 있어요.", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#5626#0", "utterance": "오늘 직장에서 제가 뭘 받았는지 상상도 못할 거예요! - 오늘 밤 마지막 NBA 경기 티켓입니다 .", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#366#3", "utterance": "전 미네소타에 살았어요.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "30_00063#9", "utterance": "비용은 3,650,000달러이며 세대 내부에 세탁 시설이 갖춰져 있음을 안내드립니다.", "dataset": "ko_sgd", "gold_type": "fact", "should_store": true}
+{"id": "dialogue_comprehension/emotion/empathetic_dialogues/test.jsonl#140#0", "utterance": "방금 16살 생일 파티를 했는데...", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#2145#4", "utterance": "버스 패스가 있으면 실제로 비용이 적게 듭니다 .", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "dialogue_comprehension/fact/personachat/test.jsonl#824#7", "utterance": "라자냐는 맛있어요. 이번 여행에서 다양한 음식을 맛보고 있어요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "response_selection/socialdial/test.jsonl#3177#3", "utterance": "가급적이면 바다 전망으로요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "28_00005#4", "utterance": "나 파스타밖에 안 먹어, 알지?", "dataset": "ko_sgd", "gold_type": "preference", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#6669#0", "utterance": "좋아요, 여러분 . 모여주세요 규칙은 다음과 같습니다. 태클 금지 . 밀지 않기 .", "dataset": "ko_dialog", "gold_type": "instruction", "should_store": true}
+{"id": "dialogue_comprehension/fact/personachat/test.jsonl#402#14", "utterance": "네, 일주일에 4번 교육청에서 관리인으로 일합니다.", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "response_selection/empathetic_dialogues/test.jsonl#28#1", "utterance": "그거 좋지 않네요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#5968#2", "utterance": "그리고 사무실에서 하루 종일 책상에 앉아 있으면 도움이되지 않는다고 생각합니다 .", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "dialogue_comprehension/relation/socialdial_distance/test.jsonl#414#3", "utterance": "아직 몸이 안 좋아서요 이해하시겠어요?", "dataset": "ko_dialog", "gold_type": "context", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#6006#8", "utterance": "저도 그래요! 물론 다이어트를 자주 하지만 점심에는 콩 한 개면 충분해요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#2634#8", "utterance": "8시에 시작합니다.", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#3641#14", "utterance": "네, 저도 많이 좋아해요. 다음 작품도 좋았으면 좋겠어요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#5260#6", "utterance": "나도 트래비스 좋아해. 나도 화학을 좋아해.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#4945#12", "utterance": "네, 어머니와 아버지가 계시고 남자친구도 있어요.", "dataset": "ko_dialog", "gold_type": "relationship", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#24#6", "utterance": "웹에서 일자리를 찾아봐야 할 것 같아 .", "dataset": "ko_dialog", "gold_type": "goal", "should_store": true}
+{"id": "1_00033#2", "utterance": "정말 마음에 드네요.", "dataset": "ko_sgd", "gold_type": "preference", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#0#3", "utterance": "다음 월요일은 12월 2일 입니다. 버스는 8시에 출발하지만 우리는 7시에 짐을 싣기 시작해야합니다.", "dataset": "ko_dialog", "gold_type": "commitment", "should_store": true}
+{"id": "3_00006#2", "utterance": "워싱턴 시애틀에서 출발하고 돌아오는 건 이번 달 14일로 부탁할게.", "dataset": "ko_sgd", "gold_type": "commitment", "should_store": true}
+{"id": "response_selection/empathetic_dialogues/test.jsonl#1527#2", "utterance": "네.. 저와 제 파트너는 그녀가 정말 자랑스러워요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#11#1", "utterance": "심각한 것은 아닙니다 . 하지만 항상 두통이 있고 몇 주 동안 제대로 잠을 자지 못했습니다. 식욕도 떨어지고 눈이 따갑기도 해요.", "dataset": "ko_dialog", "gold_type": "observation", "should_store": true}
+{"id": "response_selection/empathetic_dialogues/test.jsonl#1038#0", "utterance": "오늘 나는 내 딸이 훌륭하게 노래한다는 것을 깨달았습니다. 나는 감동했다", "dataset": "ko_dialog", "gold_type": "learning", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#4544#11", "utterance": "롤스로이스 고스트, 너무 비싸서 못 살 것 같아.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "synth#하지마#0", "utterance": "Mnemosyne 내부를 수정하지마.", "dataset": "synthetic", "gold_type": "instruction", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#5643#3", "utterance": "저는 두 아이가 있고 스톤즈 듣는 걸 좋아해요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "dialogue_comprehension/fact/empathetic_dialogues/test.jsonl#1937#0", "utterance": "최근 모임에 갔는데 친구의 남편이 저에게 추파를 던졌습니다.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "28_00111#3", "utterance": "알렉산드라 팰리스라는 공연 예술 장소가 있습니다.", "dataset": "ko_sgd", "gold_type": "fact", "should_store": true}
+{"id": "25_00011#9", "utterance": "식당은 총 10곳이며 나파에는 브릭스 레스토랑 앤 가든이 있습니다.", "dataset": "ko_sgd", "gold_type": "fact", "should_store": true}
+{"id": "dialogue_comprehension/fact/empathetic_dialogues/test.jsonl#2296#4", "utterance": "조금 울긴 했지만, 딸아이가 풀어줬기 때문에 참았어요.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "32_00015#8", "utterance": "다음 주 수요일 오후 2시로 예약해 주세요.", "dataset": "ko_sgd", "gold_type": "commitment", "should_store": true}
+{"id": "response_selection/empathetic_dialogues/test.jsonl#209#0", "utterance": "집에 왔는데 아내가 미래의 아기 사진을 4D로 보여줬는데 심장이 너무 빨리 뛰었어요!", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "dialogue_comprehension/fact/empathetic_dialogues/test.jsonl#1518#4", "utterance": "식욕을 완전히 잃었어요! 다음에 또 그 식당에서 저녁을 먹게 된다면 꼭 미리 테이크아웃을 해야겠어요.", "dataset": "ko_dialog", "gold_type": "preference", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#535#2", "utterance": "그는 나에게서 돈을 빌렸고 나는 그것을 돌려 받아야했습니다. 그는 아직 돈이 없다고 말했다.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "dialogue_comprehension/fact/personachat/test.jsonl#442#1", "utterance": "그날은 이상했어요, 제가 특별하다는 걸 알았어요.", "dataset": "ko_dialog", "gold_type": "learning", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#2899#1", "utterance": "안녕하세요, 저는 라이프 코치로 살고 있어요!", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "synth#하지마#1", "utterance": "Docker를 사용하지마.", "dataset": "synthetic", "gold_type": "instruction", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#3252#4", "utterance": "제 직업은 아이들과 아내를 행복하게 해주는 거예요.", "dataset": "ko_dialog", "gold_type": "goal", "should_store": true}
+{"id": "1_00018#0", "utterance": "샌프란시스코에서 오후 7시에 식당 자리 하나 예약하려고 해요.", "dataset": "ko_sgd", "gold_type": "goal", "should_store": true}
+{"id": "23_00091#27", "utterance": "티켓 1매당 요금은 20달러입니다.", "dataset": "ko_sgd", "gold_type": "fact", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#3521#4", "utterance": "중국인들은 차가운 음식을 먹는 것을 좋아하지 않습니다 .", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "dialogue_comprehension/emotion/empathetic_dialogues/test.jsonl#704#7", "utterance": "제 여동생이 라구나 나이구엘에서 결혼했어요.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "dialogue_comprehension/emotion/empathetic_dialogues/test.jsonl#1660#2", "utterance": "알아, 그냥 정말 보고 싶어. 불쌍한 암 고양이. 정말 사랑했는데.", "dataset": "ko_dialog", "gold_type": "relationship", "should_store": true}
+{"id": "response_selection/socialdial/test.jsonl#5123#3", "utterance": "또한 3 페이지의 차트는 더 명확하게 레이블을 지정해야합니다.", "dataset": "ko_dialog", "gold_type": "instruction", "should_store": true}
+{"id": "1_00004#4", "utterance": "아메리칸 캐니언에 있어.", "dataset": "ko_sgd", "gold_type": "context", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#221#10", "utterance": "그건 내가 잡아둘게.", "dataset": "ko_dialog", "gold_type": "commitment", "should_store": true}
+{"id": "26_00051#2", "utterance": "3월 4일에 멕시코시티에서 라스베이거스로 가려고 합니다.", "dataset": "ko_sgd", "gold_type": "commitment", "should_store": true}
+{"id": "dialogue_comprehension/fact/personachat/test.jsonl#314#5", "utterance": "와우, 정말 멋지네요. 저는 최근에 남편과 함께 미국으로 이사했어요.", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#943#9", "utterance": "장성한 자식들이 찾아오지 않으니 찾아갈지도 모르죠.", "dataset": "ko_dialog", "gold_type": "relationship", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#103#3", "utterance": "네, 집에 가서 펼쳤는데 이 구멍이 있더군요", "dataset": "ko_dialog", "gold_type": "event", "should_store": true}
+{"id": "1_00000#9", "utterance": "예약은 완료되었습니다만 안타깝게도 채식 옵션은 제공되지 않으며 가격대는 보통입니다.", "dataset": "ko_sgd", "gold_type": "event", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#6633#1", "utterance": "코비 브라이언트와 샤킬 오닐, 그들은 로스 앤젤레스 레이커스의 스타 플레이어입니다.", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "1_00016#0", "utterance": "3월 10일에 페탈루마에서 4명 자리 예약하려고 해요.", "dataset": "ko_sgd", "gold_type": "commitment", "should_store": true}
+{"id": "3_00095#4", "utterance": "오늘 오후 2시에 픽업할게.", "dataset": "ko_sgd", "gold_type": "commitment", "should_store": true}
+{"id": "response_selection/personachat/test.jsonl#4046#2", "utterance": "한꺼번에 세쌍둥이가 생겼네요. 전 싱글이에요. 여자친구가 도망갔어요.", "dataset": "ko_dialog", "gold_type": "relationship", "should_store": true}
+{"id": "dialogue_comprehension/relation/socialdial_distance/test.jsonl#380#2", "utterance": "여기 오면 안 돼요", "dataset": "ko_dialog", "gold_type": "instruction", "should_store": true}
+{"id": "synth#하자#2", "utterance": "로그를 추가하자.", "dataset": "synthetic", "gold_type": "decision", "should_store": true}
+{"id": "synth#하자#3", "utterance": "이 구조를 사용하자.", "dataset": "synthetic", "gold_type": "decision", "should_store": true}
+{"id": "response_selection/dailydialog/test.jsonl#1699#2", "utterance": "그래도 돈은 아낄 수 있었잖아", "dataset": "ko_dialog", "gold_type": "fact", "should_store": true}
+{"id": "dialogue_comprehension/fact/empathetic_dialogues/test.jsonl#2152#2", "utterance": "아직 일주일 더 기다려야 해요.", "dataset": "ko_dialog", "gold_type": "context", "should_store": true}
+{"id": "7_00065#7", "utterance": "확인하겠습니다, 3월 9일에 아스펜 빌리지 아파트를 방문하시고 싶으시군요.", "dataset": "ko_sgd", "gold_type": "commitment", "should_store": true}
+{"id": "dialogue_comprehension/fact/empathetic_dialogues/test.jsonl#2111#3", "utterance": "그럼 내가 널 위해 기도할게!", "dataset": "ko_dialog", "gold_type": "commitment", "should_store": true}
+{"id": "response_selection/empathetic_dialogues/test.jsonl#1496#0", "utterance": "그 당시에는 나쁘다고 생각하지 않았어요. 하지만 그녀가 실제로 좋아하지 않는다고 말한 후 생각이 달라졌습니다.", "dataset": "ko_dialog", "gold_type": "learning", "should_store": true}
+{"id": "dialogue_comprehension/relation/socialdial_relation/test.jsonl#174#3", "utterance": "그럼 더 저렴한 것을 선택하겠습니다.", "dataset": "ko_dialog", "gold_type": "decision", "should_store": true}
+{"id": "response_selection/socialdial/test.jsonl#1946#2", "utterance": "저는 컴퓨터공학과 학생인데요 교수님 연구에 관심이 많아요", "dataset": "ko_dialog", "gold_type": "relationship", "should_store": true}
+{"id": "koalpaca#42589", "utterance": "이 텍스트에 두 문장을 추가하여 명확한 사건 순서를 설정합니다.", "dataset": "ko_alpaca", "gold_type": "instruction", "should_store": true}
+{"id": "dialogue_comprehension/dialog_act/dailydialog/test.jsonl#64#0", "utterance": "안녕하세요 지미 . 오늘 나중에 운동하러 가자 .", "dataset": "ko_dialog", "gold_type": "commitment", "should_store": true}
+{"id": "24_00001#6", "utterance": "필라델피아에서 출발하려고 합니다.", "dataset": "ko_sgd", "gold_type": "context", "should_store": true}
