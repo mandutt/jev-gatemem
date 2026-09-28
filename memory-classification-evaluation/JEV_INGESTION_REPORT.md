@@ -58,6 +58,17 @@
 - P3(160건 subset)에서 context가 도움이 된 건 **정제된 관련 턴**이었기 때문 — 원시 이전 턴은 분류 방해
 - **결론: 실운용에서도 무컨텍스트(P8) 유지. context 주입 시 정제된 턴만 허용.**
 
+## 3.6 P11 실험 — store 오분류 근본 원인 규명 (302건 subset)
+
+- **문제**: gold store 649건 중 302건(46.5%)을 store=NO_STORE로 오분류 (store recall 0.535)
+- **P11-b (store 단독 재호출)**: 회수 2.3% (7/302) → **store 질문 자체가 "저장할 가치 없음" 편향** (분류력 문제 아님)
+- **P11-a (type 주입 후 store)**: 회수 85.1% (257/302) → type이 저장타입임을 알려주면 즉시 회수
+  - gold type별: commitment/observation/error/learning/artifact 100%, preference/fact/context 85~92%
+- **결론**: 
+  1. store 오분류의 근본 원인 = **store 지시문이 저장타입을 store로 인식 못 하는 프롬프트 구조**
+  2. type 주입(P11-a) or type 이중확인(G-qual)이 해법
+  3. **G-qual이 최선**: 기존 1호출 + type 이중확인으로 같은 이득(88% vs 85.1%), 추가 비용 0
+
 ## 4. 게이트 규칙 (G) — live A/B 검증 (state.db 142건, 사용자 판정 83건)
 
 | 게이트 | SKIP | KEEP(저장) | 누락(bad) | 과다(ok) |
