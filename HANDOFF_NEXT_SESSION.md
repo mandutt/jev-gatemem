@@ -162,12 +162,13 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - **검증**: `harnesses/smoke_write_gate.py` 4/4 PASS (SKIP/KEEP/킬스위치/JEV실패), 실 JEV API로 SKIP(좋아 진행해줘) vs KEEP(내일까지 보고서) 판정 확인, trace 로그 기록 확인
 - ⏳ **남은 일**: 데스크톱 재시작(플러그인 새 코드 로드) 후 실사용 확인 → 장기 관측
 
-**★ assistant 발화 저장 게이트 (G-AS) — 2026-09-28 설계 완료, 구현 전**
+**★ assistant 발화 저장 게이트 (G-AS) — 2026-09-28 구현 완료 (커밋 7615e1a), 적용 대기**
 - **문제**: Mnemosyne 기본 `_sync_roles={"user"}` → assistant 결과물(작업 핵심)이 메모리에 안 남음. 사용자 지적: "지시만 저장하면 작업 내용을 기억 못 함"
 - **실측**: 최근 21일 assistant 3,715건 중 200건 분류 → **79% 저장 가치** (유저와 정반대). gold50 인간 판정 → **G-AS 채택** (`store==STORE && type!=context → KEEP`, precision 0.744 / recall 0.935 / F1 0.829). **context 필터 전수 검증: 17건 gold → 오분류 0건** (결과물 손실 0, G-AS 확정)
 - **폐기된 대안**: conf 임계값(결과물 conf 0.59~0.97 분산 → recall 폭락), commitment 필터(TP 6건 손실), P8-AS 전용 프롬프트(recall 0.355), 정규식 next-step 필터(FP 2/9만 매치)
 - **주의**: JEV 호출은 반드시 TypeSafe 직접 API (`api.typesafe.ai/v1/systemone`, jev-latest) — 9router(localhost:20128)는 간헐적 400 반환
-- **구현 전제**: `sync_roles: ["user","assistant"]` 활성화 + `hermes_j1.py` sync_turn에 assistant 게이트 분기
+- **구현 내역**: `write_gate.evaluate_assistant()` (G-AS 규칙 + 1500자 truncation + 5xx/시간초과 1회 재시도), `hermes_j1.sync_turn()` 4-way 분기 (user G-qual / asst G-AS), `_sync_turn_without_assistant()`, 타임아웃 5s→15s (실측 latency 0.24~23s), config `memory.mnemosyne.sync_roles: [user, assistant]` (실제 홈 AppData\Local\hermes에 hermes config set으로 반영 — **주의: .hermes/가 아님**, get_hermes_home 기준)
+- **검증**: smoke_write_gate 7케이스 ALL PASS + 실 DB 라이브 검증 (A: user만 저장, B: 둘 다 저장 — trace로 skip 확인, 테스트 메모리 삭제 완료)
 - 산출물: `memory-classification-evaluation/ASSISTANT_GATE_REPORT.md`, `data/ab_assistant_gold50*`
 
 - [x] **데스크톱 재시작 후 실사용 검증** — 2026-09-27 밤 세션: `Jev choice: idx=0 latency=226ms pool=1` 실측 (agent.log)
@@ -181,6 +182,35 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - [x] **★ Jev 개입 trace 로그 (2026-09-27 밤)** — `gateway/trace.py` — ring buffer 로거: `$LOCALAPPDATA/hermes/logs/jev_trace.log` (기본, `JEV_TRACE_PATH`로 오버라이드), cap 512KB 초과 시 선두 절반 폐기 (파일 상시 ~256~512KB 수렴, 무한 증가 없음). prefetch당 4이벤트 기록: `pool`(lane별 기여: fts/vec/imp/graph/pool) → `gate`(pool/passed) → `jev`(idx/lat_ms/pick) → `lift`(lifted/from_idx/picked_id/prev_top). Jev OFF/fallback 시 trace 미기록. **검증: verify_trace.py (ring 단위), 섀도잉 시뮬레이션 PASS, smoke --on 8쿼리×4이벤트=32줄, --off 회귀 8/8, verify_gateway_api pass**
 - [ ] **Mnemosyne 업데이트 시** — `typed_memory.py` 한국어 패치 재적용: `.venv\Scripts\python.exe scripts\reapply_korean_classifier.py` (라이브 vs 재적용 40/40 검증됨). 업데이트 자체는 §7-12 정책(3.15.1 고정, 4.0.0 stable 확인 후) 따름
 - [ ] graph/fact lane — **실데이터 재평가**: facts/graph_edges/memoria_facts가 쌓이면 (수십 개 이상) verify_graph_lane_synthetic.py 방식으로 실데이터 gold 회수 확인 후 lane 상세 튜닝 (budget/confidence 임계값)
+
+## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
+
+> 2026-09-28 구현 완료 — **Hermes 재시작(새 세션) 시 G-AS가 활성화됨**. 아래 순서로 확인:
+
+1. **config 로드 확인**:
+   ```
+   hermes config get memory.mnemosyne.sync_roles   # → [user, assistant]
+   ```
+2. **`[ASSISTANT]` 자동저장 확인** (새 세션에서 대화 몇 턴 후):
+   ```sql
+   SELECT COUNT(*) FROM working_memory WHERE content LIKE '[ASSISTANT]%';
+   -- 0 → sync_roles 미적용 (config 확인), N>0 → 정상
+   ```
+3. **G-AS 게이트 동작 확인** — `jev_trace.log`에서 `write-gate-as` 이벤트:
+   ```
+   $LOCALAPPDATA/hermes/logs/jev_trace.log  (tail)
+   # keep=skip ... reason=no-store / reason=context  → 게이트 정상 SKIP
+   # 이벤트 없음 → JEV_WRITE_GATE=0 확인 / TYPESAFE_API_KEY 확인
+   ```
+4. **롤백 방법** (문제 시):
+   - 게이트만 끄기: `JEV_WRITE_GATE=0` (환경변수) → 전부 KEEP
+   - assistant 저장 끄기: `hermes config unset memory.mnemosyne.sync_roles` → user만
+5. **장기 관측 후 리포트 갱신**: 1~2주 후 `[ASSISTANT]` 저장량·recall 영향 → `ASSISTANT_GATE_REPORT.md`에 실측 반영
+
+**알려진 주의**:
+- 실제 Hermes 홈 = `C:\Users\mandu\AppData\Local\hermes` (**`.hermes/` 아님**) — config 수정은 `hermes config set` 사용 (agent 직접 편집은 차단됨)
+- JEV API 간헐 503/520 — 게이트는 KEEP으로 fallback (데이터 손실 없음), trace에 `http-5xx` 기록
+- 라이브 JEV 호출은 발화당 ~0.2~2초 (가끔 15초+) — sync_turn이 그만큼 지연될 수 있음
 
 ## 9. 환경 요약
 
@@ -197,7 +227,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 | 평가셋 | `data/dataset_curated.json` (52쿼리, 6유형, gold 16자리 ID) |
 | 로그 | `C:\Users\mandu\AppData\Local\hermes\logs\agent.log` (`grep "Jev choice"`) |
 | **Jev trace 로그** | `C:\Users\mandu\AppData\Local\hermes\logs\jev_trace.log` (ring buffer 512KB, `JEV_TRACE_PATH`로 경로 변경 가능) |
-| **쓰기 게이트** | `JEV_WRITE_GATE=0` → 비활성(KEEP). SKIP 이벤트만 `jev_trace.log`에 `write-gate` 기록 |
+| **쓰기 게이트** | `JEV_WRITE_GATE=0` → 비활성(KEEP). SKIP 이벤트만 `jev_trace.log`에 `write-gate`(user) / `write-gate-as`(assistant) 기록 |
 
 ## 10. 세션 전환 방법
 
