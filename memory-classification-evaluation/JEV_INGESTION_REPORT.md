@@ -74,6 +74,23 @@ v3의 약점(fact로의 과수집: NO_STORE→fact 56, preference→fact 20, eve
 - 107건(fact 오분류 + artifact 전체) 재분류: 34건 교정
 - **최종 파일: `JEV_ALL1975_V4.jsonl`** (프롬프트 v4 전체 적용 — 영구)
 
+### 2.1d observation/context 정밀도 개선 — 프롬프트 v5 (최종)
+
+v4의 약점(observation FP 50, context FP ~81: 잡담·일반론·일회성 사건을 observation/context로 과분류)을 v5로 보강:
+- observation = **화자에게 반복·지속되는 패턴만** (일반론/비유적 always/often 금지)
+- context = **화자의 현재 진행 상태만** (의견·잡담·일반론은 NO_STORE/preference)
+
+| 지표 | v4 | **v5** |
+|---|---|---|
+| **정확도** | 0.7868 | **0.8172** |
+| observation F1 | 0.306 | **0.647** |
+| context F1 | 0.324 | **0.574** |
+| preference F1 | 0.718 | **0.752** |
+| store 결합 F1 | 0.813 | **0.830** (FP 233→199) |
+
+- 145건(observation/context 오분류) 재분류: **60건 교정, 0건 퇴행**
+- **최종 파일: `JEV_ALL1975_V5.jsonl`** (전체 적용 — 영구)
+
 ### 2.2 should_store
 
 | 규칙 | acc | prec | rec | F1 | FP | FN |
