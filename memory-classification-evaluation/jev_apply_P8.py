@@ -1,4 +1,4 @@
-"""v8 프롬프트 결과를 v7 최종 파일에 합성 — JEV_ALL1975_V8.jsonl 생성."""
+"""P8 프롬프트 결과를 P7 최종 파일에 합성 — JEV_ALL1975_P8.jsonl 생성."""
 import json
 from pathlib import Path
 

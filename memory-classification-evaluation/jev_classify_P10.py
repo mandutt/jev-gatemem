@@ -1,8 +1,10 @@
-"""v10-EN — v10 프롬프트의 지시문만 영어로 번역한 A/B 분류기.
+"""JEV P10 프롬프트 — 지시문 실험용 (P9 과잉 교정의 진행 명령 예외 버전).
 
-가설: JEV가 영어 지시문에 더 잘 따르는지 검증.
-- STORE_INSTRUCTIONS: 영어 지시 + 한국어 예시 유지
-- CLASSIFY_INSTRUCTIONS: 영어 지시 + 한국어 예시 (별도 없음 — v10과 동일 구조)
+변경 요약 (P8 → P9 → P10):
+- P9: "모든 질문=STORE" 도메인 적응 — 저장 필터 붕괴 (저장 96%)
+- P10: P9 + GO-AHEAD 진행 명령 예외 명시 — type 분류 과잉 교정 (-16.5pp, 폐기)
+- P10-EN: P10 지시문 영어 버전 (jev_classify_P10_EN.py) — 차이 없음, 폐기
+- **현행 채택: P8 + G0.6** (jev_classify.py 프롬프트 + store 단독 게이트)
 """
 import argparse
 import concurrent.futures
@@ -20,7 +22,7 @@ TYPES = ["fact", "preference", "decision", "commitment", "goal", "event",
          "instruction", "relationship", "context", "learning", "observation",
          "error", "artifact", "NO_STORE"]
 
-STORE_INSTRUCTIONS_EN = (
+STORE_INSTRUCTIONS = (
     "STORE if the utterance has lasting value for future conversations, "
     "NO_STORE otherwise.\n"
     "NO_STORE examples: '좋아 진행해줘' / '알겠습니다' / '그걸로 가자' / "
@@ -38,7 +40,7 @@ STORE_INSTRUCTIONS_EN = (
     "Pick exactly one."
 )
 
-CLASSIFY_INSTRUCTIONS_EN = (
+CLASSIFY_INSTRUCTIONS = (
     "Classify the speaker's utterance into exactly one memory type from the "
     "criteria, based on meaning and intent, NOT grammar or sentence ending.\n"
     "\n"
@@ -101,8 +103,8 @@ CLASSIFY_INSTRUCTIONS_EN = (
 )
 
 
-def jev_classify_en(utterance: str, context: str = "", timeout: float = 60.0) -> dict:
-    """One JEV call (EN instructions): returns {store, store_prob, type, type_prob, probs, latency_ms, usage}."""
+def jev_classify(utterance: str, context: str = "", timeout: float = 60.0) -> dict:
+    """One JEV call: returns {store, store_prob, type, type_prob, probs, latency_ms, usage}."""
     state = {
         "utterance": utterance,
         "candidates": [{"id": f"t{i}", "label": t} for i, t in enumerate(TYPES)],
@@ -112,12 +114,12 @@ def jev_classify_en(utterance: str, context: str = "", timeout: float = 60.0) ->
     questions = {
         "store": {
             "type": "choice",
-            "instructions": STORE_INSTRUCTIONS_EN,
+            "instructions": STORE_INSTRUCTIONS,
             "criteria": {"c0": "STORE", "c1": "NO_STORE"},
         },
         "classify": {
             "type": "choice",
-            "instructions": CLASSIFY_INSTRUCTIONS_EN,
+            "instructions": CLASSIFY_INSTRUCTIONS,
             "criteria": {f"c{i}": t for i, t in enumerate(TYPES)},
         },
     }
@@ -193,13 +195,14 @@ def main():
     def process(row):
         for attempt in range(3):
             try:
-                res = jev_classify_en(row["utterance"], row.get("context", ""))
+                res = jev_classify(row["utterance"], row.get("context", ""))
                 return {
                     "id": row["id"],
                     "dataset": row.get("dataset"),
                     "utterance": row["utterance"],
+                    "ending_class": row.get("ending_class"),
                     "gold_type": row.get("gold_type"),
-                    "gold_should_store": row.get("gold_should_store"),
+                    "gold_should_store": row.get("should_store"),
                     **res,
                 }
             except Exception as e:

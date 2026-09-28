@@ -1,6 +1,6 @@
-"""v8 vs v10 (ALL1975 전체) 비교 — 정확도·store·type 분포·오분류 변화 분석.
+"""P8 vs P10 (ALL1975 전체) 비교 — 정확도·store·type 분포·오분류 변화 분석.
 
-Usage: python compare_v8_v10.py [v8.jsonl] [v10.jsonl]
+Usage: python compare_P8_P10.py [P8.jsonl] [P10.jsonl]
 """
 import json
 import sys
