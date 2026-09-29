@@ -25,7 +25,9 @@ from typing import Any, Dict, Optional
 
 from .spool import SpoolWriter
 
-DEFAULT_DATA_DIR = Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "jev-mem"
+DEFAULT_DATA_DIR = Path(
+    os.environ.get("JEV_MEM_DATA_DIR")
+    or Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "jev-mem")
 AUTO_START_TIMEOUT_S = 20.0
 HEALTH_PROBE_TIMEOUT_S = 0.5
 
@@ -37,7 +39,10 @@ class JevMemClient:
         self.agent = agent
         self.data_dir = Path(data_dir) if data_dir else DEFAULT_DATA_DIR
         self.auto_start = auto_start
-        self.port = port  # explicit port (else read from core.json)
+        # explicit port wins; else env override (tests/chaos set JEV_MEM_PORT);
+        # else read from core.json
+        self.port = port if port is not None else (
+            int(os.environ["JEV_MEM_PORT"]) if os.environ.get("JEV_MEM_PORT") else None)
         self.core_json = self.data_dir / "core.json"
         self.token_path = self.data_dir / "token"
         self._token_cache: Optional[str] = None
@@ -211,6 +216,42 @@ class JevMemClient:
                 time.sleep(0.3)
         self._spool(payload)
         return {"ok": False, "status": "spooled", "error": "core failed"}
+
+    def tool(self, tool_name: str, args: Dict = None, *, timeout_s: float = 60.0) -> Dict:
+        """POST /v1/tools (P5) — run a mnemosyne_* tool on the core side.
+
+        Returns {"ok": true, "tool": ..., "result": {...}} or
+        {"ok": false, "error": ...}. Tools are read/write — failure does NOT
+        spool (stateful replay is unsafe); the caller (Hermes handle_tool_call)
+        surfaces the error JSON to the model.
+        """
+        base = self.ensure_core()
+        if not base:
+            return {"ok": False, "error": "core unreachable: " + (self._last_error() or "")}
+        body = json.dumps({"tool": tool_name, "args": args or {}},
+                          ensure_ascii=False).encode("utf-8")
+        for attempt in (0, 1):
+            try:
+                req = urllib.request.Request(
+                    f"{base}/tools", data=body, headers=self._headers(), method="POST")
+                with urllib.request.urlopen(req, timeout=timeout_s) as r:
+                    return json.loads(r.read().decode("utf-8"))
+            except urllib.error.HTTPError as e:
+                if e.code == 401 and attempt == 0:
+                    self._token_cache = None
+                    continue
+                try:
+                    return json.loads(e.read().decode("utf-8"))
+                except Exception:
+                    return {"ok": False, "error": f"HTTP {e.code}"}
+            except Exception as e:
+                if attempt == 1:
+                    return {"ok": False, "error": str(e)}
+                time.sleep(0.3)
+        return {"ok": False, "error": "core failed"}
+
+    def _last_error(self) -> str:
+        return ""
 
     # -- spool / idem -----------------------------------------------------
     def _spool(self, payload: Dict) -> None:

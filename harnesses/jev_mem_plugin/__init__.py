@@ -23,13 +23,20 @@ if str(_MIDDLEWARE_REPO) not in sys.path:
 
 
 def register_memory_provider(ctx):
-    """Hermes memory-provider discovery entry (same contract as mnemosyne_hermes)."""
-    from harnesses.hermes_j1 import JevRerankProvider
+    """Hermes memory-provider discovery entry (same contract as mnemosyne_hermes).
 
-    provider = JevRerankProvider()
+    P5: JEV_MEM_MODE에 따라 rpc(JevRpcProvider, 기본) / embedded(JevRerankProvider) 분기.
+    """
+    from harnesses.hermes_j1 import _make_provider
+
+    provider = _make_provider()
     ctx.register_memory_provider(provider)
 
 
 # The dir loader's fallback path (`_instantiate_subclass`) scans module attrs
-# for a MemoryProvider subclass — expose it so BOTH discovery paths work.
-from harnesses.hermes_j1 import JevRerankProvider as JevRerankProvider  # noqa: E402,F401
+# for a MemoryProvider subclass. Only JevRpcProvider is exposed here: dir() is
+# alphabetical, so exporting both made the fallback silently pick JevRerank
+# (embedded mode) whenever register() failed — a silent mode downgrade.
+# Keep the embedded class importable from harnesses.hermes_j1 for manual
+# rollback, but never as a module attribute of this plugin package.
+from harnesses.hermes_j1 import JevRpcProvider as JevRpcProvider  # noqa: E402,F401

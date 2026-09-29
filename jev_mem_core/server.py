@@ -24,6 +24,7 @@ except ImportError:  # pragma: no cover
 from . import __version__, PROTOCOL
 from .config import Config
 from .pipeline import Pipeline
+from .tools import ToolExecutor
 
 log = logging.getLogger("jev_mem.server")
 
@@ -48,6 +49,7 @@ class CoreServer:
         self.ctx = ctx
         self.token = token
         self.pipeline = Pipeline(ctx)
+        self.tools = ToolExecutor()  # P5: mnemosyne_* tool proxy (single writer)
         self.app = None
         self._runner = None
         self._site = None
@@ -62,6 +64,7 @@ class CoreServer:
         self.app.router.add_post("/v1/prefetch", self.handle_prefetch)
         self.app.router.add_post("/v1/turns", self.handle_turns)
         self.app.router.add_get("/v1/turns/{turn_id}", self.handle_turn_get)
+        self.app.router.add_post("/v1/tools", self.handle_tools)  # P5
         self.app.router.add_get("/v1/status", self.handle_status)
         self.app.router.add_get("/v1/metrics", self.handle_metrics)
         self.app.router.add_post("/v1/spool/flush", self.handle_spool_flush)
@@ -205,6 +208,36 @@ class CoreServer:
             "SELECT * FROM ingest_ledger WHERE turn_id = ?", (turn_id,)
         ).fetchone()
         return ledger._row_dict(row) if row else None
+
+    async def handle_tools(self, request) -> web.Response:
+        """P5 — mnemosyne_* tool proxy. Body: {tool, args}.
+
+        Runs the tool in the writer thread (serialized with /v1/turns writes),
+        returns the tool's JSON result as-is.
+        """
+        try:
+            body = await request.json()
+        except Exception:
+            return self._error(400, "INVALID_REQUEST", "body must be JSON")
+        if not isinstance(body, dict):
+            return self._error(400, "INVALID_REQUEST", "body must be object")
+        tool_name = str(body.get("tool") or "")
+        args = body.get("args") or {}
+        if not tool_name or not tool_name.startswith("mnemosyne_"):
+            return self._error(400, "INVALID_REQUEST",
+                               "tool must be a mnemosyne_* tool name")
+        if not isinstance(args, dict):
+            return self._error(400, "INVALID_REQUEST", "args must be object")
+        try:
+            # run INSIDE the writer thread so tool DB access is serialized
+            # with /v1/turns writes (single writer guarantee)
+            result = await self.ctx.writer.submit(
+                lambda w: self.tools.dispatch(tool_name, args),
+                f"tool_{tool_name}")
+        except Exception as e:
+            log.exception("tool dispatch crashed")
+            return self._error(500, "INTERNAL", str(e)[:200], retryable=True)
+        return web.json_response({"ok": True, "tool": tool_name, "result": result})
 
     async def handle_status(self, request) -> web.Response:
         pending = -1

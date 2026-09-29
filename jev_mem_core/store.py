@@ -38,8 +38,25 @@ def store_kept(wctx, *, req: Dict, decisions: Dict, session_key: str,
     """4-way branch (B §5.4, 기존 hermes_j1 로직 이동) — writer thread only.
 
     Returns memory_ids created ([] = both skipped).
+
+    P5: session_key(예: hermes_<sid>)를 beam.session_id로 임시 설정해
+    저장 행의 session_id가 Hermes 임베디드와 동일한 규칙을 따르게 한다
+    (B §11.2 '세션 접두사 hermes_<session_id> 유지'). SingleWriter가
+    직렬화하므로 런타임 교체는 안전하다.
     """
     beam = wctx.beam
+    prev_sid = getattr(beam, "session_id", None)
+    if session_key:
+        beam.session_id = session_key
+    try:
+        return _store_kept_impl(beam, req, decisions, session_key, idem_key, turn_id)
+    finally:
+        if prev_sid is not None:
+            beam.session_id = prev_sid
+
+
+def _store_kept_impl(beam, req: Dict, decisions: Dict, session_key: str,
+                     idem_key: Optional[str], turn_id: str) -> List[str]:
     user_keep = bool(decisions.get("user", {}).get("keep"))
     asst_keep = bool(decisions.get("assistant", {}).get("keep"))
     user = (req.get("user_content") or "").strip()

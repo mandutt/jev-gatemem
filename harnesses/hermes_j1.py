@@ -14,6 +14,8 @@ Design (approved 2026-09-27):
 from __future__ import annotations
 
 import logging
+import os
+import threading
 
 from mnemosyne_hermes import MnemosyneMemoryProvider
 
@@ -28,6 +30,118 @@ from core import j1_engine as _j1_engine
 log = logging.getLogger(__name__)
 
 _PREFETCH_TOP_K = 5
+
+# P5 (2026-09-29): transport mode switch (B §11.2).
+#   rpc      (기본) — core daemon 경유. Hermes는 mnemosyne.db를 열지 않음.
+#   embedded (롤백) — v0.1.0 동작 (JevRerankProvider, 임베디드 beam + 게이트).
+_MODE = os.environ.get("JEV_MEM_MODE", "rpc").strip().lower()
+RPC_MODE = _MODE == "rpc"
+log.info("JEV memory provider mode=%s (JEV_MEM_MODE=%s)", _MODE, os.environ.get("JEV_MEM_MODE") or "(default)")
+
+
+class JevRpcProvider(MnemosyneMemoryProvider):
+    """P5 — RPC provider: all memory access goes through jev-mem-core.
+
+    - prefetch -> POST /v1/prefetch (degrade: '' on any failure — base
+      fallback 금지, B §11.2)
+    - sync_turn -> POST /v1/turns (fire-and-forget ack; 4-way gate 분기는
+      core로 이전됨 — 이 클래스에는 게이트 코드 없음)
+    - mnemosyne_* tools -> POST /v1/tools (core 프로세스의 단일 writer가 실행)
+    - initialize(): 임베디드 beam을 만들지 않음 (split-brain 원천 차단,
+      fastembed RAM을 core에만 로드)
+    Real Hermes venv python이 필요 (import mnemosyne_hermes).
+    """
+
+    def __init__(self):
+        super().__init__()
+        from jev_mem_core.client import JevMemClient
+        self._client = JevMemClient("hermes", auto_start=True, spool=True)
+        self._init_lock = threading.Lock()
+        self._initialized = False
+
+    # -- lifecycle ------------------------------------------------------
+    def is_available(self) -> bool:
+        # core가 없으면 auto-start로 뜬다 (client.ensure_core). 항상 사용 가능.
+        return True
+
+    def initialize(self, session_id: str, **kwargs) -> None:
+        """rpc 모드: beam 미생성. core 연결만 준비한다."""
+        self._session_id = session_id
+        self._hermes_home = kwargs.get("hermes_home", "")
+        self._agent_context = kwargs.get("agent_context", "primary")
+        self._skip_contexts = getattr(self, "_skip_contexts", set())
+        self._initialized = True
+        # Lazy: core 연결은 첫 prefetch/turn에서 (auto-start)
+
+    def shutdown(self) -> None:
+        pass  # core는 데몬으로 유지
+
+    # -- prefetch / sync_turn -------------------------------------------
+    def prefetch(self, query: str, *, session_id: str = "") -> str:
+        try:
+            return self._client.prefetch(
+                query, session_id=session_id,
+                timeout_ms=1500, rerank=True)
+        except Exception as e:
+            log.warning("JEV rpc prefetch failed (%s); empty context", e)
+            return ""
+
+    def sync_turn(self, user_content: str, assistant_content: str, *,
+                  session_id: str = "", messages=None) -> None:
+        """Fire-and-forget: ack 수신 후 반환. 실패 시 client가 스풀."""
+        if not (user_content or "").strip() and not (assistant_content or "").strip():
+            return
+        uc = (user_content or "")[:262144]
+        ac = (assistant_content or "")[:262144]
+        try:
+            self._client.turn({
+                "agent": "hermes",
+                "session_id": session_id or self._session_id or "",
+                "user_content": uc,
+                "assistant_content": ac,
+                "turn_seq": None,
+            })
+        except Exception as e:
+            log.warning("JEV rpc sync_turn failed (%s); spooled by client", e)
+
+    # -- tools ----------------------------------------------------------
+    def get_tool_schemas(self):
+        """베이스와 동일한 툴 스키마 노출 (core가 실행)."""
+        try:
+            return super().get_tool_schemas()
+        except Exception as e:
+            log.error("get_tool_schemas failed: %s", e)
+            return []
+
+    def handle_tool_call(self, tool_name: str, args, **kwargs) -> str:
+        """모든 mnemosyne_* 툴을 core로 프록시 (단일 writer)."""
+        import json
+        if not tool_name.startswith("mnemosyne_"):
+            return json.dumps({"error": f"Unknown Mnemosyne tool: {tool_name}"})
+        try:
+            resp = self._client.tool(tool_name, dict(args or {}))
+        except Exception as e:
+            return json.dumps({"status": "error",
+                               "error": f"JEV core tool call failed: {e}"})
+        # resp: {"ok": true, "tool": ..., "result": {...}} or error shape
+        if resp.get("ok"):
+            result = resp.get("result")
+            return json.dumps(result, ensure_ascii=False)
+        return json.dumps({"status": "error", "error": resp.get("error", "core tool failed")})
+
+    @property
+    def name(self) -> str:
+        return "mnemosyne"  # provider name 유지 — config/도구 연동 그대로
+
+    def recall_status(self):
+        return None  # rpc 모드에선 recall indicator 미제공 (prefetch 결과만)
+
+
+def _make_provider():
+    """register_memory_provider 용 팩토리 — 모드 분기."""
+    if RPC_MODE:
+        return JevRpcProvider()
+    return JevRerankProvider()
 
 
 class JevRerankProvider(MnemosyneMemoryProvider):
@@ -194,4 +308,4 @@ class JevRerankProvider(MnemosyneMemoryProvider):
             log.debug("sync_turn_without_assistant failed: %s", e)
 
 
-__all__ = ["JevRerankProvider", "load_j1_plugin"]
+__all__ = ["JevRerankProvider", "JevRpcProvider", "_make_provider", "load_j1_plugin"]

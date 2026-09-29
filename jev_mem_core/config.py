@@ -13,6 +13,16 @@ ENV_PORT = "JEV_MEM_PORT"
 ENV_DB = "JEV_MEM_DB"
 ENV_DATA_DIR = "JEV_MEM_DATA_DIR"
 
+# P5 (2026-09-29 승인): core 기본 DB = Hermes 실 메모리 DB.
+# data_dir(jev-mem: ledger/spool/token/logs)는 유지하고 mnemosyne.db만
+# Hermes가 사용하는 DB를 가리킨다 — 기존 965행 메모리 보존 + 단일 writer 완성.
+# 테스트/카오스는 JEV_MEM_DB env로 오버라이드하므로 영향 없음.
+def _default_mnemosyne_db() -> Path:
+    override = os.environ.get(ENV_DATA_DIR)
+    if override:
+        return Path(_expand(override)) / "mnemosyne.db"
+    return Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "hermes" / "mnemosyne" / "data" / "mnemosyne.db"
+
 
 @dataclass
 class Config:
@@ -24,7 +34,7 @@ class Config:
     data_dir: Path = field(
         default_factory=lambda: Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "jev-mem"
     )
-    mnemosyne_db: Path | None = None  # None -> data_dir/mnemosyne.db
+    mnemosyne_db: Path | None = None  # None -> Hermes 실 메모리 DB (P5)
     # writer
     writer_max_queue_depth: int = 500
     writer_slow_job_warn_ms: int = 500  # v1.1 D14: remember() 임베딩 포함 ~0.1s 대비
@@ -143,9 +153,9 @@ class Config:
         if os.environ.get(ENV_DATA_DIR):
             cfg.data_dir = Path(_expand(os.environ[ENV_DATA_DIR]))
 
-        # default db path
+        # default db path (P5: Hermes 실 메모리 DB 유지)
         if cfg.mnemosyne_db is None:
-            cfg.mnemosyne_db = cfg.data_dir / "mnemosyne.db"
+            cfg.mnemosyne_db = _default_mnemosyne_db()
         return cfg
 
     @property
