@@ -29,6 +29,7 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 | **★ Importance 보조 lane (2026-09-27 밤)** | ✅ | **CJK LIKE 검색 한계(영어 content + row-limit)로 남은 gold 3건 → `_imp_search()` lane 추가 (importance≥0.85 최신 8개, RRF 통합). pool 92.31%→100%, filtered 82.69%, top-5 71.15%. fallback+runtime smoke PASS** |
 | **★ Graph/Fact lane (2026-09-27 밤)** | ✅ | **`_graph_lane_search()` 3경로 (facts subject/object→source_msg_id, graph_edges gist→관련성 게이트, memoria_facts key/value→source_memory_id). 합성 데이터 검증 6/6 PASS (회수 경로 정확), 실데이터 4-lane 지표 3-lane과 동일 (100%/82.69%/71.15%, 성능 무하락). 현재 실데이터로는 gold 추가 회수 0 (facts 5개뿐) — 데이터 축적 후 재평가** |
 | **★ 한국어 어미 분류 패치 (2026-09-27 밤)** | ✅ | **Mnemosyne `typed_memory.py`에 한국어 어미 패치** (28종성 클래스 + 의문/지시/단정/격식 24패턴). "좋아 진행해줘" fact 오분류 해결. 한국어 39/39, 영어 13/13, 라이브 36건 재분류 정상. **②번 `\b`→ASCII 경계 수정** ("error가" 한-영 혼용 매치, 관계 패턴 동사 정밀화로 relationship 오분류 36→0) + **④번 F1/F2 구조 수정** (종결형 FACT 어미 10개 `(?![가-힣])` 후방차단 + version 패턴 `(?![A-Za-z0-9_-])` — 라이브 823건 A/B 7건 fact→context 전부 개선, 회귀 0) + **⑤번 한글 ERROR 구문 패턴** (2026-09-28, "오류가 발생했어"류 6개 패턴 — 라이브 828건 3건 context/relationship→error 실제 오류 보고, 회귀 0, 스모크 15/15). ①(어휘)·③(score=conf)은 실험 결과 부정적(179건 회귀)로 **보류**. **재적용**: `scripts/reapply_korean_classifier.py` (②+④+⑤ 통합, f4/f5_patch import, 멱등). 문서: `docs/korean-classifier-patch.md` (①③④⑤ 실험 결과 포함). 스킬: `mnemosyne-korean-classifier` |
+| **★ G-AS 적용 확인 (2026-09-29)** | ✅ | **§8.5 체크리스트 실측 통과** — `sync_roles=[user, assistant]` 로드, trace `write-gate-as` 이벤트 실세션 발화로 기록(KEEP/SKIP 모두), session `hermes_20260929_104012_df1103`에 `[ASSISTANT]` 레코드 8건 저장, final 발화 KEEP/중간 진행 SKIP 판정 정상 |
 
 ## 3. 오늘(2026-09-27 저녁) 변경 사항 — 반드시 읽을 것
 
@@ -160,9 +161,9 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - `harnesses/wg_access.py` — 섀도잉 안전 accessor (alias → repo fallback)
 - `harnesses/hermes_j1.py` — `JevRerankProvider.sync_turn` 오버라이드: user 발화만 게이트 (SKIP 시 `_sync_turn_without_user`로 저장), assistant는 무게이트, 실패→base. **주의: `_sync_roles` 기본값은 `{"user"}`** — 기본 환경에선 user 발화만 저장되므로 게이트 실효 범위는 "user 발화 SKIP" 하나로 한정 (assistant 저장은 sync_roles에 assistant 추가 시에만)
 - **검증**: `harnesses/smoke_write_gate.py` 4/4 PASS (SKIP/KEEP/킬스위치/JEV실패), 실 JEV API로 SKIP(좋아 진행해줘) vs KEEP(내일까지 보고서) 판정 확인, trace 로그 기록 확인
-- ⏳ **남은 일**: 데스크톱 재시작(플러그인 새 코드 로드) 후 실사용 확인 → 장기 관측
+- ✅ **남은 일 완료 (2026-09-29)**: 데스크톱 재시작 후 실사용 확인 — **§8.5 체크리스트 실측 통과**: `sync_roles=[user, assistant]` 로드, `write-gate-as` trace 이벤트 실세션 발화로 기록(KEEP/SKIP 모두), session `hermes_20260929_104012_df1103`에 `[ASSISTANT]` 레코드 8건 저장 (final 발화 KEEP / 중간 진행 SKIP), content 앞 100자 확인됨. **장기 관측 지속**
 
-**★ assistant 발화 저장 게이트 (G-AS) — 2026-09-28 구현 완료 (커밋 7615e1a), 적용 대기**
+**★ assistant 발화 저장 게이트 (G-AS) — 2026-09-28 구현 (커밋 7615e1a), 2026-09-29 적용 완료**
 - **문제**: Mnemosyne 기본 `_sync_roles={"user"}` → assistant 결과물(작업 핵심)이 메모리에 안 남음. 사용자 지적: "지시만 저장하면 작업 내용을 기억 못 함"
 - **실측**: 최근 21일 assistant 3,715건 중 200건 분류 → **79% 저장 가치** (유저와 정반대). gold50 인간 판정 → **G-AS 채택** (`store==STORE && type!=context → KEEP`, precision 0.744 / recall 0.935 / F1 0.829). **context 필터 전수 검증: 17건 gold → 오분류 0건** (결과물 손실 0, G-AS 확정)
 - **폐기된 대안**: conf 임계값(결과물 conf 0.59~0.97 분산 → recall 폭락), commitment 필터(TP 6건 손실), P8-AS 전용 프롬프트(recall 0.355), 정규식 next-step 필터(FP 2/9만 매치)
