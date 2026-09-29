@@ -16,6 +16,16 @@ from typing import Any, Dict, List, Optional
 log = logging.getLogger("jev_mem.pipeline")
 
 
+def _redaction():
+    from .redact import active
+    return active()
+
+
+def _redact_payload(payload: Dict) -> Dict:
+    from .redact import redact_payload
+    return redact_payload(payload)
+
+
 class JevUnavailable(Exception):
     pass
 
@@ -87,10 +97,19 @@ class Pipeline:
                 idem_key = f"{agent}:{session_id}:{__import__('uuid').uuid4().hex[:12]}"
         ph = ledger.payload_hash(agent, session_id, req.get("turn_seq"), user, asst)
 
+        # B §5.3 (승인 2): ledger payload에만 redaction (스풀은 client가 수행)
+        # mnemosyne DB 저장분은 치환 안 함.
+        if _redaction():
+            req_for_ledger = _redact_payload(req)
+        else:
+            req_for_ledger = req
+
         # 1) durable receive (writer queue)
         try:
             rec = await self.ctx.writer.submit(
-                lambda w: ledger.ledger_receive(w.state, idem_key=idem_key, payload=req, payload_hash_=ph),
+                lambda w: ledger.ledger_receive(w.state, idem_key=idem_key,
+                                                payload=req_for_ledger,
+                                                payload_hash_=ph),
                 "ledger_receive",
             )
         except Exception as e:

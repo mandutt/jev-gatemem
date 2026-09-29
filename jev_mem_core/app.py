@@ -25,6 +25,8 @@ from .ledger import init_schema as init_ledger_schema
 from .ledger import recover_incomplete
 from .ops import backup_vacuum_into, checkpoint_passive
 from .pipeline import CircuitBreaker
+from .redact import active as _redact_active
+from .redact import get_patterns as _redact_patterns
 from .server import CoreServer
 from .spool import SpoolScanner, SpoolWriter
 from .writer import ReaderPool, SingleWriter, WriterContext
@@ -288,6 +290,27 @@ async def _op_loop(ctx: CoreContext, pipeline) -> None:
         ctx._last_tick = time.monotonic()
 
 
+async def _apply_data_dir_acl(cfg: Config) -> None:
+    """B §5.3 승인 1번: %LOCALAPPDATA%/jev-mem 사용자 전용 ACL (best-effort).
+
+    token 파일과 동일 정책(icacls /inheritance:r /grant:r <user>:F)을
+    data_dir 전체에 적용. 기본 data_dir에서만 실행(테스트 스크래치 제외 +
+    시스템 폴더 회피를 위해 항상 시도하되 실패는 무시).
+    """
+    try:
+        import subprocess
+        user = os.environ.get("USERNAME") or os.environ.get("USER")
+        if not user:
+            return
+        d = str(cfg.data_dir)
+        subprocess.run(
+            ["icacls", d, "/inheritance:r", "/grant:r", f"{user}:F",
+             "/T", "/Q"], capture_output=True, timeout=30)
+        log.info("data dir ACL applied (user-only): %s", d)
+    except Exception as e:
+        log.warning("data dir ACL failed: %s", e)
+
+
 async def _serve(cfg: Config) -> None:
     token = make_token(cfg)
 
@@ -299,6 +322,11 @@ async def _serve(cfg: Config) -> None:
     # writer thread + warmup + recovery BEFORE accepting traffic
     ctx.writer.start(timeout=60)
     await asyncio.to_thread(_warmup_embedding, cfg)
+
+    # B §5.3 (승인): user-only ACL on the data dir + redaction notice
+    await _apply_data_dir_acl(cfg)
+    if _redact_active():
+        log.info("redaction ACTIVE (patterns: %s)", ", ".join(_redact_patterns()))
 
     # synced-folder warning (B §13)
     ctx.synced_folder_warning = await _check_synced_folder(cfg)

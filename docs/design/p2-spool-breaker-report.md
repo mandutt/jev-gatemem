@@ -1,4 +1,4 @@
-# P2 — 스풀/브레이커/운영/자동기동 구현 보고 · 2026-09-29
+## P2 — 스풀/브레이커/운영/자동기동 구현 보고 · 2026-09-29
 
 > 상태: **✅ P2 완료 (카오스 테스트 7/7 통과)** — P1 골든 + smoke 7/7 유지
 > 스펙: B §8(장애처리)/§9(스풀)/§13(DB운영)/§14(관측성)/§16.3(카오스)
@@ -53,7 +53,7 @@ plus: P1 골든 3/3 identical 유지, smoke_write_gate 7/7 유지.
 | 싱글턴 | ✅ 카오스 4 (exit 3) + P1 |
 | 카오스 테스트 (§16.3) | ✅ 7/7 (표의 9개 중 코어 7개; 브라우저 403·1MiB 413은 P1 검증) |
 
-**남은 P2 항목** (다음 단계): ① **ACL·redaction 방침 보고 → 승인 후 확정** (§5.3, 아래 별첨) ② 동시성 테스트(§16.2, 8클라이언트×200턴)는 P5 직전 승인 게이트로 배정 ③ `jev-mem-client` 설치·패스 정리 (P3에서 pi 연동 시 사용).
+**남은 P2 항목** (다음 단계): ① ~~ACL·redaction 방침 보고 → 승인 후 확정~~ **✅ 2026-09-29 승인 → 구현 완료** (아래 별첨) ② 동시성 테스트(§16.2, 8클라이언트×200턴)는 P5 직전 승인 게이트로 배정 ③ `jev-mem-client` 설치·패스 정리 (P3에서 pi 연동 시 사용).
 
 ## 5. 다음 단계 = P3 (pi 어댑터)
 
@@ -80,7 +80,18 @@ plus: P1 골든 3/3 identical 유지, smoke_write_gate 7/7 유지.
 | **로그** | 요청 본문 원문은 core.log에 기록 안 함 (B §10 이미 준수; 길이·해시·agent만) | 이미 구현 |
 | **분석** | redaction 활성화 시 저장 원문을 키워드 스캔해 "발견 시 경고 로그" (저장 차단 X) | 과잉 차단 방지 |
 
-### 승인 요청
-1. **ACL**: `%LOCALAPPDATA%\jev-mem\` 사용자 전용 icacls 적용 — 승인?
-2. **redaction**: 기본 꺼짐, `JEV_MEM_REDACT_KEYS` 패턴 치환을 스풀·ledger에 적용, DB 저장분은 치환 안 함 — 승인?
-3. 기본 키 패턴 `*KEY*,*TOKEN*,*SECRET*,*PASSWORD*` — 승인? (변경 시 목록 제시)
+### 승인 결과 — **✅ 2026-09-29 사용자 승인 → 전 항목 구현 완료**
+
+| 항목 | 구현 | 검증 |
+|---|---|---|
+| 1. **ACL** | `app._apply_data_dir_acl()`: core 기동 시 `icacls <data_dir> /inheritance:r /grant:r <user>:F /T /Q` (best-effort, 실패 시 warning) | core.log 안착 로그 |
+| 2. **redaction** | `jev_mem_core/redact.py` 신규. 활성: `JEV_MEM_REDACT=1` 또는 `JEV_MEM_REDACT_KEYS` 존재 시. **스풀**(client._spool) + **ledger**(pipeline.process_turn, DB 저장 전) 양쪽 모두 적용. **mnemosyne DB 저장분은 치환 안 함** | `experiments/verify_redact.py` **19/19 PASS** |
+| 3. **기본 키 패턴** | `*KEY*,*TOKEN*,*SECRET*,*PASSWORD*` (env `JEV_MEM_REDACT_KEYS`로 오버라이드) | D2/E3/E4 |
+
+- 매칭 규칙: 공백 없는 토큰 내 키워드 포함 + 선택 `: 값`/`=값` tail 일괄 치환 (e.g. `API KEY: sk-abc` → `API ***`). 한글 문장은 미매치(오탐 없음 D7).
+- redaction 비활성 시 **동작 변화 없음** (기본 OFF 유지 — 기존 카오스 7/7에 회귀 없음).
+
+### 승인 요청 (최초 제안 — 위에서 확정됨)
+1. **ACL**: `%LOCALAPPDATA%\jev-mem\` 사용자 전용 icacls 적용 — 승인? → ✅
+2. **redaction**: 기본 꺼짐, `JEV_MEM_REDACT_KEYS` 패턴 치환을 스풀·ledger에 적용, DB 저장분은 치환 안 함 — 승인? → ✅
+3. 기본 키 패턴 `*KEY*,*TOKEN*,*SECRET*,*PASSWORD*` — 승인? → ✅

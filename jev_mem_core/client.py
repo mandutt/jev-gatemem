@@ -217,7 +217,10 @@ class JevMemClient:
         if self.spool_writer is None:
             return
         try:
-            ok = self.spool_writer.append(payload)
+            # B §5.3 (승인 2): 어댑터 스풀 저장분도 redaction (활성 시)
+            from .redact import redact_payload
+            sp = redact_payload(payload)
+            ok = self.spool_writer.append(sp)
             if not ok:
                 print("jev-mem: spool append failed", file=sys.stderr)
         except Exception as e:
