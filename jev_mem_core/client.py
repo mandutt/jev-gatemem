@@ -108,6 +108,13 @@ class JevMemClient:
         concurrent spawns harmless (only one survives).
         """
         py = sys.executable
+        # pythonw.exe = windowless console host. Even with CREATE_NO_WINDOW a
+        # console-subsystem python.exe can flash a brief console window on
+        # spawn (user-observed 2026-09-29 twice); pythonw has no console at
+        # all, making the flash structurally impossible.
+        pyw = py.replace("python.exe", "pythonw.exe")
+        if os.path.isfile(pyw):
+            py = pyw
         cmd = [py, "-m", "jev_mem_core", "--serve"]
         env = dict(os.environ)
         # jev_mem_core lives in the middleware repo, not on sys.path of the
