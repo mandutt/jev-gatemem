@@ -40,6 +40,21 @@ class Config:
     prefetch_max_timeout_ms: int = 2000  # 상한 2.0s
     # session lock
     session_lock_idle_s: int = 600
+    # P2: spool (D6 — adapter writes, core replays)
+    spool_max_bytes: int = 50 * 1024 * 1024  # 50 MiB per agent (B §9.1)
+    spool_replay_interval_s: int = 600  # scan every 10 min
+    spool_skip_fresh_s: int = 10  # skip files modified <10s ago (B §9.3.5)
+    # P2: pending_gate (D7 — B §8.2)
+    pending_gate_max_age_h: int = 24
+    pending_gate_retry_interval_s: int = 60
+    pending_gate_batch: int = 20
+    # P2: DB ops (B §13)
+    checkpoint_idle_interval_s: int = 300  # wal_checkpoint(PASSIVE)
+    backup_interval_h: int = 24
+    backup_keep: int = 7
+    backup_lock_retries: int = 3  # 2s apart (D11d: spool/backup only)
+    # P2: core.log rotation (B §14)
+    log_dir: Path | None = None  # None -> data_dir/logs
 
     @classmethod
     def load(cls, path: Path | None = None) -> "Config":
@@ -66,6 +81,9 @@ class Config:
             emb = data.get("embedding", {})
             jv = data.get("jev", {})
             pf = data.get("prefetch", {})
+            sp = data.get("spool", {})
+            pg = data.get("pending_gate", {})
+            ops = data.get("ops", {})
             if "host" in srv:
                 cfg.host = srv["host"]
             if "port" in srv:
@@ -94,6 +112,28 @@ class Config:
                 cfg.prefetch_default_timeout_ms = int(pf["default_timeout_ms"])
             if "max_timeout_ms" in pf:
                 cfg.prefetch_max_timeout_ms = int(pf["max_timeout_ms"])
+            if "max_bytes" in sp:
+                cfg.spool_max_bytes = int(sp["max_bytes"])
+            if "replay_interval_s" in sp:
+                cfg.spool_replay_interval_s = int(sp["replay_interval_s"])
+            if "skip_fresh_s" in sp:
+                cfg.spool_skip_fresh_s = int(sp["skip_fresh_s"])
+            if "max_age_h" in pg:
+                cfg.pending_gate_max_age_h = int(pg["max_age_h"])
+            if "retry_interval_s" in pg:
+                cfg.pending_gate_retry_interval_s = int(pg["retry_interval_s"])
+            if "batch" in pg:
+                cfg.pending_gate_batch = int(pg["batch"])
+            if "checkpoint_idle_interval_s" in ops:
+                cfg.checkpoint_idle_interval_s = int(ops["checkpoint_idle_interval_s"])
+            if "backup_interval_h" in ops:
+                cfg.backup_interval_h = int(ops["backup_interval_h"])
+            if "backup_keep" in ops:
+                cfg.backup_keep = int(ops["backup_keep"])
+            if "backup_lock_retries" in ops:
+                cfg.backup_lock_retries = int(ops["backup_lock_retries"])
+            if "log_dir" in pth:
+                cfg.log_dir = Path(_expand(str(pth["log_dir"])))
 
         # env re-override (tests use env to point at scratch DBs)
         if os.environ.get(ENV_PORT):

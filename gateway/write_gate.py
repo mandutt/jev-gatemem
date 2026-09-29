@@ -28,7 +28,7 @@ JEV_WRITE_GATE_ENV = "JEV_WRITE_GATE"
 JEV_WRITE_GATE_TIMEOUT_S = 15.0
 JEV_WRITE_GATE_RETRIES = 1
 
-API_URL = "https://api.typesafe.ai/v1/systemone"
+API_URL = os.environ.get("JEV_API_URL") or "https://api.typesafe.ai/v1/systemone"
 MODEL = "jev-latest"
 
 TYPES = [

@@ -168,3 +168,42 @@ def recover_incomplete(conn) -> list[Dict]:
             "status": r["status"], "attempts": r["attempts"],
         })
     return out
+
+
+def pending_gate_rows(conn, limit: int = 20) -> list[Dict]:
+    """Oldest pending_gate rows with payload (B §8.2 re-judge loop)."""
+    rows = conn.execute(
+        "SELECT * FROM ingest_ledger WHERE status = 'pending_gate'"
+        " ORDER BY received_at LIMIT ?", (limit,)
+    ).fetchall()
+    out = []
+    for r in rows:
+        payload = r["payload_json"]
+        if payload:
+            try:
+                payload = json.loads(payload)
+            except Exception:
+                payload = None
+        out.append({
+            "idem_key": r["idem_key"], "payload": payload, "turn_id": r["turn_id"],
+            "created_at": _parse_ts(r["received_at"]),
+        })
+    return out
+
+
+def pending_gate_count(conn) -> int:
+    row = conn.execute(
+        "SELECT COUNT(*) AS n FROM ingest_ledger WHERE status = 'pending_gate'"
+    ).fetchone()
+    return int(row["n"]) if row else 0
+
+
+def _parse_ts(s: str) -> float:
+    """Parse ISO-8601 ('%Y-%m-%dT%H:%M:%S%z') -> epoch seconds (best-effort)."""
+    if not s:
+        return 0.0
+    try:
+        from datetime import datetime
+        return datetime.fromisoformat(s).timestamp()
+    except Exception:
+        return 0.0

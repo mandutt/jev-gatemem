@@ -23,8 +23,10 @@ from . import PROTOCOL, __version__
 from .config import Config
 from .ledger import init_schema as init_ledger_schema
 from .ledger import recover_incomplete
+from .ops import backup_vacuum_into, checkpoint_passive
 from .pipeline import CircuitBreaker
 from .server import CoreServer
+from .spool import SpoolScanner, SpoolWriter
 from .writer import ReaderPool, SingleWriter, WriterContext
 
 log = logging.getLogger("jev_mem.app")
@@ -46,6 +48,21 @@ class CoreContext:
         self._session_locks: Dict[str, asyncio.Lock] = {}
         self._session_locks_lru: list = []
         self._embed_pool = None  # ThreadPoolExecutor for embedding (D3a)
+        # P2: operational state
+        self.scanner: Optional[SpoolScanner] = None
+        self.spool_writer: Optional[SpoolWriter] = None
+        self.last_backup_at = 0.0
+        self.last_checkpoint_at = 0.0
+        self.synced_folder_warning = False
+        self._last_pending_check = 0.0
+        self._last_tick = time.monotonic()
+        self.stats: Dict[str, Any] = {
+            "jev_calls": 0, "jev_failures": 0,
+            "turns": {"stored": 0, "skipped": 0, "pending_gate": 0, "failed": 0},
+            "dedup_count": 0, "spool_replayed": 0,
+            "embed_ms": 0.0, "rss_mb": 0.0,
+            "prefetch_degraded": 0, "prefetch_total": 0,
+        }
 
     def session_lock(self, key: str) -> asyncio.Lock:
         lock = self._session_locks.get(key)
@@ -194,6 +211,83 @@ async def _guard_requeue(pipeline, payload: Dict, idem_key: str) -> None:
         log.exception("replay turn failed for %s", idem_key)
 
 
+async def _check_synced_folder(cfg: Config) -> bool:
+    """B §13: warn when DB sits under a sync-folder (OneDrive/Dropbox/…)."""
+    db = cfg.mnemosyne_db.resolve()
+    markers = ("onedrive", "dropbox", "google drive", "iCloudDrive", "icloud")
+    try:
+        parts = [p.name.lower() for p in db.parents]
+    except Exception:
+        return False
+    return any(m in part for part in parts for m in markers)
+
+
+async def _op_loop(ctx: CoreContext, pipeline) -> None:
+    """P2 periodic ops: pending_gate re-judge, checkpoint, backup, spool scan."""
+    cfg = ctx.cfg
+    pending_iv = cfg.pending_gate_retry_interval_s
+    check_iv = cfg.checkpoint_idle_interval_s
+    backup_iv = cfg.backup_interval_h * 3600
+    while True:
+        await asyncio.sleep(60)  # 1 min tick — cheap, keeps loops aligned
+        now = time.monotonic()
+
+        # 1) pending_gate re-judge (only while circuit closed) — B §8.2
+        if now - ctx._last_pending_check >= pending_iv:
+            ctx._last_pending_check = now
+            if not ctx.breaker.is_open:
+                try:
+                    r = await pipeline.requeue_pending_gate(
+                        max_age_h=cfg.pending_gate_max_age_h,
+                        batch=cfg.pending_gate_batch)
+                    if r.get("rejudged") or r.get("expired"):
+                        log.info("pending_gate: rejudged=%s expired=%s left=%s",
+                                 r["rejudged"], r["expired"], r["left"])
+                except Exception:
+                    log.exception("pending_gate rejudge loop error")
+
+        # 2) WAL checkpoint (idle) — B §13
+        if now - ctx.last_checkpoint_at >= check_iv:
+            ctx.last_checkpoint_at = now
+            try:
+                chk = await asyncio.to_thread(checkpoint_passive, cfg.mnemosyne_db)
+                if not chk.get("ok"):
+                    log.warning("wal_checkpoint PASSIVE: %s", chk.get("detail"))
+            except Exception:
+                log.exception("checkpoint error")
+
+        # 3) daily backup (VACUUM INTO, keep N) — B §13
+        if now - ctx.last_backup_at >= backup_iv:
+            ctx.last_backup_at = now
+            try:
+                bkp = await asyncio.to_thread(
+                    backup_vacuum_into, cfg.mnemosyne_db,
+                    cfg.data_dir / "backups", cfg.backup_keep,
+                    cfg.backup_lock_retries)
+                if bkp is None:
+                    log.warning("backup failed — will retry next cycle")
+                    ctx.last_backup_at = 0.0
+            except Exception:
+                log.exception("backup error")
+                ctx.last_backup_at = 0.0
+
+        # 4) spool scan (10 min) — B §9.3
+        if ctx.scanner is not None:
+            try:
+                r = await asyncio.to_thread(ctx.scanner.maybe_scan)
+                if r and r.get("files"):
+                    log.info("spool scan: %s", r)
+                    ctx.stats["spool_replayed"] += r.get("lines", 0)
+            except Exception:
+                log.exception("spool scan error")
+
+        # 5) watchdog: event-loop lag > 5s (B §14)
+        lag = time.monotonic() - ctx._last_tick
+        if lag > 5.0:
+            log.warning("event loop lag %.1fs (watchdog)", lag)
+        ctx._last_tick = time.monotonic()
+
+
 async def _serve(cfg: Config) -> None:
     token = make_token(cfg)
 
@@ -206,8 +300,27 @@ async def _serve(cfg: Config) -> None:
     ctx.writer.start(timeout=60)
     await asyncio.to_thread(_warmup_embedding, cfg)
 
-    # recover pending rows
+    # synced-folder warning (B §13)
+    ctx.synced_folder_warning = await _check_synced_folder(cfg)
+    if ctx.synced_folder_warning:
+        log.warning("mnemosyne.db is under a sync folder (OneDrive/Dropbox…) — "
+                    "WAL/SHM corruption risk; see /v1/status")
+
+    # spool scanner (B §9.3): startup scan + 10-min interval
     pipeline = server.pipeline
+    ctx.scanner = SpoolScanner(
+        cfg.data_dir / "spool", pipeline.process_turn,
+        asyncio.get_running_loop(),
+        interval_s=cfg.spool_replay_interval_s,
+        skip_fresh_s=cfg.spool_skip_fresh_s)
+    try:
+        sr = await asyncio.to_thread(ctx.scanner.scan_once)
+        if sr.get("files"):
+            log.info("startup spool replay: %s", sr)
+    except Exception:
+        log.exception("startup spool scan failed")
+
+    # recover pending rows
     try:
         n = await _recover_pending(ctx, pipeline)
         if n:
@@ -237,6 +350,9 @@ async def _serve(cfg: Config) -> None:
     log.info("jev-mem-core %s ready (protocol %d, writing %s)",
              __version__, PROTOCOL, cfg.mnemosyne_db)
 
+    # P2 background ops loop
+    op_task = asyncio.ensure_future(_op_loop(ctx, pipeline))
+
     stop_evt = server._shutdown_evt
     loop = asyncio.get_running_loop()
     for sig in (signal.SIGINT, signal.SIGTERM):
@@ -249,12 +365,21 @@ async def _serve(cfg: Config) -> None:
         await stop_evt.wait()
     finally:
         log.info("shutting down…")
+        op_task.cancel()
+        try:
+            await op_task
+        except asyncio.CancelledError:
+            pass
         try:
             await server.stop()
         finally:
-            ctx.writer.stop()
+            ctx.writer.stop()  # on_close: wal_checkpoint(TRUNCATE) + close
             try:
-                ctx.core_json_path.unlink(missing_ok=True)
+                ctx.readers.close()
+            except Exception:
+                pass
+            try:
+                cfg.core_json_path.unlink(missing_ok=True)
             except Exception:
                 pass
             log.info("bye")
@@ -269,6 +394,20 @@ def _warmup_embedding(cfg: Config) -> None:
         beam_mod._embeddings.embed(["warmup"])
     except Exception as e:
         log.warning("embedding warmup failed: %s", e)
+
+
+def _apply_api_url_override() -> None:
+    """JEV_API_URL env override (test/chaos use). write_gate reads the module
+    constant at call time, so patching it here before any gate call works."""
+    url = os.environ.get("JEV_API_URL")
+    if not url:
+        return
+    try:
+        import gateway.write_gate as wg
+        wg.API_URL = url
+        log.info("JEV_API_URL override -> %s (write_gate)", url)
+    except Exception as e:
+        log.warning("JEV_API_URL override failed: %s", e)
 
 
 async def _probe_health(cfg: Config) -> bool:
@@ -295,6 +434,19 @@ def main() -> None:
 
     cfg = Config.load(args.config)
 
+    # core.log daily rotation (B §14) — recent 14 days
+    log_dir = cfg.log_dir or (cfg.data_dir / "logs")
+    try:
+        log_dir.mkdir(parents=True, exist_ok=True)
+        from logging.handlers import TimedRotatingFileHandler
+        fh = TimedRotatingFileHandler(log_dir / "core.log", when="midnight",
+                                      backupCount=14, encoding="utf-8")
+        fh.setFormatter(logging.Formatter(
+            "%(asctime)s %(levelname)s %(name)s: %(message)s"))
+        logging.getLogger().addHandler(fh)
+    except Exception as e:
+        log.warning("core.log setup failed: %s", e)
+
     if args.check:
         ok = asyncio.run(_probe_health(cfg))
         print("ready" if ok else "down")
@@ -303,6 +455,8 @@ def main() -> None:
     if not args.serve:
         p.print_help()
         sys.exit(0)
+
+    _apply_api_url_override()
 
     try:
         asyncio.run(_serve(cfg))

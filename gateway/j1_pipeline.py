@@ -395,8 +395,10 @@ def _jev_choice(client, state: dict, labels: list, timeout: float) -> Optional[i
         }
     }
     try:
+        import os as _os
+        _api = _os.environ.get("JEV_API_URL") or "https://api.typesafe.ai/v1/systemone"
         resp = client.post(
-            "https://api.typesafe.ai/v1/systemone",
+            _api,
             json={"state": state, "questions": questions, "model": "jev-latest"},
             timeout=timeout,
         )

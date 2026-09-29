@@ -63,6 +63,8 @@ class CoreServer:
         self.app.router.add_post("/v1/turns", self.handle_turns)
         self.app.router.add_get("/v1/turns/{turn_id}", self.handle_turn_get)
         self.app.router.add_get("/v1/status", self.handle_status)
+        self.app.router.add_get("/v1/metrics", self.handle_metrics)
+        self.app.router.add_post("/v1/spool/flush", self.handle_spool_flush)
         self.app.router.add_post("/v1/admin/shutdown", self.handle_shutdown)
         self.app.middlewares.append(self.security_middleware)
         self._runner = web.AppRunner(self.app)
@@ -205,16 +207,67 @@ class CoreServer:
         return ledger._row_dict(row) if row else None
 
     async def handle_status(self, request) -> web.Response:
+        pending = -1
+        try:
+            from . import ledger
+            pending = await self.ctx.writer.submit(
+                lambda w: ledger.pending_gate_count(w.state), "status_pending")
+        except Exception:
+            pass
         return web.json_response({
             "status": "ready",
             "uptime_s": round(time.monotonic() - self.ctx.started_at, 1),
             "version": __version__,
             "protocol": PROTOCOL,
-            "db": {"path": str(self.cfg.mnemosyne_db), "writable": True},
+            "db": {"path": str(self.cfg.mnemosyne_db), "writable": True,
+                   "synced_folder_warning": self.ctx.synced_folder_warning},
             "jev": {"circuit": self.ctx.breaker.state,
                     "consecutive_failures": self.ctx.breaker.consecutive},
-            "queues": {"writer_depth": self.ctx.writer.depth},
+            "queues": {"writer_depth": self.ctx.writer.depth, "pending_gate": pending,
+                       "spool_files": (self.ctx.scanner.pending_files
+                                       if self.ctx.scanner else 0)},
+            "stats": self.ctx.stats,
         })
+
+    async def handle_metrics(self, request) -> web.Response:
+        """B §14 — JSON metrics (no Prometheus dependency)."""
+        try:
+            import psutil
+            rss_mb = round(psutil.Process().memory_info().rss / 1048576, 1)
+        except Exception:
+            rss_mb = -1.0  # psutil not installed
+        st = self.ctx.stats
+        return web.json_response({
+            "uptime_s": round(time.monotonic() - self.ctx.started_at, 1),
+            "version": __version__,
+            "jev": {"circuit": self.ctx.breaker.state,
+                    "calls": st["jev_calls"], "failures": st["jev_failures"]},
+            "writer_queue_depth": self.ctx.writer.depth,
+            "turns": st["turns"],
+            "dedup_count": st["dedup_count"],
+            "prefetch": {"total": st["prefetch_total"],
+                         "degraded": st["prefetch_degraded"],
+                         "degraded_ratio": round(
+                             (st["prefetch_degraded"] / st["prefetch_total"])
+                             if st["prefetch_total"] else 0.0, 4)},
+            "spool": {"pending_files": (self.ctx.scanner.pending_files
+                                        if self.ctx.scanner else 0),
+                      "replayed": st["spool_replayed"]},
+            "embed_ms": st["embed_ms"],
+            "rss_mb": rss_mb,
+            "synced_folder_warning": self.ctx.synced_folder_warning,
+        })
+
+    async def handle_spool_flush(self, request) -> web.Response:
+        """B §9.3 — trigger an immediate spool scan/replay."""
+        if self.ctx.scanner is None:
+            return self._error(503, "NOT_READY", "spool scanner not initialized")
+        try:
+            r = await asyncio.to_thread(self.ctx.scanner.scan_once)
+        except Exception as e:
+            log.exception("spool flush failed")
+            return self._error(500, "INTERNAL", str(e)[:200], retryable=True)
+        return web.json_response({"ok": True, **r})
 
     async def handle_shutdown(self, request) -> web.Response:
         asyncio.get_running_loop().call_later(0.1, self._shutdown_evt.set)

@@ -103,6 +103,7 @@ class Pipeline:
             # completed already?
             row = rec.get("row") or {}
             status = row.get("status")
+            self.ctx.stats["dedup_count"] += 1
             return {"ok": True, "status": "stored" if status == "stored" else status,
                     "turn_id": rec["turn_id"], "deduplicated": True}
 
@@ -118,13 +119,16 @@ class Pipeline:
                     decisions = await asyncio.to_thread(
                         self._evaluate_turn, user, asst)
                     self.ctx.breaker.on_success()
+                    self.ctx.stats["jev_calls"] += 1
             except (JevUnavailable, JevTimeout, JevError) as e:
                 self.ctx.breaker.on_failure(e)
+                self.ctx.stats["jev_failures"] += 1
                 return await self._gate_failure(req, rec, session_key, idem_key, turn_id, e)
             except Exception as e:
                 # unexpected — treat as gate failure -> pending_gate (data preserved)
                 log.exception("gate unexpected failure")
                 self.ctx.breaker.on_failure(e)
+                self.ctx.stats["jev_failures"] += 1
                 return await self._gate_failure(req, rec, session_key, idem_key, turn_id, e)
 
             # 3) store (writer thread)
@@ -146,24 +150,38 @@ class Pipeline:
             await self.ctx.writer.submit(
                 lambda w: self._finish(w, idem_key, decisions, mem_ids), "ledger_finish")
             status = "stored" if mem_ids else "skipped"
+            self.ctx.stats["turns"][status] = self.ctx.stats["turns"].get(status, 0) + 1
             return {"ok": True, "status": status, "turn_id": turn_id,
                     "decisions": decisions, "memory_ids": mem_ids}
 
     # -- internals ------------------------------------------------------
     def _evaluate_turn(self, user: str, asst: str) -> Dict[str, Dict]:
-        """Runs BOTH gates synchronously (JEV calls). to_thread-wrapped."""
+        """Runs BOTH gates synchronously (JEV calls). to_thread-wrapped.
+
+        JEV network/5xx failures are ALSO surfaced as JevUnavailable so the
+        pipeline can move the turn to pending_gate (B §8.2 'spool' default).
+        Fail-open KEEP verdicts with a non-transient cause (401/empty/kill
+        switch/parse) are returned as-is.
+        """
         wg = _load_write_gate()
         decisions: Dict[str, Dict] = {}
         user_skip = False
         asst_skip = False
+        transient = ("http-5", "error")
         if (user or "").strip() and len(user) > 5:
             r = wg.evaluate(user) if wg else {"keep": True, "reason": "no-wg"}
+            reason = str(r.get("reason") or "")
+            if reason.startswith(transient) or reason in ("error",):
+                raise JevUnavailable(f"gate user failed: {reason}")
             decisions["user"] = r
             user_skip = not r.get("keep")
         else:
             decisions["user"] = {"keep": True, "reason": "empty"}
         if (asst or "").strip() and len(asst) > 10:
             r = wg.evaluate_assistant(asst) if wg else {"keep": True, "reason": "no-wg"}
+            reason = str(r.get("reason") or "")
+            if reason.startswith(transient) or reason in ("error",):
+                raise JevUnavailable(f"gate assistant failed: {reason}")
             decisions["assistant"] = r
             asst_skip = not r.get("keep")
         else:
@@ -194,10 +212,110 @@ class Pipeline:
                                        last_error=f"gate:{type(exc).__name__}"),
                 "ledger_pending_gate",
             )
+            self.ctx.stats["turns"]["pending_gate"] = \
+                self.ctx.stats["turns"].get("pending_gate", 0) + 1
         except Exception:
             pass
         return {"ok": True, "status": "pending_gate", "turn_id": turn_id,
                 "decisions": {}, "error": str(exc)[:120]}
+
+    # ------------------------------------------------------------------
+    async def requeue_pending_gate(self, max_age_h: float = 24.0,
+                                   batch: int = 20) -> Dict:
+        """Re-judge pending_gate rows (B §8.2): oldest first, max N.
+
+        Called every `pending_gate_retry_interval_s` while the circuit is
+        closed. Rows older than `max_age_h` -> failed(reason=expired) and
+        their payload is dropped.
+        """
+        from . import ledger
+
+        def _peek(w):
+            return ledger.pending_gate_rows(w.state, limit=batch)
+
+        rows = await self.ctx.writer.submit(_peek, "pending_peek")
+        if not rows:
+            return {"rejudged": 0, "expired": 0, "left": 0}
+        rejudged = 0
+        expired = 0
+        now = time.time()
+        for r in rows:
+            created = r.get("created_at") or 0
+            age_h = (now - created) / 3600 if created else 0
+            if age_h >= max_age_h:
+                try:
+                    await self.ctx.writer.submit(
+                        lambda w, k=r["idem_key"]: ledger.ledger_mark(
+                            w.state, k, "failed", last_error="expired",
+                            clear_payload=True),
+                        "pending_expire")
+                    expired += 1
+                except Exception:
+                    pass
+                continue
+            payload = r.get("payload")
+            if not payload:
+                # payload lost — nothing to re-judge; mark failed
+                try:
+                    await self.ctx.writer.submit(
+                        lambda w, k=r["idem_key"]: ledger.ledger_mark(
+                            w.state, k, "failed", last_error="payload_lost",
+                            clear_payload=True),
+                        "pending_fail")
+                    expired += 1
+                except Exception:
+                    pass
+                continue
+            # re-judge: run the gate+store part only (ledger row already exists)
+            try:
+                res = await self._rejudge_one(payload, r["idem_key"])
+                if res:
+                    rejudged += 1
+            except Exception:
+                log.exception("rejudge failed for %s", r["idem_key"])
+        return {"rejudged": rejudged, "expired": expired,
+                "left": await self._pending_count()}
+
+    async def _pending_count(self) -> int:
+        from . import ledger
+        try:
+            return await self.ctx.writer.submit(
+                lambda w: ledger.pending_gate_count(w.state), "pending_count")
+        except Exception:
+            return -1
+
+    async def _rejudge_one(self, payload: Dict, idem_key: str) -> bool:
+        """Gate + store for an already-received row. Returns True on success."""
+        user = payload.get("user_content") or ""
+        asst = payload.get("assistant_content") or ""
+        agent = payload.get("agent") or ""
+        session_id = payload.get("session_id") or ""
+        session_key = payload.get("session_key") or \
+            f"{agent}_{session_id}" if session_id else ""
+        try:
+            async with self.ctx.jev_sem:
+                if not self.ctx.breaker.allow():
+                    return False  # circuit open again — leave for next round
+                decisions = await asyncio.to_thread(self._evaluate_turn, user, asst)
+                self.ctx.breaker.on_success()
+        except (JevUnavailable, JevTimeout, JevError) as e:
+            self.ctx.breaker.on_failure(e)
+            return False
+        except Exception as e:
+            self.ctx.breaker.on_failure(e)
+            return False
+        try:
+            mem_ids = await self.ctx.writer.submit(
+                lambda w: self._store(w, payload, decisions, session_key,
+                                      idem_key, ""),
+                "store_rejudged")
+            await self.ctx.writer.submit(
+                lambda w, k=idem_key: self._finish(w, k, decisions, mem_ids),
+                "ledger_finish_rejudged")
+            return True
+        except Exception as e:
+            log.warning("rejudge store failed: %s", e)
+            return False
 
     # ------------------------------------------------------------------
     async def process_prefetch(self, req: Dict) -> Dict:
@@ -251,6 +369,7 @@ class Pipeline:
                 rerank_used = "jev"
             except (asyncio.TimeoutError, JevUnavailable, JevError) as e:
                 self.ctx.breaker.on_failure(e)
+                self.ctx.stats["jev_failures"] += 1
                 ctx = self._render(stage1_rows, query, max_chars)
                 degraded = True
                 reason = "jev_timeout" if isinstance(e, asyncio.TimeoutError) else "jev_unavailable"
@@ -261,6 +380,9 @@ class Pipeline:
             reason = "budget_exceeded" if degraded else None
             rerank_used = "skipped" if (not rerank) else ("budget_exceeded" if degraded else "skip")
 
+        self.ctx.stats["prefetch_total"] += 1
+        if degraded:
+            self.ctx.stats["prefetch_degraded"] += 1
         return {"context": ctx,
                 "meta": {"degraded": degraded, "degraded_reason": reason,
                          "rerank": rerank_used, "lanes": lanes,
