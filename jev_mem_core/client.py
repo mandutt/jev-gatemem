@@ -130,8 +130,12 @@ class JevMemClient:
         if self.port:
             env["JEV_MEM_PORT"] = str(self.port)
         if sys.platform == "win32":
-            flags = subprocess.CREATE_NEW_PROCESS_GROUP | getattr(
-                subprocess, "DETACHED_PROCESS", 0)
+            # CREATE_NO_WINDOW (hidden console) is the reliable windowless
+            # combination for console children; DETACHED_PROCESS alone can
+            # still flash a brief console window on some Windows builds
+            # (user-reported 2026-09-29). CREATE_NEW_PROCESS_GROUP keeps the
+            # child groupable for later taskkill-style cleanup.
+            flags = subprocess.CREATE_NEW_PROCESS_GROUP | 0x08000000  # CREATE_NO_WINDOW
             shell = False
             logf = self.data_dir / "logs"
             logf.mkdir(parents=True, exist_ok=True)
