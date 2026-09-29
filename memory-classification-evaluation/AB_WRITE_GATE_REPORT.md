@@ -91,3 +91,12 @@ SKIP = store==NO_STORE && store_confidence >= 0.6  (type 무관)
 - assistant 저장 활성화 시 `sync_roles: ["user","assistant"]` 필요
 - conf 임계값은 assistant에서 **부적합** (결과물 conf가 0.59~0.97 분산 → recall 폭락)
 - 전용 프롬프트(P8-AS)는 recall 0.355로 폐기 — **P8 원본 그대로 + type 필터**가 최적
+
+### 6.1 trace 정책 변경 (2026-09-29, B) — KEEP/SKIP 모두 기록
+
+- **변경 전**: user `write-gate` / assistant `write-gate-as` 모두 **SKIP만 trace** (KEEP 무기록)
+- **변경 후**: **KEEP/SKIP unconditional 기록** (`keep=keep`/`keep=skip`, 같은 이벤트명)
+- **이유**: 플러그인 자체 완결성 — "KEEP vs 미평가" 구분을 위해 스킬/문서 로딩에 의존하지 않도록
+  (다른 에이전트 연결 대비). 사후 감사: trace에 `keep=keep`이 있으면 저장된 것, 없으면 미평가
+- **검증**: 라이브 4케이스 trace 4줄 정확 + smoke 7케이스 ALL PASS + trace keep 0→8건
+- **운용 지표**: `grep -c 'keep=keep' jev_trace.log` = 저장된 발화 수 / `keep=skip` = 제외된 발화 수

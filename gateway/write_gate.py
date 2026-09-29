@@ -279,6 +279,20 @@ def evaluate(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIM
                 "lat_ms": f"{lat_ms:.0f}",
                 "utterance": (utterance or "")[:100],
             })
+        else:
+            # B: KEEP도 trace (2026-09-29 실측 채택) — 게이트 판정 근거를 항상 남김.
+            # SKIP 전용 trace는 "KEEP vs 미평가"를 구분 못 해 사후 감사 불가였음.
+            # unconditional (옵션 없음): 플러그인 자체 완결성 — 스킬/문서 부재에도 감사 가능.
+            _jtrace("write-gate", {
+                "keep": "keep",
+                "store": store,
+                "store_conf": f"{store_conf:.2f}",
+                "type": mtype,
+                "type_conf": f"{type_conf:.2f}",
+                "reason": reason,
+                "lat_ms": f"{lat_ms:.0f}",
+                "utterance": (utterance or "")[:100],
+            })
         return {
             "keep": keep,
             "store": store,
@@ -364,6 +378,19 @@ def evaluate_assistant(utterance: str, *, client=None, timeout: float = JEV_WRIT
         if not keep:
             _jtrace("write-gate-as", {
                 "keep": "skip",
+                "store": store,
+                "store_conf": f"{store_conf:.2f}",
+                "type": mtype,
+                "type_conf": f"{type_conf:.2f}",
+                "reason": reason,
+                "lat_ms": f"{lat_ms:.0f}",
+                "utterance": (utterance or "")[:100],
+            })
+        else:
+            # B: KEEP도 trace (2026-09-29 실측 채택) — assistant 게이트 판정 근거를 항상 남김.
+            # unconditional: 플러그인 자체 완결성 (스킬/문서 부재에도 사후 감사 가능).
+            _jtrace("write-gate-as", {
+                "keep": "keep",
                 "store": store,
                 "store_conf": f"{store_conf:.2f}",
                 "type": mtype,

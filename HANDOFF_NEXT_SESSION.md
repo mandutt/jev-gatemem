@@ -156,7 +156,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 > 상세: `memory-classification-evaluation/JEV_INGESTION_REPORT.md`, `AB_WRITE_GATE_REPORT.md`.
 
 **★ 쓰기 게이트 실장 (2026-09-28) — 구현 완료, 적용 승인 대기**
-- `gateway/write_gate.py` — G-qual 평가 (P8 스토어/분류 지시문, 킬스위치 `JEV_WRITE_GATE=0`, 실패→KEEP, SKIP만 trace)
+- `gateway/write_gate.py` — G-qual 평가 (P8 스토어/분류 지시문, 킬스위치 `JEV_WRITE_GATE=0`, 실패→KEEP, **KEEP/SKIP 모두 trace** (2026-09-29 B 반영))
 - `harnesses/wg_access.py` — 섀도잉 안전 accessor (alias → repo fallback)
 - `harnesses/hermes_j1.py` — `JevRerankProvider.sync_turn` 오버라이드: user 발화만 게이트 (SKIP 시 `_sync_turn_without_user`로 저장), assistant는 무게이트, 실패→base. **주의: `_sync_roles` 기본값은 `{"user"}`** — 기본 환경에선 user 발화만 저장되므로 게이트 실효 범위는 "user 발화 SKIP" 하나로 한정 (assistant 저장은 sync_roles에 assistant 추가 시에만)
 - **검증**: `harnesses/smoke_write_gate.py` 4/4 PASS (SKIP/KEEP/킬스위치/JEV실패), 실 JEV API로 SKIP(좋아 진행해줘) vs KEEP(내일까지 보고서) 판정 확인, trace 로그 기록 확인
@@ -207,6 +207,12 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
    - 규칙: `gateway/write_gate.py` `_as_commitment_fp_filter` (KNOWLEDGE 보호 + TRANSITION×OPERATION/INTENT SKIP)
    - 실측: gold50 precision 0.744→0.806, recall 유지 0.935, 회귀 0, FP 43% 감소, 비용 0
    - 상세: `ASSISTANT_GATE_REPORT.md` §7, 실험: `experiments/exp2_*_rule_v*.py`
+3c. **G-AS 실측 (2026-09-29, 세션 20260929_104012_df1103) — KEEP trace(B) + final-only 전달 확정**:
+   - **B 구현 (unconditional KEEP trace)**: `write_gate.py` `evaluate()`/`evaluate_assistant()` — before: `if not keep: _jtrace` (SKIP만) → after: KEEP/SKIP 모두 trace (`keep=keep`/`keep=skip`, 같은 이벤트명). 검증: 라이브 4케이스 trace 4줄 정확 기록 + smoke 7케이스 ALL PASS + trace `keep` 0→8건. **플러그인 자체 완결성** (스킬/문서 없이 사후 감사 가능 — 다른 에이전트 연결 대비)
+   - **Hermes는 final 발화만 provider에 전달** (C 관측): `turn_finalizer.py` → `_sync_external_memory_for_turn` 턴당 1회, `final_response`=마지막 assistant text. 도구 중간 assistant 발화는 sync_turn에 **도달 안 함** (#15218 "partial output is not durable truth"). 실측: 세션 assistant 53건 중 final(fr=stop) 5건만 게이트+[ASSISTANT] 저장 → 중간 발화 유실은 Hermes 설계, 플러그인 결함 아님 (수정은 Hermes 코어/별도 훅 몫)
+   - **저장 session_id = `hermes_<session_id>`** (`_session_id = f"hermes_{stable_scope}"`), importance=0.15, scope=session, memory_type은 beam classify (게이트와 독립)
+   - **[ASSISTANT] 첫 KEEP 실측**: 2026-09-29 세션서 final 발화 8건 저장 (결과물/판단형), trace `write-gate-as keep=keep` 동반. 과거(07-31~09-28)는 전부 SKIP(no-store/context) → 0건이 "게이트 미적용"이 아니라 "게이트가 정상 SKIP"이었음
+   - **G-qual/G-AS 독립**: user SKIP + asst KEEP → `_sync_turn_without_user`로 [ASSISTANT]만 저장 (10:46:52 실측: write-gate skip + [ASSISTANT] row 동시, write-gate-as 무기록=KEEP)
 4. **롤백 방법** (문제 시):
    - 게이트만 끄기: `JEV_WRITE_GATE=0` (환경변수) → 전부 KEEP
    - assistant 저장 끄기: `hermes config unset memory.mnemosyne.sync_roles` → user만
@@ -237,7 +243,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 | 평가셋 | `data/dataset_curated.json` (52쿼리, 6유형, gold 16자리 ID) |
 | 로그 | `C:\Users\mandu\AppData\Local\hermes\logs\agent.log` (`grep "Jev choice"`) |
 | **Jev trace 로그** | `C:\Users\mandu\AppData\Local\hermes\logs\jev_trace.log` (ring buffer 512KB, `JEV_TRACE_PATH`로 경로 변경 가능) |
-| **쓰기 게이트** | `JEV_WRITE_GATE=0` → 비활성(KEEP). SKIP 이벤트만 `jev_trace.log`에 `write-gate`(user) / `write-gate-as`(assistant) 기록 |
+| **쓰기 게이트** | `JEV_WRITE_GATE=0` → 비활성(KEEP). **KEEP/SKIP 모두** `jev_trace.log`에 `write-gate`(user) / `write-gate-as`(assistant) 기록 (2026-09-29 B: unconditional, `keep=keep`/`keep=skip`) |
 
 ## 10. 세션 전환 방법
 

@@ -177,3 +177,30 @@ v4 규칙의 오탐을 탐색했다. 목적: 외부 데이터에서 본 오탐�
 - **결정**: v4 규칙 그대로 유지. 외부 데이터셋은 "분류 정확도 검증"이 아닌
   "어휘 커버리지 참고" 용도로만 활용.
 - 실험: `experiments/exp2_14_dataset_scan_input.json`, `experiments/exp2_15_dataset_ab_sim.py`
+
+## 9. 라이브 실측 (2026-09-29) — trace 기반 운용 확인 + KEEP trace(B)
+
+### 9.1 KEEP trace (B) — unconditional 구현 (커밋 예정, 플러그인 완결성)
+- **변경 전**: `evaluate()`/`evaluate_assistant()` 모두 `if not keep: _jtrace(...)` → **SKIP만 trace**, KEEP은 무기록
+  → "trace에 write-gate-as 없음 = KEEP or 미평가"를 구분 불가, 사후 감사 불가
+- **변경 후**: KEEP/SKIP **모두** trace (같은 이벤트명 `write-gate`/`write-gate-as`, `keep=keep`/`keep=skip`). 옵션 없음(unconditional):
+  플러그인 자체가 판정 근거를 항상 남김 — 스킬/문서 로딩과 무관하게 동작 (다른 에이전트 연결 대비)
+- **검증**: 라이브 4케이스 (user/asst × KEEP/SKIP) → trace 4줄 정확 (`keep=keep 2` + `keep=skip 2`) /
+  smoke_write_gate 7케이스 ALL PASS (회귀 0) / trace keep 카운트 0→8건
+
+### 9.2 final-only 전달 확정 (C 관측 — Hermes 설계, 플러그인 책임 아님)
+- `turn_finalizer.py` → `_sync_external_memory_for_turn` **턴당 1회**, `final_response` = 마지막 assistant text 단일.
+  도구 중간 assistant 발화는 sync_turn에 **도달 안 함** (#15218 "partial output is not durable truth")
+- 라이브 대조: 세션 `20260929_104012_df1103` assistant 53건(텍스트) 중 **final(fr=stop) 5건만** 게이트+[ASSISTANT] 저장
+- 결론: 중간 발화 유실은 플러그인이 받지 못해서 생기는 것 — Hermes 코어/별도 훅의 몫
+
+### 9.3 [ASSISTANT] 첫 KEEP 실측 (운용 데이터)
+- 2026-09-29 세션: final 발화 8건 KEEP 저장 (`hermes_20260929_104012_df1103`, importance=0.15, scope=session)
+  - 저장 예: "[ASSISTANT] DB 클린 확인(프로브 잔여물 없음)...", "[ASSISTANT] 완전한 실측 완료...", "[ASSISTANT] 스킬 반영 완료했습니다..."
+  - 대응 trace: `write-gate-as keep=keep store=STORE type=fact/commitment/observation... reason=store`
+- 과거(07-31~09-28) [ASSISTANT] 0건 = **게이트가 정상 SKIP** (모든 발화 no-store/context) — 미적용이 아님
+- 저장 session_id는 `hermes_<session_id>` (`_session_id = f"hermes_{stable_scope}"`) — raw session_id로 조회 시 미스
+
+### 9.4 G-qual/G-AS 독립 동작 (라이브 확인)
+- user SKIP + asst KEEP → `_sync_turn_without_user`로 [ASSISTANT]만 저장
+  (10:46:52 실측: `write-gate keep=skip` + [ASSISTANT] row 동시 생성, write-gate-as 무기록 = KEEP 임을 9.1로 확인)
