@@ -40,7 +40,7 @@ class JevMemClient:
         self.port = port  # explicit port (else read from core.json)
         self.core_json = self.data_dir / "core.json"
         self.token_path = self.data_dir / "token"
-        self._token: Optional[str] = None
+        self._token_cache: Optional[str] = None
         self.spool_writer = (SpoolWriter(self.data_dir / "spool", agent)
                              if spool else None)
 
@@ -132,13 +132,13 @@ class JevMemClient:
 
     # -- auth ------------------------------------------------------------
     def _token(self) -> str:
-        if self._token:
-            return self._token
+        if self._token_cache:
+            return self._token_cache
         try:
-            self._token = self.token_path.read_text(encoding="utf-8").strip()
+            self._token_cache = self.token_path.read_text(encoding="utf-8").strip()
         except Exception:
-            self._token = ""
-        return self._token
+            self._token_cache = ""
+        return self._token_cache
 
     def _headers(self, use_token: bool = True) -> Dict[str, str]:
         h = {"Content-Type": "application/json"}
@@ -171,7 +171,7 @@ class JevMemClient:
                 return data.get("context") or ""
             except urllib.error.HTTPError as e:
                 if e.code == 401 and attempt == 0:
-                    self._token = None  # re-read token file once (B §11.1)
+                    self._token_cache = None  # re-read token file once (B §11.1)
                     continue
                 return ""
             except Exception:
@@ -197,7 +197,7 @@ class JevMemClient:
                     return json.loads(r.read().decode("utf-8"))
             except urllib.error.HTTPError as e:
                 if e.code == 401 and attempt == 0:
-                    self._token = None
+                    self._token_cache = None
                     continue
                 if 400 <= e.code < 500:
                     # 4xx not retryable, not spoolable (B §9.2)
