@@ -42,14 +42,32 @@ collector가 내부 예외 시 fallback `_instantiate_subclass`가 **dir() 알�
 | 로더 경유 로드 | `load_memory_provider('jev-mem')` → `JevRpcProvider, is_available=True` |
 | **라이브 실측 (재시작 후)** | agent.log `mode=rpc` → `'jev-mem' activated`; `POST /v1/prefetch 200`; turns.stored→실 DB 2행(`hermes_20260929_230014_afe197`); `POST /v1/tools 200`(mnemosyne_stats). 행수 967→969 |
 
-## 5. 라이브 운영 관측
+## 5. 라이브 운영 관측 → 해소 (2026-09-29 심야 후속)
 
-- **데스크톱 재시작 시 core 데몬 동반 사망**: 재시작 후 첫 prefetch 8s 타임아웃(세션당 prefetch 스킵). 복구는 수동 재기동.
-  당분 `persist_on_release=true` 기동으로 완화. 근본 해법: Windows 시작 시 core 자동 실행(작업 스케줄러) — P2 autostart와 통합 필요.
-- **prefetch 타임아웃 스킵**: 한 세션에서 타임아웃되면 이후 턴도 스킵("skipping it until the stuck call returns"). core 데몬 정상화 후 새 세션에서 복구 확인.
-- `/v1/tools` 응답 `session_id: hermes_core-tools` — 툴 실행용 임시 세션 고정값. read 중심이라 무해하나, remember류 툴 호출 시 스코프 확인 필요.
+- **데스크톱 재시작 시 core 데몬 동반 사망** → **해소 (on-demand 기동 확정)**: 사용자 확정 — 부팅 상주 불필요,
+  첫 에이전트 요청 시 client `ensure_core()`가 probe → 없으면 기동. 수정 전 auto-start는 두 결함으로 실패:
+  ① `sys.executable`(Hermes venv python)에 `jev_mem_core`가 없어 spawn 실패 ("No module named jev_mem_core") →
+  `_spawn_core`가 PYTHONPATH에 middleware repo 주입 (`2c1845e`)
+  ② config가 `JEV_MEM_DATA_DIR`에서 DB 경로를 추론해 `jev-mem/mnemosyne.db`로 자동 다운그레이드 →
+  data_dir와 DB 분리, 기본 DB는 항상 Hermes 실 DB (같은 커밋)
+- **재기동 시 콘솔 창 깜빡임** → **해소**: DETACHED_PROCESS → CREATE_NO_WINDOW(`d4df938`)로도 재발(23:20 실측) →
+  최종 해법: spawn 실행 파일을 같은 venv의 **pythonw.exe**(콘솔 없는 호스트)로 교체 (`46e24cc`) —
+  깜빡임 구조적 불가능. 검증: shutdown → ensure_core → pythonw 데몬, 실 DB, breaker closed.
+- **prefetch 타임아웃 스킵**: 데몬 죽은 시간대 시작 세션은 이후 턴도 스킵. 새 세션에서 복구 확인. (인지됨, 구조상 허용)
+- `/v1/tools` 응답 `session_id: hermes_core-tools` — 툴 실행용 임시 세션 고정값. read 중심이라 무해하나, remember류 툴 호출 시 스코프 확인 필요. (잔여)
+- 검증 후 정리: `jev-mem\mnemosyne.db`의 P4 검증 테스트 행 15행 삭제 (승인 반영). 라이브 DB 무영향.
 
 ## 6. 롤백
 
 `config.yaml` `memory.provider: mnemosyne`(기존) + `JEV_MEM_MODE=embedded` 설정 시
 in-process JevRerankProvider로 복귀. DB는 동일 파일이므로 데이터 무손실.
+
+## 7. 최종 커밋 이력 (P5 본체 + 후속)
+
+| 커밋 | 내용 |
+|---|---|
+| `d2f6a05` | P5 본체: /v1/tools 프록시, store 세션 스코프, 플러그인 rpc 로드 수정 |
+| `6f91d8b` | P5 보고서 + HANDOFF 전체 완료 표기 |
+| `2c1845e` | client auto-start 수정 (PYTHONPATH 주입 + DB 다운그레이드 방지) |
+| `d4df938` | CREATE_NO_WINDOW (불충분 — 이후 46e24cc로 대체) |
+| `46e24cc` | pythonw.exe spawn — 창 깜빡임 구조적 차단 (최종) |
