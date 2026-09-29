@@ -184,7 +184,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - [ ] **Mnemosyne 업데이트 시** — `typed_memory.py` 한국어 패치 재적용: `.venv\Scripts\python.exe scripts\reapply_korean_classifier.py` (라이브 vs 재적용 40/40 검증됨). 업데이트 자체는 §7-12 정책(3.15.1 고정, 4.0.0 stable 확인 후) 따름
 - [ ] graph/fact lane — **실데이터 재평가**: facts/graph_edges/memoria_facts가 쌓이면 (수십 개 이상) verify_graph_lane_synthetic.py 방식으로 실데이터 gold 회수 확인 후 lane 상세 튜닝 (budget/confidence 임계값)
 - [x] **★ Hermes 종속성 독립화 (P1 일부)** — `core/j1_engine.py` 분리 완료 (hermes_j1은 얇은 어댑터로), smoke 7/7 + verify_core_j1_engine.py live DB PASS, 커밋 `140fa46`
-- [ ] **★ 멀티 에이전트 전환 (Core-as-Writer) — 2026-09-29 P3 완료** — `docs/design/p1-core-server-report.md` (P1) + `docs/design/p2-spool-breaker-report.md` (P2, ACL·redaction 승인 반영 `5b41a4c`) + `docs/design/p3-pi-extension-report.md` (P3). **P3 완료**: pi 0.87.1 확장(`adapters/pi/pi-jev-mem.ts`, `~/.pi/agent/extensions/` 등록) 연결 — prefetch 주입 + sync_turn 저장(`source_agent=pi`) 실측, Hermes+pi 동시 쓰기 SQLITE_BUSY 0, 회귀 전체 유지. client.py `_token` 속성/메서드 충돌 버그 수정. → **P4 codex/opencode** (동일 `JevMemClient` 패턴) → **P5 Hermes 전환** (동시성 테스트 §16.2 게이트, 목표 2026-10-13)
+- [ ] **★ 멀티 에이전트 전환 (Core-as-Writer) — 2026-09-29 P4 완료** — `docs/design/p1-core-server-report.md` (P1) + `docs/design/p2-spool-breaker-report.md` (P2) + `docs/design/p3-pi-extension-report.md` (P3) + `docs/design/p4-codex-opencode-report.md` (P4). **P4 완료**: codex hooks(recall/record) JEV core 전환 + trusted_hash 갱신, opencode v2 플러그인(aisdk.language 래퍼 prefetch 주입 + session.idle 저장) + MCP bridge JEV core 전환 — 전부 실측(모델 인용, DB 저장, tools/list+call). 어댑터 `adapters/codex|opencode/` 등록. → **P5 Hermes 전환** (동시성 테스트 §16.2 게이트, 목표 2026-10-13)
 
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
