@@ -110,10 +110,23 @@ class JevMemClient:
         py = sys.executable
         cmd = [py, "-m", "jev_mem_core", "--serve"]
         env = dict(os.environ)
+        # jev_mem_core lives in the middleware repo, not on sys.path of the
+        # spawning interpreter — inject the repo (parent of the package dir)
+        # so `python -m jev_mem_core` resolves anywhere (measured failure:
+        # "No module named jev_mem_core" when Hermes venv python spawned us).
+        repo_root = str(Path(__file__).resolve().parent.parent)
+        pp = env.get("PYTHONPATH", "")
+        if repo_root not in pp.split(os.pathsep):
+            env["PYTHONPATH"] = repo_root + (os.pathsep + pp if pp else "")
         # if this client targets a non-default data dir, the spawned core
-        # must inherit the same port/data-dir (tests use scratch dirs)
+        # must inherit the same port/data-dir (tests use scratch dirs).
+        # NOTE: with the default data_dir, do NOT inject JEV_MEM_DB — the
+        # core's own default (config.py) is the Hermes live DB (P5), and a
+        # blind injection would silently downgrade it to data_dir/mnemosyne.db
+        # (measured: auto-started core wrote jev-mem/mnemosyne.db instead).
         env.setdefault("JEV_MEM_DATA_DIR", str(self.data_dir))
-        env.setdefault("JEV_MEM_DB", str(self.data_dir / "mnemosyne.db"))
+        if self.data_dir != DEFAULT_DATA_DIR:
+            env["JEV_MEM_DB"] = str(self.data_dir / "mnemosyne.db")
         if self.port:
             env["JEV_MEM_PORT"] = str(self.port)
         if sys.platform == "win32":

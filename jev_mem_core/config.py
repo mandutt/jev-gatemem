@@ -18,9 +18,9 @@ ENV_DATA_DIR = "JEV_MEM_DATA_DIR"
 # Hermes가 사용하는 DB를 가리킨다 — 기존 965행 메모리 보존 + 단일 writer 완성.
 # 테스트/카오스는 JEV_MEM_DB env로 오버라이드하므로 영향 없음.
 def _default_mnemosyne_db() -> Path:
-    override = os.environ.get(ENV_DATA_DIR)
-    if override:
-        return Path(_expand(override)) / "mnemosyne.db"
+    # NOTE: intentionally NOT derived from JEV_MEM_DATA_DIR. data_dir holds
+    # ledger/spool/token/logs; the memory DB is a separate concern (P5: the
+    # default is the Hermes live DB regardless of where the data dir is).
     return Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "hermes" / "mnemosyne" / "data" / "mnemosyne.db"
 
 
