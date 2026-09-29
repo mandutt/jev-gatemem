@@ -183,6 +183,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - [x] **★ Jev 개입 trace 로그 (2026-09-27 밤)** — `gateway/trace.py` — ring buffer 로거: `$LOCALAPPDATA/hermes/logs/jev_trace.log` (기본, `JEV_TRACE_PATH`로 오버라이드), cap 512KB 초과 시 선두 절반 폐기 (파일 상시 ~256~512KB 수렴, 무한 증가 없음). prefetch당 4이벤트 기록: `pool`(lane별 기여: fts/vec/imp/graph/pool) → `gate`(pool/passed) → `jev`(idx/lat_ms/pick) → `lift`(lifted/from_idx/picked_id/prev_top). Jev OFF/fallback 시 trace 미기록. **검증: verify_trace.py (ring 단위), 섀도잉 시뮬레이션 PASS, smoke --on 8쿼리×4이벤트=32줄, --off 회귀 8/8, verify_gateway_api pass**
 - [ ] **Mnemosyne 업데이트 시** — `typed_memory.py` 한국어 패치 재적용: `.venv\Scripts\python.exe scripts\reapply_korean_classifier.py` (라이브 vs 재적용 40/40 검증됨). 업데이트 자체는 §7-12 정책(3.15.1 고정, 4.0.0 stable 확인 후) 따름
 - [ ] graph/fact lane — **실데이터 재평가**: facts/graph_edges/memoria_facts가 쌓이면 (수십 개 이상) verify_graph_lane_synthetic.py 방식으로 실데이터 gold 회수 확인 후 lane 상세 튜닝 (budget/confidence 임계값)
+- [ ] **★ Hermes 종속성 독립화** (2026-09-29 로드맵 작성, 미착수) — `docs/hermes-decoupling-roadmap.md` 참고. P1: `core/j1_engine.py` 분리 (hermes_j1은 얇은 어댑터로) → P3: opencode 어댑터 → P2: `gateway` rename (섀도잉 accessor 제거, 별도 승인 필요)
 
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
