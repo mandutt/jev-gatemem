@@ -26,6 +26,10 @@ def register_memory_provider(ctx):
     """Hermes memory-provider discovery entry (same contract as mnemosyne_hermes).
 
     P5: JEV_MEM_MODE에 따라 rpc(JevRpcProvider, 기본) / embedded(JevRerankProvider) 분기.
+    F4 (2026-09-30): embedded rollback wiring — register() honors JEV_MEM_MODE
+    via _make_provider, so setting JEV_MEM_MODE=embedded and restarting Hermes
+    rolls back to the v0.1.0 in-process provider without code edits.
+    Rollback path VERIFIED: loader analysis + JEV_MEM_MODE branch smoke.
     """
     from harnesses.hermes_j1 import _make_provider
 

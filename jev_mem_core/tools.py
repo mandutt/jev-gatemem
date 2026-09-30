@@ -51,7 +51,7 @@ class ToolExecutor:
             return Path(env)
         return Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "hermes"
 
-    def ensure(self) -> Any:
+    def ensure(self, session_id: str = "") -> Any:
         """Return the initialized provider (lazy, once). None on failure."""
         if self._provider is not None:
             return self._provider
@@ -61,14 +61,38 @@ class ToolExecutor:
             from mnemosyne_hermes import MnemosyneMemoryProvider
             home = self._resolve_hermes_home()
             p = MnemosyneMemoryProvider()
-            p.initialize("core-tools", hermes_home=str(home), platform="windows")
+            # A4 (2026-09-30): initialize with the FIRST caller session when
+            # provided, so tool writes land in that session's scope instead of
+            # a shared 'core-tools' bucket. Later /v1/tools calls with a
+            # different session_id rebind via _rebind_session (below).
+            init_session = session_id or "core-tools"
+            p.initialize(init_session, hermes_home=str(home), platform="windows")
             self._provider = p
-            log.info("tool executor initialized (hermes_home=%s)", home)
+            self._bound_session = init_session
+            log.info("tool executor initialized (hermes_home=%s, session=%s)",
+                     home, init_session)
             return p
         except Exception as e:
             self._init_error = str(e)
             log.error("tool executor init failed: %s", e)
             return None
+
+    _bound_session: str = "core-tools"
+
+    def _rebind_session(self, session_id: str) -> None:
+        """A4: switch the durable tool session when the caller's differs.
+
+        Uses on_session_switch(reset=False) — no ledger reset, no data loss;
+        only session-scoped state (beam session_id / channel_id) is rebound.
+        """
+        if not session_id or session_id == self._bound_session:
+            return
+        try:
+            self._provider.on_session_switch(session_id, reset=False)
+            self._bound_session = session_id
+            log.info("tool executor session rebound: %s", session_id)
+        except Exception as e:
+            log.error("session rebind to %s failed: %s", session_id, e)
 
     def tool_schemas(self) -> list:
         p = self.ensure()
@@ -80,12 +104,15 @@ class ToolExecutor:
             log.error("tool schemas failed: %s", e)
             return []
 
-    def dispatch(self, tool_name: str, args: Dict[str, Any]) -> Dict[str, Any]:
-        p = self.ensure()
+    def dispatch(self, tool_name: str, args: Dict[str, Any],
+                 session_id: str = "") -> Dict[str, Any]:
+        p = self.ensure(session_id)
         if p is None:
             return {"status": "memory_unavailable",
                     "tool": tool_name,
                     "error": f"tool executor unavailable: {self._init_error}"}
+        if session_id:
+            self._rebind_session(session_id)
         # tool_runner: sync function -> JSON string. Return as parsed JSON.
         try:
             raw = p.handle_tool_call(tool_name, args)

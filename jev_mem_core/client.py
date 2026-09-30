@@ -30,6 +30,7 @@ DEFAULT_DATA_DIR = Path(
     or Path(os.environ.get("LOCALAPPDATA", str(Path.home()))) / "jev-mem")
 AUTO_START_TIMEOUT_S = 20.0
 HEALTH_PROBE_TIMEOUT_S = 0.5
+SPAWN_COOLDOWN_S = 30.0  # A5: throttle repeated spawn attempts
 
 
 class JevMemClient:
@@ -46,6 +47,8 @@ class JevMemClient:
         self.core_json = self.data_dir / "core.json"
         self.token_path = self.data_dir / "token"
         self._token_cache: Optional[str] = None
+        self._spawning = False       # A5
+        self._last_spawn_at = 0.0    # A5: monotonic timestamp of last spawn
         self.spool_writer = (SpoolWriter(self.data_dir / "spool", agent)
                              if spool else None)
 
@@ -74,13 +77,23 @@ class JevMemClient:
             return base
         if not self.auto_start:
             return None
-        # lazy auto-start (D4): spawn detached, wait for readiness.
-        # core.json may not exist yet — poll until it appears, then probe.
+        # A5 spawn throttle: process-wide cooldown + single in-flight spawn.
+        # The core singleton makes concurrent spawns harmless, but repeated
+        # spawn attempts every request would burn CPU and flash processes.
+        now = time.monotonic()
+        if self._spawning:
+            return None  # another thread/request is already starting core
+        if now - self._last_spawn_at < SPAWN_COOLDOWN_S:
+            return None  # inside cooldown — do not retry yet
+        self._spawning = True
+        self._last_spawn_at = now
         try:
             self._spawn_core()
         except Exception as e:
             print(f"jev-mem: auto-start failed: {e}", file=sys.stderr)
             return None
+        finally:
+            self._spawning = False
         t0 = time.monotonic()
         while time.monotonic() - t0 < AUTO_START_TIMEOUT_S:
             base = self.base_url()
@@ -241,18 +254,23 @@ class JevMemClient:
         self._spool(payload)
         return {"ok": False, "status": "spooled", "error": "core failed"}
 
-    def tool(self, tool_name: str, args: Dict = None, *, timeout_s: float = 60.0) -> Dict:
+    def tool(self, tool_name: str, args: Dict = None, *,
+             timeout_s: float = 60.0, session_id: str = "") -> Dict:
         """POST /v1/tools (P5) — run a mnemosyne_* tool on the core side.
 
+        session_id: caller's active session — the core rebinds its durable
+        tool session so writes land in the right scope (A4, 2026-09-30).
         Returns {"ok": true, "tool": ..., "result": {...}} or
         {"ok": false, "error": ...}. Tools are read/write — failure does NOT
         spool (stateful replay is unsafe); the caller (Hermes handle_tool_call)
         surfaces the error JSON to the model.
         """
+        self._tool_session_id = session_id
         base = self.ensure_core()
         if not base:
             return {"ok": False, "error": "core unreachable: " + (self._last_error() or "")}
-        body = json.dumps({"tool": tool_name, "args": args or {}},
+        body = json.dumps({"tool": tool_name, "args": args or {},
+                           "session_id": getattr(self, "_tool_session_id", "") or ""},
                           ensure_ascii=False).encode("utf-8")
         for attempt in (0, 1):
             try:

@@ -232,7 +232,8 @@ class CoreServer:
             # run INSIDE the writer thread so tool DB access is serialized
             # with /v1/turns writes (single writer guarantee)
             result = await self.ctx.writer.submit(
-                lambda w: self.tools.dispatch(tool_name, args),
+                lambda w: self.tools.dispatch(tool_name, args,
+                                              session_id=str(body.get("session_id") or "")),
                 f"tool_{tool_name}")
         except Exception as e:
             log.exception("tool dispatch crashed")
