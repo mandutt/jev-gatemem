@@ -58,6 +58,9 @@ class CoreContext:
         self.synced_folder_warning = False
         self._last_pending_check = 0.0
         self._last_tick = time.monotonic()
+        # D-5 (idle shutdown): last non-probe activity. /health and /metrics
+        # do NOT refresh this — only real work (prefetch/turns/tools) does.
+        self.last_activity_at = time.monotonic()
         self.stats: Dict[str, Any] = {
             "jev_calls": 0, "jev_failures": 0,
             "turns": {"stored": 0, "skipped": 0, "pending_gate": 0, "failed": 0},
@@ -65,6 +68,9 @@ class CoreContext:
             "embed_ms": 0.0, "rss_mb": 0.0,
             "prefetch_degraded": 0, "prefetch_total": 0,
         }
+
+    def touch_activity(self) -> None:
+        self.last_activity_at = time.monotonic()
 
     def session_lock(self, key: str) -> asyncio.Lock:
         lock = self._session_locks.get(key)
@@ -288,6 +294,38 @@ async def _op_loop(ctx: CoreContext, pipeline) -> None:
         if lag > 5.0:
             log.warning("event loop lag %.1fs (watchdog)", lag)
         ctx._last_tick = time.monotonic()
+
+        # 6) D-5 idle shutdown: graceful exit when idle for idle_shutdown_min.
+        # Conditions (ALL required, review F10):
+        #   - no non-probe activity for N minutes
+        #   - writer queue empty
+        #   - no pending_gate backlog and no spool files
+        idle_min = cfg.idle_shutdown_min
+        if idle_min > 0 and now - ctx.last_activity_at >= idle_min * 60:
+            queue_depth = -1
+            pending = -1
+            spool_files = -1
+            try:
+                queue_depth = ctx.writer.depth() if ctx.writer else 0
+            except Exception:
+                queue_depth = -1
+            try:
+                from . import ledger as _ledger
+                pending = await asyncio.to_thread(
+                    _ledger.pending_gate_count, ctx.writer.state) if ctx.writer else 0
+            except Exception:
+                pending = -1
+            try:
+                spool_files = (len(list((cfg.data_dir / "spool").glob("*.jsonl")))
+                               if (cfg.data_dir / "spool").exists() else 0)
+            except Exception:
+                spool_files = -1
+            if queue_depth == 0 and pending == 0 and spool_files == 0:
+                log.info("idle shutdown: no activity for %s min, queues empty — exiting",
+                         idle_min)
+                raise SystemExit(0)
+            log.info("idle shutdown deferred: queue=%s pending=%s spool=%s",
+                     queue_depth, pending, spool_files)
 
 
 async def _apply_data_dir_acl(cfg: Config) -> None:

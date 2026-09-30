@@ -65,6 +65,37 @@ def compile_patterns(patterns: Optional[List[str]] = None) -> List[re.Pattern]:
 
 _REDACTED = "***"
 
+# D-3 (2026-09-30, review F13): high-precision patterns for the STORE path.
+# Unlike the key-name patterns above (which rely on "KEY"/"TOKEN" wording),
+# these match well-known secret FORMATS — near-zero false positives on prose.
+# Entropy-based detection is intentionally NOT included (too many false
+# positives on ordinary text).
+HIGH_PRECISION_PATTERNS = [
+    # Cloud/API key prefixes
+    r"sk-[A-Za-z0-9]{20,}",            # OpenAI-style
+    r"sk-ant-[A-Za-z0-9\-]{20,}",      # Anthropic
+    r"AKIA[0-9A-Z]{16}",               # AWS access key
+    r"AIza[0-9A-Za-z\-_]{35}",         # Google API key
+    r"ghp_[A-Za-z0-9]{36}",            # GitHub PAT
+    r"gho_[A-Za-z0-9]{36}",            # GitHub OAuth
+    r"github_pat_[A-Za-z0-9_]{80,}",   # GitHub fine-grained PAT
+    r"xox[bposa]-[A-Za-z0-9\-]{10,}",  # Slack tokens
+    r"eyJ[A-Za-z0-9\-_]{50,}\.eyJ[A-Za-z0-9\-_]{50,}\.[A-Za-z0-9\-_]{20,}",  # JWT
+    r"-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----",
+    # Bearer/authorization headers
+    r"(?i)bearer\s+[A-Za-z0-9\-_.~+/=]{20,}",
+]
+
+
+def redact_text_high_precision(text: str) -> str:
+    """D-3: redact format-based secrets on the STORE path (mnemosyne.db)."""
+    if not text:
+        return text
+    out = text
+    for pat in HIGH_PRECISION_PATTERNS:
+        out = re.sub(pat, _REDACTED, out)
+    return out
+
 
 def redact_text(text: str, patterns: Optional[List[re.Pattern]] = None) -> str:
     """Replace matched tokens with '***'. Returns original if no match."""

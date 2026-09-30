@@ -121,13 +121,23 @@ class JevMemClient:
         concurrent spawns harmless (only one survives).
         """
         py = sys.executable
-        # pythonw.exe = windowless console host. Even with CREATE_NO_WINDOW a
-        # console-subsystem python.exe can flash a brief console window on
-        # spawn (user-observed 2026-09-29 twice); pythonw has no console at
-        # all, making the flash structurally impossible.
-        pyw = py.replace("python.exe", "pythonw.exe")
-        if os.path.isfile(pyw):
-            py = pyw
+        # D-2 (2026-09-30, review F7): prefer the dedicated core venv at
+        # %LOCALAPPDATA%/jev-mem/venv — decouples the core from the Hermes
+        # venv so Hermes updates can't replace DLLs (onnxruntime, sqlite-vec)
+        # under a running process, and agents without Hermes can still run
+        # the core. Falls back to the spawning interpreter when absent.
+        core_venv_pyw = (Path(os.environ.get("LOCALAPPDATA", str(Path.home())))
+                         / "jev-mem" / "venv" / "Scripts" / "pythonw.exe")
+        if core_venv_pyw.is_file():
+            py = str(core_venv_pyw)
+        else:
+            # pythonw.exe = windowless console host. Even with CREATE_NO_WINDOW a
+            # console-subsystem python.exe can flash a brief console window on
+            # spawn (user-observed 2026-09-29 twice); pythonw has no console at
+            # all, making the flash structurally impossible.
+            pyw = py.replace("python.exe", "pythonw.exe")
+            if os.path.isfile(pyw):
+                py = pyw
         cmd = [py, "-m", "jev_mem_core", "--serve"]
         env = dict(os.environ)
         # jev_mem_core lives in the middleware repo, not on sys.path of the

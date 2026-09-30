@@ -8,6 +8,7 @@ so crash-window requeue can detect already-stored turns via metadata_json.
 from __future__ import annotations
 
 import json
+import os
 from typing import Any, Dict, List, Optional
 
 
@@ -31,6 +32,14 @@ def _remember_with_meta(beam, content: str, *, importance: float, source: str,
         metadata=meta,
         extract_entities=True,
     )
+
+
+def _config_store_redact() -> bool:
+    """D-3 toggle: env JEV_MEM_STORE_REDACT=0 disables; config default ON."""
+    v = os.environ.get("JEV_MEM_STORE_REDACT")
+    if v is not None:
+        return v not in ("0", "false", "False")
+    return True  # default ON (config ops.store_redact mirrors this)
 
 
 def store_kept(wctx, *, req: Dict, decisions: Dict, session_key: str,
@@ -61,6 +70,14 @@ def _store_kept_impl(beam, req: Dict, decisions: Dict, session_key: str,
     asst_keep = bool(decisions.get("assistant", {}).get("keep"))
     user = (req.get("user_content") or "").strip()
     asst = (req.get("assistant_content") or "").strip()
+    # D-3 (2026-09-30, review F13): redact the STORE path so secrets never
+    # reach mnemosyne.db (and thus other agents' prompts). Format-based
+    # high-precision patterns only. Applied AFTER gate evaluation so the gate
+    # sees the original text. Toggle: config ops.store_redact (default ON).
+    from .redact import redact_text_high_precision
+    if _config_store_redact():
+        user = redact_text_high_precision(user)
+        asst = redact_text_high_precision(asst)
     source_agent = req.get("agent", "")
     scope = req.get("scope", "session")
 

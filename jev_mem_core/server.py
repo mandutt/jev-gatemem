@@ -126,6 +126,7 @@ class CoreServer:
         })
 
     async def handle_prefetch(self, request) -> web.Response:
+        self.ctx.touch_activity()  # D-5: real work refreshes idle clock
         try:
             body = await request.json()
         except Exception:
@@ -146,6 +147,7 @@ class CoreServer:
         return web.json_response({"ok": True, **result})
 
     async def handle_turns(self, request) -> web.Response:
+        self.ctx.touch_activity()  # D-5
         try:
             body = await request.json()
         except Exception:
@@ -215,6 +217,7 @@ class CoreServer:
         Runs the tool in the writer thread (serialized with /v1/turns writes),
         returns the tool's JSON result as-is.
         """
+        self.ctx.touch_activity()  # D-5
         try:
             body = await request.json()
         except Exception:

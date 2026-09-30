@@ -63,6 +63,14 @@ class Config:
     backup_interval_h: int = 24
     backup_keep: int = 7
     backup_lock_retries: int = 3  # 2s apart (D11d: spool/backup only)
+    # D-5 (2026-09-30, review F10): idle shutdown — graceful exit when all of:
+    # no non-probe activity for N minutes, writer queue empty, no pending_gate
+    # or spool backlog. 0 disables. Default 60 per review recommendation.
+    idle_shutdown_min: int = 60
+    # D-3 (2026-09-30, review F13): redaction on the STORE path (what reaches
+    # mnemosyne.db), not just ledger/spool. High-precision patterns only —
+    # entropy-based detection stays off to avoid false positives on prose.
+    store_redact: bool = True
     # P2: core.log rotation (B §14)
     log_dir: Path | None = None  # None -> data_dir/logs
 
@@ -142,6 +150,10 @@ class Config:
                 cfg.backup_keep = int(ops["backup_keep"])
             if "backup_lock_retries" in ops:
                 cfg.backup_lock_retries = int(ops["backup_lock_retries"])
+            if "idle_shutdown_min" in ops:
+                cfg.idle_shutdown_min = int(ops["idle_shutdown_min"])
+            if "store_redact" in ops:
+                cfg.store_redact = bool(ops["store_redact"])
             if "log_dir" in pth:
                 cfg.log_dir = Path(_expand(str(pth["log_dir"])))
 
