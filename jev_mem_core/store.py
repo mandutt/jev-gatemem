@@ -14,7 +14,8 @@ from typing import Any, Dict, List, Optional
 
 def _remember_with_meta(beam, content: str, *, importance: float, source: str,
                         scope: str, session_key: str, idem_key: Optional[str],
-                        source_agent: str, turn_id: str) -> str:
+                        source_agent: str, turn_id: str,
+                        fail_open: Optional[str] = None) -> str:
     """beam.remember() with v1.1 D12 metadata. Returns memory_id."""
     meta: Dict[str, Any] = {
         "source_agent": source_agent,
@@ -24,6 +25,9 @@ def _remember_with_meta(beam, content: str, *, importance: float, source: str,
         meta["idem_key"] = idem_key
     if turn_id:
         meta["turn_id"] = turn_id
+    if fail_open:
+        # F11: gate-less storage marker — enables later re-judging/cleanup
+        meta["gate"] = f"fail_open:{fail_open}"
     return beam.remember(
         content=content,
         source=source,
@@ -82,30 +86,32 @@ def _store_kept_impl(beam, req: Dict, decisions: Dict, session_key: str,
     scope = req.get("scope", "session")
 
     ids: List[str] = []
+    fo_user = (decisions.get("user", {}) or {}).get("fail_open")
+    fo_asst = (decisions.get("assistant", {}) or {}).get("fail_open")
 
     if user_keep and asst_keep:
         if user:
             ids.append(_remember_with_meta(
                 beam, f"[USER] {user}", importance=0.5, source="conversation",
                 scope=scope, session_key=session_key, idem_key=idem_key,
-                source_agent=source_agent, turn_id=turn_id))
+                source_agent=source_agent, turn_id=turn_id, fail_open=fo_user))
         if asst:
             ids.append(_remember_with_meta(
                 beam, f"[ASSISTANT] {asst}", importance=0.15, source="conversation",
                 scope=scope, session_key=session_key, idem_key=idem_key,
-                source_agent=source_agent, turn_id=turn_id))
+                source_agent=source_agent, turn_id=turn_id, fail_open=fo_asst))
     elif user_keep:
         if user:
             ids.append(_remember_with_meta(
                 beam, f"[USER] {user}", importance=0.5, source="conversation",
                 scope=scope, session_key=session_key, idem_key=idem_key,
-                source_agent=source_agent, turn_id=turn_id))
+                source_agent=source_agent, turn_id=turn_id, fail_open=fo_user))
     elif asst_keep:
         if asst:
             ids.append(_remember_with_meta(
                 beam, f"[ASSISTANT] {asst}", importance=0.15, source="conversation",
                 scope=scope, session_key=session_key, idem_key=idem_key,
-                source_agent=source_agent, turn_id=turn_id))
+                source_agent=source_agent, turn_id=turn_id, fail_open=fo_asst))
     # both SKIP -> nothing
     return ids
 

@@ -152,6 +152,26 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 
 ## 8. 다음 단계 (남은 작업 우선순위)
 
+> **2026-09-30 외부 AI 검토 후속 사이클 완료** — 검토 브리프(`docs/design/multi-agent-implementation-review-brief.md`)에 대한 외부 검토서(`jev-mem-core-implementation-review.md`)의 지적을 전부 처리:
+>
+> | 항목 | 결과 |
+> |---|---|
+> | A1 골든 동등성 | ✅ 22/22 (max_chars=0 비교, 로직 결함 아님) |
+> | A2 게이트 동등성 | ✅ 5케이스 임베디드 vs core 일치 |
+> | A4 /v1/tools 세션 | ✅ on_session_switch(reset=False) 리바인딩 + hermes_ 접두 정규화, 라이브 실측 PASS |
+> | A5 spawn 스로틀 | ✅ 쿨다운 30s + in-flight 플래그 (좀비 3개 정리 실측) |
+> | D-2 전용 venv | ✅ `%LOCALAPPDATA%\jev-mem\venv` 구축, client가 우선 사용, 전 기능 실측 PASS |
+> | D-3 저장 redaction | ✅ `redact_text_high_precision` (형식 기반 고정밀), 기본 ON, `JEV_MEM_STORE_REDACT=0` 토글 |
+> | D-5 idle shutdown | ✅ 기본 60분, 3조건(비활동+큐+백로그) 모두 충족 시 graceful 종료 |
+> | F8 DB 정체성 | ✅ 기동 시 DB 부재 거부(exit 4, `--init-db` 오버라이드) + core_meta 기록 + 경로/행수 변화 거부(`--accept-db-change`) |
+> | F11 fail-open 표식 | ✅ `gate: fail_open:<reason>` 메타 + `/v1/status` degraded/degraded_reasons/gate_fail_open_total |
+> | F12 생존성 | ✅ 부모 종료 후 데몬 생존 실측 PASS |
+> | F14 내구성 | ✅ mnemosyne.db `synchronous=FULL` (ledger와 정합) |
+> | F15 doctor | ✅ `experiments/jev_mem_doctor.py` — 6영역 15체크 |
+> | F17 동시성 | ✅ Jev live 조건 명시: 4클라이언트×10, p50=276ms/p95=453ms (목표 <800ms) |
+>
+> **잔여**: F16(검토 브리프 번호 정정 — 다음 외부 검토 시 반영), 장기 관측(§8.5).
+
 > **2026-09-28 갱신 — JEV 생성 분류(Ingestion Classification) 평가 + 쓰기 게이트 구현 완료**. 최종: **P8 + G-qual**
 > 명명 규칙: **P{번호}** = JEV 프롬프트 버전 (P8 = 84.9%, 채택) / **G{규칙}** = 저장 게이트 (G-qual = store==NO_STORE && type==NO_STORE && conf≥0.6 → SKIP, type rescue 포함). 조합 표기가 곧 최종.
 > 상세: `memory-classification-evaluation/JEV_INGESTION_REPORT.md`, `AB_WRITE_GATE_REPORT.md`.

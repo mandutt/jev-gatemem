@@ -187,11 +187,21 @@ class Pipeline:
         user_skip = False
         asst_skip = False
         transient = ("http-5", "error")
+        fail_open_reasons = ("http-401", "no-wg", "kill", "parse")
         if (user or "").strip() and len(user) > 5:
             r = wg.evaluate(user) if wg else {"keep": True, "reason": "no-wg"}
             reason = str(r.get("reason") or "")
             if reason.startswith(transient) or reason in ("error",):
                 raise JevUnavailable(f"gate user failed: {reason}")
+            # F11: mark fail-open KEEP verdicts (gate-less storage) for later
+            # re-judging/cleanup; surfaced in /v1/status degraded_reasons.
+            if r.get("keep") and (reason.startswith("http-401") or reason in fail_open_reasons):
+                r["fail_open"] = reason
+                self.ctx.stats["gate_fail_open_total"] = (
+                    self.ctx.stats.get("gate_fail_open_total", 0) + 1)
+                self.ctx.fail_open_streak += 1
+            else:
+                self.ctx.fail_open_streak = 0
             decisions["user"] = r
             user_skip = not r.get("keep")
         else:
@@ -201,6 +211,13 @@ class Pipeline:
             reason = str(r.get("reason") or "")
             if reason.startswith(transient) or reason in ("error",):
                 raise JevUnavailable(f"gate assistant failed: {reason}")
+            if r.get("keep") and (reason.startswith("http-401") or reason in fail_open_reasons):
+                r["fail_open"] = reason
+                self.ctx.stats["gate_fail_open_total"] = (
+                    self.ctx.stats.get("gate_fail_open_total", 0) + 1)
+                self.ctx.fail_open_streak += 1
+            else:
+                self.ctx.fail_open_streak = 0
             decisions["assistant"] = r
             asst_skip = not r.get("keep")
         else:

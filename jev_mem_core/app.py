@@ -61,6 +61,8 @@ class CoreContext:
         # D-5 (idle shutdown): last non-probe activity. /health and /metrics
         # do NOT refresh this — only real work (prefetch/turns/tools) does.
         self.last_activity_at = time.monotonic()
+        # F11: consecutive fail-open KEEP verdicts (degraded signal)
+        self.fail_open_streak = 0
         self.stats: Dict[str, Any] = {
             "jev_calls": 0, "jev_failures": 0,
             "turns": {"stored": 0, "skipped": 0, "pending_gate": 0, "failed": 0},
@@ -349,8 +351,69 @@ async def _apply_data_dir_acl(cfg: Config) -> None:
         log.warning("data dir ACL failed: %s", e)
 
 
+def _verify_db_identity(wctx, cfg: Config, accept_change: bool) -> None:
+    """F8: record db_path + working_memory row count in core_meta; refuse
+    start when the DB identity changed (path moved or rows collapsed to 0
+    vs recorded) unless --accept-db-change. Guards silent DB forks.
+    Runs INSIDE the writer thread via submit (owns core_state.db conn)."""
+    import hashlib
+    conn = wctx.state
+    try:
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS core_meta (key TEXT PRIMARY KEY, value TEXT)")
+        conn.commit()
+    except Exception:
+        return  # state conn unusable — skip guard (writer will surface errors)
+    db_norm = str(cfg.mnemosyne_db.resolve()).lower()
+    db_id = hashlib.sha256(db_norm.encode()).hexdigest()[:16]
+    row = conn.execute(
+        "SELECT value FROM core_meta WHERE key='db_identity'").fetchone()
+    prev = json.loads(row[0]) if row else None
+    # current row count (read-only on the memory DB)
+    try:
+        mconn = sqlite3.connect(f"file:{cfg.mnemosyne_db}?mode=ro", uri=True, timeout=5)
+        n_rows = mconn.execute("SELECT COUNT(*) FROM working_memory").fetchone()[0]
+        mconn.close()
+    except Exception:
+        n_rows = -1
+    if prev and not accept_change:
+        if prev.get("db_path") != db_norm:
+            log.error("DB identity changed: recorded=%s now=%s — refusing "
+                      "(--accept-db-change to override)", prev.get("db_path"), db_norm)
+            sys.exit(5)
+        if prev.get("rows", 0) > 100 and n_rows == 0:
+            log.error("working_memory collapsed: %s -> 0 rows — refusing "
+                      "(--accept-db-change to override)", prev.get("rows"))
+            sys.exit(5)
+    conn.execute(
+        "INSERT INTO core_meta (key, value) VALUES ('db_identity', ?) "
+        "ON CONFLICT(key) DO UPDATE SET value=excluded.value",
+        (json.dumps({"db_path": db_norm, "db_id": db_id,
+                     "rows": n_rows, "checked_at": time.strftime("%Y-%m-%dT%H:%M:%S%z")}),))
+    conn.commit()
+    log.info("db identity: id=%s rows=%s", db_id, n_rows)
+
+
 async def _serve(cfg: Config) -> None:
     token = make_token(cfg)
+
+    # F8 (2026-09-30, review): DB identity check BEFORE anything touches the
+    # DB. Refuse to start when the configured DB file is missing (silent fork
+    # risk — measured: auto-started core once created an empty DB); allow
+    # --init-db to override. Also record db_path+row count in core_meta and
+    # refuse on path change / row collapse unless --accept-db-change.
+    init_db = "--init-db" in sys.argv
+    accept_change = "--accept-db-change" in sys.argv
+    if not cfg.mnemosyne_db.exists() and not init_db:
+        log.error("mnemosyne.db not found at %s — refusing to start "
+                  "(silent-fork guard; pass --init-db to create)", cfg.mnemosyne_db)
+        sys.exit(4)
+    if not cfg.mnemosyne_db.exists() and init_db:
+        cfg.mnemosyne_db.parent.mkdir(parents=True, exist_ok=True)
+        import sqlite3 as _sq
+        _c = _sq.connect(str(cfg.mnemosyne_db))
+        _c.close()
+        log.info("--init-db: created empty DB at %s (Beam initializes schema)", cfg.mnemosyne_db)
 
     # singleton: try binding the port first — EADDRINUSE -> probe existing core
     ctx = build_context(cfg)
@@ -360,6 +423,26 @@ async def _serve(cfg: Config) -> None:
     # writer thread + warmup + recovery BEFORE accepting traffic
     ctx.writer.start(timeout=60)
     await asyncio.to_thread(_warmup_embedding, cfg)
+
+    # F8: record/verify DB identity in core_state.db core_meta (writer thread)
+    try:
+        await ctx.writer.submit(
+            lambda w: _verify_db_identity(w, cfg, accept_change), "db_identity")
+    except SystemExit:
+        ctx.writer.stop()
+        raise
+
+    # F14 (2026-09-30, review): durability parity — ledger(core_state.db) is
+    # WAL+NORMAL; promote the memory DB to synchronous=FULL so a power loss /
+    # BSOD can't leave ledger 'stored' while the memory write rolls back
+    # (re-send would hit dedup -> permanent loss). Cost: slower commits.
+    try:
+        await ctx.writer.submit(
+            lambda w: w.beam.conn.execute("PRAGMA synchronous=FULL"),
+            "pragma_full")
+        log.info("mnemosyne.db synchronous=FULL (F14 durability parity)")
+    except Exception as e:
+        log.warning("synchronous=FULL set failed: %s", e)
 
     # B §5.3 (승인): user-only ACL on the data dir + redaction notice
     await _apply_data_dir_acl(cfg)
@@ -493,6 +576,10 @@ def main() -> None:
     p.add_argument("--serve", action="store_true", help="run the core server")
     p.add_argument("--check", action="store_true", help="probe health of a running core")
     p.add_argument("--config", type=Path, default=None, help="config.toml path")
+    p.add_argument("--init-db", action="store_true",
+                   help="create the configured mnemosyne.db if missing (F8 guard override)")
+    p.add_argument("--accept-db-change", action="store_true",
+                   help="accept a changed DB identity (F8 guard override)")
     args = p.parse_args()
 
     logging.basicConfig(level=logging.INFO,

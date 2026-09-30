@@ -251,8 +251,23 @@ class CoreServer:
                 lambda w: ledger.pending_gate_count(w.state), "status_pending")
         except Exception:
             pass
+        # Δ5 (F11/F15): degraded flag + reasons — adapters check this to
+        # surface silent-degradation states instead of failing open quietly.
+        spool_files = self.ctx.scanner.pending_files if self.ctx.scanner else 0
+        reasons = []
+        if self.ctx.breaker.is_open:
+            reasons.append("jev_circuit_open")
+        if self.ctx.fail_open_streak >= 5:
+            reasons.append("gate_fail_open_streak")
+        if pending > 50:
+            reasons.append("pending_gate_backlog")
+        if spool_files > 0:
+            reasons.append("spool_backlog")
         return web.json_response({
             "status": "ready",
+            "degraded": bool(reasons),
+            "degraded_reasons": reasons,
+            "gate_fail_open_total": self.ctx.stats.get("gate_fail_open_total", 0),
             "uptime_s": round(time.monotonic() - self.ctx.started_at, 1),
             "version": __version__,
             "protocol": PROTOCOL,
@@ -261,8 +276,7 @@ class CoreServer:
             "jev": {"circuit": self.ctx.breaker.state,
                     "consecutive_failures": self.ctx.breaker.consecutive},
             "queues": {"writer_depth": self.ctx.writer.depth, "pending_gate": pending,
-                       "spool_files": (self.ctx.scanner.pending_files
-                                       if self.ctx.scanner else 0)},
+                       "spool_files": spool_files},
             "stats": self.ctx.stats,
         })
 
