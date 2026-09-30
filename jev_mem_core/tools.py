@@ -66,6 +66,8 @@ class ToolExecutor:
             # a shared 'core-tools' bucket. Later /v1/tools calls with a
             # different session_id rebind via _rebind_session (below).
             init_session = session_id or "core-tools"
+            if init_session.startswith("hermes_"):
+                init_session = init_session[7:]  # avoid hermes_hermes_ double prefix
             p.initialize(init_session, hermes_home=str(home), platform="windows")
             self._provider = p
             self._bound_session = init_session
@@ -84,15 +86,21 @@ class ToolExecutor:
 
         Uses on_session_switch(reset=False) — no ledger reset, no data loss;
         only session-scoped state (beam session_id / channel_id) is rebound.
+
+        Session-prefix normalization: mnemosyne_hermes unconditionally wraps
+        the scope as f"hermes_{scope}" (_provider_session_id), so a caller
+        passing an already-prefixed id would double it (measured:
+        hermes_hermes_a4_live_probe). Strip a leading "hermes_" here.
         """
         if not session_id or session_id == self._bound_session:
             return
+        scope = session_id[7:] if session_id.startswith("hermes_") else session_id
         try:
-            self._provider.on_session_switch(session_id, reset=False)
-            self._bound_session = session_id
-            log.info("tool executor session rebound: %s", session_id)
+            self._provider.on_session_switch(scope, reset=False)
+            self._bound_session = scope
+            log.info("tool executor session rebound: %s", scope)
         except Exception as e:
-            log.error("session rebind to %s failed: %s", session_id, e)
+            log.error("session rebind to %s failed: %s", scope, e)
 
     def tool_schemas(self) -> list:
         p = self.ensure()
