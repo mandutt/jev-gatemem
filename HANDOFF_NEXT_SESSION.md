@@ -214,7 +214,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
   - **bekko-a25m**: gold MRR 0.501 + 배치 2+ OOM(4.29GB) + G5 드리프트 93% → 탈락 확정.
   - **granite**: 정적 quint8 배치 4에서도 50.8GB 버퍼 OOM → 운영 불가 확정.
 - **최종 판정: bekko-a8m 채택** (다국어 배포 조건 + RAM + 지연 종합). 하이브리드 vec_weight 0.3 권장.
-- 남은 일: **S4 마이그레이션** 설계·실행 → 설계 문서 `docs/design/s4-embedding-migration-plan.md` **v3 (2026-10-01, 2차 외부 검토 3건 종합 + 재설계)**. **핵심: v2의 섀도/delta/legacy 역스왑 구조를 폐기하고 Mnemosyne 공식 `reindex_vectors()`(beam.py:2394) 단일 경로로 재설계** — 모든 저장소(memory_embeddings+vec0+binary_vector)를 원천 텍스트에서 전량 재구축, 오프라인(데몬 정지) 실행이 공식 권장 사용법. 롤백은 백업 복원 단일 경로. 기동 가드(모델 분포·카나리 검증 후 서비스 시작) 상시 방어선. vec_facts는 0건+writer 없음 실측 → 제외 확정. 전체 dry-run 리허설(창 시간 실측, vec0 rollback 실측, 4클라이언트 스풀링 실측)이 live 실행 전 필수 게이트. 이전 버전: `s4-embedding-migration-plan-v1.md`/`-v2.md` 보존. **실행 전 사용자 승인 대기.**
+- 남은 일: ~~S4 마이그레이션~~ → **완료 (2026-10-01 라이브 컷오버)**: `docs/design/s4-live-cutover-report-20261001.md` (commit `c19e2ea`). 최종 상태: `bench/bekko-a8m` 100% 단일 모델 (1,153행, orphan 0, integrity ok). 라이브 reindex 37.3s / fixup 54.7s → maintenance window 2분 이내 확정. 사건: 데몬 warmup 실패 시 fallback MiniLM 조용히 서빙 → 1행 오염 발견·복구. 모델 고정: jev-mem venv `sitecustomize.py` (커스텀 등록+clamp512+cache_dir 강제 주입) + 데몬 env `MNEMOSYNE_EMBEDDING_MODEL`/`MNEMOSYNE_FASTEMBED_CACHE_DIR` 필수. 잔여 P1: `/v1/status`에 embedding_model 노출 + warmup fail-fast. `bench/bekko-a8m`은 fastembed 커스텀 별칭 — 원본 `hotchpotch/bekko-embedding-v1-a8m` (별칭↔원본 매핑은 sitecustomize.py, DB 이관 시 함께 가야 함). 백업 `s4-pre-migration-20261001-154527.db` 2026-10-08 검증 후 삭제 권고.
 
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
