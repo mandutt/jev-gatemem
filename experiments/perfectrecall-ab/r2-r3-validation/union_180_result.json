@@ -1,0 +1,12 @@
+{
+  "engine": "union-180-relevance",
+  "n": 180,
+  "acc1": 0.5555555555555556,
+  "mrr": 0.6009917007466027,
+  "cov": 145,
+  "requests": 379,
+  "input_tokens": 4429901,
+  "output_tokens": 163453,
+  "cost_usd": 0.0,
+  "total_s": 41.3
+}
