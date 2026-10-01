@@ -1,182 +1,226 @@
-# S4 마이그레이션 설계 v2 — bekko-a8m 전환 (외부 AI 3건 검토 종합 반영)
+# S4 마이그레이션 설계 v3 — bekko-a8m 전환 (외부 AI 2차 검토 3건 종합 + 재설계)
 
 > 상위: `embed-benchmark-final-report.md` (S3 채택 확정)
-> v1: 2026-10-01 초안 (`s4-embedding-migration-plan-v1.md` 보존) → 외부 AI 3건(a/b/c) 검토 → 본 v2 (2026-10-01 종합 반영)
+> 이력: v1 (초안) → AI 3건 검토 → v2 → AI 3건 2차 검토 → **본 v3 (2026-10-01)**
+> **v3는 v2 구조(섀도 테이블 + delta ledger + rowid 수동 재구축)를 폐기하고
+> Mnemosyne 공식 `reindex_vectors()` 기반으로 재설계한 것.** 근거는 §0-★.
 > **상태: 설계 완료, 미실행.** 실행 전 사용자 승인 대기.
-> 검토 원문: `Downloads/{a,b,c}-ai-s4 임베딩 마이그레이션 수정 필요 항목.md`
+> 검토 원문: `Downloads/{a,b,c}-ai-임베딩 마이그레이션 v2 검토.md`
+> 이전 버전 보존: `s4-embedding-migration-plan-v1.md`, `s4-embedding-migration-plan-v2.md`
 
 ---
 
-## 0. v1 → v2 핵심 변경 (3 AI 종합)
+## 0. v2 → v3 재설계 근거
 
-| # | v1 설계 | 문제 (검토 지적) | v2 수정 |
-|---|---|---|---|
-| P0-1 | 재임베딩 전 등록 패치 선적용 → 신규 쓰기 a8m | **재임베딩 기간 내내 live DB에 3개 모델 벡터 혼합 → vec 검색 품질 붕괴** (c/b/a 공통, c-AI "반드시 수정") | **등록(register)과 활성(activate) 분리.** 재임베딩 중 live 데몬은 baseline 유지, a8m은 migration worker만 사용 |
-| P0-2 | working_memory 1,030행만 재임베딩 | **episodic 113건 누락 → 영구 소실** (a/b 지적, 라이브 실측으로 확인) | 대상 = working 1,138 + **episodic 113** 전수. 단, episodic은 `memory_embeddings`에 없고 `vec_episodes`에만 존재 (§2 실측) |
-| P0-3 | "무중단" + 데몬 중단 없이 WAL 스왑 | DB 트랜잭션 원자성 ≠ 앱 무중단. DB/config 2-phase crash 불일치, 스왑-재기동 사이 쿼리가 구모델로 a8m 테이블 오염 (c/b/a 공통) | **짧은 maintenance window cutover**: 데몬 정지 → 스왑 → config 적용 → 재기동 (수십 초~1분) |
-| P0-4 | 테이블 rename 스왑 | vec0 가상 테이블 rename 불안전 + rename 시 트리거/뷰 참조 따라감 + 인덱스 이름 충돌 (b/c 지적, 라이브 스키마 실측으로 확인) | `memory_embeddings`는 **단일 트랜잭션 내용 교체**(CTAS 보존 → DELETE → INSERT SELECT), vec0 테이블은 **delete+insert 재구축** |
-| P0-5 | 롤백 = legacy 역스왑 단일 경로 | cutover 후 신규 a8m 행은 legacy에 없음 → 역스왑 시 벡터 소실 (c/b 지적) | 롤백 3단계 정의 (§6): 즉시 역스왑 / reopen 후 delta 재임베딩 / 재해 복구 백업 |
+### ★ 핵심 발견: Mnemosyne 공식 `reindex_vectors()` API (beam.py:2394)
+
+2차 검토 전 라이브 코드 실측에서, v1/v2가 수작업으로 설계한 것과 동일한 작업을 하는
+**공식 내장 함수가 이미 존재**함을 확인:
+
+> *"Rebuild every vector representation from source text with the ACTIVE embedding model...
+> It re-embeds working_memory and episodic_memory and refreshes every store,
+> **reusing the same write helpers the normal store path uses so encodings stay consistent.**
+> Synchronous and blocking — **run it offline (with any provider/gateway stopped)**. Idempotent."*
+
+커버 저장소: `memory_embeddings`(working float JSON) + `vec_working` + `vec_episodes` +
+`episodic_memory.binary_vector` + `vec_facts`(writer 없음 — dim 불일치 방지용 빈 재생성).
+**모델 교체 직후 사용이 문서화된 정식 용도**이며, S3 벤치마크에서 배치 4로 1,143행 완주 실측됨.
+
+이 함수 채택으로 v2의 다음 요소 전부 제거:
+- 섀도 테이블 (`memory_embeddings_a8m`) — 불필요
+- T0 delta ledger (rowid+벡터 축적) — **불필요** (b-AI #3 "rowid 재사용 위험" 소멸)
+- cutover 시 vec0 delete+insert 수공예 — **불필요** (DROP+재생성 내장)
+- CTAS legacy 복사 (c-AI #2 "CTAS는 PK/인덱스 미보존" 지적) — **불필요**
+- 배치 1 vs 4 불변성 우려 (b-AI #6) — 함수가 동일 helper로 단일 경로 사용
+
+### 2차 검토 반영 (v3에 흡수)
+
+| AI | 지적 | v3 반영 |
+|---|---|---|
+| c | 품질 게이트 기준을 "live 혼합 상태"가 아닌 **S3 실험 baseline**으로 고정 | ✅ §6 게이트 재정의 |
+| c | CTAS legacy는 rollback table 부적격 (PK/제약 미보존) | ✅ legacy 테이블 개념 자체 제거 — 롤백은 백업 복원으로 일원화 |
+| c | vec0 rollback semantics를 0.1.9에서 실측 리허설 | ✅ 리허설 항목에 포함 (§4-①) |
+| c | reopen 후 롤백에 DELETE replay 누락 | ✅ v3 롤백 B에서 delta replay 정의에 DELETE 포함 |
+| c | gold 3건 = smoke, 게이트는 gold 50 | ✅ 3층 검증(§7)으로 분리 |
+| c | "RAM p95"는 측정 정의 오류 | ✅ warm idle / worst-case peak 지표로 분리 |
+| c | model 문자열에 @rev 붙이면 등호 비교 실패 위험 | ✅ 리비전은 별도 ledger metadata로만 기록 (§3-3 수정) |
+| c | DB commit과 config commit 사이 crash 상태 머신 미정의 | ✅ migration_state.json 마커 + 기동 가드 (§3-7) |
+| c | 1분은 목표치일 뿐 — 리허설로 실측 | ✅ 전체 dry-run 리허설 필수화 (§4-①) |
+| b | **vec_facts 누락** | ✅ 실측: **0건 + writer 없음** (beam.py "no writer yet") → §2에 확정 기록. 재임베딩 불요 |
+| b | 롤백 A/B가 vec0 구(舊) 벡터를 못 복원 | ✅ 구조 자체 변경 — vec0는 reindex가 DROP/재생성하므로 롤백은 백업 복원만 |
+| b | rowid ledger 위험 | ✅ v3에서 ledger 자체 제거 |
+| b | 타임스탬프 delta 탐지 누락 가능 | ✅ v3에서 delta 개념 제거 — 재임베딩 자체가 cutover 직후 1회 실행이므로 delta 없음 |
+| b | "숨은 인프로세스 경로 불필요" 근거 약함 | ✅ 반영 — 재시작 후 잔존 MiniLM 행 감시 게이트로 방어 (§7) |
+| b | vec_weight=0.3이 cutover 변경 목록에 없음 | ✅ 변경 목록 명시 (§4-④) |
+| b | 클라이언트 스풀링은 가정일 뿐 실측 필요 | ✅ 데몬 정지 상태 4클라이언트 쓰기 실측 항목 (§4-①) |
+| a | vec0 INSERT 시 rowid 명시 바인딩 | ✅ v3에서 수동 INSERT 제거 — 함수 내부 처리 |
+| a | cutover 전 `wal_checkpoint(TRUNCATE)` | ✅ 절차에 명시 (§4-③) |
+| a | 에이전트 idle 확인 후 cutover | ✅ 표준 절차에 포함 (§4-③) |
+
+**a-AI는 "실행 승인" 판정, c-AI는 "P0 4개 수정 후 승인", b-AI는 "1~7번 반영 + 리허설 결과 첨부 후 승인".**
+v3는 위 표대로 전부 흡수했으며, 구조 단순화로 c/b의 P0 다수가 원천 소멸됨.
 
 ## 1. 목표
 
-라이브 Mnemosyne DB(`%LOCALAPPDATA%/hermes/mnemosyne/data/mnemosyne.db`)의 임베딩을
-`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`(baseline)에서
-`hotchpotch/bekko-embedding-v1-a8m`(이하 a8m)으로 전환한다.
+라이브 Mnemosyne DB 임베딩을 MiniLM baseline에서 `hotchpotch/bekko-embedding-v1-a8m`으로 전환.
 
-**제약: 재임베딩 중 live embedding space 무혼합 + cutover는 짧은 정지 창 + 시점별 롤백 경로 보장.**
+**v3 설계 제약 (v2 대비 변경):**
+- 모델 교체 + 재임베딩은 **Mnemosyne 공식 `reindex_vectors()` 단일 경로**로 수행 (수작업 벡터 조작 금지)
+- 재임베딩은 **오프라인(데몬 정지) 상태에서 실행** — 공식 권장 사용법. 무중단 목표 폐기,
+  대신 **재임베딩 시간(1,251행 ≈ 40초~2분 실측 규모)을 정지 시간으로 명시하고 사전 리허설로 실측**
+- 롤백은 **pre-migration 전체 백업 복원 단일 경로** (legacy 테이블/역스왑 개념 제거)
+- 기동 가드로 혼합 모델 상태에서의 서비스 시작 원천 차단
 
-## 2. 현 상태 (2026-10-01 라이브 실측 — v2 사전조사)
+**이 제약 조합의 안전성**: 백업→(정지)→활성화→재임베딩→검증→(실패 시 백업 복원)→기동.
+불일치 상태로 서비스가 뜨는 경로가 기동 가드 하나로 봉쇄됨.
+
+## 2. 현 상태 (2026-10-01 라이브 실측, v2 사전조사 + v3 추가 실측)
 
 - **`memory_embeddings`** (일반 테이블, PK memory_id, 인덱스 2개): 1,145건
-  - model 분포: MiniLM 954 + bge-small 191
-  - source 커버리지: **working 1,138 (100%, 누락 0) + orphan 7** / episodic 0
-  - **bge 191건 원인 특정**: 생성 시점 07-31~08-24에 국한, 전부 working 소속 →
-    당시 활성 모델이 bge였던 시기의 잔재. 08-24 이후 bge 유입 없음 →
-    b-AI가 우려한 "숨은 인프로세스 경로" 가설은 불필요. 단, 스왑 시 전량 재임베딩으로 소멸 확인.
-- **episodic 113건의 임베딩은 `memory_embeddings`에 없고 `vec_episodes`(vec0 가상 테이블)에만 존재**
-  → v1이 "memory_embeddings 행수 = 재임베딩 대상"으로 착각한 원인 (a/b-AI 지적의 실측 확인)
-- **주 vec 저장소 = sqlite-vec 가상 테이블** (`vec_working` rowid 기반, `vec_episodes`, `vec_facts`).
-  `memory_embeddings`는 폴백/호환 저장소 → **S4는 양쪽 모두 갱신해야 함**
-  (Mnemosyne `_store_working_embedding`이 두 저장소에 동시 기록하는 구조)
-- vec0 테이블: sqlite-vec v0.1.9, **rename 불가, delete+insert만 가능** (v1 rename 계획 폐기 근거)
-- working_memory 트리거(wm_ai/au/ad)는 FTS 전용 — memory_embeddings와 무관
-  (rename 참조 오염 리스크 없음을 실측 확인했으나, 인덱스 충돌 회피 위해 여전히 내용 교체 채택)
-- config: `embedding_model: MiniLM`, `embedding_dim: 384`
-- a8m 운영 조건: 배치 4 + 클램프 512 (S3 실측, 상한 초과 시 OOM)
+  - model 분포: MiniLM 954 + bge-small 191 (07-31~08-24 잔재, 이후 유입 없음)
+  - source 커버리지: working 1,138 (100%) + orphan 7 / episodic 0
+- **episodic 113건**: `memory_embeddings`에 없고 `vec_episodes`에만 존재 (v2 실측 확인)
+- **`vec_facts`: 0건, writer 없음** (beam.py 주석 "no writer yet — recreated empty") —
+  **b-AI #1 지적에 대한 실측 답: 재임베딩 대상에서 제외 확정.** reindex가 dim 불일치 방지용으로 빈 재생성만 수행
+- 주 vec 저장소 = sqlite-vec v0.1.9 가상 테이블 (`vec_working` rowid 기반, `vec_episodes`);
+  `memory_embeddings`는 폴백/호환 저장소 — **reindex가 양쪽 모두 갱신** (b-AI 구조 우려 해소)
+- working_memory 트리거(wm_ai/au/ad)는 FTS 전용 — 임베딩 테이블과 무관
+- `episodic_memory.binary_vector` 컬럼도 재임베딩 대상 (reindex가 갱신)
+- config: `embedding_model: MiniLM`, `embedding_dim: 384` / a8m: 384-dim, 접두어 불필요
+- a8m 운영 조건: 배치 4 + 클램프 512 (S3 실측)
 
-## 3. 업데이트 내성 항목 (v1 §3 유지 + c/b-AI 보강)
+## 3. 운영 방어 항목 (v2 §3 유지 + 2차 검토 수정)
 
-### 3-1. 등록/활성 분리 (v1의 "패치로 _DEFAULT_MODEL 고정" 폐기 — c-AI #9 반영)
+### 3-1. 등록/활성 분리 (v2 유지)
 
-- `scripts/register_bekko_a8m.py` = **커스텀 모델 카탈로그 등록만**.
-  패키지 파일 수정 대신 **jev-mem-core 기동 스크립트에서 mnemosyne import 전 등록** 방식 지향
-  (b-AI #10-3 — 업데이트가 덮어쓸 파일 감소 + 카탈로그 검증 실패 회피).
-  인프로세스 경로는 §2 bge 원인 실측상 활성 경로가 아니므로 core 데몬 경로만 커버로 충분.
-- `config.yaml` = active 모델 선택 (cutover 시점에만 변경)
-- `scripts/reapply_embedding_model.py` = 등록 상태 검증 + 카나리 테스트(§3-5) 역할
-- **활성화는 마이그레이션 스크립트가 cutover 창에서 단 한 번 수행** — v1의 "재임베딩 전 선적용" 폐기
-- 등록 시 토크나이저 **truncation(=512) 고정 포함** (a-AI #3 — 라이브 경로 긴 문서 OOM 방지)
+- `scripts/register_bekko_a8m.py` = fastembed 커스텀 카탈로그 등록
+  (jev-mem-core 기동 스크립트에서 mnemosyne import 전 등록 — 패키지 파일 미수정)
+- 활성화는 migration 스크립트가 cutover 창에서 config.yaml 변경으로 단 한 번 수행
+- 등록 시 토크나이저 **truncation(=512) 고정 포함**
 
-### 3-2. dim 명시 고정 (v1 유지)
+### 3-2. dim 명시 고정 (v2 유지)
 
-- `config.yaml embedding_dim: 384` + `.env` `MNEMOSYNE_EMBEDDING_DIM=384` — 폴백 우연 일치 의존 제거
-- 검증: 스왑 후 `recall(active).embedding_dimension == 384` 실측
+- `config.yaml embedding_dim: 384` + `.env` `MNEMOSYNE_EMBEDDING_DIM=384`
 
-### 3-3. model 태그 + 리비전 (b-AI #10 반영)
+### 3-3. model 태그 (c-AI #10 반영 수정)
 
-- `memory_embeddings.model` = `hotchpotch/bekko-embedding-v1-a8m` 태그 확인 (v1 유지)
-- 모델 파일 리비전을 태그에 포함 검토 (`@<rev 8자>`) — 모델 무음 교체 감지. 태그 파서 영향 확인 후 채택
+- `memory_embeddings.model` = `hotchpotch/bekko-embedding-v1-a8m` (기존 컬럼, 등호 비교 호환)
+- **리비전은 `model` 문자열에 붙이지 않음** — migration ledger(`migration_state.json`)에
+  별도 기록 (`model_revision`) — 모델 무음 교체는 카나리가 잡음
 
-### 3-4. 업데이트 체크리스트 (v1 유지)
+### 3-4. 업데이트 체크리스트 (v2 유지)
 
-- Mnemosyne 업데이트 시: ① `typed_memory.py` 한국어 패치 재적용 ② a8m 등록 재검증(카나리) — 동일 사이클
+- Mnemosyne 업데이트 시: ① 한국어 분류 패치 재적용 ② a8m 등록 재검증(카나리)
 
-### 3-5. 카나리 테스트 (b-AI #10 반영)
+### 3-5. 카나리 테스트 (v2 유지)
 
-- 고정 한국어 문장의 기준 벡터를 사전 저장 → 등록 검증·데몬 기동 직후 코사인 ≥ 0.999 확인
-- `_DEFAULT_MODEL` 문자열 출력만으로는 등록 소실/접두사/클램프 누락을 잡지 못함
+- 고정 한국어 문장 기준 벡터 vs 실측 벡터 코사인 ≥ 0.999 — 등록 검증·데몬 기동 직후 수행
 
-### 3-6. 오프라인 경로 고정 (a-AI #6 반영)
+### 3-6. 오프라인 경로 고정 (v2 유지)
 
-- a8m 가중치를 고정 로컬 경로(`%LOCALAPPDATA%/hermes/mnemosyne/models/bekko-a8m`)에 스테이징,
-  HF 네트워크/캐시 클린업 의존 제거
+- a8m 가중치 고정 로컬 경로 스테이징 (`%LOCALAPPDATA%/hermes/mnemosyne/models/bekko-a8m`)
 
-## 4. 마이그레이션 절차 v2 (Shadow + T0 delta + 짧은 cutover 창)
+### 3-7. 기동 가드 + 상태 마커 (신규 — c-AI #11 / b-AI 기동 가드 반영)
+
+- `migration_state.json` 마커: `PREPARED → DB_COMMITTED(config 포함) → HEALTHY`
+- **jev-mem-core 기동 스크립트 가드**: 시작 전
+  ① `memory_embeddings` model 분포가 단일하고 config model과 일치하는지
+  ② 카나리 코사인 ≥ 0.999인지
+  → 불일치 시 **서비스 시작 거부 + 오류 보고** (혼합 상태 서비스 원천 차단)
+- 이 가드는 Mnemosyne 업데이트 후에도 혼합 상태 기동을 막는 상시 방어선
+
+## 4. 마이그레이션 절차 v3 (reindex_vectors 단일 경로)
 
 ```
-[준비] 전체 백업 (재해 복구 앵커):
-        ① VACUUM INTO → %LOCALAPPDATA%/hermes/mnemosyne/backup/s4-pre-migration-<ts>/mnemosyne.db
-        ② 설정 스냅샷: config.yaml / .env 임베딩 행 / 등록 패치 상태
-        ③ 무결성 게이트: 복제본 open → PRAGMA integrity_check → 핵심 테이블 행수·ID checksum 대조
-        ④ 복원 리허설: 백업본에서 recall 1건 실측 (b-AI #9)
-        ⑤ rollback_s4.py 사전 작성·검증 (a-AI #7) — 커맨드 한 줄 복원
-        ⑥ sqlite_schema 프리플라이트 (c-AI #10) — 실측 완료(§2): 트리거 0, 뷰 0,
-           vec0 의존은 별도 가상 테이블 → 교체 방식 확정 가능
+[준비]
+        ① 백업: VACUUM INTO → backup/s4-pre-migration-<ts>/mnemosyne.db
+           + 설정 스냅샷(config.yaml/.env 임베딩 행) + rollback_s4.py 사전 작성
+        ② 백업 무결성 게이트: 복제본 open → integrity_check → 행수/ID checksum 대조
+        ③ **전체 dry-run 리허설 (복제 DB에서, 격리)** — 아래 전 절차를 복제본에 수행:
+           - 데몬 정지 → 활성화 → reindex_vectors(배치 4) → 검증 게이트 → 기동 가드 → 롤백 복원
+           - 실측 기록: 재임베딩 총 시간, cutover 창 실측치(목표 ≤60s는 목표일 뿐, 실측 P95로 확정)
+           - vec0 rollback semantics: reindex 트랜잭션 의도 실패 → ROLLBACK →
+             row count/rowid/벡터 해시가 이전 상태 복귀하는지 실측 (sqlite-vec 0.1.9 직접 검증 — c-AI #5)
+           - 데몬 정지 상태에서 Hermes/Codex/pi/OpenCode 4클라이언트 쓰기 시도 →
+             스풀링/재시도 동작·유실 0·창 길이 < 클라이언트 타임아웃 실측 (b-AI 클라이언트 검증)
+           - 리허설 미통과 시 live 실행 금지 (게이트)
+        ④ bge 191건 잔존 경로 최종 확인: mnemosyne import 프로세스/venv 목록화 —
+           재시작 후 잔존 MiniLM 행 감시로 2차 방어 (§7)
    ↓
-[1단계] 등록 선작업: a8m 카탈로그 등록 + 로컬 가중치 스테이징 + 카나리 검증.
-        **live 데몬 active 모델은 MiniLM 유지** (등록만, 활성화 아님 — P0-1)
+[1단계] 등록 선작업: 카탈로그 등록 + 로컬 가중치 스테이징 + 카나리 검증
+        (live는 아직 MiniLM — 활성화 아님)
    ↓
-[2단계] T0 스냅샷 기록: 재임베딩 대상 ID 집합 + content 해시 + 시퀀스.
-        대상 = working_memory 전체(1,138) + episodic_memory 전체(113) — 원천 텍스트 기준 전수
-        **레거시 벡터 참조 금지 — content 원문에서 a8m 벡터 신규 생성** (a-AI #5)
+[2단계] Cutover (오프라인 창, 실측 시간으로 확정 — 리허설 값 기준):
+        ① 에이전트 idle 육안 확인 (a-AI 운영 권고) → 데몬 정지(jev-mem-core)
+        ② 잔여 락 정리: PRAGMA busy_timeout=30000 + wal_checkpoint(TRUNCATE) (a-AI #3)
+        ③ 활성화: config.yaml embedding_model=a8m + .env 등록 적용 (등록 활성 단 1회)
+        ④ **reindex_vectors(batch_size=4, progress=ledger 콜백)** 실행 —
+           모든 저장소를 원천 텍스트에서 a8m으로 전량 재구축
+           (bge 191건·orphan 7건·MiniLM 전부 소멸, 이것이 곧 delta 처리)
+        ⑤ migration_state.json = DB_COMMITTED (config/model 리비전 기록)
    ↓
-[3단계] 섀도 재임베딩 (migration worker 전용, a8m):
-        - memory_embeddings_a8m (동일 스키마)에 JSON 기록
-        - vec_working/vec_episodes는 vec0라 사전 적재 불가 →
-          rowid+벡터를 ledger에 축적, cutover 창에서 delete+insert (vec0 특성)
-        - **이 기간 live 데몬은 baseline 그대로** — 검색/쓰기 품질 무영향
-        - 배치 4 + 클램프 512, S3와 동일 양자화 경로(int8 quantize) 재사용 — b-AI #7
-        - 진행 ledger 행수 주기 보고
+[3단계] 검증 (§7 3층 게이트):
+        - L1 즉시 smoke: gold 3건, model 분포 단일, trace, 카나리, 기동 가드 통과
+        - L2 품질 승인: gold-50 전수 + 하이브리드 (S3 baseline 기준 — §6)
+        - L1 실패 → 즉시 롤백(§5)
+        - L1 통과 + L2 대기 중 → 데몬 재기동 허용하되, L2 통과 전 마커는 HEALTHY 아님
    ↓
-[4단계] 섀도 검증 (cutover 전, full metric set — c-AI #7):
-        - Source coverage: 대상 ID 집합 == 섀도 ID 집합 (missing 0, orphan 0, duplicate 0)
-        - 모델/차원: a8m 100%, 384D 100%, blob 길이·dtype 기대값 일치
-        - 내용 정합: source_text_hash == 현재 원문 해시 (migration 중 변경 행 탐지)
-        - S3 벡터 일치: S3 bekko 벡터와 동일 내용 행 코사인 ≥ 0.999 (b-AI #8)
-        - gold-50 + 하이브리드: 라이브(혼합 현재 상태)와 섀도를 같은 쿼리로 쌍별 비교 (b-AI #8)
-        - RAM: 최악 케이스(2만자 문서 단건) 라이브 경로 실측 ≤ 650MB (b-AI #6)
-   ↓
-[5단계] Cutover (짧은 maintenance window, 수십 초~1분 — P0-3):
-        ① 데몬 쓰기 drain/freeze → 코어 데몬(jev-mem-core) 정지
-        ② delta 반영: T0 이후 생성/수정/삭제 행을 a8m으로 처리 (수 초)
-           delta = created_at/updated_at 기반 ID 추적, INSERT/UPDATE/DELETE 전부 (c-AI #5)
-        ③ 단일 트랜잭션 DB 교체:
-           - memory_embeddings: CTAS로 legacy 보존(memory_embeddings_legacy_mlm)
-             → DELETE 전체 → 섀도 INSERT SELECT (rename 미사용 — P0-4)
-           - vec_working/vec_episodes: ledger의 rowid+벡터로 delete+insert
-           - orphan 7건: 원천 소실 행은 제거 (원천 없는 벡터 무의실)
-        ④ config.yaml embedding_model 갱신 + 등록 활성화 (DB 먼저, config 즉시)
-        ⑤ 데몬 재기동 → health check (config/DB model 일치, dim, 카나리, RAM, recall smoke)
-        ⑥ 통과 시 write reopen
-   ↓
-[검증] 라이브 실측: gold 쿼리 3건, model 분포 a8m 단일(레거시 0), trace 정상,
-        vec_weight=0.3 하이브리드 동작, RAM p95 ≤ 650MB
+[4단계] 완료: migration_state.json = HEALTHY → 7일 관찰 → 백업 삭제는 사용자 승인
 ```
 
-- **J1/JEV 파이프라인 무수정**: FTS/BM25 레인 무영향, vec 레인만 교체
-- **에이전트 클라이언트 동작**: cutover 창(수십 초) 중 에이전트 요청은 client의 스풀링/재시도 경로로 대기 — 창 길이 제한의 이유
+**변경 목록 한 줄 명시 (b-AI #7):** `embedding_model`(config), `MNEMOSYNE_EMBEDDING_DIM=384`(.env),
+등록 활성(기동 스크립트), `vec_weight=0.3`(하이브리드 파라미터, 채택안 포함 시) —
+롤백 시 4항목 모두 원복. truncation=512는 등록 내부 고정(롤백 대상 아님).
 
-## 5. 리스크 매트릭스 (v2)
-
-| # | 리스크 | 영향 | 대응 |
-|---|---|---|---|
-| 1 | 재임베딩 중 live space 혼합 | 높음 | **폐기 완료(P0-1)** — live는 baseline 유지, a8m은 worker만 |
-| 2 | DB/config crash 불일치 | 중 | cutover를 단일 maintenance 절차로 묶고 health check 게이트 (P0-3) |
-| 3 | episodic/vec0 누락 | 높음 | 대상 정의를 원천 테이블 전수로, vec0는 delete+insert (P0-2/4) |
-| 4 | 커스텀 등록 소실 (업데이트) | 높음 | §3-1 등록 스크립트 + §3-5 카나리 + §3-4 체크리스트 |
-| 5 | 재임베딩 OOM | 낮음 | 배치 4 + 클램프 512 — worker·라이브 모두 (§3-1 truncation 고정) |
-| 6 | 백업 자체 결함 | 낮음 | 무결성 게이트 + 복원 리허설 |
-| 7 | dim 폴백 우연 일치 | 중 | §3-2 명시 고정 |
-| 8 | 4.0.0 메이저 스키마 변화 | 낮음~중 | §7-12 정책 유지 (3.15.1 고정) |
-| 9 | 라이브 경로 긴 문서 OOM | 중 | 등록 시 truncation=512 고정 + 최악 케이스 RAM 게이트 (b-AI #6) |
-
-## 6. 롤백 경로 (시점별 3단계 — P0-5, c-AI #6 / b-AI #9 반영)
+## 5. 롤백 경로 (v3 — 단일화, c-AI #2/#4 / b-AI #2 근본 해소)
 
 | 시점 | 방법 |
 |---|---|
-| **A. cutover 직후, write reopen 전** | legacy 테이블 역스왑 + config 복원 + 데몬 재기동 (rollback_s4.py 1커맨드) |
-| **B. reopen 이후 (신규 a8m 행 존재)** | legacy 역스왑 후 **신규/변경 행을 MiniLM으로 delta 재임베딩** (~40초). 복원 결과는 원래 혼합 상태(MiniLM+bge)임을 명시 |
-| **C. 재해(DB 손상 등)** | pre-migration 전체 백업 복원 (완전 앵커) |
+| **재임베딩 중/직후, 데몬 미기동** | 데몬 정지 상태 유지 → **pre-migration 백업 복원** → config 원복 → 기동 가드 → 재기동. rollback_s4.py 1커맨드 |
+| **기동 후 문제 발견** | 데몬 정지 → **백업 복원** → (선택) 그 사이 신규 memory는 MiniLM으로 delta 재임베딩 — **INSERT/UPDATE/DELETE 전부 replay** (DELETE 누락 시 부활 버그 방지 — c-AI #4). 복원 결과는 원래 혼합 상태(MiniLM+bge 191) — **정상 복귀이지 순수 baseline 복귀가 아님**을 명시 |
+| **DB 손상 등 재해** | 백업 복원 (동일 앵커) |
 
-- legacy 테이블 + 전체 백업은 스왑 안정 확인(7일)까지 보존, 삭제는 사용자 승인
-- legacy = "빠른 되돌림 shortcut", 백업 = "재해 복구 앵커" — 역할 구분 명시
+- **legacy 테이블/역스왑 경로 완전 제거 근거**: v2 롤백 A/B는 `memory_embeddings`(폴백 테이블)만
+  되돌리고 주 저장소인 vec0 구 벡터는 복원 불가(b-AI #2 지적 타당) + CTAS는 PK/인덱스 미보존(c-AI #2).
+  백업은 DB 파일 전체이므로 vec0 포함 완전 복원 — 단일 경로가 더 강력.
+- 백업 보존: 7일, 삭제는 사용자 승인
 
-## 7. 검증 게이트 (스왑 승인 조건, v2)
+## 6. 품질 게이트 기준 정의 (c-AI #1 반영 — v2의 가장 중요한 수정)
 
-- [ ] 백업 무결성 게이트 통과 (integrity_check + 행수/ID checksum + 복원 리허설)
-- [ ] Source coverage: 대상 ID 집합 == 섀도 ID 집합 (missing/orphan/duplicate 0) — working+episodic 포함
-- [ ] 내용 정합: source_text_hash 일치 (stale embedding 0)
-- [ ] 모델/차원: a8m 100%, 384D 100%, blob dtype·길이 기대값 일치
-- [ ] S3 벡터 일치: 동일 내용 행 코사인 ≥ 0.999
-- [ ] gold-50 + 하이브리드 쌍별 비교: 섀도가 라이브 혼합 상태 대비 열화 없음 (MRR은 보조 지표)
-- [ ] 최악 케이스(긴 문서) 라이브 RAM ≤ 650MB
-- [ ] 카나리 벡터 코사인 ≥ 0.999
-- [ ] 라이브 gold 쿼리 3건 회수 + trace 정상 + 하이브리드(vec_weight 0.3) 동작
+- **S3 실험 baseline = migration 품질 참조선** (S3 게이트: hybrid F1 delta ≥ -0.01 등)
+- **현재 live 혼합 DB = 운영 연속성 참고용일 뿐, 품질 기준선 아님**
+- 판정 구조: `post-migration a8m vs S3 baseline` — "live 혼합 상태보다 나쁘지 않음"으로는 승인 안 함
+
+## 7. 검증 게이트 (3층 — c-AI #8 반영)
+
+**L1 즉시 smoke (cutover 직후, 분 단위):**
+- [ ] model 분포 단일 (`SELECT model, COUNT(*)` → a8m 100%, 레거시 0 — bge 191도 0)
+- [ ] **잔존 MiniLM/bge 행 감시** — cutover 1시간 후 재확인 (재임베딩 이후 신규 유입 = 숨은 경로 존재 신호 → 즉시 조사, b-AI #5)
+- [ ] 카나리 코사인 ≥ 0.999 + 기동 가드 통과
+- [ ] gold 3건 회수 + trace 정상(`write-gate`/`jev`)
+- [ ] warm idle Private Commit ≤ 650MB (p95 표현 제거 — c-AI #9)
+
+**L2 품질 승인 (마이그레이션 승인 조건):**
+- [ ] gold-50 전수 + 하이브리드(vw=0.3) — **S3 baseline 대비 게이트 충족** (hybrid F1 delta ≥ -0.01)
+- [ ] 쌍별 비교는 bootstrap CI로 판정 (50쿼리 임계 점측 방지 — b-AI)
+- [ ] S3 bekko 벡터 일치: 동일 내용 행 코사인 ≥ 0.999
+- [ ] worst-case(긴 문서) peak Private Commit ≤ 650MB (별도 측정, idle과 분리)
+- [ ] RAM 650MB는 사전 등록 G1 500MB 대비 완화임을 명시 기록 (b-AI)
+
+**L3 운영 승인 (24h/7d 관찰):**
+- [ ] 24h: 잔존 혼합 행 0 + recall 지연/오류 0 + vec0 표본 재임베딩 코사인 ≥ 0.999 (주기적 — b-AI)
+- [ ] 7d: 안정 확인 → 백업/마커 정리 승인
+
+**리허설 게이트 (실행 전):**
+- [ ] dry-run 전 절차 완주 + 창 시간 실측 기록
+- [ ] vec0 rollback 실측 (0.1.9)
+- [ ] 4클라이언트 정지 중 쓰기 유실 0 실측
+- [ ] 배치 불변성: S3에서 배치 4 완주+품질 게이트 통과 실측으로 커버 (b-AI #6 인용)
 
 ## 8. 다음 단계
 
-1. 본 v2 사용자 승인 (대기)
-2. 사전 작업: `register_bekko_a8m.py` + `rollback_s4.py` 작성, 가중치 로컬 스테이징, 카나리 기준 벡터 저장
-3. 섀도 재임베딩 실행 (T0 기록, 진행 ledger 보고)
-4. §7 게이트 통과 → cutover 창 실행
-5. 7일 관찰 후 legacy/백업 삭제 승인
+1. 본 v3 사용자 승인 (대기)
+2. 사전 작업: `register_bekko_a8m.py` + `rollback_s4.py` 작성, 가중치 스테이징, 카나리 기준 벡터 저장, 기동 가드 구현
+3. 복제 DB 전체 dry-run 리허설 → 실측치(창 시간 등) 기록
+4. 리허설 게이트 통과 → live cutover 실행 → L1/L2/L3 게이트
+5. 7일 관찰 후 정리 승인
