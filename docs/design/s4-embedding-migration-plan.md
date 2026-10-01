@@ -89,7 +89,7 @@ v4는 위 전체를 흡수. 미해결 외부 질문(c/b 공통 — reindex 중�
   ① `memory_embeddings` model 분포 단일 + config model 일치 (provenance 검사)
   ② **vec_working/vec_episodes 카운트 == 마커의 planned 카운트** (storage integrity)
   ③ vec0 declared dim == 384 + vec type == int8
-  ④ **표본 재임베딩 대조**: vec_working/vec_episodes 각 3~5행 재임베딩 → 저장 벡터와 코사인 ≥ 0.999 (부팅 시 ~1-2초)
+  ④ **표본 재임베딩 대조**: vec_working/vec_episodes 각 3~5행 재임베딩 → 저장 벡터와 코사인 ≥ **0.995 (int8 양자화 노이즈 바닥 실측 ≈0.9958; fp32 JSON 대조 시에만 ≥ 0.999)** (부팅 시 ~1-2초)
   ⑤ 카나리 코사인 ≥ 0.999
   ⑥ `embedding_meta`(model, revision, dim, 시각)와 config 대조
 - 가드는 PREPARED/REINDEXING 상태에서도 기동 거부 (crash 시 혼합/불완전 상태 서비스 차단)
@@ -190,7 +190,7 @@ v4는 위 전체를 흡수. 미해결 외부 질문(c/b 공통 — reindex 중�
 
 ## 8. 다음 단계
 
-1. 본 v4 사용자 승인 (대기) — **리허설 착수 승인까지가 이번 요청 범위 제안**
+1. 본 v4 사용자 승인 — **리허설 착수 승인 완료 (2026-10-01), 리허설 전 항목 PASS** → 결과 보고: `s4-rehearsal-report-20261001.md`
 2. 사전 작업: `register_bekko_a8m.py` + `rollback_s4.py` + 기동 가드 작성, 가중치 스테이징, 카나리 기준 벡터 저장
 3. 복제 DB 전체 dry-run 리허설 → 실측치(창 시간, failure 복원, 배치 불변성, 동일 데이터 대조) 기록
 4. 리허설 결과 보고 → live cutover 최종 승인 → 실행 → L1/L2 → L3 관찰
