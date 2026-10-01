@@ -358,6 +358,7 @@ class Pipeline:
         """Two-stage prefetch with budget (B §7.5). Returns dict for response."""
         options = req.get("options") or {}
         max_chars = int(options.get("max_chars", 6000))
+        include_pool_ids = bool(options.get("pool_ids", False))
         timeout_ms = int(options.get("timeout_ms") or self.ctx.cfg.prefetch_default_timeout_ms)
         timeout_ms = max(200, min(timeout_ms, self.ctx.cfg.prefetch_max_timeout_ms))  # D7a clamp
         rerank = bool(options.get("rerank", True))
@@ -394,6 +395,7 @@ class Pipeline:
         degraded = False
         reason = None
         rerank_used = "skipped"
+        final_rows = stage1_rows
         if rerank and remaining > 0.3 and self.ctx.breaker.allow():
             try:
                 async with self.ctx.jev_sem:
@@ -401,6 +403,7 @@ class Pipeline:
                         asyncio.to_thread(self._rerank, query, stage1_rows),
                         timeout=remaining)
                 self.ctx.breaker.on_success()
+                final_rows = ranked
                 ctx = self._render(ranked, query, max_chars)
                 rerank_used = "jev"
             except (asyncio.TimeoutError, JevUnavailable, JevError) as e:
@@ -419,10 +422,15 @@ class Pipeline:
         self.ctx.stats["prefetch_total"] += 1
         if degraded:
             self.ctx.stats["prefetch_degraded"] += 1
-        return {"context": ctx,
-                "meta": {"degraded": degraded, "degraded_reason": reason,
-                         "rerank": rerank_used, "lanes": lanes,
-                         "latency_ms": round((time.perf_counter() - t0) * 1000)}}
+        meta = {"degraded": degraded, "degraded_reason": reason,
+                "rerank": rerank_used, "lanes": lanes,
+                "latency_ms": round((time.perf_counter() - t0) * 1000)}
+        if include_pool_ids:
+            # Measurement aid: stage1 pool ids (RRF order) + post-rerank ids
+            # (JEV lift observation). Opt-in via options.pool_ids.
+            meta["pool_ids"] = [str(r.get("id") or "") for r in stage1_rows]
+            meta["final_ids"] = [str(r.get("id") or "") for r in final_rows[:40]]
+        return {"context": ctx, "meta": meta}
 
     def _retrieve(self, beam, query: str) -> List[Dict]:
         """Stage 1: lanes -> RRF -> conservative filter (no JEV)."""
