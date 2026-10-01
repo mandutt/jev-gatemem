@@ -51,6 +51,21 @@ spool 잔여                   : 0
 ingest_ledger 테스트 잔여    : 0
 ```
 
+## 사후 검증 (2026-10-01 17:06 라이브 데몬 재기동 후 실측)
+
+P1 구현(§35) 반영 코드 + sitecustomize 강제(a8m 무조건 적용) 상태로 **정식 데몬 재기동 완료**. Hermes 텔레그램 세션(라이브)에서 검증:
+
+| 항목 | 실측 |
+|---|---|
+| 데몬 health | `ready` (protocol 1, 0.2.0, 127.0.0.1:47821) |
+| `/v1/status` embedding | `{model: bench/bekko-a8m, dim: 384, warmup_ok: true, warmup_error: null}` |
+| degraded | false |
+| **데몬 Private Commit** | **672 MB** (WS 194 MB) — 모델 단독 617 MB + 데몬 런타임 ~55 MB |
+| Hermes 쓰기 게이트 | trace에 `write-gate` 정상, vec prefetch 회복 (vec=46) |
+| 세션 접두사 | `hermes_<sid>` 단일 겹 (재바인딩 정상) |
+
+**주의 (2026-10-01 실화)**: Hermes 터미널 백그라운드 spawn으로 띄운 데몬을 "중복"으로 오판해 Stop-Process하면 라이브 데몬 본체가 죽는다 (bash 래퍼+pythonw 부모/자식 3중 트리는 정상 구조). 중복 판별은 부모 PID 트리로. 상세: jev-memory-middleware 스킬.
+
 ## 롤백 경계 (미사용, 보존)
 
 - 백업: `%LOCALAPPDATA%/hermes/mnemosyne/backups/s4-pre-migration-20261001-154527.db` + `.meta.json`

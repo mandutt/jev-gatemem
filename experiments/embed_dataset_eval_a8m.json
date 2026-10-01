@@ -1,0 +1,71 @@
+{
+  "model": "bench/bekko-a8m",
+  "label": "a8m",
+  "load_s": 1.0,
+  "mem_start": {
+    "private_mb": 419.1,
+    "ws_mb": 86.8,
+    "peak_ws_mb": 86.8
+  },
+  "mem_after_load": {
+    "private_mb": 615.5,
+    "ws_mb": 284.8,
+    "peak_ws_mb": 592.9
+  },
+  "mem_end": {
+    "private_mb": 1844.6,
+    "ws_mb": 1428.4,
+    "peak_ws_mb": 1488.7
+  },
+  "total_texts": 9800,
+  "embed_total_s": 103.8,
+  "throughput": 94.4,
+  "results": {
+    "kodialogbench": {
+      "n": 1200,
+      "acc1": 0.56,
+      "mrr": 0.7177,
+      "s": 29.6,
+      "mode": "choice"
+    },
+    "koalpaca": {
+      "n": 500,
+      "acc1": 0.98,
+      "mrr": 0.9877,
+      "s": 23.3,
+      "mode": "pool"
+    },
+    "kosgd": {
+      "n": 500,
+      "acc1": 0.086,
+      "mrr": 0.1419,
+      "s": 5.7,
+      "mode": "pool"
+    },
+    "machinereading": {
+      "n": 300,
+      "acc1": 1.0,
+      "mrr": 1.0,
+      "s": 15.3,
+      "mode": "pool"
+    }
+  },
+  "kodialog_sub": {
+    "kodialog/dailydialog": {
+      "acc1": 0.5267,
+      "mrr": 0.6916
+    },
+    "kodialog/empathetic_dialogues": {
+      "acc1": 0.66,
+      "mrr": 0.7879
+    },
+    "kodialog/personachat": {
+      "acc1": 0.4967,
+      "mrr": 0.6798
+    },
+    "kodialog/socialdial": {
+      "acc1": 0.5567,
+      "mrr": 0.7113
+    }
+  }
+}

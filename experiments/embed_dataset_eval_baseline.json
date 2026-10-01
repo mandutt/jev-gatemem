@@ -1,0 +1,71 @@
+{
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "label": "baseline",
+  "load_s": 0.7,
+  "mem_start": {
+    "private_mb": 419.5,
+    "ws_mb": 86.9,
+    "peak_ws_mb": 86.9
+  },
+  "mem_after_load": {
+    "private_mb": 947.0,
+    "ws_mb": 612.2,
+    "peak_ws_mb": 628.4
+  },
+  "mem_end": {
+    "private_mb": 3157.8,
+    "ws_mb": 2038.8,
+    "peak_ws_mb": 2143.3
+  },
+  "total_texts": 9800,
+  "embed_total_s": 242.4,
+  "throughput": 40.4,
+  "results": {
+    "kodialogbench": {
+      "n": 1200,
+      "acc1": 0.585,
+      "mrr": 0.744,
+      "s": 66.2,
+      "mode": "choice"
+    },
+    "koalpaca": {
+      "n": 500,
+      "acc1": 0.788,
+      "mrr": 0.8396,
+      "s": 55.8,
+      "mode": "pool"
+    },
+    "kosgd": {
+      "n": 500,
+      "acc1": 0.052,
+      "mrr": 0.1067,
+      "s": 12.7,
+      "mode": "pool"
+    },
+    "machinereading": {
+      "n": 300,
+      "acc1": 0.37,
+      "mrr": 0.4931,
+      "s": 44.2,
+      "mode": "pool"
+    }
+  },
+  "kodialog_sub": {
+    "kodialog/dailydialog": {
+      "acc1": 0.5933,
+      "mrr": 0.7497
+    },
+    "kodialog/empathetic_dialogues": {
+      "acc1": 0.7167,
+      "mrr": 0.8294
+    },
+    "kodialog/personachat": {
+      "acc1": 0.46,
+      "mrr": 0.6578
+    },
+    "kodialog/socialdial": {
+      "acc1": 0.57,
+      "mrr": 0.7389
+    }
+  }
+}
