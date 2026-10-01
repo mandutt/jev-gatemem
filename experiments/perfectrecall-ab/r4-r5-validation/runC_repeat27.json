@@ -1,0 +1,731 @@
+[
+ {
+  "idx": 0,
+  "dataset": "kodialog/dailydialog",
+  "q": "이봐요, 대마초 좀 살래요?",
+  "ranks3": [
+   15,
+   15,
+   15
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.07,
+   0.07,
+   0.07
+  ],
+  "top_scores": [
+   0.58,
+   0.58,
+   0.58
+  ]
+ },
+ {
+  "idx": 1,
+  "dataset": "kodialog/dailydialog",
+  "q": "이봐요, 대마초 좀 살래요? 뭐 좀?",
+  "ranks3": [
+   2,
+   2,
+   2
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.41,
+   0.41,
+   0.41
+  ],
+  "top_scores": [
+   0.58,
+   0.58,
+   0.58
+  ]
+ },
+ {
+  "idx": 6,
+  "dataset": "kodialog/dailydialog",
+  "q": "뭐 좀? 대마초! 알지? 대마초, 간자, 메리 제인 좀 만성적으로! 오,",
+  "ranks3": [
+   5,
+   5,
+   5
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.41,
+   0.41,
+   0.41
+  ],
+  "top_scores": [
+   0.5,
+   0.5,
+   0.5
+  ]
+ },
+ {
+  "idx": 8,
+  "dataset": "kodialog/dailydialog",
+  "q": "오, 음, 됐어요. 당신이 몇 줄을 선호한다면 나는 또한 타격이 있습니다",
+  "ranks3": [
+   13,
+   13,
+   13
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.14,
+   0.14,
+   0.14
+  ],
+  "top_scores": [
+   0.53,
+   0.53,
+   0.53
+  ]
+ },
+ {
+  "idx": 15,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "네, 10년 전에 끔찍한 경험을 한 적이 있어요. 100% 그들의 잘못이",
+  "ranks3": [
+   4,
+   4,
+   4
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.43,
+   0.43,
+   0.43
+  ],
+  "top_scores": [
+   0.54,
+   0.54,
+   0.54
+  ]
+ },
+ {
+  "idx": 17,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "네, 10년 전에 끔찍한 경험을 한 적이 있어요. 100% 그들의 잘못이",
+  "ranks3": [
+   5,
+   5,
+   5
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.5,
+   0.5,
+   0.5
+  ],
+  "top_scores": [
+   0.76,
+   0.76,
+   0.76
+  ]
+ },
+ {
+  "idx": 18,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "네, 10년 전에 끔찍한 경험을 한 적이 있어요. 100% 그들의 잘못이",
+  "ranks3": [
+   6,
+   6,
+   6
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.42,
+   0.42,
+   0.42
+  ],
+  "top_scores": [
+   0.76,
+   0.76,
+   0.76
+  ]
+ },
+ {
+  "idx": 20,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "그 경험에 대해 말씀해 주시겠어요? 우리가 장소를 바꾼 것 같아요 네, ",
+  "ranks3": [
+   3,
+   3,
+   3
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.5,
+   0.5,
+   0.5
+  ],
+  "top_scores": [
+   0.74,
+   0.74,
+   0.74
+  ]
+ },
+ {
+  "idx": 22,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "나 거기, 어떻게해야할지 모르겠어요, 여자 친구와 헤어졌고 8 년 동안 ",
+  "ranks3": [
+   13,
+   13,
+   13
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.18,
+   0.18,
+   0.18
+  ],
+  "top_scores": [
+   0.72,
+   0.72,
+   0.72
+  ]
+ },
+ {
+  "idx": 23,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "나 거기, 어떻게해야할지 모르겠어요, 여자 친구와 헤어졌고 8 년 동안 ",
+  "ranks3": [
+   7,
+   7,
+   7
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.36,
+   0.36,
+   0.36
+  ],
+  "top_scores": [
+   0.71,
+   0.71,
+   0.71
+  ]
+ },
+ {
+  "idx": 24,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "나 거기, 어떻게해야할지 모르겠어요, 여자 친구와 헤어졌고 8 년 동안 ",
+  "ranks3": [
+   7,
+   7,
+   7
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.38,
+   0.38,
+   0.38
+  ],
+  "top_scores": [
+   0.74,
+   0.74,
+   0.74
+  ]
+ },
+ {
+  "idx": 25,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "콘서트에 빨리 가고 싶어요.",
+  "ranks3": [
+   8,
+   8,
+   8
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.24,
+   0.24,
+   0.24
+  ],
+  "top_scores": [
+   0.65,
+   0.65,
+   0.65
+  ]
+ },
+ {
+  "idx": 27,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "콘서트에 빨리 가고 싶어요. 어떤 콘서트요? U2 콘서트요. 티켓이 정말",
+  "ranks3": [
+   14,
+   14,
+   14
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.12,
+   0.12,
+   0.12
+  ],
+  "top_scores": [
+   0.82,
+   0.82,
+   0.82
+  ]
+ },
+ {
+  "idx": 28,
+  "dataset": "kodialog/empathetic_dialogues",
+  "q": "그래서 어제 친구 아기가 넘어져서 무릎을 긁어서 기운을 북돋아 주려고 했",
+  "ranks3": [
+   6,
+   6,
+   6
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.29,
+   0.29,
+   0.29
+  ],
+  "top_scores": [
+   0.69,
+   0.69,
+   0.69
+  ]
+ },
+ {
+  "idx": 30,
+  "dataset": "kodialog/personachat",
+  "q": "네, 깔끔하고 스턴트도 두 배로 하고 정말 재미있고 힘든 일이에요. 네,",
+  "ranks3": [
+   15,
+   15,
+   15
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.26,
+   0.26,
+   0.26
+  ],
+  "top_scores": [
+   0.63,
+   0.63,
+   0.63
+  ]
+ },
+ {
+  "idx": 31,
+  "dataset": "kodialog/personachat",
+  "q": "저도 영화 일을 해요. 멋지네요! 저는 휴먼 서비스 분야에서 일했었죠. ",
+  "ranks3": [
+   16,
+   16,
+   16
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.23,
+   0.23,
+   0.23
+  ],
+  "top_scores": [
+   0.68,
+   0.68,
+   0.68
+  ]
+ },
+ {
+  "idx": 34,
+  "dataset": "kodialog/personachat",
+  "q": "괜찮아요, 방금 퇴근해서 피곤하고 두 가지 일을 하고 있어요. 방금 공포",
+  "ranks3": [
+   5,
+   5,
+   5
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.29,
+   0.29,
+   0.29
+  ],
+  "top_scores": [
+   0.54,
+   0.54,
+   0.54
+  ]
+ },
+ {
+  "idx": 38,
+  "dataset": "kodialog/personachat",
+  "q": "자동차는 내 취미야. 빈티지 자동차. 작업하는 걸 좋아해요. 레슬링? 좋",
+  "ranks3": [
+   5,
+   5,
+   5
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.58,
+   0.58,
+   0.58
+  ],
+  "top_scores": [
+   0.78,
+   0.78,
+   0.78
+  ]
+ },
+ {
+  "idx": 39,
+  "dataset": "kodialog/personachat",
+  "q": "잘됐네요. 빈티지 자동차를 좋아하세요? 오래된 머스탱이 두 대 있어요. ",
+  "ranks3": [
+   12,
+   12,
+   12
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.19,
+   0.19,
+   0.19
+  ],
+  "top_scores": [
+   0.68,
+   0.68,
+   0.68
+  ]
+ },
+ {
+  "idx": 40,
+  "dataset": "kodialog/personachat",
+  "q": "멋지네요. 어떤 종류의 자원 봉사 활동을 하시나요? 저는 우리 동네에 있",
+  "ranks3": [
+   3,
+   3,
+   3
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.46,
+   0.46,
+   0.46
+  ],
+  "top_scores": [
+   0.64,
+   0.64,
+   0.64
+  ]
+ },
+ {
+  "idx": 43,
+  "dataset": "kodialog/personachat",
+  "q": "안녕하세요! 오늘 밤은 어떠세요? 잘 지내고 있어요. 개 두 마리와 함께",
+  "ranks3": [
+   4,
+   4,
+   4
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.5,
+   0.5,
+   0.5
+  ],
+  "top_scores": [
+   0.74,
+   0.74,
+   0.74
+  ]
+ },
+ {
+  "idx": 48,
+  "dataset": "kodialog/socialdial",
+  "q": "리, 오늘 왜 그렇게 서둘러서 날 보러 왔어? 서명할 중요한 서류가 있잖",
+  "ranks3": [
+   6,
+   6,
+   6
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.38,
+   0.38,
+   0.38
+  ],
+  "top_scores": [
+   0.7,
+   0.7,
+   0.7
+  ]
+ },
+ {
+  "idx": 52,
+  "dataset": "kodialog/socialdial",
+  "q": "알았어, 보여줘 이건 우리 계약서야 오늘 서명해야 해 아, 아주 중요한 ",
+  "ranks3": [
+   5,
+   5,
+   5
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.53,
+   0.53,
+   0.53
+  ],
+  "top_scores": [
+   0.72,
+   0.72,
+   0.72
+  ]
+ },
+ {
+  "idx": 55,
+  "dataset": "kodialog/socialdial",
+  "q": "네, 서명하지 않으면 다음 단계로 진행할 수 없습니다. 그럼 제가 자세히",
+  "ranks3": [
+   10,
+   10,
+   10
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.29,
+   0.29,
+   0.29
+  ],
+  "top_scores": [
+   0.76,
+   0.76,
+   0.76
+  ]
+ },
+ {
+  "idx": 57,
+  "dataset": "kodialog/socialdial",
+  "q": "왕 형님, 급하게 필요한 돈 좀 빌려주실 수 있나요? 안 돼요, 가난해서",
+  "ranks3": [
+   8,
+   8,
+   8
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.29,
+   0.29,
+   0.29
+  ],
+  "top_scores": [
+   0.58,
+   0.58,
+   0.58
+  ]
+ },
+ {
+  "idx": 59,
+  "dataset": "kodialog/socialdial",
+  "q": "왕 형님, 급하게 필요한 돈 좀 빌려주실 수 있나요? 안 돼요, 가난해서",
+  "ranks3": [
+   9,
+   9,
+   9
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.29,
+   0.29,
+   0.29
+  ],
+  "top_scores": [
+   0.74,
+   0.74,
+   0.74
+  ]
+ },
+ {
+  "idx": 107,
+  "dataset": "kosgd",
+  "q": "네, 알겠습니다. 알람을 추가하시겠습니까? 네, 오후 5시에 알람 하나 ",
+  "ranks3": [
+   2,
+   2,
+   2
+  ],
+  "hit1_any": false,
+  "hit1_all": false,
+  "tie_rates": [
+   1,
+   1,
+   1
+  ],
+  "scores_ans": [
+   0.25,
+   0.25,
+   0.25
+  ],
+  "top_scores": [
+   0.28,
+   0.28,
+   0.28
+  ]
+ }
+]

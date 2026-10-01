@@ -1,0 +1,1622 @@
+[
+ {
+  "idx": 0,
+  "dataset": "kodialog/dailydialog",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 14,
+  "score_ans": 0.08
+ },
+ {
+  "idx": 1,
+  "dataset": "kodialog/dailydialog",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 2,
+  "score_ans": 0.4
+ },
+ {
+  "idx": 2,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 3,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 4,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 5,
+  "dataset": "kodialog/dailydialog",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.48
+ },
+ {
+  "idx": 6,
+  "dataset": "kodialog/dailydialog",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 4,
+  "score_ans": 0.44
+ },
+ {
+  "idx": 7,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 8,
+  "dataset": "kodialog/dailydialog",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 11,
+  "score_ans": 0.14
+ },
+ {
+  "idx": 9,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 10,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 11,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 12,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 13,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 14,
+  "dataset": "kodialog/dailydialog",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 15,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 3,
+  "score_ans": 0.53
+ },
+ {
+  "idx": 16,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.69
+ },
+ {
+  "idx": 17,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 5,
+  "score_ans": 0.48
+ },
+ {
+  "idx": 18,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 6,
+  "score_ans": 0.42
+ },
+ {
+  "idx": 19,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.72
+ },
+ {
+  "idx": 20,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 4,
+  "score_ans": 0.48
+ },
+ {
+  "idx": 21,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.88
+ },
+ {
+  "idx": 22,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 15,
+  "score_ans": 0.17
+ },
+ {
+  "idx": 23,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 7,
+  "score_ans": 0.37
+ },
+ {
+  "idx": 24,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 7,
+  "score_ans": 0.38
+ },
+ {
+  "idx": 25,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 7,
+  "score_ans": 0.27
+ },
+ {
+  "idx": 26,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.92
+ },
+ {
+  "idx": 27,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 13,
+  "score_ans": 0.11
+ },
+ {
+  "idx": 28,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 7,
+  "score_ans": 0.3
+ },
+ {
+  "idx": 29,
+  "dataset": "kodialog/empathetic_dialogues",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.87
+ },
+ {
+  "idx": 30,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 13,
+  "score_ans": 0.27
+ },
+ {
+  "idx": 31,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 16,
+  "score_ans": 0.23
+ },
+ {
+  "idx": 32,
+  "dataset": "kodialog/personachat",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 33,
+  "dataset": "kodialog/personachat",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 34,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 6,
+  "score_ans": 0.29
+ },
+ {
+  "idx": 35,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 39,
+  "score_ans": 0.11
+ },
+ {
+  "idx": 36,
+  "dataset": "kodialog/personachat",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 37,
+  "dataset": "kodialog/personachat",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 38,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 5,
+  "score_ans": 0.55
+ },
+ {
+  "idx": 39,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 9,
+  "score_ans": 0.2
+ },
+ {
+  "idx": 40,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 3,
+  "score_ans": 0.47
+ },
+ {
+  "idx": 41,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.53
+ },
+ {
+  "idx": 42,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 26,
+  "score_ans": 0.08
+ },
+ {
+  "idx": 43,
+  "dataset": "kodialog/personachat",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 5,
+  "score_ans": 0.48
+ },
+ {
+  "idx": 44,
+  "dataset": "kodialog/personachat",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 45,
+  "dataset": "kodialog/socialdial",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 46,
+  "dataset": "kodialog/socialdial",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 47,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.82
+ },
+ {
+  "idx": 48,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 6,
+  "score_ans": 0.41
+ },
+ {
+  "idx": 49,
+  "dataset": "kodialog/socialdial",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 50,
+  "dataset": "kodialog/socialdial",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 51,
+  "dataset": "kodialog/socialdial",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 52,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 5,
+  "score_ans": 0.53
+ },
+ {
+  "idx": 53,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 10,
+  "score_ans": 0.2
+ },
+ {
+  "idx": 54,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 17,
+  "score_ans": 0.16
+ },
+ {
+  "idx": 55,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 10,
+  "score_ans": 0.31
+ },
+ {
+  "idx": 56,
+  "dataset": "kodialog/socialdial",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 57,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 9,
+  "score_ans": 0.3
+ },
+ {
+  "idx": 58,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.77
+ },
+ {
+  "idx": 59,
+  "dataset": "kodialog/socialdial",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 11,
+  "score_ans": 0.27
+ },
+ {
+  "idx": 60,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.96
+ },
+ {
+  "idx": 61,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.94
+ },
+ {
+  "idx": 62,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.88
+ },
+ {
+  "idx": 63,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.9
+ },
+ {
+  "idx": 64,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.82
+ },
+ {
+  "idx": 65,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.92
+ },
+ {
+  "idx": 66,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.92
+ },
+ {
+  "idx": 67,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.96
+ },
+ {
+  "idx": 68,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.88
+ },
+ {
+  "idx": 69,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.93
+ },
+ {
+  "idx": 70,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.86
+ },
+ {
+  "idx": 71,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.41
+ },
+ {
+  "idx": 72,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.81
+ },
+ {
+  "idx": 73,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.85
+ },
+ {
+  "idx": 74,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.96
+ },
+ {
+  "idx": 75,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.94
+ },
+ {
+  "idx": 76,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.9
+ },
+ {
+  "idx": 77,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.85
+ },
+ {
+  "idx": 78,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.79
+ },
+ {
+  "idx": 79,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.96
+ },
+ {
+  "idx": 80,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.95
+ },
+ {
+  "idx": 81,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.92
+ },
+ {
+  "idx": 82,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.95
+ },
+ {
+  "idx": 83,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.93
+ },
+ {
+  "idx": 84,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.83
+ },
+ {
+  "idx": 85,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.95
+ },
+ {
+  "idx": 86,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.94
+ },
+ {
+  "idx": 87,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.95
+ },
+ {
+  "idx": 88,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.87
+ },
+ {
+  "idx": 89,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.91
+ },
+ {
+  "idx": 90,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.95
+ },
+ {
+  "idx": 91,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.96
+ },
+ {
+  "idx": 92,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.96
+ },
+ {
+  "idx": 93,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.95
+ },
+ {
+  "idx": 94,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.94
+ },
+ {
+  "idx": 95,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.79
+ },
+ {
+  "idx": 96,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.95
+ },
+ {
+  "idx": 97,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.82
+ },
+ {
+  "idx": 98,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.96
+ },
+ {
+  "idx": 99,
+  "dataset": "koalpaca",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.83
+ },
+ {
+  "idx": 100,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.89
+ },
+ {
+  "idx": 101,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 5,
+  "score_ans": 0.26
+ },
+ {
+  "idx": 102,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 5,
+  "score_ans": 0.3
+ },
+ {
+  "idx": 103,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.87
+ },
+ {
+  "idx": 104,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 105,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.89
+ },
+ {
+  "idx": 106,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 107,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 2,
+  "score_ans": 0.25
+ },
+ {
+  "idx": 108,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.91
+ },
+ {
+  "idx": 109,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 10,
+  "score_ans": 0.08
+ },
+ {
+  "idx": 110,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 7,
+  "score_ans": 0.08
+ },
+ {
+  "idx": 111,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 112,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 113,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 114,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.86
+ },
+ {
+  "idx": 115,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 4,
+  "score_ans": 0.17
+ },
+ {
+  "idx": 116,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 4,
+  "score_ans": 0.14
+ },
+ {
+  "idx": 117,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.72
+ },
+ {
+  "idx": 118,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.86
+ },
+ {
+  "idx": 119,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 22,
+  "score_ans": 0.09
+ },
+ {
+  "idx": 120,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 16,
+  "score_ans": 0.06
+ },
+ {
+  "idx": 121,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 122,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 123,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 3,
+  "score_ans": 0.52
+ },
+ {
+  "idx": 124,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": 13,
+  "score_ans": 0.07
+ },
+ {
+  "idx": 125,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 5,
+  "score_ans": 0.22
+ },
+ {
+  "idx": 126,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 127,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.85
+ },
+ {
+  "idx": 128,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.82
+ },
+ {
+  "idx": 129,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.91
+ },
+ {
+  "idx": 130,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 131,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.24
+ },
+ {
+  "idx": 132,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 133,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 134,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 2,
+  "score_ans": 0.89
+ },
+ {
+  "idx": 135,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 0,
+  "hit5": 1,
+  "rank": 4,
+  "score_ans": 0.3
+ },
+ {
+  "idx": 136,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 137,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 138,
+  "dataset": "kosgd",
+  "covered": false,
+  "hit1": 0,
+  "hit5": 0,
+  "rank": null,
+  "score_ans": null
+ },
+ {
+  "idx": 139,
+  "dataset": "kosgd",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.81
+ },
+ {
+  "idx": 140,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.84
+ },
+ {
+  "idx": 141,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.86
+ },
+ {
+  "idx": 142,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.74
+ },
+ {
+  "idx": 143,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.82
+ },
+ {
+  "idx": 144,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.86
+ },
+ {
+  "idx": 145,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.84
+ },
+ {
+  "idx": 146,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.81
+ },
+ {
+  "idx": 147,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.74
+ },
+ {
+  "idx": 148,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.8
+ },
+ {
+  "idx": 149,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.95
+ },
+ {
+  "idx": 150,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.84
+ },
+ {
+  "idx": 151,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.82
+ },
+ {
+  "idx": 152,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.74
+ },
+ {
+  "idx": 153,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.84
+ },
+ {
+  "idx": 154,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.87
+ },
+ {
+  "idx": 155,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.89
+ },
+ {
+  "idx": 156,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.88
+ },
+ {
+  "idx": 157,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.77
+ },
+ {
+  "idx": 158,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.81
+ },
+ {
+  "idx": 159,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.89
+ },
+ {
+  "idx": 160,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.92
+ },
+ {
+  "idx": 161,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.85
+ },
+ {
+  "idx": 162,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.75
+ },
+ {
+  "idx": 163,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.86
+ },
+ {
+  "idx": 164,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.89
+ },
+ {
+  "idx": 165,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.92
+ },
+ {
+  "idx": 166,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.85
+ },
+ {
+  "idx": 167,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.91
+ },
+ {
+  "idx": 168,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.76
+ },
+ {
+  "idx": 169,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.85
+ },
+ {
+  "idx": 170,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.87
+ },
+ {
+  "idx": 171,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.85
+ },
+ {
+  "idx": 172,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.74
+ },
+ {
+  "idx": 173,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.84
+ },
+ {
+  "idx": 174,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.82
+ },
+ {
+  "idx": 175,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.93
+ },
+ {
+  "idx": 176,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.85
+ },
+ {
+  "idx": 177,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.89
+ },
+ {
+  "idx": 178,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.74
+ },
+ {
+  "idx": 179,
+  "dataset": "machinereading",
+  "covered": true,
+  "hit1": 1,
+  "hit5": 1,
+  "rank": 1,
+  "score_ans": 0.78
+ }
+]
