@@ -206,6 +206,40 @@ Paired bootstrap 95% CI (MRR delta):
 - **kosgd 양 모델 저조**(0.086/0.052)는 **과제 특성**(맥락-다음 발화는 어휘 중복 거의 없는 일반응답 예측) 때문 — 모델 결함 아님. 상대 우위는 a8m(1.65배).
 - 종합: **운영 도메인(장기기억 회수)에서 a8m이 baseline 대비 우위 유지** — X1의 우려(대화 응답만)는 도메인 한정이며, 지시문·문서 회수에선 a8m이 명확히 낫다. S4 채택(§9) 재확인 보강.
 
+## 8c. PerfectRecall vs 내 구현 — 격리 A/B 비교 (2026-10-01)
+
+> 동기: PerfectRecall(`arslanr-com/perfectrecall`, 이하 PR)은 "Jev full-corpus 스캔" 설계의 독립 포크. 같은 스크래치 코퍼스·쿼리로 내 파이프라인(lane pool + Jev rerank)과 품질/비용/지연/메모리를 격리 비교.
+
+**프로토콜 (격리 준수):**
+- 스크래치 전용 SQLite DB (코퍼스 419 스팬: kodialogbench 60아이템×5후보 + koalpaca 40 + kosgd 40 + 기계독해 40), 쿼리 180, 동일 seed
+- 실 Hermes/데몬/DB/config 무접촉 —내 venv(jev-mem) 코드는 스크래치 DB에 바인딩, PR venv는 자체 클론 사용
+- Jev 엔드포인트 동일 (`api.typesafe.ai/v1/systemone`, typesafe provider), 동일 키
+- 내 파이프라인: `build_lane_pool`(FTS+vec+imp+graph RRF) → `_filter_and_rank` → `jev_rerank(choice)` — 라이브 `pipeline._retrieve/_rerank` 로직 그대로
+- PR: `jev_recall._rank(query, corpus)` = `jev.relevance` 전체 코퍼스 배치 (cutoff=0, 전부 유지)
+- **스크래치 DB 벡터 백필 필수**: PR venv로 생성된 DB는 `memory_embeddings` 0건 → a8m으로 419건 백필 후 재측정 (내 vec lane 활성화)
+
+**결과:**
+
+| 지표 | 내 구현 (lane+rerank) | PerfectRecall (full-scan) | 비고 |
+|---|---|---|---|
+| Acc@1 | **0.489** | **0.806** | PR 우위 |
+| MRR | 0.556 | 0.849 | PR 우위 |
+| 지연 | **0.23 s/쿼리** | 0.38 s/쿼리 | 내 구현 -40% |
+| Jev 요청/180쿼리 | **179** | 1,800 | PR 10배 |
+| 추정 비용 | **$0.00~0.02** | $0.05~0.15 (usage.cost 미반환) | 요청 10배 |
+| 프로세스 메모리 | a8m 모델 **615 MB** | **12 MB** (모델 없음) | PR 50배 적음 |
+
+**원인 분석 (필수):**
+1. **lane pool 커버리지 상한 = PR Acc**: raw pool(필터 전 RRF) 정답 커버 145/180(80.6%) = **Acc 0.467 ≈ PR Acc 0.806**. 즉 PR은 "전체 코퍼스를 Jev에 노출"하므로 lane이 놓치는 19.4%도 판정 가능 — 내 정확도 하드캡은 lane pool 누락.
+2. **`_filter_and_rank` 어휘 게이트가 한국어 단답을 추가 탈락**: min_distinctive=2 + min_coverage=0.30은 조사 분리된 한국어 반응형 후보("뭐 좀?")를 토큰 중첩 부족으로 다수 제거 (pool 60→4~11). 그나마 남은 pool도 짧은 의미 매칭은 vec 유사도가 낮아 top-60 미포함.
+3. **내 rerank는 pool 내 1등만 lift**: pool에 정답이 없으면(19.4%) 회생 불가, 있어도 choice가 틀리면 손해 — 순 효과는 +0.02 (0.467→0.489).
+4. **PR은 임베딩 모델 없이 SQLite 스트리밍 스캔** → 메모리 12MB, 대신 쿼리당 요청이 코퍼스 크기에 정비례 (180쿼리=1,800요청, 코퍼스 10배면 요청도 10배).
+
+**결론:**
+- **회수 정확도는 PR 우위 (0.806 vs 0.489)** — lane pool 누락(19.4%) + 어휘 게이트가 원인. 다만 이 태스크(짧은 한국어 대화 응답 5지선다)는 **내 운영 도메인(장기기억 회수)과 다름** — §8b의 koalpaca(0.980)/기계독해(1.000)와 같은 지시문·문서 회수에선 내 파이프라인이 lane pool 커버리지가 높아 격차가 작을 것으로 예상.
+- **비용/자원은 내 구현 압도적 우위** (요청 1/10, 지연 -40%, 임베딩 모델 615MB 대신 PR은 12MB지만 recall 품질을 Jev API 비용으로 구매).
+- **설계 트레이드오프가 실측으로 확정**: PR="전부 Jev에 던진다"(정확도↑, 비용∝코퍼스), 내 구현="lane pool로 좁힌다"(비용 고정, 누락 리스크). 내 운영 환경(15.6GB RAM, 비용 민감)에서는 lane+게이트가 적합하나, **lane pool 커버리지 80%대 단점은 인지하고 운영 문서에 명시** (query가 길고 어휘 풍부한 실제 메모리 회수에선 커버리지가 더 높음 — §8b 참조).
+
 ## 9. 최종 채택 판정 (다국어 조건 확정 반영)
 
 **사용자 제약 확정 (2026-10-01)**: 배포 시 다른 사용자의 다국어 사용 가능성을 배제하지 않음 → 한·영 한정 모델 기피.

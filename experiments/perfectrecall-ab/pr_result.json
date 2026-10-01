@@ -1,0 +1,12 @@
+{
+  "engine": "perfectrecall",
+  "n": 180,
+  "corpus": 419,
+  "acc1": 0.8055555555555556,
+  "mrr": 0.8485266900056183,
+  "total_s": 69.3,
+  "per_query_s": 0.38,
+  "jev_requests": 1800,
+  "cache_hits": 0,
+  "cost_usd": 0.0
+}
