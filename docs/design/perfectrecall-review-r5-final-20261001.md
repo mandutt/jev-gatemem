@@ -83,3 +83,20 @@ Run A: Acc@1 0.561 (이전 0.556 — JEV 비결정성 범위 내 재현), hit@5 
 | `runD_scope8.py` / `runD_scope8.json` | 419 vs 풀 직접 비교 8건 |
 | `runE_cands.py` / `runE_cands.json` | cands-only 조건 재현 12건 |
 | `mech_test.py` / `mech_report.md` | R4 메커니즘 검증 (H1/H2) |
+
+## 6. 부록: 이후 후속 조치 (동일일자, 본 보고서 작성 후)
+
+R5 결론(격차 = 평가 조건 차이) 확정 후, R4에서 제기된 E_factual_misc 약점을 해소하는
+**vec-rank 커버리지 예외**를 구현·검증·채택했다. 핵심 결과만 요약:
+
+| 단계 | 내용 | 커밋 |
+|---|---|---|
+| Run I (오프라인 시뮬) | vec_rank≤2 ∧ overlap≥1이면 어휘 게이트 탈락 무시 → Pool Recall 82.2→90.0% (hit@5 순손실 -4.4%p 경고) | `5ce52a8` |
+| Run J (라이브 JEV 실호출) | **이탈 0건** — JEV rerank가 예상 이탈 전부 흡수. Acc@1 75.6→**83.3%**, hit@5 81.1→**88.9%**, 개선 7/후퇴 0 → **채택 확정** | `4d0f65a` |
+| 합성 벤치 회귀 스윕 | JEV 호출 0회 오프라인: kodialog/kosgd 회복 10건, 이탈 0건 — 합성 벤치도 회귀 없음 | `16df608` |
+
+운영 지표 최종 상태 (n=90 gold + 무답 10, JEV 실호출): Pool Recall **90.0%**, Acc@1 **83.3%**,
+hit@5 **88.9%**, MRR 0.946, p95 336ms. 상세: `experiments/operational-golden/GOLDEN_RUN3_GATE_EXCEPTION.md`.
+
+**교훈**: 오프라인 게이트 단독 지표는 JEV lift 단계를 반영하지 못해 과소평가된다 — 게이트 변형
+판정은 반드시 JEV 실호출 포함 최종 지표로 해야 한다 (Run I의 hit@5 경고가 라이브에서 기각됨).
