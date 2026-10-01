@@ -86,6 +86,8 @@ IMP_MIN_IMPORTANCE = 0.85  # 이 이상의 importance만 보조 lane에 포함
 LANE_GRAPH_BUDGET = 10     # graph/fact lane (관계·속성 기반 회수)
 RRF_K = 30
 POOL_BUDGET = 40          # candidates fed to Jev choice
+# JEV state excerpt cap (chars). Env override: JEV_EXCERPT_LIMIT. Default 120.
+EXCERPT_LIMIT = int(os.environ.get("JEV_EXCERPT_LIMIT", "120"))
 POOL_DEFAULT_TOP = 40     # pool-alone fallback returns this many
 JEV_CHOICE_TIMEOUT_S = 5.0   # hard cap; MemoryManager also bounds external prefetch
 JEV_ENV_KEY = "JEV_RERANK"
@@ -447,7 +449,7 @@ def build_state(query: str, candidates: List[dict]) -> dict:
             "scope": c.get("scope") or "",
             "importance": float(c.get("importance") or 0.0),
             "source": c.get("source") or "",
-            "excerpt": _excerpt(c.get("content") or ""),
+            "excerpt": _excerpt(c.get("content") or "", EXCERPT_LIMIT),
         })
     return {"question": query, "candidates": headers}
 
