@@ -1,8 +1,66 @@
-# 커버리지 예외 규칙 실험 보고 (Run I) — 2026-10-01
+# 커버리지 예외 규칙 실험 보고 (Run I 시뮬레이션 + Run J 라이브 채택) — 2026-10-01
 
 > Run G/H에서 확인한 E_factual_misc 약점(짧은 구어체 질문 × 어휘 게이트 커버리지
-> 0.30 미달)의 정밀 해소 시도. 라이브 DB에서 90 gold 쿼리 전수 오프라인 시뮬레이션
-> (JEV 호출 없음, 로컬 RRF+게이트만 재현).
+> 0.30 미달)의 정밀 해소 시도. Run I: 라이브 DB에서 90 gold 쿼리 전수 오프라인 시뮬레이션
+> (JEV 호출 없음, 로컬 RRF+게이트만 재현). Run J: 예외 적용 라이브 데몬 + JEV 실호출 재판정.
+
+---
+
+# Run J 최종 결과 — vec≤2 예외 **채택 확정** (라이브 JEV 실호출)
+
+## 최종 지표 (n=90 gold + 10 no-answer)
+
+| 지표 | Run H (baseline) | **Run J (vec≤2 예외)** | 변화 |
+|---|---|---|---|
+| Pool Recall | 82.2% | **90.0%** | +7.8%p |
+| **Acc@1** | 75.6% | **83.3%** | **+7.7%p** |
+| **hit@5** | 81.1% | **88.9%** | **+7.8%p** |
+| MRR | 0.941 | 0.946 | +0.005 |
+| p50/p95 | 295/365ms | 268/336ms | 개선 |
+
+**쿼리별 변화: 개선 7건 / 후퇴 0건** — 시뮬레이션이 예상한 hit5 이탈 13건은
+**1건도 발생하지 않았다.** JEV rerank가 이탈 예상분을 전부 흡수 (예측대로).
+
+## 회복 7건 (전부 final_rank 1위)
+
+| 쿼리 (축) | baseline | Run J |
+|---|---|---|
+| commit governance 규칙이 뭐지? (para) | 풀 미달 | 1 |
+| DTO 분리 어디까지 하면 돼? (para) | 풀 미달 | 1 |
+| codex config.toml 훅 어떻게 설정했지? (para) | 풀 미달 | 1 |
+| 코드 설명과 구조 라벨 언어 규칙? (lit) | 풀 미달 | 1 |
+| hermes update 중간에 꺼지면 어떻게 해? (lit) | 풀 미달 | 1 |
+| camelai-serial-proxy 기능 정리해줘 (para) | 풀 미달 | 1 |
+| supermemory 왜 안 쓰는 거야? (lit) | 풀 미달 | 1 |
+
+전부 E_factual/C_preference의 짧은 구어 질문 — 예외 규칙이 목표 충돌만 정밀 해소.
+
+## 구현 (gateway/j1_pipeline.py)
+
+- `VEC_RANK_EXEMPT = int(os.environ.get("JEV_VEC_RANK_EXEMPT", "2"))` —
+  env 오버라이드 가능, 0이면 예외 비활성
+- `build_lane_pool`이 RRF 후 각 행에 `_lane_ranks`(fts/vec/imp/graph rank) 부착
+- `_filter_and_rank`의 dist/coverage 탈락 분기에서
+  **vec_rank ≤ 2 ∧ overlap ≥ 1**이면 통과 (vec lane이 강하게 확신하는 정답 보호)
+- 데몬 재기동 + 라이브 검증 완료 (status: ready, a8m warmup OK)
+
+## 무답 lift 변화 (수용 가능)
+
+lift=True 무답 4→5건 (불고기·러시아어 신규). JEV가 무관 후보를 1위로 올려도
+실제 답변 생성 계층에서 걸러지는 영역이며, 정답 +7.7%p와의 교환으로 수용.
+
+## 결정
+
+**vec≤2 커버리지 예외 채택 확정.** 근거: 라이브 실측 개선 7/후퇴 0, hit@5 88.9%,
+지연 개선. 잔여: 합성 벤치(kodialog/kosgd) 회귀 스윕은 다음 세션 권장 (운영 도메인과
+kodialog 5-way는 태스크가 달라 영향 가능성 낮음).
+
+## 원본
+- `golden_eval_runJ.json` (Run J 실측) / `golden_eval_runH_baseline.json` (비교 기준)
+
+---
+
+# 이하 Run I 오프라인 시뮬레이션 기록
 
 ## 1. 실험 설계
 
