@@ -214,7 +214,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
   - **bekko-a25m**: gold MRR 0.501 + 배치 2+ OOM(4.29GB) + G5 드리프트 93% → 탈락 확정.
   - **granite**: 정적 quint8 배치 4에서도 50.8GB 버퍼 OOM → 운영 불가 확정.
 - **최종 판정: bekko-a8m 채택** (다국어 배포 조건 + RAM + 지연 종합). 하이브리드 vec_weight 0.3 권장.
-- 남은 일: **S4 마이그레이션**(섀도 테이블 + 백그라운드 재임베딩 + 아토믹 스왑) 설계·실행.
+- 남은 일: **S4 마이그레이션**(섀도 테이블 + 백그라운드 재임베딩 + 아토믹 스왑) 설계·실행 → 설계 문서 `docs/design/s4-embedding-migration-plan.md` 작성 완료 (2026-10-01). **업데이트 내성 4항목**(a8m 등록 재적용 스크립트 / embedding_dim 명시 고정 / model 태그·분포 검증 / 업데이트 체크리스트 편입) 포함, 실행 전 사용자 승인 대기.
 
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
