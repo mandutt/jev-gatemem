@@ -32,7 +32,7 @@
 
 **교훈**: 데몬은 warmup 실패 시 **에러 로그 1줄 + fallback 모델로 계속 서빙**한다. 운영 가드가 `memory_embeddings.model` 분포만 보면 늦음. 라이브 쓰기 1건의 모델 태그가 유일한 실측 증거.
 
-**권고 (P1, 미착수)**: 데몬 `/v1/status`에 `embedding_model` 필드 노출 + 기동 가드가 warmup 실패 시 fallback 대신 **기동 중단(fail-fast)** 전환.
+**권고 (P1) → 구현 완료 (2026-10-01)**: 데몬 `/v1/status`에 `embedding: {model, dim, warmup_ok, warmup_error}` 필드 노출 + 기동 가드가 warmup 실패 시 fallback 대신 **기동 중단(fail-fast)** — 기본 exit 9, `JEV_MEM_EMBED_WARMUP=warn`으로 경고 전환. 검증: `experiments/verify_p1_embed_status.py` (11/11 PASS). 라이브 반영 확인: `/v1/status` → `embedding.model = bench/bekko-a8m, warmup_ok=true`.
 
 ## 사건 3 (경미): sqlite_vec 미로드 쿼리 실패
 

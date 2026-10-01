@@ -263,6 +263,10 @@ class CoreServer:
             reasons.append("pending_gate_backlog")
         if spool_files > 0:
             reasons.append("spool_backlog")
+        # P1 (S4): embedding warmup failure — reachable only in warn mode
+        # (JEV_MEM_EMBED_WARMUP=warn); default mode refuses to start.
+        if not self.ctx.embedding.get("warmup_ok"):
+            reasons.append("embedding_warmup_failed")
         return web.json_response({
             "status": "ready",
             "degraded": bool(reasons),
@@ -273,6 +277,7 @@ class CoreServer:
             "protocol": PROTOCOL,
             "db": {"path": str(self.cfg.mnemosyne_db), "writable": True,
                    "synced_folder_warning": self.ctx.synced_folder_warning},
+            "embedding": dict(self.ctx.embedding),
             "jev": {"circuit": self.ctx.breaker.state,
                     "consecutive_failures": self.ctx.breaker.consecutive},
             "queues": {"writer_depth": self.ctx.writer.depth, "pending_gate": pending,

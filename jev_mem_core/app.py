@@ -63,6 +63,14 @@ class CoreContext:
         self.last_activity_at = time.monotonic()
         # F11: consecutive fail-open KEEP verdicts (degraded signal)
         self.fail_open_streak = 0
+        # P1 (S4 2026-10-01): embedding model state — set at startup warmup,
+        # exposed via /v1/status so a silent MiniLM fallback is impossible.
+        self.embedding: Dict[str, Any] = {
+            "model": None,         # actual loaded model name (alias or raw)
+            "dim": None,           # embedding dimension (env-aware)
+            "warmup_ok": False,    # startup warmup succeeded
+            "warmup_error": None,  # str(e) when warmup failed / unavailable
+        }
         self.stats: Dict[str, Any] = {
             "jev_calls": 0, "jev_failures": 0,
             "turns": {"stored": 0, "skipped": 0, "pending_gate": 0, "failed": 0},
@@ -239,7 +247,12 @@ async def _op_loop(ctx: CoreContext, pipeline) -> None:
     check_iv = cfg.checkpoint_idle_interval_s
     backup_iv = cfg.backup_interval_h * 3600
     while True:
-        await asyncio.sleep(60)  # 1 min tick — cheap, keeps loops aligned
+        # 1 min tick — cheap, keeps loops aligned. Watchdog measures the
+        # OVERRUN of this sleep (true event-loop block), not the tick
+        # interval itself: a sleep(60) that returns on time logs nothing,
+        # while a loop blocked for >5s past the wakeup is a real stall.
+        tick_start = time.monotonic()
+        await asyncio.sleep(60)
         now = time.monotonic()
 
         # 1) pending_gate re-judge (only while circuit closed) — B §8.2
@@ -291,8 +304,8 @@ async def _op_loop(ctx: CoreContext, pipeline) -> None:
             except Exception:
                 log.exception("spool scan error")
 
-        # 5) watchdog: event-loop lag > 5s (B §14)
-        lag = time.monotonic() - ctx._last_tick
+        # 5) watchdog: event-loop lag > 5s (B §14) — overrun of the 60s tick
+        lag = time.monotonic() - tick_start - 60.0
         if lag > 5.0:
             log.warning("event loop lag %.1fs (watchdog)", lag)
         ctx._last_tick = time.monotonic()
@@ -422,7 +435,17 @@ async def _serve(cfg: Config) -> None:
 
     # writer thread + warmup + recovery BEFORE accepting traffic
     ctx.writer.start(timeout=60)
-    await asyncio.to_thread(_warmup_embedding, cfg)
+    await asyncio.to_thread(_warmup_embedding, ctx, cfg)
+    # P1 (S4): a failed embedding warmup means the daemon would silently
+    # serve the fastembed default (MiniLM) — refuse to start unless
+    # JEV_MEM_EMBED_WARMUP=warn explicitly demotes it to a warning.
+    if not ctx.embedding.get("warmup_ok") and os.environ.get("JEV_MEM_EMBED_WARMUP", "fail") != "warn":
+        if ctx.embedding.get("warmup_error"):
+            log.error("embedding warmup failed: %s — refusing to start "
+                      "(JEV_MEM_EMBED_WARMUP=warn to demote to warning)",
+                      ctx.embedding["warmup_error"])
+            ctx.writer.stop()
+            sys.exit(9)
 
     # F8: record/verify DB identity in core_state.db core_meta (writer thread)
     try:
@@ -534,14 +557,46 @@ async def _serve(cfg: Config) -> None:
             log.info("bye")
 
 
-def _warmup_embedding(cfg: Config) -> None:
-    """Load the embedding model once (v1.1 D14: process-global)."""
+def _warmup_embedding(ctx: "CoreContext", cfg: Config) -> None:
+    """Load the embedding model once (v1.1 D14: process-global).
+
+    Records the outcome on ``ctx.embedding`` so /v1/status can expose the
+    ACTUAL model in use. Without this, a failed warmup silently falls back to
+    the fastembed default (MiniLM) — the S4 MiniLM-1-row incident — and the
+    only detection was a post-hoc DB model-tag check.
+    """
+    emb = ctx.embedding
+    import mnemosyne.core.embeddings as _emb_mod
+
     try:
+        # env-aware dim (MNEMOSYNE_EMBEDDING_DIM or catalog fallback)
+        try:
+            dim = _emb_mod._get_embedding_dim(_emb_mod._DEFAULT_MODEL)
+        except Exception:
+            dim = None
+        emb["dim"] = dim
+        emb["model"] = _emb_mod._DEFAULT_MODEL
+
         import mnemosyne.core.beam as beam_mod
         if not beam_mod._embeddings.available():
+            # disabled (MNEMOSYNE_NO_EMBEDDINGS etc.) or API-mode — not a failure
+            emb["warmup_error"] = "disabled or api-mode (MNEMOSYNE_*_EMBEDDINGS_OFF/API)"
+            emb["warmup_ok"] = False
             return
         beam_mod._embeddings.embed(["warmup"])
+        # success: capture the model the embedding object actually resolved,
+        # including the fastembed alias if it loaded through one
+        try:
+            m = _emb_mod._get_model()
+            if m is not None and hasattr(m, "model_name"):
+                emb["model"] = m.model_name
+        except Exception:
+            pass  # status still shows _DEFAULT_MODEL
+        emb["warmup_ok"] = True
+        emb["warmup_error"] = None
     except Exception as e:
+        emb["warmup_ok"] = False
+        emb["warmup_error"] = str(e)[:300]
         log.warning("embedding warmup failed: %s", e)
 
 

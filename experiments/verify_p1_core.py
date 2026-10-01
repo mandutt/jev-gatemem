@@ -45,6 +45,10 @@ env["JEV_MEM_PORT"] = str(PORT)
 env["JEV_MEM_DATA_DIR"] = str(DATA)
 env["JEV_MEM_DB"] = str(DB)
 env["JEV_WRITE_GATE"] = "0"  # gate off for determinism in golden test (JEV skip)
+# P1 (2026-10-01): embedding warmup fail-fast guard — this golden test does
+# not exercise embeddings (JEV skipped, DB-only), so demote warmup failure
+# to a warning instead of letting the new default fail-fast exit(9).
+env["JEV_MEM_EMBED_WARMUP"] = "warn"
 
 
 def wait_ready(timeout=25):
