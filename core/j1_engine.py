@@ -163,7 +163,7 @@ def _run(beam, query: str, *, pipeline, client, top_k: int, timeout) -> str:
     pool = build_lane_pool(recall_raw, query)
     if not pool:
         return ""
-    filtered = _filter_and_rank(pool, query)
+    filtered = _filter_and_rank(pool, query, min_distinctive=1, min_coverage=0.0)
     if not filtered:
         return ""
 
