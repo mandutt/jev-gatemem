@@ -218,6 +218,36 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - 남은 일: ~~S4 마이그레이션~~ → **완료 (2026-10-01 라이브 컷오버)**: `docs/design/s4-live-cutover-report-20261001.md` (commit `c19e2ea`). 최종 상태: `bench/bekko-a8m` 100% 단일 모델 (1,153행, orphan 0, integrity ok). 라이브 reindex 37.3s / fixup 54.7s → maintenance window 2분 이내 확정. 사건: 데몬 warmup 실패 시 fallback MiniLM 조용히 서빙 → 1행 오염 발견·복구. 모델 고정: jev-mem venv `sitecustomize.py` (커스텀 등록+clamp512+cache_dir 강제 주입) + 데몬 env `MNEMOSYNE_EMBEDDING_MODEL`/`MNEMOSYNE_FASTEMBED_CACHE_DIR` 필수. `bench/bekko-a8m`은 fastembed 커스텀 별칭 — 원본 `hotchpotch/bekko-embedding-v1-a8m` (별칭↔원본 매핑은 sitecustomize.py, DB 이관 시 함께 가야 함). 백업 `s4-pre-migration-20261001-154527.db` 2026-10-08 검증 후 삭제 권고.
 - **~~P1 잔여~~ → 완료 (2026-10-01, commit 예정)**: `/v1/status`에 `embedding: {model, dim, warmup_ok, warmup_error}` 노출 + warmup 실패 시 **기본 fail-fast(exit 9)** (`JEV_MEM_EMBED_WARMUP=warn`으로 경고 전환 가능) + degraded_reasons `embedding_warmup_failed` + watchdog 가짜 lag 경고 수정(틱 간격이 아닌 sleep 초과분 측정). **sitecustomize.py가 `MNEMOSYNE_EMBEDDING_MODEL`/`MNEMOSYNE_FASTEMBED_CACHE_DIR`을 무조건 강제** — 부모 env(raw 명) 상속으로 인한 warmup 실패 재발 구조적 차단. 검증: `experiments/verify_p1_embed_status.py` 11/11 + `verify_watchdog_regression.py` PASS + `verify_p1_core.py` ALL PASS.
 
+**★ PerfectRecall 대비 검증 + 운영 골든셋 최적화 사이클 완료 (2026-10-01) — R3~R5 + Run G~N**
+
+> PR(`arslanr-com/perfectrecall`) 대비 격차 규명(R3~R5, 외부 AI 3종 3회 검토)과
+> 운영 골든셋(45 gold × 2축 = 90쿼리 + 무답 10) 기반 파이프라인 최적화가 **모두 종결**된 상태.
+> SoT: `docs/design/perfectrecall-review-r5-final-20261001.md` (부록 1·2 포함, `15fb90a`).
+
+| 항목 | 결과 | 커밋 |
+|---|---|---|
+| R5 격차 규명 | 0.556 vs 0.806 격차 = **평가 조건 차이**(55-way vs 5-way) — 시스템 품질 차이 아님 | `b9ced71` |
+| P0 게이트 완화 | 어휘 게이트 `(2, 0.30)`→`(1, 0.0)` (strict 게이트가 vec 기반 정답 38% 사살) | `c3aee3a` |
+| union vs RRF | 180쿼리 전수 실측 **정확한 동률** (0.5556 vs 0.5556) → RRF 유지 | `f5d7441` |
+| **vec-rank 커버리지 예외** | `VEC_RANK_EXEMPT=2` (vec_rank≤2 ∧ overlap≥1 → 게이트 탈락 무시). 라이브: Pool Recall 82.2→**90.0%**, Acc@1 75.6→**83.3%**, hit@5 81.1→**88.9%**, 이탈 0 → **운영 반영 완료** | `ac2c608` |
+| Run K excerpt 200 | Acc@1 84.4% (+1.1%p) but JEV 토큰 **+50%** → **기각** (120 유지, `JEV_EXCERPT_LIMIT` env 추기 스위치 유지) | `a0bd5f9` |
+| Run L PR full-scan | 운영 골든셋에서 Acc@1 **52.2% vs 83.3%** — 군집 코퍼스에서 rank2 밀림(31%) → **기각** | `275cd03` |
+| Run M 탈락 해부 | 탈락 9건 = 완전 의역 3(overlap=0) + 깊은 vec 순위 5 + 레인 부재 1. 예외 ≤20 확장도 회복 4/9 → **vec-rank 예외 레버 소진** | `159908d` |
+| Run N 어간 정규화 | 회복 **0건**, 90.0→82.2% 순손실 — **음절 단위 토큰화가 이미 pseudo-stemming 역할** → **기각** | `ca69db4` |
+
+- **최종 확정**: Pool Recall 90.0%는 현 구조의 사실상 상한. 커버리지 변수는 게이트 자체뿐
+  (`min_coverage`/`min_distinctive`/vec-rank 예외) — POOL_BUDGET(40)/LANE_VEC_BUDGET(60)은
+  컷오프라 커버리지와 무관(Run M에서 "게이트 통과 후 순위 밀림" 0건 확인).
+- **운영 지표 최종** (n=90 gold + 무답 10, JEV 실호출): Pool Recall **90.0%**, Acc@1 **83.3%**,
+  hit@5 **88.9%**, MRR 0.946, p95 336ms.
+- **운영 최적화 사이클 종결**: 남은 개선 경로는 임베딩 모델 교체(의역 강화)뿐이며,
+  X1 실측상 a8m 운영 도메인 유효성 확인됨 → 교체 근거 현재 없음.
+- Run 상세: `experiments/operational-golden/GOLDEN_RUN{1,2,3_GATE_EXCEPTION,K,L,M,N}*.md` +
+  `FREELEVER_REPORT.md`. 평가 스크립트: `scratch/perfectrecall/` (골든셋 `golden_final_v2.json`).
+- **pitfall**: 운영 전체 코퍼스 테스트 시 `jev_recall.visible_memories`는 `cross_session=False`
+  기본 → `_filters(cross_session=True)` 필수. `build_lane_pool`의 recall_raw는 `(kind, arg, k)`
+  3인자이며 **"get" hydration 핸들러 누락 시 pool이 조용히 0이 됨**.
+
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
 > 2026-09-28 구현 완료 — **Hermes 재시작(새 세션) 시 G-AS가 활성화됨**. 아래 순서로 확인:
