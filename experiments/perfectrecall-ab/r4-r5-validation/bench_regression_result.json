@@ -1,0 +1,1832 @@
+{
+ "baseline": {
+  "use_exemption": false,
+  "n": 180,
+  "hits": {
+   "1": 82,
+   "5": 85,
+   "10": 88,
+   "40": 89
+  },
+  "pool_avg": 23.4,
+  "avg_rank": 1.36,
+  "elapsed_s": 9.7,
+  "per_item": [
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": 1,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 11
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 10
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 30
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 27
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 34
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 34
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 34
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 37
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 20
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 25
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 28
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 62
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 2
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 2
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 3
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": 11,
+    "pool": 12
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 11
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 13
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 29
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": 7,
+    "pool": 19
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": 4,
+    "pool": 14
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 2
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 0
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 16
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 13
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 9
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 2
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 3
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 13
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 11
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 11
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 18
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 13
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 13
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 15
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 17
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 19
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 20
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 23
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 25
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 14
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 23
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 26
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 24
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 13
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 14
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 24
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 7
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 20
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 2,
+    "pool": 18
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 16
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 32
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 19
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 47
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 64
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 30
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 6,
+    "pool": 36
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 24
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 18
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 26
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 24
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 21
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 21
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 34
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 32
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 3,
+    "pool": 36
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 26
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 40
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 25
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 26
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 24
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 24
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 25
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 6,
+    "pool": 29
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 30
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 17
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 27
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 18
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 15
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 19
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 16
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 10
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 9
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 5
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 33
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 20
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 35
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 12
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 7
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 17
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 19
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 3
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 27
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 32
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 3
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 22
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 17
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 17
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 31
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 24
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 1
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 35
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 13
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 43
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 39
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 48
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 43
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 44
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 45
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 49
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 51
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 54
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 55
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 48
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 44
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 58
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 45
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 56
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 51
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 44
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 50
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 45
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 37
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 50
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 43
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 57
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 42
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 48
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 50
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 45
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 44
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 35
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 43
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 42
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 48
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 47
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 51
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 42
+   }
+  ]
+ },
+ "exception": {
+  "use_exemption": true,
+  "n": 180,
+  "hits": {
+   "1": 84,
+   "5": 95,
+   "10": 98,
+   "40": 99
+  },
+  "pool_avg": 24.2,
+  "avg_rank": 1.44,
+  "elapsed_s": 7.3,
+  "per_item": [
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": 1,
+    "pool": 5
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 11
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 10
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 30
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 27
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 35
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 36
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 35
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 38
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 21
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 9
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 27
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 29
+   },
+   {
+    "dataset": "kodialog/dailydialog",
+    "rank": null,
+    "pool": 62
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": 13,
+    "pool": 14
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": 2,
+    "pool": 12
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 13
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 29
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": 7,
+    "pool": 19
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": 4,
+    "pool": 14
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 3
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/empathetic_dialogues",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 2
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 18
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 15
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": 2,
+    "pool": 11
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 3
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 4
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 13
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 9
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": 2,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 9
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": 3,
+    "pool": 12
+   },
+   {
+    "dataset": "kodialog/personachat",
+    "rank": null,
+    "pool": 11
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 19
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 14
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 14
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 17
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 19
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 21
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 22
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 24
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 25
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 14
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 10
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 9
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kodialog/socialdial",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 23
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 27
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 25
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 13
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 14
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 25
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 8
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 20
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 2,
+    "pool": 18
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 16
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 32
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 20
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 47
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 64
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 30
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 6,
+    "pool": 36
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 25
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 18
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 26
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 25
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 22
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 22
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 35
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 32
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 3,
+    "pool": 36
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 27
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 40
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 26
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 27
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 24
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 25
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 25
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 6,
+    "pool": 30
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 31
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 18
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 27
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 18
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 15
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 20
+   },
+   {
+    "dataset": "koalpaca",
+    "rank": 1,
+    "pool": 17
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 9
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 2,
+    "pool": 12
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 9
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 11
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 6
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 10
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 9
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 9
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 35
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 22
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 37
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 14
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 2,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 10
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 19
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 21
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 8
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 10
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 3,
+    "pool": 29
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 9
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 34
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 5
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 24
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 18
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 19
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 1,
+    "pool": 33
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 7
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 25
+   },
+   {
+    "dataset": "kosgd",
+    "rank": 2,
+    "pool": 9
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 3
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 6
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 37
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 15
+   },
+   {
+    "dataset": "kosgd",
+    "rank": null,
+    "pool": 10
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 43
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 39
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 48
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 43
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 44
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 45
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 49
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 51
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 54
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 55
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 48
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 44
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 58
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 45
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 56
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 51
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 44
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 50
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 45
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 37
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 50
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 43
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 57
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 42
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 48
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 50
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 45
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 44
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 35
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 43
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 42
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 48
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 47
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 46
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 51
+   },
+   {
+    "dataset": "machinereading",
+    "rank": 1,
+    "pool": 42
+   }
+  ]
+ }
+}
