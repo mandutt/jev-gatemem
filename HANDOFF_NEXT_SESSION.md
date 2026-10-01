@@ -206,6 +206,16 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - [x] **★ Hermes 종속성 독립화 (P1 일부)** — `core/j1_engine.py` 분리 완료 (hermes_j1은 얇은 어댑터로), smoke 7/7 + verify_core_j1_engine.py live DB PASS, 커밋 `140fa46`
 - [x] **★ 멀티 에이전트 전환 (Core-as-Writer) — 2026-09-29 P5 완료 (전체 완료)** — `docs/design/p1-core-server-report.md` (P1) + `docs/design/p2-spool-breaker-report.md` (P2) + `docs/design/p3-pi-extension-report.md` (P3) + `docs/design/p4-codex-opencode-report.md` (P4) + `docs/design/p5-hermes-rpc-report.md` (P5). **P5 완료**: Hermes rpc 전환(JevRpcProvider 기본, embedded 롤백), mnemosyne_* 툴 `/v1/tools` 프록시(단일 writer 직렬화), core DB → Hermes 실 DB 전환, 세션 접두사 `hermes_<sid>` 규칙 유지. 검증: §16.2 동시성 7/7 (1760 요청, 0 BUSY, p95 508ms), RPC 8/8+롤백 3/3, 전 회귀(smoke/P1/P2 chaos/redact) ALL, **재시작 후 라이브 실측** (activated, prefetch 200, turns.stored→실DB, tools 200, 행수 967→969). 커밋 `d2f6a05`. 잔여: ~~core 데몬 부팅 자동화~~ → **해소: on-demand 기동 확정** (client auto-start 수정 `2c1845e`+`46e24cc` — 첫 에이전트 요청 시 pythonw 무창 기동, 부팅 상주 불필요; 2026-09-29 사용자 확정), `/v1/tools` remember류 세션 스코프 확인
 
+**★ 임베딩 모델 교체 벤치마크 S3 완료 + bekko-a8m 채택 확정 (2026-10-01)**
+- 배경: baseline(mmBERT? → E5 계열) RAM 948MB 과다 → 경량 후보 `koen`(한·영 프루닝), `bekko-a8m`(100+ 언어, 7.7M), `bekko-a25m`(24.9M), granite(fp16 동적/정적 quint8) 전수 평가.
+- 실측 요약 (`docs/design/embed-benchmark-final-report.md`, 스크립트/결과: `%LOCALAPPDATA%/jev-mem/bench/run-20260930/cand/`):
+  - **bekko-a8m**: 내부 gold-50 MRR 0.772(1위), RAM commit 617MB(-35%), p95 1.5ms, X2 다국어 vec 5/5 통과. 조건: 배치 4+클램프 512 필수.
+  - **koen**: 외부 KoDialogBench(X1) Acc@1 0.622로 1위이나, **CJK(일본어·중국어) vec 붕괴(X2 0/1)** — 한·영 전용 프루닝의 직접 결과. 하이브리드(BM25 vw=0.3)로 이 조건에서 복구되지만 대규모 코퍼스·의미적 유추 질의에선 보장 없음.
+  - **bekko-a25m**: gold MRR 0.501 + 배치 2+ OOM(4.29GB) + G5 드리프트 93% → 탈락 확정.
+  - **granite**: 정적 quint8 배치 4에서도 50.8GB 버퍼 OOM → 운영 불가 확정.
+- **최종 판정: bekko-a8m 채택** (다국어 배포 조건 + RAM + 지연 종합). 하이브리드 vec_weight 0.3 권장.
+- 남은 일: **S4 마이그레이션**(섀도 테이블 + 백그라운드 재임베딩 + 아토믹 스왑) 설계·실행.
+
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
 > 2026-09-28 구현 완료 — **Hermes 재시작(새 세션) 시 G-AS가 활성화됨**. 아래 순서로 확인:
