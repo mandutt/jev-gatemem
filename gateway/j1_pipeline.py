@@ -77,6 +77,10 @@ def _jtrace(event: str, fields: dict) -> None:
 
 LANE_FTS_BUDGET = 60
 LANE_VEC_BUDGET = 60
+# vec-rank coverage exemption threshold (Run I/J: gate-missed golds are vec
+# rank 1-2; exempting them recovers short colloquial queries). Env-overridable
+# for ablation; set 0 to disable the exemption.
+VEC_RANK_EXEMPT = int(os.environ.get("JEV_VEC_RANK_EXEMPT", "2"))
 LANE_IMP_BUDGET = 8        # importance 보조 lane (CJK 검색 한계 보완)
 IMP_MIN_IMPORTANCE = 0.85  # 이 이상의 importance만 보조 lane에 포함
 LANE_GRAPH_BUDGET = 10     # graph/fact lane (관계·속성 기반 회수)
@@ -152,9 +156,19 @@ def _filter_and_rank(rows: List[dict], query: str,
             continue
         overlap = q_tokens & _tokenize(content)
         if len(overlap) < min_distinctive:
-            continue
+            # vec-rank exemption: the embedding lane's top hits pass even with
+            # low lexical overlap — short colloquial queries ("provider가 뭐지?")
+            # systematically fail cov>=0.30 despite the answer being vec rank 1-2.
+            # Run I sim: recovers 7 gate-missed golds (5 at pool rank 1).
+            lane_ranks = r.get("_lane_ranks") or {}
+            vr = lane_ranks.get("vec_rank")
+            if not (vr is not None and vr <= VEC_RANK_EXEMPT and len(overlap) >= 1):
+                continue
         if len(overlap) / len(q_tokens) < min_coverage:
-            continue
+            lane_ranks = r.get("_lane_ranks") or {}
+            vr = lane_ranks.get("vec_rank")
+            if not (vr is not None and vr <= VEC_RANK_EXEMPT and len(overlap) >= 1):
+                continue
         source = str(r.get("source") or "").lower()
         quality = _SOURCE_QUALITY.get(source, 1.0)
         if source in _RAW_SOURCES:
@@ -379,7 +393,16 @@ def build_lane_pool(recall_raw: Callable[[str, int], List[dict]], query: str) ->
         "graph": sum(1 for r in ranks.values() if "graph_rank" in r),
         "pool": len(full),
     })
-    return [row for row, _ in ranked]
+    out = []
+    for row, _ in ranked:
+        lane_ranks = ranks.get(row["id"], {})
+        if lane_ranks:
+            # Attach lane ranks so the gate can apply the vec-rank exemption
+            # (semantic-signal pass for vec top hits with low lexical overlap).
+            row = dict(row)
+            row["_lane_ranks"] = lane_ranks
+        out.append(row)
+    return out
 
 
 def _jev_choice(client, state: dict, labels: list, timeout: float) -> Optional[int]:
