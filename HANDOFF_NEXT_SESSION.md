@@ -263,7 +263,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - 신규 기록부: `jev_mem_core/rejudge_markers.py` 공용 헬퍼(`apply_rejudge_patch`) — gate 불변·mutation 후 직렬화·metadata_json만 UPDATE. `recover.py`·`rejudge_v2.py` 이식. `server.py` pending predicate 공용 상수화
 - 레거시 tag-format writer(`403_apply.py`·`p1_apply.py`) → `tools/legacy/` 이동 + Exit Guard
 - 검증: markers_verify 22/22 · backfill post-verify PASS · recall regress(레거시 0건 포함) · p3a 20/20 · syncpath 7/7 · 라이브 `/v1/status` skip_staged=24 pending=0
-- **잔여(별도 승인 후)**: `rejudge_verdicts` P1 64건 백필(감사 SoT 정합 — recall/동작 무영향), 상세: `docs/review/2026-10-03_failopen_마커포맷_통일_완료.md`
+- **잔여(별도 승인 후)**: `rejudge_verdicts` P1 64건 백필(감사 SoT 정합 — recall/동작 무영향) → **완료 (2026-10-03)**: `tools/jed_failopen_verdicts_backfill.py` — dry-run JSON에서 verdict/reason/latency_ms + 판정 시각(`run_at`)으로 64건 INSERT(사전검증 0 중복·0 불일치, 사후검증 96건 전수 대조 0 불일치, 멱등성 가드 확인). 상세: `docs/review/2026-10-03_failopen_마커포맷_통일_완료.md`
 
 - **최종 확정**: Pool Recall 90.0%는 현 구조의 사실상 상한. 커버리지 변수는 게이트 자체뿐
   (`min_coverage`/`min_distinctive`/vec-rank 예외) — POOL_BUDGET(40)/LANE_VEC_BUDGET(60)은
