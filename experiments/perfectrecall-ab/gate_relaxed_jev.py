@@ -68,7 +68,7 @@ for idx, it in enumerate(items):
     ans = cands[it['answer']]
     pool = j1p.build_lane_pool(recall_raw, q)
     filt = j1p._filter_and_rank(pool, q, min_distinctive=1, min_coverage=0.0) if pool else []
-    rows = j1p.jev_rerank(query=q, pool=filt, client=client, call_jev=True, timeout=8.0)
+    rows, _ = j1p.jev_rerank(query=q, pool=filt, client=client, call_jev=True, timeout=8.0)
     contents = [r.get('content', '') for r in rows]
     covered = ans in contents
     rank = (contents.index(ans) + 1) if covered else len(contents) + 1

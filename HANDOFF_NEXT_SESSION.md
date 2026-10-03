@@ -234,6 +234,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 | Run L PR full-scan | 운영 골든셋에서 Acc@1 **52.2% vs 83.3%** — 군집 코퍼스에서 rank2 밀림(31%) → **기각** | `275cd03` |
 | Run M 탈락 해부 | 탈락 9건 = 완전 의역 3(overlap=0) + 깊은 vec 순위 5 + 레인 부재 1. 예외 ≤20 확장도 회복 4/9 → **vec-rank 예외 레버 소진** | `159908d` |
 | Run N 어간 정규화 | 회복 **0건**, 90.0→82.2% 순손실 — **음절 단위 토큰화가 이미 pseudo-stemming 역할** → **기각** | `ca69db4` |
+| **Run O abstain** | **무답 오주입 10/10 → 0/10 (완전 해결), gold 59/59 보존, wrong→none 17/17 정화, 토큰 +1.0% → 채택·라이브 적용** (`JEV_ABSTAIN`, abstain 라벨 c<N>, abstained=True → 빈 context) | `(커밋 예정)` |
 
 - **최종 확정**: Pool Recall 90.0%는 현 구조의 사실상 상한. 커버리지 변수는 게이트 자체뿐
   (`min_coverage`/`min_distinctive`/vec-rank 예외) — POOL_BUDGET(40)/LANE_VEC_BUDGET(60)은

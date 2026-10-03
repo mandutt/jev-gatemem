@@ -167,7 +167,7 @@ def _run(beam, query: str, *, pipeline, client, top_k: int, timeout) -> str:
     if not filtered:
         return ""
 
-    ranked = jev_rerank(
+    ranked, _abstained = jev_rerank(
         query=query,
         pool=filtered[:pool_top],
         client=client,

@@ -108,7 +108,7 @@ if key:
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
     )
     t0 = time.perf_counter()
-    ranked = j1.jev_rerank(
+    ranked, _ = j1.jev_rerank(
         query=QUERY,
         pool=top,
         client=client,

@@ -98,13 +98,19 @@ class MemoryGateway:
                 # JEV_RERANK=0 (kill switch): pool-only, identical to harness
                 return self._rows_to_candidates(filtered)
             client = self._typesafe_client()
-            ranked = j1.jev_rerank(
+            ranked, abstained = j1.jev_rerank(
                 query=query,
                 pool=filtered,
                 client=client,
                 call_jev=client is not None,
                 timeout=self.timeout,
             )
+            if abstained:
+                # Run O: Jev says no candidate is usable evidence. Signal
+                # "no memory" downstream by returning an empty candidate list
+                # (prefetch will render an empty context block), mirroring the
+                # pool-empty shape. Nothing is lifted.
+                return []
             return self._rows_to_candidates(ranked)
         except Exception:
             # any pipeline failure -> pool-only ranking (spec §19), no raise

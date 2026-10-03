@@ -71,8 +71,8 @@ def main():
                 ans = cands[it['answer']]
                 contents = [r.get('content','') for r in rows]
                 print(f'  [진단 {idx}] {it["dataset"]} pool={len(rows)} ans_in={ans in contents}', flush=True)
-            rows = j1p.jev_rerank(query=q, pool=rows, client=client,
-                                  call_jev=True, timeout=8.0)
+            rows, _ = j1p.jev_rerank(query=q, pool=rows, client=client,
+                                     call_jev=True, timeout=8.0)
         except Exception as e:
             print(f'  오류 idx={idx}: {e}', flush=True)
             rows = []

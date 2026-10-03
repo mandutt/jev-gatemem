@@ -460,9 +460,14 @@ class Pipeline:
 
     def _rerank(self, query: str, rows: List[Dict]) -> List[Dict]:
         from gateway import j1_pipeline as j1p
-        return j1p.jev_rerank(query=query, pool=rows,
-                              client=_jev_client(), call_jev=True,
-                              timeout=5.0)
+        ranked, abstained = j1p.jev_rerank(query=query, pool=rows,
+                                            client=_jev_client(), call_jev=True,
+                                            timeout=5.0)
+        if abstained:
+            # Run O: Jev says no candidate is usable evidence. Return empty
+            # so the prefetch renders an empty context block ("no memory").
+            return []
+        return ranked
 
     def _render(self, rows: List[Dict], query: str, max_chars: int) -> str:
         from core import j1_engine

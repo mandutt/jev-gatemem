@@ -91,6 +91,16 @@ EXCERPT_LIMIT = int(os.environ.get("JEV_EXCERPT_LIMIT", "120"))
 POOL_DEFAULT_TOP = 40     # pool-alone fallback returns this many
 JEV_CHOICE_TIMEOUT_S = 5.0   # hard cap; MemoryManager also bounds external prefetch
 JEV_ENV_KEY = "JEV_RERANK"
+# Run O (2026-10-03): abstain label on the Jev choice question. Default ON;
+# set JEV_ABSTAIN=0 to disable (pre-Run-O behavior). Measured: NO_ANSWER
+# misinjection 10/10 -> 0/10, gold pick 59/59 preserved, wrong->none 17/17
+# were true abstentions (gold absent from pool), tokens +1.0%, latency flat.
+ABSTAIN_ENV_KEY = "JEV_ABSTAIN"
+ABSTAIN_LABEL = "No candidate is usable evidence for answering the question"
+ABSTAIN_INSTRUCTION = (
+    " If none of the candidates contains usable evidence, "
+    "pick the 'no candidate' option."
+)
 
 # Align with mnemosyne_hermes prefetch gates (do not import the private
 # adapter; re-declared here so this module also works from the middleware
@@ -407,16 +417,34 @@ def build_lane_pool(recall_raw: Callable[[str, int], List[dict]], query: str) ->
     return out
 
 
+def _abstain_enabled() -> bool:
+    """JEV_ABSTAIN env: '0'/'false'/'off' disables; default ON."""
+    raw = (os.environ.get(ABSTAIN_ENV_KEY) or "").strip().lower()
+    return raw not in ("0", "false", "off", "no", "disabled")
+
+
 def _jev_choice(client, state: dict, labels: list, timeout: float) -> Optional[int]:
-    """Single Jev choice call -> index into labels; None on any failure."""
+    """Single Jev choice call -> index into labels; None on any failure.
+
+    With abstain enabled (JEV_ABSTAIN != '0'), an extra label ``c<N>`` is
+    offered; a return value of ``len(labels)`` means Jev abstained (no
+    candidate is usable evidence). None still means call failure -> pool.
+    """
+    abstain = _abstain_enabled()
+    j_labels = list(labels)
+    if abstain:
+        j_labels.append(ABSTAIN_LABEL)
+    instructions = (
+        "Which candidate memory is the single best evidence for answering "
+        "the question? Pick exactly one. Consider directness and specificity."
+    )
+    if abstain:
+        instructions += ABSTAIN_INSTRUCTION
     questions = {
         "best": {
             "type": "choice",
-            "instructions": (
-                "Which candidate memory is the single best evidence for answering "
-                "the question? Pick exactly one. Consider directness and specificity."
-            ),
-            "criteria": {f"c{i}": labels[i] for i in range(len(labels))},
+            "instructions": instructions,
+            "criteria": {f"c{i}": j_labels[i] for i in range(len(j_labels))},
         }
     }
     try:
@@ -467,16 +495,19 @@ def jev_rerank(
     call_jev: bool = True,
     labels: Optional[List[str]] = None,
     timeout: float = JEV_CHOICE_TIMEOUT_S,
-) -> List[dict]:
+) -> tuple[List[dict], bool]:
     """J1: lift Jev's pick to rank 1, keep pool order for the rest.
 
     ``pool`` is pre-filtered and ranked (pool order preserved). When Jev is
-    disabled (``call_jev=False``) or fails, returns the pool unchanged.
+    disabled (``call_jev=False``) or fails, returns the pool unchanged with
+    ``abstained=False``. When Jev picks the abstain label (Run O), returns the
+    pool unchanged with ``abstained=True`` — nothing is lifted, and the caller
+    can signal "no usable memory" downstream.
     """
     if not pool:
-        return []
+        return [], False
     if not call_jev or client is None:
-        return pool
+        return pool, False
     state = build_state(query, pool)
     if labels is None:
         labels = [_excerpt((c.get("content") or ""), 100) or "n/a" for c in pool]
@@ -492,10 +523,15 @@ def jev_rerank(
         "pick": (pool[idx].get("id", "")[:12] if idx is not None and 0 <= idx < len(pool) else "") if idx is not None else "",
     })
     if idx is None:
-        return pool
+        return pool, False
     idx = int(idx)
+    if (_abstain_enabled()
+            and idx == len(labels)):
+        # Run O abstain: Jev says no candidate is usable evidence.
+        _jtrace("abstain", {"query": (query or "")[:120], "pool": len(pool)})
+        return pool, True
     if not (0 <= idx < len(pool)):
-        return pool
+        return pool, False
     lifted = pool[idx]["id"] != pool[0]["id"]
     _jtrace("lift", {
         "query": (query or "")[:120],
@@ -504,7 +540,7 @@ def jev_rerank(
         "picked_id": str(pool[idx].get("id", ""))[:12],
         "prev_top": str(pool[0].get("id", ""))[:12],
     })
-    return [pool[idx]] + [c for i, c in enumerate(pool) if i != idx]
+    return [pool[idx]] + [c for i, c in enumerate(pool) if i != idx], False
 
 
 def jev_enabled() -> bool:

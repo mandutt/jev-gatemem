@@ -16,8 +16,8 @@
    "8f29956602d8",
    "e08586b7c524",
    "f3a089910283",
-   "7eae83489d9d",
    "d57dae97af6e",
+   "7eae83489d9d",
    "a4b8a46a2527",
    "f9d466b9cdc3",
    "92f416d0daa2",
@@ -27,30 +27,33 @@
    "b2c41af7443d",
    "82224347939d",
    "defd6ee560fa",
-   "0a54586de2cc",
    "7051bfc358fa",
+   "0a54586de2cc",
    "f26a5a04273d",
-   "1b8ee7c09201",
-   "c37d5978be73",
-   "ccfe09c10086",
-   "7f6666aa2ac7"
+   "b333a7481538"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 239.4339000002219,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 299.1948999997476,
+   "usage": {
+    "input_tokens": 5386,
+    "output_tokens": 242
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 241.61589999994249,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 302.55159999978787,
+   "usage": {
+    "input_tokens": 5421,
+    "output_tokens": 251
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "618362fc6d33e3c1",
@@ -74,25 +77,32 @@
    "beab87c715c1",
    "f7c2facbc7f0",
    "c5676668b5d5",
+   "b333a7481538",
    "01af8eb023cb",
    "1b8ee7c09201"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 4,
   "base": {
-   "idx": null,
-   "lat_ms": 177.28280000028462,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 222.22789999977977,
+   "usage": {
+    "input_tokens": 3974,
+    "output_tokens": 179
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 161.26179999992019,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 234.17949999929988,
+   "usage": {
+    "input_tokens": 4009,
+    "output_tokens": 188
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "c66472eaa13fd3dc",
@@ -109,24 +119,31 @@
    "f3a089910283",
    "82224347939d",
    "b77f24838010",
-   "7f6666aa2ac7"
+   "7f6666aa2ac7",
+   "b333a7481538"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 148.44159999984186,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 213.96370000002207,
+   "usage": {
+    "input_tokens": 2378,
+    "output_tokens": 107
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 165.8738999999514,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 240.9419000005073,
+   "usage": {
+    "input_tokens": 2413,
+    "output_tokens": 116
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "c66472eaa13fd3dc",
@@ -143,24 +160,31 @@
    "a10d456086d1",
    "f3a089910283",
    "b77f24838010",
-   "82224347939d"
+   "82224347939d",
+   "b333a7481538"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 277.12949999977354,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 222.49569999985397,
+   "usage": {
+    "input_tokens": 2367,
+    "output_tokens": 107
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 149.82869999994364,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 221.6323000002376,
+   "usage": {
+    "input_tokens": 2402,
+    "output_tokens": 116
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "9d4feaccfa1020b4",
@@ -195,36 +219,42 @@
    "82224347939d",
    "0944f1eb1c74",
    "8fc316450430",
+   "68d6bded59cc",
    "bdcf871ed72d",
-   "d623da85d7a3",
+   "45417b4a4837",
    "eb83f4e51569",
    "a85b09212b28",
    "02a3a906c586",
+   "d623da85d7a3",
    "586e9ab5c2eb",
    "63953e350cdc",
    "e1b4d8072a21",
    "bfc2b1f593ac",
    "7051bfc358fa",
-   "defd6ee560fa",
-   "60ff7d888af3",
-   "e27ce1a2593d"
+   "defd6ee560fa"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 194.50729999971372,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 255.56630000028235,
+   "usage": {
+    "input_tokens": 7478,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 176.32619999994859,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 257.24889999946754,
+   "usage": {
+    "input_tokens": 7513,
+    "output_tokens": 377
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "9d4feaccfa1020b4",
@@ -248,6 +278,7 @@
    "d6618e7fde51",
    "5c58baaabfe4",
    "0e3bf6ae0920",
+   "4e307c575b9a",
    "1aba183966ce",
    "4cd10eb7eef5",
    "ddd0175e98cb",
@@ -269,19 +300,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 4,
   "base": {
-   "idx": null,
-   "lat_ms": 191.99820000039836,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 5,
+   "lat_ms": 244.66840000059165,
+   "usage": {
+    "input_tokens": 6091,
+    "output_tokens": 314
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 193.1352000001425,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 5,
+   "lat_ms": 286.9597999997495,
+   "usage": {
+    "input_tokens": 6126,
+    "output_tokens": 323
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "a112c8b5932fbc1f",
@@ -296,19 +333,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 149.9232999999549,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 213.03880000050412,
+   "usage": {
+    "input_tokens": 838,
+    "output_tokens": 42
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 150.6147999998575,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 236.2659000000349,
+   "usage": {
+    "input_tokens": 872,
+    "output_tokens": 50
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "a112c8b5932fbc1f",
@@ -322,19 +365,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 164.51450000022305,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 228.48319999957312,
+   "usage": {
+    "input_tokens": 660,
+    "output_tokens": 34
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 152.51760000001013,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 225.956799999949,
+   "usage": {
+    "input_tokens": 694,
+    "output_tokens": 42
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "26efd95898ed8fcb",
@@ -355,24 +404,31 @@
    "1b8ee7c09201",
    "c37d5978be73",
    "01af8eb023cb",
-   "d623da85d7a3"
+   "d623da85d7a3",
+   "b333a7481538"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 170.28919999984282,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 253.51800000044022,
+   "usage": {
+    "input_tokens": 3062,
+    "output_tokens": 143
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 173.07309999978315,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 219.68259999994189,
+   "usage": {
+    "input_tokens": 3097,
+    "output_tokens": 152
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "26efd95898ed8fcb",
@@ -402,19 +458,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 163.77660000034666,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 219.7968000000401,
+   "usage": {
+    "input_tokens": 3853,
+    "output_tokens": 170
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 174.54270000007455,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 229.19129999991128,
+   "usage": {
+    "input_tokens": 3888,
+    "output_tokens": 179
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "098d90e014006142",
@@ -454,19 +516,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 226.52400000015405,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 223.40429999985645,
+   "usage": {
+    "input_tokens": 5557,
+    "output_tokens": 260
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 183.88789999971777,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 243.53580000024522,
+   "usage": {
+    "input_tokens": 5592,
+    "output_tokens": 269
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "098d90e014006142",
@@ -491,6 +559,7 @@
    "a958782e5bc0",
    "801a615849e0",
    "82224347939d",
+   "4ae3a739749b",
    "aa59c1a76503",
    "bc65d5b9a31e",
    "1aba183966ce",
@@ -507,19 +576,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 162.7173000001676,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 280.746000000363,
+   "usage": {
+    "input_tokens": 5889,
+    "output_tokens": 278
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 160.16309999986333,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 250.10549999933573,
+   "usage": {
+    "input_tokens": 5924,
+    "output_tokens": 287
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "e481f1a2bb8f7969",
@@ -540,25 +615,32 @@
    "82224347939d",
    "fb99e54b93d1",
    "8240074df79d",
+   "b333a7481538",
    "fa2909eeb976",
    "01af8eb023cb"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 5,
   "base": {
-   "idx": null,
-   "lat_ms": 151.7391000002135,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 241.50139999983367,
+   "usage": {
+    "input_tokens": 3356,
+    "output_tokens": 152
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 159.94809999983772,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 243.75960000088526,
+   "usage": {
+    "input_tokens": 3391,
+    "output_tokens": 161
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "e481f1a2bb8f7969",
@@ -585,19 +667,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 182.93899999980567,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 213.9484999997876,
+   "usage": {
+    "input_tokens": 3227,
+    "output_tokens": 143
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 176.40369999980976,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 218.41500000027736,
+   "usage": {
+    "input_tokens": 3262,
+    "output_tokens": 152
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "b2ed9f4dc0b1efea",
@@ -636,19 +724,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 7,
   "base": {
-   "idx": null,
-   "lat_ms": 187.18390000003637,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 6,
+   "lat_ms": 228.84549999980663,
+   "usage": {
+    "input_tokens": 5426,
+    "output_tokens": 251
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 170.5616999997801,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 6,
+   "lat_ms": 231.66649999984656,
+   "usage": {
+    "input_tokens": 5461,
+    "output_tokens": 260
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "b2ed9f4dc0b1efea",
@@ -668,25 +762,25 @@
    "efb4e9a38f6e",
    "85ffd017a5c1",
    "7eae83489d9d",
-   "6dba06d7d89e",
    "edf486fa0d3c",
    "a33406bb5c56",
    "82224347939d",
    "d648c4df077f",
    "8983102151c5",
+   "4ae3a739749b",
    "7de7c9abedf6",
+   "dd995f9714e5",
    "7954198de010",
    "1485c214b940",
-   "d41cb780a46c",
    "aa59c1a76503",
-   "dd995f9714e5",
    "bc65d5b9a31e",
+   "2329ee321ac8",
+   "3296a9d8c964",
+   "da73299f0514",
    "5c58baaabfe4",
    "0e3bf6ae0920",
    "d0778712fae8",
-   "2329ee321ac8",
    "1aba183966ce",
-   "da73299f0514",
    "4cd10eb7eef5",
    "2ee0d4657b9a",
    "ddd0175e98cb",
@@ -700,19 +794,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 5,
   "base": {
-   "idx": null,
-   "lat_ms": 188.9549000002262,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 245.50899999940157,
+   "usage": {
+    "input_tokens": 7565,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 181.19960000012725,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 239.38219999945431,
+   "usage": {
+    "input_tokens": 7600,
+    "output_tokens": 377
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "7de2c1dfef632694",
@@ -735,19 +835,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 9,
   "base": {
-   "idx": null,
-   "lat_ms": 151.5294000000722,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 8,
+   "lat_ms": 219.67680000034306,
+   "usage": {
+    "input_tokens": 2594,
+    "output_tokens": 107
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 161.72550000010233,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 8,
+   "lat_ms": 239.23269999977492,
+   "usage": {
+    "input_tokens": 2629,
+    "output_tokens": 116
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "7de2c1dfef632694",
@@ -772,19 +878,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 153.3862000001136,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 243.8320000001113,
+   "usage": {
+    "input_tokens": 2817,
+    "output_tokens": 125
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 156.74519999993208,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 226.45269999975426,
+   "usage": {
+    "input_tokens": 2852,
+    "output_tokens": 134
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "e5bbd0063f1356f6",
@@ -799,6 +911,7 @@
    "30820f800725",
    "82224347939d",
    "c61a61602dab",
+   "4ae3a739749b",
    "88719d737246",
    "abeee45b0bb3",
    "1fc9945f41f6"
@@ -806,19 +919,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 153.21730000005118,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 214.77360000062617,
+   "usage": {
+    "input_tokens": 2530,
+    "output_tokens": 107
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 173.1675000000905,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 224.26379999978963,
+   "usage": {
+    "input_tokens": 2565,
+    "output_tokens": 116
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "e5bbd0063f1356f6",
@@ -847,19 +966,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 161.82119999984934,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 223.47500000068976,
+   "usage": {
+    "input_tokens": 3451,
+    "output_tokens": 161
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 159.051399999953,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 243.30139999983658,
+   "usage": {
+    "input_tokens": 3486,
+    "output_tokens": 170
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "ef3d9670463aea79",
@@ -882,19 +1007,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 179.3670000001839,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 9,
+   "lat_ms": 211.21940000011818,
+   "usage": {
+    "input_tokens": 2338,
+    "output_tokens": 107
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 155.04200000032142,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 11,
+   "lat_ms": 224.18610000022454,
+   "usage": {
+    "input_tokens": 2373,
+    "output_tokens": 117
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "ef3d9670463aea79",
@@ -910,19 +1041,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 145.5673000000388,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 221.40870000021096,
+   "usage": {
+    "input_tokens": 1032,
+    "output_tokens": 50
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 156.40110000003915,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 207.94299999943178,
+   "usage": {
+    "input_tokens": 1066,
+    "output_tokens": 58
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "d1c90516d9870c95",
@@ -949,28 +1086,31 @@
    "16a83c41b83f",
    "7ad0824e1ffb",
    "1b8ee7c09201",
-   "c37d5978be73",
-   "fa2909eeb976",
-   "01af8eb023cb",
-   "d623da85d7a3",
-   "7f6666aa2ac7"
+   "b333a7481538",
+   "c37d5978be73"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 185.32340000001568,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 278.8652999997794,
+   "usage": {
+    "input_tokens": 4329,
+    "output_tokens": 197
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 184.12760000001072,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 250.70279999999912,
+   "usage": {
+    "input_tokens": 4364,
+    "output_tokens": 206
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "d1c90516d9870c95",
@@ -1022,19 +1162,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 169.40340000019205,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 254.6039999997447,
+   "usage": {
+    "input_tokens": 7368,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 169.23680000036256,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 279.67420000004495,
+   "usage": {
+    "input_tokens": 7403,
+    "output_tokens": 377
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "2ecef73164830638",
@@ -1049,19 +1195,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 174.25230000026204,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 210.58520000042336,
+   "usage": {
+    "input_tokens": 877,
+    "output_tokens": 42
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 147.52480000015566,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 210.7456000003367,
+   "usage": {
+    "input_tokens": 911,
+    "output_tokens": 50
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "2ecef73164830638",
@@ -1080,7 +1232,9 @@
    "aa59c1a76503",
    "fcb6471ed872",
    "bc65d5b9a31e",
+   "3296a9d8c964",
    "0e3bf6ae0920",
+   "4e307c575b9a",
    "d0778712fae8",
    "1aba183966ce",
    "4cd10eb7eef5",
@@ -1104,19 +1258,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 193.05830000030255,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 232.86540000026434,
+   "usage": {
+    "input_tokens": 5984,
+    "output_tokens": 305
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 168.05209999984072,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 255.80509999963397,
+   "usage": {
+    "input_tokens": 6019,
+    "output_tokens": 314
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "9f04ed2c8e14f11b",
@@ -1131,19 +1291,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 158.80470000001878,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 214.83710000029532,
+   "usage": {
+    "input_tokens": 882,
+    "output_tokens": 42
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 151.0217999998531,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 225.28070000043954,
+   "usage": {
+    "input_tokens": 916,
+    "output_tokens": 50
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "9f04ed2c8e14f11b",
@@ -1157,25 +1323,30 @@
    "756028f39c04",
    "82224347939d",
    "3719ff17edda",
-   "ffeec759e2f3",
-   "7f6666aa2ac7"
+   "ffeec759e2f3"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 164.4559000001209,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 238.54380000011588,
+   "usage": {
+    "input_tokens": 1620,
+    "output_tokens": 74
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 164.35279999996055,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 203.9161000002423,
+   "usage": {
+    "input_tokens": 1654,
+    "output_tokens": 82
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "a13019e1f438960c",
@@ -1196,19 +1367,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 176.2524000000667,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 232.98909999994066,
+   "usage": {
+    "input_tokens": 1889,
+    "output_tokens": 90
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 172.49149999997826,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 218.89439999995375,
+   "usage": {
+    "input_tokens": 1923,
+    "output_tokens": 98
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "a13019e1f438960c",
@@ -1233,19 +1410,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 159.51629999972283,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 196.4111999996021,
+   "usage": {
+    "input_tokens": 2678,
+    "output_tokens": 125
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 151.8252000000757,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 234.4082999998136,
+   "usage": {
+    "input_tokens": 2713,
+    "output_tokens": 134
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "9150f1246613b092",
@@ -1262,19 +1445,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 178.31410000007963,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 214.88600000066072,
+   "usage": {
+    "input_tokens": 1143,
+    "output_tokens": 58
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 155.1673999997547,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 5,
+   "lat_ms": 227.71629999988363,
+   "usage": {
+    "input_tokens": 1177,
+    "output_tokens": 66
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "9150f1246613b092",
@@ -1300,19 +1489,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 176.17509999990943,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 233.36489999928745,
+   "usage": {
+    "input_tokens": 2932,
+    "output_tokens": 134
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 177.1552000000156,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 14,
+   "lat_ms": 217.4032000002626,
+   "usage": {
+    "input_tokens": 2967,
+    "output_tokens": 144
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "5a3ebc06a87940da",
@@ -1329,19 +1524,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 172.3280999999588,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 220.36099999968428,
+   "usage": {
+    "input_tokens": 1263,
+    "output_tokens": 58
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 156.19390000028943,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 207.93959999991785,
+   "usage": {
+    "input_tokens": 1297,
+    "output_tokens": 66
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "5a3ebc06a87940da",
@@ -1376,19 +1577,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 178.3407999996598,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 209.19450000019424,
+   "usage": {
+    "input_tokens": 4490,
+    "output_tokens": 215
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 168.3802000002288,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 208.54890000009618,
+   "usage": {
+    "input_tokens": 4525,
+    "output_tokens": 224
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "c9e4828c93bdb0a0",
@@ -1408,19 +1615,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 172.05139999987296,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 195.119999999406,
+   "usage": {
+    "input_tokens": 1893,
+    "output_tokens": 82
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 150.58749999980137,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 8,
+   "lat_ms": 192.84160000006523,
+   "usage": {
+    "input_tokens": 1927,
+    "output_tokens": 90
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "c9e4828c93bdb0a0",
@@ -1441,19 +1654,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 156.5056999997978,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 5,
+   "lat_ms": 215.81370000058087,
+   "usage": {
+    "input_tokens": 2128,
+    "output_tokens": 90
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 175.34399999976813,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 9,
+   "lat_ms": 220.95989999979793,
+   "usage": {
+    "input_tokens": 2162,
+    "output_tokens": 98
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "a68b370287d1892f",
@@ -1480,24 +1699,31 @@
    "d41cb780a46c",
    "fa2909eeb976",
    "01af8eb023cb",
+   "b333a7481538",
    "1b8ee7c09201"
   ],
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 181.20799999996962,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 235.06300000008196,
+   "usage": {
+    "input_tokens": 4038,
+    "output_tokens": 197
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 176.90029999994294,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 217.78990000075282,
+   "usage": {
+    "input_tokens": 4073,
+    "output_tokens": 206
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "a68b370287d1892f",
@@ -1510,7 +1736,6 @@
    "d28786a095ac",
    "801a615849e0",
    "e4ce6af83f5d",
-   "bffe4e0696c7",
    "19314b0b85c0",
    "82224347939d",
    "7de7c9abedf6",
@@ -1520,47 +1745,55 @@
    "fcb6471ed872",
    "bc65d5b9a31e",
    "d6618e7fde51",
+   "3296a9d8c964",
    "5c58baaabfe4",
    "0e3bf6ae0920",
+   "4e307c575b9a",
    "d0778712fae8",
    "1aba183966ce",
-   "3924d13964ce",
    "4cd10eb7eef5",
    "ddd0175e98cb",
+   "3924d13964ce",
    "0fcd8703019f",
    "20fc79238a17",
    "673d2775bd12",
    "e190aaaf3f5f",
+   "10c5ec4e3ba7",
+   "ca51f03c09d0",
    "2319432549a0",
    "37448adcef85",
    "6254f7834336",
-   "10c5ec4e3ba7",
    "bbade3a34046",
    "d078b35cc49e",
-   "ca51f03c09d0",
    "16a83c41b83f",
    "7ad0824e1ffb",
-   "1b8ee7c09201",
    "ffb22f17dc18",
+   "1b8ee7c09201",
    "d5bd8f549b39",
    "99ae39831e24"
   ],
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 172.89370000025883,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 238.20070000056148,
+   "usage": {
+    "input_tokens": 7283,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 170.76660000020638,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 229.15680000005523,
+   "usage": {
+    "input_tokens": 7318,
+    "output_tokens": 377
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "1cef4743165b7707",
@@ -1574,25 +1807,32 @@
    "82224347939d",
    "1785f8fc1ccb",
    "fa2909eeb976",
+   "b333a7481538",
    "1b8ee7c09201",
    "ccfe09c10086"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 161.49740000037127,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 237.91259999961767,
+   "usage": {
+    "input_tokens": 1940,
+    "output_tokens": 90
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 150.45110000028217,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 212.84490000016376,
+   "usage": {
+    "input_tokens": 1974,
+    "output_tokens": 98
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "1cef4743165b7707",
@@ -1608,19 +1848,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 161.52259999989838,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 212.7994000002218,
+   "usage": {
+    "input_tokens": 896,
+    "output_tokens": 50
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 167.86699999966004,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 225.993600000038,
+   "usage": {
+    "input_tokens": 930,
+    "output_tokens": 58
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "f2421b7b489858bb",
@@ -1639,19 +1885,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 172.833300000093,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 231.4101000001756,
+   "usage": {
+    "input_tokens": 1710,
+    "output_tokens": 74
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 151.685599999837,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 240.54439999963506,
+   "usage": {
+    "input_tokens": 1744,
+    "output_tokens": 82
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "f2421b7b489858bb",
@@ -1662,8 +1914,8 @@
    "2ecef7316483",
    "105d31e9dcc3",
    "f8f0169811cd",
-   "3ceb2752882e",
    "769e56524b6f",
+   "3ceb2752882e",
    "0b69fece3a10",
    "b1bbd4f66f0d",
    "e08586b7c524",
@@ -1703,19 +1955,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 156.74829999989015,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 239.63050000020303,
+   "usage": {
+    "input_tokens": 6963,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 166.37790000004316,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 40,
+   "lat_ms": 256.80430000011256,
+   "usage": {
+    "input_tokens": 6998,
+    "output_tokens": 378
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "e6b3887395a2ac45",
@@ -1732,19 +1990,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 150.76189999990675,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 187.9879999996774,
+   "usage": {
+    "input_tokens": 1177,
+    "output_tokens": 58
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 154.69719999964582,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 217.1267000003354,
+   "usage": {
+    "input_tokens": 1211,
+    "output_tokens": 66
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "e6b3887395a2ac45",
@@ -1754,8 +2018,8 @@
   "pool": [
    "2ecef7316483",
    "e6b3887395a2",
-   "b04680169e0f",
    "37691fc654d8",
+   "b04680169e0f",
    "66078e4c4296",
    "f1fc9590e57f",
    "82224347939d",
@@ -1763,24 +2027,31 @@
    "1b8ee7c09201",
    "7f6666aa2ac7",
    "c37d5978be73",
-   "ccfe09c10086"
+   "ccfe09c10086",
+   "b333a7481538"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 188.9229999997042,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 259.98230000004696,
+   "usage": {
+    "input_tokens": 2586,
+    "output_tokens": 125
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 158.32280000040555,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 193.275800000265,
+   "usage": {
+    "input_tokens": 2621,
+    "output_tokens": 134
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "e941022a685c2be1",
@@ -1795,8 +2066,8 @@
    "ef3d9670463a",
    "a91edb7c70ca",
    "105d31e9dcc3",
-   "ed3a3442d3bc",
    "23d9bae9023c",
+   "ed3a3442d3bc",
    "a38de84f23cd",
    "a412396a272f",
    "37124fd03148",
@@ -1821,30 +2092,36 @@
    "b6fa2be963cc",
    "df18200591eb",
    "fdba62d81bcc",
+   "c829209550b9",
    "19314b0b85c0",
    "0fcd8703019f",
    "b4303c041cca",
    "a7e8d62931f1",
    "4e9f13a4d426",
-   "ab21e95a4260",
-   "f3461a5663ef"
+   "ab21e95a4260"
   ],
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 195.86729999991803,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 7,
+   "lat_ms": 261.06679999975313,
+   "usage": {
+    "input_tokens": 7538,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 201.18189999993774,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 7,
+   "lat_ms": 254.7574000000168,
+   "usage": {
+    "input_tokens": 7573,
+    "output_tokens": 377
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "e941022a685c2be1",
@@ -1855,8 +2132,8 @@
    "e941022a685c",
    "6dba06d7d89e",
    "5e18c61d576b",
-   "c79244f9fa6d",
    "769e56524b6f",
+   "c79244f9fa6d",
    "8e12f1d11158",
    "10d99127d8fa",
    "a412396a272f",
@@ -1876,19 +2153,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 168.98900000023787,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 240.5746000004001,
+   "usage": {
+    "input_tokens": 4106,
+    "output_tokens": 188
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 149.94190000015806,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 237.06099999981234,
+   "usage": {
+    "input_tokens": 4141,
+    "output_tokens": 197
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "498bb204de3b1d14",
@@ -1908,19 +2191,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 4,
   "base": {
-   "idx": null,
-   "lat_ms": 180.38179999985005,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 236.00960000021587,
+   "usage": {
+    "input_tokens": 1864,
+    "output_tokens": 82
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 154.1968999999881,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 215.12979999988602,
+   "usage": {
+    "input_tokens": 1898,
+    "output_tokens": 90
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "498bb204de3b1d14",
@@ -1942,19 +2231,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 5,
   "base": {
-   "idx": null,
-   "lat_ms": 178.59249999992244,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 236.76939999950264,
+   "usage": {
+    "input_tokens": 2175,
+    "output_tokens": 98
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 170.23370000015348,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 191.02960000054736,
+   "usage": {
+    "input_tokens": 2210,
+    "output_tokens": 107
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "c69c459c7c67c2d1",
@@ -1981,19 +2276,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 188.53519999993296,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 304.63679999957094,
+   "usage": {
+    "input_tokens": 2952,
+    "output_tokens": 143
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 183.7325999999848,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 232.97679999996035,
+   "usage": {
+    "input_tokens": 2987,
+    "output_tokens": 152
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "c69c459c7c67c2d1",
@@ -2015,19 +2316,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 184.99489999976504,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 5,
+   "lat_ms": 230.24230000009993,
+   "usage": {
+    "input_tokens": 2104,
+    "output_tokens": 98
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 177.81310000009398,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 10,
+   "lat_ms": 203.96739999978308,
+   "usage": {
+    "input_tokens": 2139,
+    "output_tokens": 108
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "ac6b11080109c3fe",
@@ -2045,19 +2352,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 154.83580000000075,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 217.0222000004287,
+   "usage": {
+    "input_tokens": 1478,
+    "output_tokens": 66
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 157.15750000026674,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 231.87760000018898,
+   "usage": {
+    "input_tokens": 1512,
+    "output_tokens": 74
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "ac6b11080109c3fe",
@@ -2069,24 +2382,31 @@
    "ac6b11080109",
    "105d31e9dcc3",
    "82224347939d",
-   "c37d5978be73"
+   "c37d5978be73",
+   "b333a7481538"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 148.40660000027128,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 204.12080000005517,
+   "usage": {
+    "input_tokens": 1394,
+    "output_tokens": 66
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 183.73739999969985,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 204.52780000050552,
+   "usage": {
+    "input_tokens": 1428,
+    "output_tokens": 74
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "efb4e9a38f6ee270",
@@ -2125,19 +2445,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 8,
   "base": {
-   "idx": null,
-   "lat_ms": 181.64530000012746,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 7,
+   "lat_ms": 282.7412999995431,
+   "usage": {
+    "input_tokens": 5659,
+    "output_tokens": 251
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 162.61420000000726,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 7,
+   "lat_ms": 315.7980000005409,
+   "usage": {
+    "input_tokens": 5694,
+    "output_tokens": 260
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "efb4e9a38f6ee270",
@@ -2154,12 +2480,15 @@
    "7954198de010",
    "1485c214b940",
    "aa59c1a76503",
-   "d623da85d7a3",
+   "4ae3a739749b",
    "fcb6471ed872",
    "bc65d5b9a31e",
+   "d623da85d7a3",
    "d6618e7fde51",
+   "3296a9d8c964",
    "5c58baaabfe4",
    "0e3bf6ae0920",
+   "4e307c575b9a",
    "d0778712fae8",
    "1aba183966ce",
    "4cd10eb7eef5",
@@ -2172,26 +2501,31 @@
    "ca51f03c09d0",
    "ffb22f17dc18",
    "d5bd8f549b39",
-   "7051bfc358fa",
    "99ae39831e24",
-   "60ff7d888af3"
+   "7051bfc358fa"
   ],
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 163.19500000008702,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 255.06939999922906,
+   "usage": {
+    "input_tokens": 5653,
+    "output_tokens": 296
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 162.4283999999534,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 32,
+   "lat_ms": 409.78589999940596,
+   "usage": {
+    "input_tokens": 5688,
+    "output_tokens": 306
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "36f843b4b1886e39",
@@ -2205,6 +2539,8 @@
    "36f843b4b188",
    "82224347939d",
    "ffa9e112f10f",
+   "68d6bded59cc",
+   "45417b4a4837",
    "aba6e4aa3839",
    "7b9a307f12ea",
    "df2392834e27",
@@ -2213,19 +2549,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 4,
   "base": {
-   "idx": null,
-   "lat_ms": 157.78439999985494,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 235.39309999978286,
+   "usage": {
+    "input_tokens": 2444,
+    "output_tokens": 116
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 175.5858999999873,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 200.19779999984166,
+   "usage": {
+    "input_tokens": 2479,
+    "output_tokens": 125
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "36f843b4b1886e39",
@@ -2239,19 +2581,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 176.00999999967826,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 205.9482000004209,
+   "usage": {
+    "input_tokens": 652,
+    "output_tokens": 34
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 174.71249999971405,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 211.68539999962377,
+   "usage": {
+    "input_tokens": 686,
+    "output_tokens": 42
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "b5f5672a2446d4e8",
@@ -2263,8 +2611,8 @@
    "36f843b4b188",
    "b5f5672a2446",
    "20fc79238a17",
-   "aba6e4aa3839",
    "4f32767963e4",
+   "aba6e4aa3839",
    "cd66d12d63e9",
    "aa2b523ac897",
    "61c457eae84e",
@@ -2273,19 +2621,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 190.8742999999049,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 227.64860000006593,
+   "usage": {
+    "input_tokens": 2118,
+    "output_tokens": 98
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 155.45560000009573,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 215.47449999980017,
+   "usage": {
+    "input_tokens": 2153,
+    "output_tokens": 107
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "b5f5672a2446d4e8",
@@ -2302,19 +2656,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 173.72049999994488,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 253.83450000026642,
+   "usage": {
+    "input_tokens": 1198,
+    "output_tokens": 58
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 157.63969999989058,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 216.20809999967605,
+   "usage": {
+    "input_tokens": 1232,
+    "output_tokens": 66
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "d28786a095ace1ae",
@@ -2330,19 +2690,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 160.73569999980464,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 239.5781999994142,
+   "usage": {
+    "input_tokens": 1046,
+    "output_tokens": 50
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 150.23489999975936,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 198.3898999997109,
+   "usage": {
+    "input_tokens": 1080,
+    "output_tokens": 58
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "d28786a095ace1ae",
@@ -2367,19 +2733,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 155.0318999998126,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 254.2846999995163,
+   "usage": {
+    "input_tokens": 2948,
+    "output_tokens": 125
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 332.7460999998948,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 258.6610999996992,
+   "usage": {
+    "input_tokens": 2983,
+    "output_tokens": 134
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "2f199c68ab243ff8",
@@ -2402,26 +2774,32 @@
    "ffeec759e2f3",
    "2391679160f2",
    "7f6666aa2ac7",
-   "fa2909eeb976",
    "ccfe09c10086",
+   "fa2909eeb976",
    "01af8eb023cb"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 183.2958999998482,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 273.4944000003452,
+   "usage": {
+    "input_tokens": 3783,
+    "output_tokens": 170
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 214.97880000015357,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 206.756000000496,
+   "usage": {
+    "input_tokens": 3818,
+    "output_tokens": 179
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "2f199c68ab243ff8",
@@ -2439,19 +2817,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 171.9913000001725,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 368.2474999995975,
+   "usage": {
+    "input_tokens": 1341,
+    "output_tokens": 66
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 150.77160000009826,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 291.10770000079356,
+   "usage": {
+    "input_tokens": 1375,
+    "output_tokens": 74
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "90b4edf612db6b2c",
@@ -2471,8 +2855,8 @@
    "105d31e9dcc3",
    "801a615849e0",
    "d51bf1b875f5",
-   "ed3a3442d3bc",
    "23d9bae9023c",
+   "ed3a3442d3bc",
    "a38de84f23cd",
    "a412396a272f",
    "0bb865391baf",
@@ -2503,19 +2887,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 4,
   "base": {
-   "idx": null,
-   "lat_ms": 168.92670000015642,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 358.7500000003274,
+   "usage": {
+    "input_tokens": 7961,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 171.45570000002408,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 249.8065999998289,
+   "usage": {
+    "input_tokens": 7996,
+    "output_tokens": 377
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "90b4edf612db6b2c",
@@ -2546,6 +2936,7 @@
    "b04680169e0f",
    "51e1c19cfb14",
    "82224347939d",
+   "4ae3a739749b",
    "7de7c9abedf6",
    "7954198de010",
    "1485c214b940",
@@ -2553,33 +2944,38 @@
    "fcb6471ed872",
    "bc65d5b9a31e",
    "d6618e7fde51",
+   "3296a9d8c964",
    "5c58baaabfe4",
    "0e3bf6ae0920",
+   "4e307c575b9a",
    "d0778712fae8",
    "1aba183966ce",
    "4cd10eb7eef5",
    "ddd0175e98cb",
-   "19314b0b85c0",
-   "0fcd8703019f",
-   "20fc79238a17",
-   "673d2775bd12"
+   "19314b0b85c0"
   ],
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 180.67699999983233,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 24,
+   "lat_ms": 333.76920000046084,
+   "usage": {
+    "input_tokens": 7160,
+    "output_tokens": 369
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 160.35479999982272,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 40,
+   "lat_ms": 286.27229999983683,
+   "usage": {
+    "input_tokens": 7195,
+    "output_tokens": 378
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "509622f2ecaf7c06",
@@ -2600,19 +2996,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 175.72599999994054,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 198.84710000042105,
+   "usage": {
+    "input_tokens": 1957,
+    "output_tokens": 90
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 175.23339999979726,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 221.761200000401,
+   "usage": {
+    "input_tokens": 1991,
+    "output_tokens": 98
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "509622f2ecaf7c06",
@@ -2635,19 +3037,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 159.84639999987849,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 283.2250000001295,
+   "usage": {
+    "input_tokens": 2494,
+    "output_tokens": 107
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 155.67389999978332,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 252.97560000035446,
+   "usage": {
+    "input_tokens": 2529,
+    "output_tokens": 116
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "7a3675ebfc5a1829",
@@ -2660,28 +3068,36 @@
    "509622f2ecaf",
    "c37d5978be73",
    "82224347939d",
+   "68d6bded59cc",
+   "45417b4a4837",
    "f3461a5663ef",
    "07cd663214ee",
-   "f46100444d45",
    "d623da85d7a3",
+   "f46100444d45",
    "1b8ee7c09201"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 157.23119999984192,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 231.69039999993402,
+   "usage": {
+    "input_tokens": 2531,
+    "output_tokens": 116
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 149.52859999993962,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 245.71070000001782,
+   "usage": {
+    "input_tokens": 2566,
+    "output_tokens": 125
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "7a3675ebfc5a1829",
@@ -2698,33 +3114,39 @@
    "d28786a095ac",
    "a91edb7c70ca",
    "d51bf1b875f5",
-   "34ad025da7fb",
    "82224347939d",
+   "34ad025da7fb",
+   "542bfe007b9d",
    "ced9f96ad196",
    "f3461a5663ef",
    "d41cb780a46c",
    "ccfe09c10086",
    "c8d3aac89003",
    "7f6666aa2ac7",
-   "fa2909eeb976",
-   "c37d5978be73"
+   "b333a7481538"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 170.0596000000587,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 231.38970000036352,
+   "usage": {
+    "input_tokens": 3869,
+    "output_tokens": 179
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 163.68300000021918,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 206.43639999980223,
+   "usage": {
+    "input_tokens": 3904,
+    "output_tokens": 188
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "2ff550d144b5ae03",
@@ -2742,19 +3164,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 170.93549999981406,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 216.89880000030826,
+   "usage": {
+    "input_tokens": 1405,
+    "output_tokens": 66
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 155.48790000002555,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 6,
+   "lat_ms": 251.33160000041244,
+   "usage": {
+    "input_tokens": 1439,
+    "output_tokens": 74
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "2ff550d144b5ae03",
@@ -2806,19 +3234,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 183.4726000001865,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 274.21719999983907,
+   "usage": {
+    "input_tokens": 7220,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 166.18309999967096,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 40,
+   "lat_ms": 268.51390000047104,
+   "usage": {
+    "input_tokens": 7255,
+    "output_tokens": 378
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "1928d454e0ed168b",
@@ -2856,6 +3290,7 @@
    "ca51f03c09d0",
    "d5bd8f549b39",
    "99ae39831e24",
+   "b333a7481538",
    "fa2909eeb976",
    "8240074df79d",
    "01af8eb023cb",
@@ -2866,19 +3301,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 4,
   "base": {
-   "idx": null,
-   "lat_ms": 176.6631000000416,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 246.1923000000752,
+   "usage": {
+    "input_tokens": 6960,
+    "output_tokens": 341
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 173.00909999994474,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 240.1372000003903,
+   "usage": {
+    "input_tokens": 6995,
+    "output_tokens": 350
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "1928d454e0ed168b",
@@ -2897,19 +3338,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 156.49359999997614,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 206.26960000026884,
+   "usage": {
+    "input_tokens": 1572,
+    "output_tokens": 74
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 153.91159999990123,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 221.9772999997076,
+   "usage": {
+    "input_tokens": 1606,
+    "output_tokens": 82
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "f9d466b9cdc3cd88",
@@ -2954,19 +3401,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 5,
   "base": {
-   "idx": null,
-   "lat_ms": 167.64790000024732,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 257.73779999963153,
+   "usage": {
+    "input_tokens": 6697,
+    "output_tokens": 305
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 172.98759999994218,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 214.27459999995335,
+   "usage": {
+    "input_tokens": 6732,
+    "output_tokens": 314
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "f9d466b9cdc3cd88",
@@ -2981,24 +3434,31 @@
    "e2397d4f1e78",
    "1485c214b940",
    "82224347939d",
-   "cb18b392b49c"
+   "cb18b392b49c",
+   "4ae3a739749b"
   ],
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 172.26720000007845,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 229.938200000106,
+   "usage": {
+    "input_tokens": 1912,
+    "output_tokens": 90
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 156.9446000003154,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 208.28900000014983,
+   "usage": {
+    "input_tokens": 1946,
+    "output_tokens": 98
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "09547ea49fc36991",
@@ -3017,19 +3477,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 152.92859999999564,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 210.10220000061963,
+   "usage": {
+    "input_tokens": 1573,
+    "output_tokens": 74
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 152.59399999968082,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 220.07349999967118,
+   "usage": {
+    "input_tokens": 1607,
+    "output_tokens": 82
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "09547ea49fc36991",
@@ -3063,19 +3529,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 3,
   "base": {
-   "idx": null,
-   "lat_ms": 179.60889999994833,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 243.85350000011385,
+   "usage": {
+    "input_tokens": 4191,
+    "output_tokens": 206
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 181.52939999981754,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 238.24039999999513,
+   "usage": {
+    "input_tokens": 4226,
+    "output_tokens": 215
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "ed3a3442d3bcbb33",
@@ -3090,8 +3562,8 @@
    "ef3d9670463a",
    "f8f0169811cd",
    "b5f5672a2446",
-   "ed3a3442d3bc",
    "23d9bae9023c",
+   "ed3a3442d3bc",
    "a38de84f23cd",
    "a412396a272f",
    "37124fd03148",
@@ -3104,9 +3576,9 @@
    "769e56524b6f",
    "d51bf1b875f5",
    "c6d078105178",
-   "c37d5978be73",
    "82224347939d",
    "5504bc5b5f79",
+   "c37d5978be73",
    "47c5a3434439",
    "78a245c364d0",
    "c19801a7350b",
@@ -3116,30 +3588,36 @@
    "b6fa2be963cc",
    "df18200591eb",
    "fdba62d81bcc",
+   "c829209550b9",
    "19314b0b85c0",
    "0fcd8703019f",
    "b4303c041cca",
    "a7e8d62931f1",
    "4e9f13a4d426",
-   "ab21e95a4260",
-   "f3461a5663ef"
+   "ab21e95a4260"
   ],
   "gold_in_pool": true,
-  "gold_pool_rank": 8,
+  "gold_pool_rank": 9,
   "base": {
-   "idx": null,
-   "lat_ms": 188.28050000001895,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 8,
+   "lat_ms": 250.51259999963804,
+   "usage": {
+    "input_tokens": 7518,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 181.63490000006277,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 8,
+   "lat_ms": 262.2673999994731,
+   "usage": {
+    "input_tokens": 7553,
+    "output_tokens": 377
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "ed3a3442d3bcbb33",
@@ -3159,19 +3637,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 150.6257999999434,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 215.66119999988587,
+   "usage": {
+    "input_tokens": 1731,
+    "output_tokens": 82
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 151.1731000000509,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 8,
+   "lat_ms": 220.2424000006431,
+   "usage": {
+    "input_tokens": 1765,
+    "output_tokens": 90
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "dce5e8ceddf18db9",
@@ -3202,8 +3686,10 @@
    "aa59c1a76503",
    "fcb6471ed872",
    "bc65d5b9a31e",
+   "3296a9d8c964",
    "5c58baaabfe4",
    "0e3bf6ae0920",
+   "4e307c575b9a",
    "d0778712fae8",
    "1aba183966ce",
    "4cd10eb7eef5",
@@ -3216,25 +3702,30 @@
    "10c5ec4e3ba7",
    "ca51f03c09d0",
    "ffb22f17dc18",
-   "d5bd8f549b39",
-   "99ae39831e24"
+   "d5bd8f549b39"
   ],
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 186.45640000022468,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 236.8252999995093,
+   "usage": {
+    "input_tokens": 6713,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 180.31520000022283,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 253.07679999968968,
+   "usage": {
+    "input_tokens": 6748,
+    "output_tokens": 377
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "dce5e8ceddf18db9",
@@ -3252,19 +3743,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 2,
   "base": {
-   "idx": null,
-   "lat_ms": 168.10160000022734,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 309.379500000432,
+   "usage": {
+    "input_tokens": 1440,
+    "output_tokens": 66
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 168.50529999965147,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 371.6599999997925,
+   "usage": {
+    "input_tokens": 1474,
+    "output_tokens": 74
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "edf486fa0d3cd079",
@@ -3307,19 +3804,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 23,
   "base": {
-   "idx": null,
-   "lat_ms": 159.73090000034063,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 29,
+   "lat_ms": 258.64460000047984,
+   "usage": {
+    "input_tokens": 6023,
+    "output_tokens": 288
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 161.21250000014697,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 29,
+   "lat_ms": 247.96119999973598,
+   "usage": {
+    "input_tokens": 6058,
+    "output_tokens": 297
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "edf486fa0d3cd079",
@@ -3340,19 +3843,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 156.61000000000058,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 213.66570000009233,
+   "usage": {
+    "input_tokens": 1899,
+    "output_tokens": 90
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 155.32320000011168,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 205.63820000006672,
+   "usage": {
+    "input_tokens": 1933,
+    "output_tokens": 98
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "3581b9a33901eba4",
@@ -3366,8 +3875,8 @@
    "8c6397b2b7e6",
    "4d2b596ac231",
    "0e6671c3ff19",
-   "f0907ec8cee6",
    "c57b99c24955",
+   "f0907ec8cee6",
    "d034a70ce7b2",
    "4ab9e79c9156",
    "e0f9d5057424",
@@ -3376,19 +3885,25 @@
   "gold_in_pool": true,
   "gold_pool_rank": 1,
   "base": {
-   "idx": null,
-   "lat_ms": 176.48300000018935,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 239.60729999998875,
+   "usage": {
+    "input_tokens": 2527,
+    "output_tokens": 116
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 179.90610000015295,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 220.2314000005572,
+   "usage": {
+    "input_tokens": 2562,
+    "output_tokens": 125
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "gold",
+  "abs_cls": "gold"
  },
  {
   "gold": "3581b9a33901eba4",
@@ -3406,8 +3921,10 @@
    "fcb6471ed872",
    "bc65d5b9a31e",
    "d6618e7fde51",
+   "3296a9d8c964",
    "5c58baaabfe4",
    "0e3bf6ae0920",
+   "4e307c575b9a",
    "d0778712fae8",
    "1aba183966ce",
    "4cd10eb7eef5",
@@ -3431,19 +3948,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 203.5475999996379,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 26,
+   "lat_ms": 267.01760000014474,
+   "usage": {
+    "input_tokens": 5747,
+    "output_tokens": 306
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 180.20900000010442,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 33,
+   "lat_ms": 250.37979999979143,
+   "usage": {
+    "input_tokens": 5782,
+    "output_tokens": 315
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "0ea67a3b101917e5",
@@ -3461,19 +3984,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 181.3915000002453,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 239.17660000006435,
+   "usage": {
+    "input_tokens": 1442,
+    "output_tokens": 66
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 155.67000000010012,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 4,
+   "lat_ms": 218.52099999978236,
+   "usage": {
+    "input_tokens": 1476,
+    "output_tokens": 74
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "0ea67a3b101917e5",
@@ -3504,19 +4033,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 177.32539999997243,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 9,
+   "lat_ms": 308.0993000003218,
+   "usage": {
+    "input_tokens": 2507,
+    "output_tokens": 107
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 162.88950000034674,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 11,
+   "lat_ms": 211.57289999973727,
+   "usage": {
+    "input_tokens": 2542,
+    "output_tokens": 117
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": "5e8516d6f91b46dd",
@@ -3553,19 +4088,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 160.54239999994024,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 5,
+   "lat_ms": 252.15299999945273,
+   "usage": {
+    "input_tokens": 4998,
+    "output_tokens": 233
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 168.63670000020647,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 5,
+   "lat_ms": 261.91860000017186,
+   "usage": {
+    "input_tokens": 5033,
+    "output_tokens": 242
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": "132fb95d922f9bc5",
@@ -3590,19 +4131,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 159.9965999998858,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 208.6040000003777,
+   "usage": {
+    "input_tokens": 1231,
+    "output_tokens": 58
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 169.33620000008887,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 3,
+   "lat_ms": 225.00229999968724,
+   "usage": {
+    "input_tokens": 1265,
+    "output_tokens": 66
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "wrong"
  },
  {
   "gold": null,
@@ -3620,19 +4167,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 153.35929999992004,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 204.35569999972358,
+   "usage": {
+    "input_tokens": 1419,
+    "output_tokens": 66
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 154.3829000002006,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 6,
+   "lat_ms": 252.5654000000941,
+   "usage": {
+    "input_tokens": 1453,
+    "output_tokens": 74
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -3684,19 +4237,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 166.3330000001224,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 2,
+   "lat_ms": 257.70079999983864,
+   "usage": {
+    "input_tokens": 7686,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 160.05059999997684,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 40,
+   "lat_ms": 291.44059999998717,
+   "usage": {
+    "input_tokens": 7721,
+    "output_tokens": 378
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -3748,19 +4307,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 178.81880000004458,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 247.30710000039835,
+   "usage": {
+    "input_tokens": 7247,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 161.47219999993467,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 40,
+   "lat_ms": 249.21329999961017,
+   "usage": {
+    "input_tokens": 7282,
+    "output_tokens": 378
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -3773,19 +4338,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 151.29339999975855,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 228.53289999966364,
+   "usage": {
+    "input_tokens": 523,
+    "output_tokens": 26
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 179.1480000001684,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 1,
+   "lat_ms": 204.17989999987185,
+   "usage": {
+    "input_tokens": 557,
+    "output_tokens": 34
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -3837,19 +4408,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 166.75949999989825,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 252.25200000022596,
+   "usage": {
+    "input_tokens": 6841,
+    "output_tokens": 368
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 173.4599999999773,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 40,
+   "lat_ms": 235.6049999998504,
+   "usage": {
+    "input_tokens": 6876,
+    "output_tokens": 378
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -3881,19 +4458,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 160.1743000001079,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 19,
+   "lat_ms": 265.34929999979795,
+   "usage": {
+    "input_tokens": 3570,
+    "output_tokens": 189
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 172.66699999981938,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 20,
+   "lat_ms": 222.31699999974808,
+   "usage": {
+    "input_tokens": 3605,
+    "output_tokens": 198
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -3926,19 +4509,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 165.11690000015733,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 230.56699999960983,
+   "usage": {
+    "input_tokens": 3635,
+    "output_tokens": 197
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 158.19769999961864,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 21,
+   "lat_ms": 247.39620000036666,
+   "usage": {
+    "input_tokens": 3670,
+    "output_tokens": 207
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -3957,19 +4546,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 160.94320000001971,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 6,
+   "lat_ms": 221.1858000000575,
+   "usage": {
+    "input_tokens": 1574,
+    "output_tokens": 74
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 157.09719999995286,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 7,
+   "lat_ms": 215.75279999979102,
+   "usage": {
+    "input_tokens": 1608,
+    "output_tokens": 82
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -3991,19 +4586,25 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 170.03089999980148,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 212.98959999967337,
+   "usage": {
+    "input_tokens": 2137,
+    "output_tokens": 98
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 151.97239999997691,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 10,
+   "lat_ms": 211.044600000605,
+   "usage": {
+    "input_tokens": 2172,
+    "output_tokens": 108
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  },
  {
   "gold": null,
@@ -4029,18 +4630,24 @@
   "gold_in_pool": false,
   "gold_pool_rank": null,
   "base": {
-   "idx": null,
-   "lat_ms": 170.49950000000536,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 0,
+   "lat_ms": 223.2955999998012,
+   "usage": {
+    "input_tokens": 2682,
+    "output_tokens": 134
+   },
+   "error": null
   },
   "abs": {
-   "idx": null,
-   "lat_ms": 155.16500000012456,
-   "usage": {},
-   "error": "HTTPError: HTTP Error 402: Payment Required"
+   "idx": 14,
+   "lat_ms": 215.11740000005375,
+   "usage": {
+    "input_tokens": 2717,
+    "output_tokens": 144
+   },
+   "error": null
   },
-  "base_cls": "err",
-  "abs_cls": "err"
+  "base_cls": "wrong",
+  "abs_cls": "none"
  }
 ]

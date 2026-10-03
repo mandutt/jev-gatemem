@@ -158,7 +158,7 @@ def run_case(query: str, pool: list, client, call_jev: bool = True, timeout: flo
     t0 = time.perf_counter()
     raised = None
     try:
-        out = jev_rerank(
+        out, _ = jev_rerank(
             query=query,
             pool=pool,
             client=client,
