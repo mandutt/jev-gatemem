@@ -18,6 +18,7 @@ the caller can fall back to its base provider. This module never raises.
 """
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Callable, Dict, List, Optional
 
 from mnemosyne.core import beam as beam_mod  # Mnemosyne SDK — agent-agnostic
@@ -60,17 +61,25 @@ def hydration_get(beam, memory_id: str) -> Optional[dict]:
     cross-session. Without this, pool candidates from other sessions are
     search hits that hydration silently drops (observed: 14/62 pool-outside
     gold). Pure read; Mnemosyne core untouched.
+
+    2026-10-03 archived-filter: FTS/imp/graph lane 원시 쿼리에는 temporal
+    필터가 없고(vec lane만 보유) hydration이 pool의 단일 choke point이므로
+    여기서 superseded_by/valid_until 필터를 강제한다 — 재판정 skip(archived)
+    행이 FTS 경유로 pool에 재유입되는 회귀를 실측('좋아 진행해줘' pool 3건).
     """
     conn = getattr(beam, "conn", None)
     if conn is None:
         # last-resort: public get() (session-scoped; may miss cross-session)
         return beam.get(memory_id)
+    now_iso = datetime.now().isoformat()
     for table in ("working_memory", "episodic_memory"):
         row = conn.execute(
             f"SELECT id, content, source, timestamp, session_id,"
             f" importance, metadata_json, veracity, created_at"
-            f" FROM {table} WHERE id = ?",
-            (memory_id,),
+            f" FROM {table} WHERE id = ?"
+            f" AND superseded_by IS NULL"
+            f" AND (valid_until IS NULL OR valid_until > ?)",
+            (memory_id, now_iso),
         ).fetchone()
         if row:
             return {

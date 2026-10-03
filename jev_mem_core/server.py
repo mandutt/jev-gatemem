@@ -298,9 +298,14 @@ class CoreServer:
                     " WHERE metadata_json LIKE '%fail_open%'"
                     " AND metadata_json NOT LIKE '%rejudged%'").fetchone()
                 rejudge["pending"] = int(n["n"]) if n else 0
+                # skip_staged: 태그형('rejudged:skip') + JSON형('"rejudged": "skip"')
+                # 둘 다 집계 — P1/tools는 태그형, P3 recover.py는 JSON형 기록.
+                # 한쪽만 세면 P3 적용분 누락 (2026-10-03 실측: 17 vs 실제 23).
                 s = mconn.execute(
                     "SELECT COUNT(*) AS n, MAX(timestamp) AS mx FROM working_memory"
-                    " WHERE metadata_json LIKE '%rejudged:skip%'").fetchone()
+                    " WHERE metadata_json LIKE '%rejudged:skip%'"
+                    " OR metadata_json LIKE '%\"rejudged\": \"skip\"%'"
+                    " OR metadata_json LIKE '%\"rejudged\":\"skip\"%'").fetchone()
                 rejudge["skip_staged"] = int(s["n"]) if s else 0
                 if s and s["mx"]:
                     try:
@@ -319,6 +324,25 @@ class CoreServer:
         except Exception:
             log.exception("status rejudge block failed")
 
+        # P2b/P3: open incident 목록은 DB(gate_outage)가 SoT — 재시작으로
+        # 런타임 stats가 리셋돼도 실제 상태를 반환한다 (2026-10-03 실측:
+        # 재시작 직후 stats=0으로 open incident 미표시). writer 불가 시에만 stats 폴백.
+        outages_info = {
+            "open": int(self.ctx.stats.get("outages_open", 0)),
+            "open_incidents": list(self.ctx.stats.get("outage_incidents", [])),
+        }
+        try:
+            from . import ledger as _ledger
+            open_rows = await self.ctx.writer.submit(
+                lambda w: _ledger.outage_open_incidents(w.state),
+                "status_outages")
+            outages_info = {
+                "open": len(open_rows),
+                "open_incidents": [r["incident_id"] for r in open_rows],
+            }
+        except Exception:
+            pass
+
         return web.json_response({
             "status": "ready",
             "degraded": bool(reasons),
@@ -329,10 +353,7 @@ class CoreServer:
                 k: v for k, v in stats.items()
                 if k.startswith("gate_fail_") and k != "gate_fail_open_total"
             },
-            "outages": {
-                "open": self.ctx.stats.get("outages_open", 0),
-                "open_incidents": self.ctx.stats.get("outage_incidents", []),
-            },
+            "outages": outages_info,
             "rejudge": rejudge,
             "uptime_s": round(time.monotonic() - self.ctx.started_at, 1),
             "version": __version__,

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from typing import Optional
 
 from gateway.types import MemoryCandidate, MemoryRecord, RecallHit
@@ -79,12 +80,17 @@ class MnemosyneBackend:
         beam = self._ensure_beam()
         conn = beam.conn
         cursor = conn.cursor()
+        # 2026-10-03 archived-filter: FTS lane은 temporal 필터가 없음 → 여기서
+        # superseded_by/valid_until 강제 (j1_engine.hydration_get와 동일 규칙).
+        now_iso = datetime.now().isoformat()
         for table in ("working_memory", "episodic_memory"):
             cursor.execute(
                 f"SELECT id, content, source, timestamp, session_id,"
                 f" importance, metadata_json, veracity, created_at"
-                f" FROM {table} WHERE id = ?",
-                (memory_id,),
+                f" FROM {table} WHERE id = ?"
+                f" AND superseded_by IS NULL"
+                f" AND (valid_until IS NULL OR valid_until > ?)",
+                (memory_id, now_iso),
             )
             row = cursor.fetchone()
             if row:

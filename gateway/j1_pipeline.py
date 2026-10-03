@@ -15,6 +15,7 @@ from __future__ import annotations
 import logging
 import os
 import time
+from datetime import datetime
 from typing import Callable, List, Optional
 
 from mnemosyne.core import beam as beam_mod
@@ -229,8 +230,11 @@ def _imp_search(conn, k: int = LANE_IMP_BUDGET, min_importance: float = IMP_MIN_
     try:
         rows = conn.execute(
             "SELECT id, importance, timestamp FROM working_memory"
-            " WHERE importance >= ? ORDER BY timestamp DESC LIMIT ?",
-            (min_importance, k),
+            " WHERE importance >= ?"
+            " AND superseded_by IS NULL"
+            " AND (valid_until IS NULL OR valid_until > ?)"
+            " ORDER BY timestamp DESC LIMIT ?",
+            (min_importance, datetime.now().isoformat(), k),
         ).fetchall()
     except Exception:
         return []
@@ -304,7 +308,10 @@ def _graph_lane_search(conn, query: str, k: int = LANE_GRAPH_BUDGET) -> List[dic
             content = None
             for table in ("working_memory", "episodic_memory"):
                 r = conn.execute(
-                    f"SELECT content FROM {table} WHERE id = ?", (gid,)
+                    f"SELECT content FROM {table} WHERE id = ?"
+                    f" AND superseded_by IS NULL"
+                    f" AND (valid_until IS NULL OR valid_until > ?)",
+                    (gid, datetime.now().isoformat()),
                 ).fetchone()
                 if r:
                     content = r[0]

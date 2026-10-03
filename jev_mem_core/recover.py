@@ -310,11 +310,20 @@ class RejudgeEngine:
                 meta["rejudged"] = verdict
                 if verdict == "skip":
                     meta["archived"] = True
-                    meta["valid_until"] = datetime.now().isoformat(
-                        timespec="seconds")
-                conn.execute(
-                    "UPDATE working_memory SET metadata_json=? WHERE id=?",
-                    (json.dumps(meta, ensure_ascii=False), memory_id))
+                    vu = datetime.now().isoformat(timespec="seconds")
+                    meta["valid_until"] = vu
+                    # ★컬럼 write 필수 — recall 필터는 metadata가 아니라 컬럼을 본다
+                    # (beam.py: `valid_until IS NULL OR valid_until > now`).
+                    # metadata만 쓰면 archived 행이 live recall에서 안 걸러짐
+                    # (2026-10-03 실측 회귀: P3 경로 7건 노출).
+                    conn.execute(
+                        "UPDATE working_memory SET metadata_json=?, valid_until=?"
+                        " WHERE id=?",
+                        (json.dumps(meta, ensure_ascii=False), vu, memory_id))
+                else:
+                    conn.execute(
+                        "UPDATE working_memory SET metadata_json=? WHERE id=?",
+                        (json.dumps(meta, ensure_ascii=False), memory_id))
                 conn.commit()
                 log.info("apply %s -> %s (%s)", memory_id[:16], verdict,
                          incident_id)

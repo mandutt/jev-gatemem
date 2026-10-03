@@ -120,9 +120,18 @@ def _apply_verdict(conn, memory_id: str, verdict: str, model: str) -> None:
     meta["rejudged_at"] = datetime.now().isoformat(timespec="seconds")
     if verdict == "skip":
         meta["archived"] = True
-    conn.execute(
-        "UPDATE working_memory SET metadata_json = ? WHERE id = ?",
-        (json.dumps(meta, ensure_ascii=False), memory_id))
+        # ★컬럼 write 필수 — recall 필터(beam.py)는 컬럼을 본다.
+        # metadata만 쓰면 archived 행이 live recall에서 걸러지지 않음 (2026-10-03 실측).
+        vu = datetime.now().isoformat(timespec="seconds")
+        meta["valid_until"] = vu
+        conn.execute(
+            "UPDATE working_memory SET metadata_json = ?, valid_until = ?"
+            " WHERE id = ?",
+            (json.dumps(meta, ensure_ascii=False), vu, memory_id))
+    else:
+        conn.execute(
+            "UPDATE working_memory SET metadata_json = ? WHERE id = ?",
+            (json.dumps(meta, ensure_ascii=False), memory_id))
     conn.commit()
 
 
