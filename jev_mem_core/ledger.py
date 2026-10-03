@@ -13,11 +13,16 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import time
 import uuid
 from typing import Any, Dict, Optional
 
-STATUSES = ("received", "gated", "stored", "skipped", "pending_gate", "failed")
+log = logging.getLogger(__name__)
+
+STATUSES = ("received", "gated", "stored", "skipped", "pending_gate", "failed",
+            "fail_open_quarantine", "rejudge_pending", "rejudge_running",
+            "rejudge_kept", "rejudge_invalidated")
 
 _SCHEMA = """
 CREATE TABLE IF NOT EXISTS ingest_ledger (
@@ -28,7 +33,9 @@ CREATE TABLE IF NOT EXISTS ingest_ledger (
   session_key    TEXT NOT NULL,
   turn_seq       INTEGER,
   status         TEXT NOT NULL CHECK (status IN
-                   ('received','gated','stored','skipped','pending_gate','failed')),
+                   ('received','gated','stored','skipped','pending_gate','failed',
+                    'fail_open_quarantine','rejudge_pending','rejudge_running',
+                    'rejudge_kept','rejudge_invalidated')),
   decisions_json TEXT,
   memory_ids_json TEXT,
   payload_json   TEXT,            -- origin text; NULL once terminal
@@ -41,12 +48,59 @@ CREATE INDEX IF NOT EXISTS idx_ledger_status ON ingest_ledger(status, received_a
 CREATE INDEX IF NOT EXISTS idx_ledger_updated ON ingest_ledger(updated_at);
 
 CREATE TABLE IF NOT EXISTS core_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+
+-- P2b: JEV 장애 구간 기록 (D7) — incident_id = start~end 구간
+CREATE TABLE IF NOT EXISTS gate_outage (
+  incident_id   TEXT PRIMARY KEY,
+  started_at    TEXT NOT NULL,
+  ended_at      TEXT,
+  reason        TEXT NOT NULL,      -- http-402 / http-403 / no-key / kill ...
+  failure_class TEXT NOT NULL,      -- billing / auth / transient / config ...
+  count         INTEGER NOT NULL DEFAULT 0,
+  status        TEXT NOT NULL DEFAULT 'open',  -- open | closed
+  created_at    TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_outage_status ON gate_outage(status, started_at);
 """
 
 
 def init_schema(conn) -> None:
     conn.executescript(_SCHEMA)
+    _migrate_status_check(conn)
     conn.commit()
+
+
+def _migrate_status_check(conn) -> None:
+    """기존 ingest_ledger의 CHECK 제약이 구버전(6개)일 때 table 재생성으로 확장.
+
+    CREATE TABLE IF NOT EXISTS는 기존 테이블 스키마를 바꾸지 않으므로,
+    status CHECK가 새 상태(11개)를 허용하지 않는 레거시 DB는 마이그레이션 필요.
+    Data는 보존 (same name + rename swap).
+    """
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND name='ingest_ledger'"
+    ).fetchone()
+    if not row or not row[0]:
+        return
+    sql = str(row[0])
+    # 새 CHECK가 이미 포함되어 있으면 스킵
+    if "fail_open_quarantine" in sql and "rejudge_kept" in sql:
+        return
+    conn.execute("ALTER TABLE ingest_ledger RENAME TO ingest_ledger_old")
+    conn.executescript(_SCHEMA)
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(ingest_ledger)").fetchall()]
+    collist = ", ".join(cols)
+    conn.execute(
+        f"INSERT INTO ingest_ledger ({collist})"
+        f" SELECT {collist} FROM ingest_ledger_old")
+    conn.execute("DROP TABLE ingest_ledger_old")
+    # 신규 테이블에도 인덱스 복구
+    conn.executescript("""
+        CREATE INDEX IF NOT EXISTS idx_ledger_status ON ingest_ledger(status, received_at);
+        CREATE INDEX IF NOT EXISTS idx_ledger_updated ON ingest_ledger(updated_at);
+    """)
+    conn.commit()
+    log.info("ingest_ledger CHECK migrated: 6 -> 11 statuses")
 
 
 def _now() -> str:
@@ -196,6 +250,64 @@ def pending_gate_count(conn) -> int:
         "SELECT COUNT(*) AS n FROM ingest_ledger WHERE status = 'pending_gate'"
     ).fetchone()
     return int(row["n"]) if row else 0
+
+
+# ---- P2b: gate_outage (D7 — 장애 구간 기록) ----
+
+def _now_iso() -> str:
+    return time.strftime("%Y-%m-%dT%H:%M:%S%z")
+
+
+def outage_open(conn, *, reason: str, failure_class: str,
+                incident_id: Optional[str] = None) -> str:
+    """Open (or reuse) an incident. Returns incident_id.
+
+    Same reason+class within 5 minutes reuses the open incident (연속 장애
+    병합); otherwise a new incident is created.
+    """
+    if not incident_id:
+        incident_id = f"inc-{uuid.uuid4().hex[:12]}"
+    now = _now_iso()
+    row = conn.execute(
+        "SELECT incident_id FROM gate_outage WHERE status = 'open'"
+        " AND reason = ? AND failure_class = ?"
+        " AND started_at >= datetime('now', '-5 minutes')"
+        " ORDER BY started_at DESC LIMIT 1", (reason, failure_class)
+    ).fetchone()
+    if row:
+        conn.execute(
+            "UPDATE gate_outage SET ended_at = ?, count = count + 1"
+            " WHERE incident_id = ?", (now, row["incident_id"]))
+        conn.commit()
+        return row["incident_id"]
+    conn.execute(
+        "INSERT INTO gate_outage (incident_id, started_at, ended_at, reason,"
+        " failure_class, count, status, created_at) VALUES (?,?,?,?,?,1,'open',?)",
+        (incident_id, now, now, reason, failure_class, now))
+    conn.commit()
+    return incident_id
+
+
+def outage_close(conn, incident_id: str) -> None:
+    conn.execute(
+        "UPDATE gate_outage SET ended_at = ?, status = 'closed'"
+        " WHERE incident_id = ? AND status = 'open'",
+        (_now_iso(), incident_id))
+    conn.commit()
+
+
+def outage_open_incidents(conn) -> list[Dict]:
+    rows = conn.execute(
+        "SELECT * FROM gate_outage WHERE status = 'open' ORDER BY started_at"
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def outage_count_by_class(conn) -> Dict[str, int]:
+    rows = conn.execute(
+        "SELECT failure_class, SUM(count) AS n FROM gate_outage"
+        " GROUP BY failure_class").fetchall()
+    return {r["failure_class"]: int(r["n"]) for r in rows}
 
 
 def _parse_ts(s: str) -> float:

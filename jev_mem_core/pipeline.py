@@ -168,7 +168,8 @@ class Pipeline:
             # 4) finish
             await self.ctx.writer.submit(
                 lambda w: self._finish(w, idem_key, decisions, mem_ids), "ledger_finish")
-            status = "stored" if mem_ids else "skipped"
+            fo = any((decisions.get(r) or {}).get("fail_open") for r in ("user", "assistant"))
+            status = "fail_open_quarantine" if fo else ("stored" if mem_ids else "skipped")
             self.ctx.stats["turns"][status] = self.ctx.stats["turns"].get(status, 0) + 1
             return {"ok": True, "status": status, "turn_id": turn_id,
                     "decisions": decisions, "memory_ids": mem_ids}
@@ -224,6 +225,9 @@ class Pipeline:
                 r["fail_open"] = reason
                 r["availability"] = "unavailable"
                 r["preservation"] = "quarantine"
+                # P2b: 장애 구간 기록 + incident_id 부여 (재판정 batch 단위)
+                fcls = r.get("failure_class") or _infer_failure_class(reason)
+                r["incident_id"] = self._incident_id(fcls, reason)
                 self.ctx.stats["gate_fail_open_total"] = (
                     self.ctx.stats.get("gate_fail_open_total", 0) + 1)
                 # P2a: failure_class 별 집계 (경보용) — billing/auth는 사람 개입 필요
@@ -246,6 +250,8 @@ class Pipeline:
                 r["fail_open"] = reason
                 r["availability"] = "unavailable"
                 r["preservation"] = "quarantine"
+                fcls = r.get("failure_class") or _infer_failure_class(reason)
+                r["incident_id"] = self._incident_id(fcls, reason)
                 self.ctx.stats["gate_fail_open_total"] = (
                     self.ctx.stats.get("gate_fail_open_total", 0) + 1)
                 fc = r.get("failure_class") or _infer_failure_class(reason)
@@ -260,6 +266,22 @@ class Pipeline:
             decisions["assistant"] = {"keep": True, "reason": "empty"}
         return decisions
 
+    def _incident_id(self, failure_class: str, reason: str) -> str:
+        """Get-or-create incident_id for the current outage (P2b, D7).
+
+        Writer thread가 아니므로 atomic하게 ledger에 기록할 수 없다.
+        ctx 레벨 캐시로 같은 class+reason 구간을 재사용하고, writer에서
+        ledger.outage_open으로 확정한다 (process_turn의 _finish 직전).
+        """
+        cache = getattr(self.ctx, "_incident_cache", None)
+        if cache is None:
+            cache = self.ctx._incident_cache = {}
+        key = f"{failure_class}|{reason}"
+        if key not in cache:
+            import uuid as _uuid
+            cache[key] = f"inc-{_uuid.uuid4().hex[:12]}"
+        return cache[key]
+
     def _store(self, w, req, decisions, session_key, idem_key, turn_id):
         from . import store
         return store.store_kept(w, req=req, decisions=decisions,
@@ -267,7 +289,34 @@ class Pipeline:
 
     def _finish(self, w, idem_key, decisions, mem_ids):
         from . import ledger
-        status = "stored" if mem_ids else "skipped"
+        fo = None
+        fcls = None
+        incident_id = None
+        for role in ("user", "assistant"):
+            d = (decisions.get(role) or {})
+            if d.get("fail_open"):
+                fo = d["fail_open"]
+                fcls = d.get("failure_class")
+                incident_id = d.get("incident_id")
+                break
+        if fo:
+            # P2b (v2 D1): fail-open KEEP -> quarantine 상태 기록 (재판정 대상)
+            status = "fail_open_quarantine"
+            # P2b (D7): gate_outage 테이블에 장애 구간 확정 기록
+            try:
+                if incident_id:
+                    ledger.outage_open(w.state, reason=fo,
+                                       failure_class=fcls or "unknown",
+                                       incident_id=incident_id)
+                    self.ctx.stats["outages_open"] = \
+                        len(ledger.outage_open_incidents(w.state))
+                    self.ctx.stats["outage_incidents"] = [
+                        i["incident_id"] for i in
+                        ledger.outage_open_incidents(w.state)]
+            except Exception:
+                pass  # ledger 기록 실패는 저장과 무관
+        else:
+            status = "stored" if mem_ids else "skipped"
         ledger.ledger_mark(w.state, idem_key, status, decisions=decisions,
                            memory_ids=mem_ids, clear_payload=True)
 

@@ -289,6 +289,10 @@ class CoreServer:
                 k: v for k, v in stats.items()
                 if k.startswith("gate_fail_") and k != "gate_fail_open_total"
             },
+            "outages": {
+                "open": self.ctx.stats.get("outages_open", 0),
+                "open_incidents": self.ctx.stats.get("outage_incidents", []),
+            },
             "uptime_s": round(time.monotonic() - self.ctx.started_at, 1),
             "version": __version__,
             "protocol": PROTOCOL,
