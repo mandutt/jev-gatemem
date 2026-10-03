@@ -252,6 +252,12 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - **라이브 버그 3건 발견·수정**: ① HTTP 실패-응답 skip 오분류 → 예외 승격 ② quarantine 재처리 무한루프 → `NOT LIKE '%rejudged%'` 필터 ③ `writer.submit()` wrap_future vs `.result()` 불일치 → `submit_sync()` (raw Future) 신설 + sync 호출부 6곳 전환 + `_note_recovery`/op_loop `asyncio.to_thread` 경유
 - 자동 재판정 비활성 스위치: `JEV_AUTO_REJUDGE=0` (수동 도구만). 재판정은 KEEP 자동 승격만, SKIP은 staged(`rejudged:skip` + archived + valid_until)까지 — 수동 승인 불변식 유지
 
+**★ archived(skip) recall 누출 수정 (2026-10-03 후속, 커밋 f5aa4ef)** — 재판정 skip 행 24건이 live recall에서 실제로 제외되지 않던 2중 결함:
+- **결함 A**: P3 `recover.py`·`rejudge_v2.py`가 skip 시 `valid_until`을 metadata에만 쓰고 **컬럼 누락** → recall 필터(컬럼 기준: `valid_until IS NULL OR valid_until > ?`) 무력. P1 apply는 정상이었고 P3 경로만 누락. → writer 수정 + 24건 백필(컬럼 NULL 0 확인)
+- **결함 B**: 컬럼을 채워도 **FTS/imp/graph lane + hydration에 temporal 필터 없음**(vec lane만 보유) → archived 행이 FTS 경유로 pool 재유입(실측: '좋아 진행해줘' pool 3건). → hydration(`j1_engine.hydration_get`·`backends.get_hydrated` — pool 단일 choke point) + `_imp_search`·`_graph_lane_search`에 `superseded_by IS NULL AND (valid_until IS NULL OR valid_until > ?)` 강제
+- 검증: 신규 `tools/jed_failopen_archived_recall_regress.py` (수정 전 24/24 누출 FAIL → 후 8/8 PASS) + 라이브 E2E(`/v1/prefetch` pool_ids archived 0, JEV 200 OK) + p3a 20/20·syncpath 7/7 회귀
+- 상세: `docs/review/2026-10-03_failopen_archived_recall_누출_수정완료.md`. **미결**: rejudged 마커 포맷 2종(태그형/JSON형) 신규 기록부 단일화
+
 - **최종 확정**: Pool Recall 90.0%는 현 구조의 사실상 상한. 커버리지 변수는 게이트 자체뿐
   (`min_coverage`/`min_distinctive`/vec-rank 예외) — POOL_BUDGET(40)/LANE_VEC_BUDGET(60)은
   컷오프라 커버리지와 무관(Run M에서 "게이트 통과 후 순위 밀림" 0건 확인).
