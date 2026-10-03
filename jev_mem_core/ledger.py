@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
 import time
 import uuid
 from typing import Any, Dict, Optional
@@ -77,6 +78,41 @@ CREATE TABLE IF NOT EXISTS rejudge_lease (
   lease_until  TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_lease_until ON rejudge_lease(lease_until);
+
+-- 4차 (skip_shadow): 게이트 SKIP 발화 원문의 audit-only shadow archive.
+-- recall 경로(read path)와 완전 분리 — 검색/저장 로직은 이 테이블을 읽지 않는다.
+-- 용도: 후회율 감사 표본 (SKIP됐지만 나중에 필요했던 기억이 있는가).
+CREATE TABLE IF NOT EXISTS skip_shadow (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  idem_key      TEXT NOT NULL UNIQUE,
+  turn_id       TEXT NOT NULL,
+  agent         TEXT NOT NULL,
+  session_key   TEXT NOT NULL,
+  speaker       TEXT NOT NULL CHECK (speaker IN ('user','assistant')),
+  content       TEXT NOT NULL,             -- redacted 후 최대 1500자
+  reason        TEXT NOT NULL,             -- skip / context / no-store / commitment-fp-v4 ...
+  store_conf    REAL,                      -- 게이트 판정 상세 (감사 축)
+  type_conf     REAL,
+  type_label    TEXT,
+  received_at   TEXT NOT NULL,             -- 발화 수신 시각 (leakage 차단 기준)
+  expires_at    TEXT NOT NULL              -- received_at + TTL(기본 90일)
+);
+CREATE INDEX IF NOT EXISTS idx_shadow_received ON skip_shadow(received_at);
+CREATE INDEX IF NOT EXISTS idx_shadow_speaker ON skip_shadow(speaker, received_at);
+
+-- 4차: prefetch 쿼리 영속 로깅 (감사용). recall 경로와 분리.
+-- 후회율 판정: query_log.received_at > skip_shadow.received_at 조인.
+CREATE TABLE IF NOT EXISTS query_log (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  query       TEXT NOT NULL,              -- redacted 후 최대 1500자
+  agent       TEXT NOT NULL,
+  session_id  TEXT NOT NULL,
+  received_at TEXT NOT NULL,              -- leakage 차단 기준
+  pool_n      INTEGER,                    -- prefetch 후보 수 (0 = 빈 풀)
+  abstained   INTEGER,                    -- JEV abstain 여부 (1/0)
+  latency_ms  INTEGER
+);
+CREATE INDEX IF NOT EXISTS idx_querylog_received ON query_log(received_at);
 """
 
 
@@ -243,6 +279,84 @@ def ledger_mark(conn, idem_key: str, status: str, *, decisions=None,
     args.append(idem_key)
     conn.execute(f"UPDATE ingest_ledger SET {', '.join(sets)} WHERE idem_key = ?", args)
     conn.commit()
+
+
+# ---- skip_shadow (4차 감사 전용 shadow archive) ----
+
+def shadow_ttl_days() -> int:
+    """Default 90 days (B 3차 제안). Overflow via JEV_MEM_SHADOW_TTL_DAYS."""
+    try:
+        return max(1, int(os.environ.get("JEV_MEM_SHADOW_TTL_DAYS", "90")))
+    except ValueError:
+        return 90
+
+
+def shadow_add(conn, *, idem_key: str, turn_id: str, agent: str, session_key: str,
+               speaker: str, content: str, reason: str, store_conf=None,
+               type_conf=None, type_label=None, received_at: str = "") -> None:
+    """Record a SKIP utterance for later regret audit.
+
+    - content is expected pre-redacted and pre-capped (caller applies
+      redact_text_high_precision + 1500-char cut) — this function stores as-is.
+    - Never raises: shadow failure must not affect the main pipeline.
+    - TTL: received_at + shadow_ttl_days().
+    """
+    try:
+        import datetime as _dt
+        if not received_at:
+            received_at = _now()
+        try:
+            t0 = _dt.datetime.fromisoformat(received_at)
+        except ValueError:
+            t0 = _dt.datetime.now()
+        exp = t0 + _dt.timedelta(days=shadow_ttl_days())
+        expires_at = exp.strftime("%Y-%m-%dT%H:%M:%S%z")
+        conn.execute(
+            """INSERT OR IGNORE INTO skip_shadow
+               (idem_key, turn_id, agent, session_key, speaker, content,
+                reason, store_conf, type_conf, type_label, received_at, expires_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+            (str(idem_key)[:80], str(turn_id)[:40], str(agent)[:40],
+             str(session_key)[:120], speaker, str(content)[:1500],
+             str(reason)[:60],
+             float(store_conf) if store_conf is not None else None,
+             float(type_conf) if type_conf is not None else None,
+             str(type_label)[:30] if type_label else None,
+             received_at, expires_at),
+        )
+        conn.commit()
+    except Exception:
+        log.exception("skip_shadow add failed (non-fatal)")
+
+
+def query_log_add(conn, *, query: str, agent: str, session_id: str,
+                  pool_n=None, abstained=None, latency_ms=None,
+                  received_at: str = "") -> None:
+    """4차: prefetch 쿼리 원문 영속 로깅 (감사용, recall 무영향).
+
+    caller가 redact_text_high_precision + 1500자 cap 적용 후 호출.
+    후회율 판정: 'query_log.received_at > skip_shadow.received_at' 조건으로
+    'SKIP 이후에 그 기억이 필요해진 실제 쿼리'를 leakage 없이 식별한다.
+    Never raises.
+    """
+    if os.environ.get("JEV_MEM_QUERYLOG") == "0":
+        return
+    try:
+        if not received_at:
+            received_at = _now()
+        conn.execute(
+            """INSERT INTO query_log
+               (query, agent, session_id, received_at, pool_n, abstained, latency_ms)
+               VALUES (?,?,?,?,?,?,?)""",
+            (str(query)[:1500], str(agent)[:40], str(session_id)[:120],
+             received_at,
+             int(pool_n) if pool_n is not None else None,
+             1 if abstained else (0 if abstained is not None else None),
+             int(latency_ms) if latency_ms is not None else None),
+        )
+        conn.commit()
+    except Exception:
+        log.exception("query_log add failed (non-fatal)")
 
 
 def recover_incomplete(conn) -> list[Dict]:

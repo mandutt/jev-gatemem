@@ -9,7 +9,9 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
+import os
 import time
 from typing import Any, Dict, List, Optional
 
@@ -324,12 +326,61 @@ class Pipeline:
                 pass  # ledger 기록 실패는 저장과 무관
         else:
             status = "stored" if mem_ids else "skipped"
+            # 4차: SKIP 발화 shadow archive (audit-only, recall 무영향).
+            # fail_open_quarantine은 KEEP(재판정 대상)이라 여기서 제외.
+            self._shadow_skips(w, idem_key, decisions, status)
         ledger.ledger_mark(w.state, idem_key, status, decisions=decisions,
                            memory_ids=mem_ids, clear_payload=True)
 
     def _ledger(self, w, idem_key, status, *, last_error=None):
         from . import ledger
         ledger.ledger_mark(w.state, idem_key, status, last_error=last_error)
+
+
+    def _shadow_skips(self, w, idem_key: str, decisions: Dict, status: str) -> None:
+        """4차: SKIP 발화를 skip_shadow 테이블에 기록 (audit-only).
+
+        - redaction (redact_text_high_precision) 후 1,500자 cap — B 4차 지적 반영
+          (1KB 바이트 cap은 한글 3바이트로 ~340자 — 감사 원문 왜곡).
+        - failure/quarantine KEEP은 여기 안 옴 (위 호출부에서 분기).
+        - 실패 시에도 절대 예외 전파하지 않음 (본 파이프라인 무영향).
+        """
+        if os.environ.get("JEV_MEM_SHADOW") == "0":
+            return
+        try:
+            from . import ledger
+            from .redact import redact_text_high_precision
+            row = w.state.conn.execute(
+                "SELECT agent, session_key, payload_json, received_at, turn_id"
+                " FROM ingest_ledger WHERE idem_key=?", (idem_key,)
+            ).fetchone()
+            if not row:
+                return
+            agent, session_key, payload_json, received_at, turn_id = row
+            payload = {}
+            if payload_json:
+                try:
+                    payload = json.loads(payload_json)
+                except Exception:
+                    payload = {}
+            user = payload.get("user_content") or ""
+            asst = payload.get("assistant_content") or ""
+            for spk, text in (("user", user), ("assistant", asst)):
+                d = decisions.get(spk) or {}
+                if d.get("keep") is False and (text or "").strip():
+                    safe = redact_text_high_precision(text)[:1500]
+                    ledger.shadow_add(
+                        w.state.conn, idem_key=idem_key, turn_id=turn_id or "",
+                        agent=agent or "", session_key=session_key or "",
+                        speaker=spk, content=safe,
+                        reason=str(d.get("reason") or "skip"),
+                        store_conf=d.get("store_conf"),
+                        type_conf=d.get("type_conf"),
+                        type_label=d.get("type"),
+                        received_at=received_at or "",
+                    )
+        except Exception:
+            log.exception("skip_shadow capture failed (non-fatal)")
 
     def _note_recovery(self) -> None:
         """P3 (D7): 실사용 호출 성공 1회 → open incident recovery streak 기록.
@@ -543,6 +594,20 @@ class Pipeline:
         meta = {"degraded": degraded, "degraded_reason": reason,
                 "rerank": rerank_used, "lanes": lanes,
                 "latency_ms": round((time.perf_counter() - t0) * 1000)}
+        # 4차: 쿼리 영속 로깅 (감사용, recall 무영향, writer 경유)
+        _abstained = bool(stage1_rows) and not final_rows and rerank_used == "jev"
+        try:
+            await self.ctx.writer.submit(
+                lambda w: _log_query(
+                    w, query=query, agent=req.get("agent") or "",
+                    session_id=req.get("session_id") or "",
+                    pool_n=len(stage1_rows) if stage1_rows else 0,
+                    abstained=_abstained,
+                    latency_ms=round((time.perf_counter() - t0) * 1000)),
+                "query_log",
+            )
+        except Exception:
+            log.exception("query_log capture failed (non-fatal)")
         if include_pool_ids:
             # Measurement aid: stage1 pool ids (RRF order) + post-rerank ids
             # (JEV lift observation). Opt-in via options.pool_ids.
@@ -601,12 +666,56 @@ class Pipeline:
 _jev_client_cache = None
 
 
+def _log_query(w, *, query: str, agent: str, session_id: str,
+               pool_n=None, abstained=None, latency_ms=None) -> None:
+    """4차: prefetch 쿼리를 query_log에 기록 (writer 스레드 안에서 호출).
+
+    recall 경로와 분리된 audit-only 로깅 — 실패해도 파이프라인 무영향.
+    """
+    try:
+        from . import ledger
+        from .redact import redact_text_high_precision
+        safe = redact_text_high_precision(query)[:1500]
+        ledger.query_log_add(
+            w.state.conn, query=safe, agent=agent, session_id=session_id,
+            pool_n=pool_n, abstained=abstained, latency_ms=latency_ms)
+    except Exception:
+        log.exception("query_log capture failed (non-fatal)")
+
+
 def _jev_client():
-    """Lazy shared httpx client for JEV calls (write_gate compatible)."""
+    """Lazy shared httpx client for JEV calls.
+
+    - 실측 테스트/개발 시 EXPLABS_API_KEY 우선 (experientiallabs 게이트웨이),
+      없으면 기존 TYPESAFE_API_KEY 폴백 (운영 데몬 호환 유지).
+    - JEV_API_URL도 동일 우선순위로 해석: EXPLABS_API_KEY 존재 시
+      https://api.experientiallabs.ai/v1/systemone 기본값 사용.
+    """
     global _jev_client_cache
     if _jev_client_cache is None:
-        from core import j1_engine
-        _jev_client_cache = j1_engine.typesafe_client()
+        import httpx
+        explabs_key = os.environ.get("EXPLABS_API_KEY") or ""
+        typesafe_key = os.environ.get("TYPESAFE_API_KEY") or ""
+        key = explabs_key or typesafe_key
+        if not key:
+            return None
+        if explabs_key:
+            api = os.environ.get("JEV_API_URL") or \
+                "https://api.experientiallabs.ai/v1/systemone"
+        else:
+            api = os.environ.get("JEV_API_URL") or \
+                "https://api.typesafe.ai/v1/systemone"
+        try:
+            _jev_client_cache = httpx.Client(
+                timeout=httpx.Timeout(5.0, connect=5.0),
+                headers={
+                    "Authorization": f"Bearer {key}",
+                    "Content-Type": "application/json",
+                },
+            )
+            _jev_client_cache._jev_api = api  # j1_pipeline이 env에 의존하므로 실제 URL은 env 기준
+        except Exception:
+            return None
     return _jev_client_cache
 
 
