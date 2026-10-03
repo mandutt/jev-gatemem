@@ -164,6 +164,40 @@ def _collect(answers: Dict, key: str):
         return None, None
 
 
+def _classify_http(status_code: int) -> str:
+    """HTTP status → failure_class (P2a, v2 검토 반영).
+
+    - 402/403: billing/auth — 지속적, 재시도 없음 (요청 단위), 사람 개입 필요
+    - 401: auth
+    - 429/5xx: transient (기존 pending_gate 재시도 대상)
+    - 그 외 4xx: unknown (안전하게 quarantine)
+    """
+    if status_code == 402:
+        return "billing"
+    if status_code in (401, 403):
+        return "auth"
+    if status_code == 429 or status_code >= 500:
+        return "transient"
+    return "unknown"
+
+
+def _failure_result(status_code: int) -> Dict:
+    """HTTP 실패 -> KEEP + failure_class/probe 정책 (P2a).
+
+    invariant (C-AI): availability==UNAVAILABLE && decision==KEEP → preservation==QUARANTINE
+    """
+    cls = _classify_http(status_code)
+    return {
+        "keep": True,
+        "reason": f"http-{status_code}",
+        "failure_class": cls,
+        "availability": "unavailable",
+        "preservation": "quarantine",
+        "request_retry_policy": "none" if cls in ("billing", "auth") else "backoff",
+        "recovery_probe_policy": "periodic" if cls in ("billing", "auth") else "none",
+    }
+
+
 def _post_systemone(client, *, utterance: str, timeout: float) -> tuple:
     """POST /v1/systemone with retry on transient server errors.
 
@@ -246,7 +280,7 @@ def evaluate(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIM
         lat_ms = (time.perf_counter() - t0) * 1000
         if status_code != 200:
             log.info("write-gate HTTP %s -> KEEP", status_code)
-            return {"keep": True, "reason": f"http-{status_code}"}
+            return _failure_result(status_code)
         store_idx, store_conf = _collect(answers, "store")
         type_idx, type_conf = _collect(answers, "classify")
         store = "STORE" if store_idx == 0 else ("NO_STORE" if store_idx == 1 else None)
@@ -348,7 +382,7 @@ def evaluate_assistant(utterance: str, *, client=None, timeout: float = JEV_WRIT
         lat_ms = (time.perf_counter() - t0) * 1000
         if status_code != 200:
             log.info("write-gate-as HTTP %s -> KEEP", status_code)
-            return {"keep": True, "reason": f"http-{status_code}"}
+            return _failure_result(status_code)
         store_idx, store_conf = _collect(answers, "store")
         type_idx, type_conf = _collect(answers, "classify")
         store = "STORE" if store_idx == 0 else ("NO_STORE" if store_idx == 1 else None)

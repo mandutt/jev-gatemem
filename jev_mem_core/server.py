@@ -267,11 +267,28 @@ class CoreServer:
         # (JEV_MEM_EMBED_WARMUP=warn); default mode refuses to start.
         if not self.ctx.embedding.get("warmup_ok"):
             reasons.append("embedding_warmup_failed")
+        # P2a: failure_class 기반 경보 — billing/auth는 사람 개입 필요.
+        # /v1/status가 마커(fail_open)가 아닌 클래스 집계로 degraded 판정.
+        stats = self.ctx.stats
+        gate_fail_billing = stats.get("gate_fail_billing", 0)
+        gate_fail_auth = stats.get("gate_fail_auth", 0)
+        if gate_fail_billing:
+            reasons.append("gate_billing_exhausted")
+        if gate_fail_auth:
+            reasons.append("gate_auth_failed")
+        # 임계값: billing/auth가 1회라도 있으면 degraded (KEEP 저장이 quarantine로
+        # 오염되므로 즉시 표면화). transient는 5회 streak로 기존 규칙 사용.
+        human_alert = bool(gate_fail_billing or gate_fail_auth)
         return web.json_response({
             "status": "ready",
             "degraded": bool(reasons),
             "degraded_reasons": reasons,
             "gate_fail_open_total": self.ctx.stats.get("gate_fail_open_total", 0),
+            "human_alert": human_alert,
+            "gate_fail_classes": {
+                k: v for k, v in stats.items()
+                if k.startswith("gate_fail_") and k != "gate_fail_open_total"
+            },
             "uptime_s": round(time.monotonic() - self.ctx.started_at, 1),
             "version": __version__,
             "protocol": PROTOCOL,

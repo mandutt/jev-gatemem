@@ -187,18 +187,49 @@ class Pipeline:
         user_skip = False
         asst_skip = False
         transient = ("http-5", "error")
-        fail_open_reasons = ("http-401", "no-wg", "kill", "parse")
+        # P2a (v2 검토): allowlist 폐기 → 불변식 반전.
+        #   정상 판정 = JEV 200 응답을 받고 규칙에 따라 KEEP/SKIP 결정 (reason이
+        #   store/type-rescue/low-conf/skip ... 등 규칙 기반).
+        #   그 외 (http-*, no-key, kill, parse, no-wg, empty) = fail-open.
+        #   reason이 transient(http-5xx, error)면 JevUnavailable(pending_gate)로.
+        #   C-AI invariant: availability==UNAVAILABLE && decision==KEEP → QUARANTINE
+        NORMAL_REASONS = ("store", "type-rescue", "low-conf", "skip", "context",
+                          "no-store", "commitment-fp-v4", "parse-fail")
+
+        def _infer_failure_class(reason: str) -> str:
+            """reason 문자열만 있을 때 failure_class 폴백 추론 (P2a).
+
+            - http-402 -> billing, http-401/403 -> auth, http-429/5xx -> transient
+            - no-key/kill -> config, 그 외 -> unknown
+            """
+            if reason.startswith("http-402"):
+                return "billing"
+            if reason.startswith("http-401") or reason.startswith("http-403"):
+                return "auth"
+            if reason.startswith("http-429") or reason.startswith("http-5"):
+                return "transient"
+            if reason in ("no-key", "kill", "killswitch-off"):
+                return "config"
+            return "unknown"
+
         if (user or "").strip() and len(user) > 5:
             r = wg.evaluate(user) if wg else {"keep": True, "reason": "no-wg"}
             reason = str(r.get("reason") or "")
             if reason.startswith(transient) or reason in ("error",):
                 raise JevUnavailable(f"gate user failed: {reason}")
-            # F11: mark fail-open KEEP verdicts (gate-less storage) for later
-            # re-judging/cleanup; surfaced in /v1/status degraded_reasons.
-            if r.get("keep") and (reason.startswith("http-401") or reason in fail_open_reasons):
+            # F11 (P2a 강화): 정상 판정이 아닌 모든 KEEP → fail_open 마커.
+            #   reason이 규칙 기반 정상 목록이 아니면 fail-open (allowlist 반전)
+            is_normal = reason in NORMAL_REASONS
+            if r.get("keep") and not is_normal:
                 r["fail_open"] = reason
+                r["availability"] = "unavailable"
+                r["preservation"] = "quarantine"
                 self.ctx.stats["gate_fail_open_total"] = (
                     self.ctx.stats.get("gate_fail_open_total", 0) + 1)
+                # P2a: failure_class 별 집계 (경보용) — billing/auth는 사람 개입 필요
+                fc = r.get("failure_class") or _infer_failure_class(reason)
+                key = f"gate_fail_{fc}"
+                self.ctx.stats[key] = self.ctx.stats.get(key, 0) + 1
                 self.ctx.fail_open_streak += 1
             else:
                 self.ctx.fail_open_streak = 0
@@ -211,10 +242,15 @@ class Pipeline:
             reason = str(r.get("reason") or "")
             if reason.startswith(transient) or reason in ("error",):
                 raise JevUnavailable(f"gate assistant failed: {reason}")
-            if r.get("keep") and (reason.startswith("http-401") or reason in fail_open_reasons):
+            if r.get("keep") and reason not in NORMAL_REASONS:
                 r["fail_open"] = reason
+                r["availability"] = "unavailable"
+                r["preservation"] = "quarantine"
                 self.ctx.stats["gate_fail_open_total"] = (
                     self.ctx.stats.get("gate_fail_open_total", 0) + 1)
+                fc = r.get("failure_class") or _infer_failure_class(reason)
+                key = f"gate_fail_{fc}"
+                self.ctx.stats[key] = self.ctx.stats.get(key, 0) + 1
                 self.ctx.fail_open_streak += 1
             else:
                 self.ctx.fail_open_streak = 0
