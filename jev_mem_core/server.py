@@ -25,6 +25,7 @@ except ImportError:  # pragma: no cover
 from . import __version__, PROTOCOL
 from .config import Config
 from .pipeline import Pipeline
+from .recover import FAILOPEN_PENDING_SQL  # quarantine predicate 공용 (B: 중앙화)
 from .tools import ToolExecutor
 
 log = logging.getLogger("jev_mem.server")
@@ -295,12 +296,11 @@ class CoreServer:
             try:
                 n = mconn.execute(
                     "SELECT COUNT(*) AS n FROM working_memory"
-                    " WHERE metadata_json LIKE '%fail_open%'"
-                    " AND metadata_json NOT LIKE '%rejudged%'").fetchone()
+                    f" WHERE {FAILOPEN_PENDING_SQL}").fetchone()
                 rejudge["pending"] = int(n["n"]) if n else 0
-                # skip_staged: 태그형('rejudged:skip') + JSON형('"rejudged": "skip"')
-                # 둘 다 집계 — P1/tools는 태그형, P3 recover.py는 JSON형 기록.
-                # 한쪽만 세면 P3 적용분 누락 (2026-10-03 실측: 17 vs 실제 23).
+                # skip_staged: canonical('"rejudged": "skip"') + 레거시 태그형
+                # ('rejudged:skip') 둘 다 집계 — P1/tools는 태그형, P3 recover.py는
+                # canonical 기록. 한쪽만 세면 P3 적용분 누락 (2026-10-03 실측: 17 vs 23).
                 s = mconn.execute(
                     "SELECT COUNT(*) AS n, MAX(timestamp) AS mx FROM working_memory"
                     " WHERE metadata_json LIKE '%rejudged:skip%'"

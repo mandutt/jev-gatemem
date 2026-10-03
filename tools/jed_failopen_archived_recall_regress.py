@@ -48,14 +48,20 @@ def main():
     conn.row_factory = sqlite3.Row
 
     # -- 목표집합: 아카이브(skip) 행 -------------------------------------
+    # canonical 우선 ("rejudged": "skip") + 레거시 태그형 호환 (2026-10-03 이후 0건)
     archived_ids = [r["id"] for r in conn.execute(
         "SELECT id FROM working_memory"
-        " WHERE metadata_json LIKE '%rejudged:skip%'"
-        " OR metadata_json LIKE '%\"rejudged\": \"skip\"%'"
+        " WHERE metadata_json LIKE '%\"rejudged\": \"skip\"%'"
         " OR metadata_json LIKE '%\"rejudged\":\"skip\"%'"
+        " OR metadata_json LIKE '%rejudged:skip%'"
     ).fetchall()]
     print(f"[0] 아카이브(skip) 행: {len(archived_ids)}건")
     check("아카이브 행 존재(>=20)", len(archived_ids) >= 20, f"got {len(archived_ids)}")
+    # 레거시 태그형 잔존 0건 단언 (canonical 백필 검증)
+    n_legacy = conn.execute(
+        "SELECT COUNT(*) FROM working_memory"
+        " WHERE metadata_json LIKE '%\"gate\": \"rejudged:%'").fetchone()[0]
+    check("레거시 태그형(gate=rejudged:) 0건", n_legacy == 0, f"got {n_legacy}")
 
     # -- 1) hydration 배제 -----------------------------------------------
     print("[1] hydration_get: 아카이브 전부 None 이어야 함")

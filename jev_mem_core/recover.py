@@ -20,6 +20,12 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+# quarantine 대상 predicate — canonical(rejudged 필드) + 레거시(태그형 gate) 동시 인식.
+# NOT LIKE '%rejudged%'는 canonical·레거시 모두에 걸려 재처리 방지 필터로 유효.
+FAILOPEN_PENDING_SQL = (
+    "metadata_json LIKE '%fail_open%'"
+    " AND metadata_json NOT LIKE '%rejudged%'")
+
 log = logging.getLogger("jev_mem.recover")
 
 # pipeline._evaluate_turn과 동일한 정상 판정 reason 목록 (allowlist 반전 기준)
@@ -38,8 +44,7 @@ def quarantine_rows(mconn, incident_id: Optional[str] = None, limit: int = 100
     (_incident_quarantine_left와 동일 필터).
     """
     q = ("SELECT id, content, metadata_json, timestamp FROM working_memory"
-         " WHERE metadata_json LIKE '%fail_open%'"
-         " AND metadata_json NOT LIKE '%rejudged%'")
+         f" WHERE {FAILOPEN_PENDING_SQL}")
     args: list = []
     if incident_id:
         q += " AND metadata_json LIKE ?"
@@ -288,6 +293,9 @@ class RejudgeEngine:
         skip : metadata.rejudged='skip' + archived=true + valid_until=now
                — P1 archiving 규칙과 동일하게 live recall에서 제외
         실패해도 rejudge_verdicts 기록은 유지 (재시도는 다음 배치에서).
+
+        canonical 포맷 (rejudge_markers): gate 불변, mutation 후 직렬화,
+        metadata_json만 UPDATE — valid_until 컬럼은 skip일 때만 별도 UPDATE.
         """
         import sqlite3
         from datetime import datetime
@@ -296,34 +304,21 @@ class RejudgeEngine:
             conn = sqlite3.connect(f"file:{db.as_posix()}?mode=rw", uri=True,
                                    timeout=15)
             try:
-                row = conn.execute(
-                    "SELECT metadata_json FROM working_memory WHERE id=?",
-                    (memory_id,)).fetchone()
-                if not row:
+                from .rejudge_markers import apply_rejudge_patch, now_iso
+                ok = apply_rejudge_patch(
+                    conn, memory_id, verdict,
+                    model=getattr(self.cfg, "jev_model", "jev-latest"))
+                if not ok:
                     log.warning("apply: row %s missing — skipped", memory_id)
                     return
-                meta = {}
-                try:
-                    meta = json.loads(row[0] or "{}")
-                except Exception:
-                    meta = {}
-                meta["rejudged"] = verdict
                 if verdict == "skip":
-                    meta["archived"] = True
-                    vu = datetime.now().isoformat(timespec="seconds")
-                    meta["valid_until"] = vu
                     # ★컬럼 write 필수 — recall 필터는 metadata가 아니라 컬럼을 본다
                     # (beam.py: `valid_until IS NULL OR valid_until > now`).
                     # metadata만 쓰면 archived 행이 live recall에서 안 걸러짐
                     # (2026-10-03 실측 회귀: P3 경로 7건 노출).
                     conn.execute(
-                        "UPDATE working_memory SET metadata_json=?, valid_until=?"
-                        " WHERE id=?",
-                        (json.dumps(meta, ensure_ascii=False), vu, memory_id))
-                else:
-                    conn.execute(
-                        "UPDATE working_memory SET metadata_json=? WHERE id=?",
-                        (json.dumps(meta, ensure_ascii=False), memory_id))
+                        "UPDATE working_memory SET valid_until=? WHERE id=?",
+                        (now_iso(), memory_id))
                 conn.commit()
                 log.info("apply %s -> %s (%s)", memory_id[:16], verdict,
                          incident_id)
@@ -347,14 +342,14 @@ class RejudgeEngine:
             if incident_id:
                 row = mconn.execute(
                     "SELECT COUNT(*) AS n FROM working_memory"
-                    " WHERE metadata_json LIKE ? AND metadata_json NOT LIKE '%rejudged%'",
+                    f" WHERE {FAILOPEN_PENDING_SQL}"
+                    " AND metadata_json LIKE ?",
                     (f"%{incident_id}%",)).fetchone()
             else:
                 # remnant (incident 미지정): 전체 pending quarantine 수
                 row = mconn.execute(
                     "SELECT COUNT(*) AS n FROM working_memory"
-                    " WHERE metadata_json LIKE '%fail_open%'"
-                    " AND metadata_json NOT LIKE '%rejudged%'").fetchone()
+                    f" WHERE {FAILOPEN_PENDING_SQL}").fetchone()
             return int(row["n"]) if row else 0
         except Exception:
             return -1

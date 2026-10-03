@@ -104,34 +104,21 @@ def _record(vconn, *, memory_id, verdict, model, reason, conf, lat_ms,
 
 
 def _apply_verdict(conn, memory_id: str, verdict: str, model: str) -> None:
-    """비파괴 반영: keep = rejudged:keep, skip = rejudged:skip + archived."""
-    row = conn.execute(
-        "SELECT metadata_json FROM working_memory WHERE id = ?", (memory_id,)
-    ).fetchone()
-    if not row:
+    """canonical 비파괴 반영 (rejudge_markers 공용 헬퍼).
+
+    keep = rejudged:'keep' / skip = rejudged:'skip' + archived + valid_until
+    gate는 절대 덮지 않는다 (원인 보존 불변식 — 태그형 합성 폐지).
+    """
+    from jev_mem_core.rejudge_markers import apply_rejudge_patch, now_iso
+    ok = apply_rejudge_patch(conn, memory_id, verdict, model=model)
+    if not ok:
         return
-    meta = {}
-    try:
-        meta = json.loads(row["metadata_json"] or "{}")
-    except Exception:
-        pass
-    # 이력 보존: 기존 gate/fail_open 값은 유지, verdict 기록
-    meta["gate"] = f"rejudged:{verdict}@{model}"
-    meta["rejudged_at"] = datetime.now().isoformat(timespec="seconds")
     if verdict == "skip":
-        meta["archived"] = True
         # ★컬럼 write 필수 — recall 필터(beam.py)는 컬럼을 본다.
         # metadata만 쓰면 archived 행이 live recall에서 걸러지지 않음 (2026-10-03 실측).
-        vu = datetime.now().isoformat(timespec="seconds")
-        meta["valid_until"] = vu
         conn.execute(
-            "UPDATE working_memory SET metadata_json = ?, valid_until = ?"
-            " WHERE id = ?",
-            (json.dumps(meta, ensure_ascii=False), vu, memory_id))
-    else:
-        conn.execute(
-            "UPDATE working_memory SET metadata_json = ? WHERE id = ?",
-            (json.dumps(meta, ensure_ascii=False), memory_id))
+            "UPDATE working_memory SET valid_until = ? WHERE id = ?",
+            (now_iso(), memory_id))
     conn.commit()
 
 

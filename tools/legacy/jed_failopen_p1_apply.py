@@ -1,10 +1,13 @@
 """P1 — ② 64건 반영: keep 49 승격 + skip 15 staged (---apply)
 
-- keep → metadata.gate = "rejudged:keep" (정상 승격, 감사 이력 유지)
-- skip → metadata.gate = "rejudged:skip" + "archived": true (recall 가역적 숨김, 하드 삭제 아님)
-- dry-run 기본; --apply 로만 DB 변경
-- rollback: 스냅샷 복원 또는 백업 failopen_tag_backup.json (gate_old 원복)
+⚠️ DEPRECATED — DO NOT RUN (canonical 마커 포맷으로 백필 완료, 2026-10-03).
+이 스크립트는 metadata.gate를 'rejudged:keep/skip'으로 덮어써 원인 정보를
+훼손하는 레거시 태그형 포맷을 생성한다. 재실행 금지.
 """
+raise SystemExit(
+    "DEPRECATED: legacy tag-format writer — canonical backfill completed "
+    "(2026-10-03). See tools/jed_failopen_marker_backfill.py.")
+
 import argparse, json, os, sqlite3, datetime, sys
 
 MNEMO = os.path.expandvars(r"%LOCALAPPDATA%\hermes\mnemosyne\data\mnemosyne.db")

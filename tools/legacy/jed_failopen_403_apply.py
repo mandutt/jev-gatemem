@@ -1,10 +1,13 @@
 """실제 403 2건 반영 (P1 절차 재사용) — 스냅샷 + apply + 검증.
 
-- 48f06bb6ed2360d7 [USER] 좋아 진행해줘 → SKIP (rejudged:skip + archived + valid_until)
-- 8c7b3441597eb71c [ASSISTANT] P2a 완료 보고 → KEEP (rejudged:keep)
-
-스냅샷: SQLite online backup (WAL 안전)
+⚠️ DEPRECATED — DO NOT RUN (canonical 마커 포맷으로 백필 완료, 2026-10-03).
+이 스크립트는 gate를 'rejudged:skip@jev-latest'로 덮어쓰는 레거시 태그형
+포맷을 생성한다 (원인 정보 훼손 + canonical 불변식 위반). 재실행 금지.
 """
+raise SystemExit(
+    "DEPRECATED: legacy tag-format writer — canonical backfill completed "
+    "(2026-10-03). See tools/jed_failopen_marker_backfill.py.")
+
 import json
 import os
 import sqlite3
