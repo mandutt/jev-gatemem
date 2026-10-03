@@ -1,0 +1,530 @@
+[
+ {
+  "qid": "n001",
+  "query": "다른 구성을 바꾼 적이 있어? 구체적으로 어떻게 했어?",
+  "type": "fact",
+  "gold_ids": [
+   "65a2d2e303367481"
+  ],
+  "gold_excerpts": [
+   "[USER] 다른 ai에게서 이런 답변이 나왔어\n\n---\n\n전체적으로 24차 설계는 이전 단계보다 상당히 정리됐습니다. 다만 지금 시점에서 가장 중요한 것은 “R1의 점수 패턴을 더 세밀하게 해석하는 것”보다, 이미 확인된 V/E 계층을 실제 controller의 결정"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n002",
+  "query": "정확히 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+  "type": "artifact",
+  "gold_ids": [
+   "8bfbe0fbc6e00f02"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 정확히 구분하겠습니다. **호출 수는 그대로 1회이고, 늘어나는 건 토큰(페이로드)뿐**입니다. 그리고 \"무답 쿼리 때만\"이 아니라 **모든 쿼리에 동일하게** 적용됩니다.\n\n## 호출 수: choice 1콜 → score 1콜, 동일\n\nscore"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n003",
+  "query": "원인 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+  "type": "artifact",
+  "gold_ids": [
+   "b0bbee5e935ac694"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 원인 규명 완료입니다. 결과가 매우 명확합니다:\n\n**mDenseOn의 참패는 접두사 문제가 아닙니다.**\n- A(prefix 정상): MRR 0.114\n- B(prefix 없음): MRR 0.118 — 거의 동일\n- D(doc-prefix 오용)"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n004",
+  "query": "PR 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+  "type": "artifact",
+  "gold_ids": [
+   "a76c32f12f076745"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] PR의 Pool Recall이 100%인 이유는 **성능이 아니라 정의의 차이**입니다. 이미 실측으로 입증된 사실입니다.\n\n## PR은 \"게이트가 없어서\" 100%\n\nPR의 구조는 **전체 코퍼스(419)를 레인 없이 전부 JEV에 노출**합니다"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n005",
+  "query": "IMPORTANT에 대해 사용자가 선호하는 방식이 있어?",
+  "type": "preference",
+  "gold_ids": [
+   "8506be574ec916f4"
+  ],
+  "gold_excerpts": [
+   "[USER] [IMPORTANT: Background process proc_381eb2b81004 completed normally (exit code 0).\nCommand: B=\"$LOCALAPPDATA/jev-mem/bench/run-20260930\"; V=\"$L"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n006",
+  "query": "실측 작업을 할 때 어떤 도구나 절차를 사용해?",
+  "type": "fact",
+  "gold_ids": [
+   "8728c2146ec43427"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 실측 완료입니다. 일관성 검증: 두 계측 모두 서빙 데몬(11428) 기준 동일 수치(Private 672.1MB)로 확정입니다.\n\n## 📊 임베딩 모델 RAM 점유량 — 실측\n\n**현재 라이브 서빙 데몬** (PID 11428, `bench/be"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n007",
+  "query": "라이브 시스템에서 완료했습니다 관련해서 어떤 설정이 적용되어 있어?",
+  "type": "fact",
+  "gold_ids": [
+   "d4c58b95c2c9ba35"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 완료했습니다. 결과 보고드립니다.\n\n## 구현\n\n`/v1/prefetch`에 `options.pool_ids=true` 추가 (커밋 `e353e1e`, 푸시 완료) — opt-in이라 기존 호출자에 영향 없음:\n- `meta.pool_ids`: s"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n008",
+  "query": "양쪽 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+  "type": "instruction",
+  "gold_ids": [
+   "10555641320fe37a"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 양쪽 구현을 실제 코드·문서 수준까지 대조했습니다. 결론부터 말씀드리면 **\"Jev를 읽기 시간에 판정자로 쓰는가, 쓰기 시간에 분류자로 쓰는가\"가 전부인 설계 대척점**이고, 이 프로젝트(Mnemon)의 논문이 정확히 그 분기를 벤치마크로 판정한"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n009",
+  "query": "라이브 시스템에서 url 관련해서 어떤 설정이 적용되어 있어?",
+  "type": "fact",
+  "gold_ids": [
+   "93b35851040918f2"
+  ],
+  "gold_excerpts": [
+   "[USER] @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Space-Capability-Realization-Report` 이 깃허브의 내용을 파악해줘\n\n--- Context Warnings ---\n- @url:`h"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n010",
+  "query": "IMPORTANT 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+  "type": "error",
+  "gold_ids": [
+   "d0348a43255994ac"
+  ],
+  "gold_excerpts": [
+   "[USER] [IMPORTANT: Background process proc_923378b5fe67 completed normally (exit code 0).\nCommand: B=\"$LOCALAPPDATA/jev-mem/bench/run-20260930\"; rm -r"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n011",
+  "query": "작업 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+  "type": "artifact",
+  "gold_ids": [
+   "5e41e1946a0bb6b5"
+  ],
+  "gold_excerpts": [
+   "[USER] 작업 디렉토리에 작은 Python 유틸리티 프로젝트를 문서화하세요.\n프로젝트 내용: `utils.py` (현재 존재) — `add(a,b)`, `mul(a,b)`, `greet(name)` 함수 포함.\n다음 세 파일을 생성하세요:\n1. `README.md`"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n012",
+  "query": "있습니다 구성을 바꾼 적이 있어? 구체적으로 어떻게 했어?",
+  "type": "fact",
+  "gold_ids": [
+   "d5d3644d89f95f4e"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 있습니다 — 다만 **제약 조건(RAM, fastembed 호환, 의역 강화)을 만족하는 범위에서** 봐야 합니다. 이전 S3 벤치에서 확인된 제약부터 정리하면:\n\n## 현재 제약 (S3 실측에서 확정된 것)\n\n- **RAM**: a8m 672MB"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n013",
+  "query": "다른 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+  "type": "instruction",
+  "gold_ids": [
+   "4ab9e79c91569c95"
+  ],
+  "gold_excerpts": [
+   "[USER] 다른 ai의 답변이야\n\n---\n\n최종 smoke test 하나가 필요합니다\n\n이번 hardening 버전으로 실제 Managed Mode를 한 번 실행해서:\n\nhermes-statem managed run\n    ↓\n--provider custom:loca"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n014",
+  "query": "모델 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+  "type": "error",
+  "gold_ids": [
+   "2aef8cb16e18507c"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 모델 구동 상태 점검 완료했습니다. 실측 결과입니다.\n\n## 9router 라우터 상태\n- **서버**: 9router v0.5.59 경로의 node 프로세스(PID 25444) 정상 구동 — 포트 **20128 LISTENING** ✓\n- **가"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n015",
+  "query": "조금 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+  "type": "artifact",
+  "gold_ids": [
+   "ec3c24beb85d22f3"
+  ],
+  "gold_excerpts": [
+   "[USER] 조금 전에 path 도구호출 오류 부분이 있었어. 해당 부분은 프로바이더 측의 오류로 보여서 로그를 첨부해서 리포트하고자 하니 해당 부분의 request dump를 파일로 만들어줘.\n\n\n---\nREADME ## 2가 갱신됐습니다. 이제 README의 O1~"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n016",
+  "query": "IMPORTANT 구성을 바꾼 적이 있어? 구체적으로 어떻게 했어?",
+  "type": "fact",
+  "gold_ids": [
+   "282d1e2a2f69e399"
+  ],
+  "gold_excerpts": [
+   "[USER] [IMPORTANT: Background process proc_c3bc1b15508c completed normally (exit code 0).\nCommand: cd \"C:/Users/mandu/hermes-made/jev-memory-middlewar"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n017",
+  "query": "원인 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+  "type": "error",
+  "gold_ids": [
+   "63d57a8367423dcf"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 원인 파악이 끝났습니다. 조사 결과를 정리해 보고합니다.\n\n## `/v1/status`에 모델 필드가 없는 이유\n\n### 1. 원인: 문서화만 된 \"P1 미착수\" 항목 (잊힌 게 아니라 우선순위에서 밀림)\n\n| 근거 | 내용 |\n|---|---|\n"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n018",
+  "query": "opencode 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+  "type": "error",
+  "gold_ids": [
+   "01e11a9c3438d5d6"
+  ],
+  "gold_excerpts": [
+   "[opencode session] task: 정지되었었는데, 다시 이어서 시작해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nworktree: C:\\Users\\mandu\\Documents\\opencode\\testp"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n019",
+  "query": "IMPORTANT 작업할 때 주의하거나 선호하는 점이 뭐야?",
+  "type": "preference",
+  "gold_ids": [
+   "1a27e0b3af9c8294"
+  ],
+  "gold_excerpts": [
+   "[USER] [IMPORTANT: Background process proc_9adae6704e46 completed normally (exit code 0).\nCommand: cd /c/Users/mandu/hermes-made/verifier-pilot/experi"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n020",
+  "query": "검증 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+  "type": "instruction",
+  "gold_ids": [
+   "d7e42dafa3143a95"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 검증 완료했습니다. 테스트용 행을 별도로 생성하지 않고 기존 라이브 대화 데이터로만 검증했으므로(이 세션 자체가 라이브 쓰기 대상) 삭제할 테스트 행은 없습니다.\n\n## S4 임베딩 마이그레이션 검증 결과 (2026-10-01)\n\n### 1. 데몬"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n021",
+  "query": "가지 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+  "type": "error",
+  "gold_ids": [
+   "7cab2a81ca778295"
+  ],
+  "gold_excerpts": [
+   "[USER] 한 가지 궁금한 점이 있어. typed_memory.py에 아까 한글 어미 관련 사항을 넣었는데, 해당 문서에는 영어로 error, file, folder 등의 단어가 나왔을 때 분류하는 기준도 있어. 그런데 만약에 한글로 같은 뜻인 오류, 파일, 폴더 등"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n022",
+  "query": "S3 구성을 바꾼 적이 있어? 구체적으로 어떻게 했어?",
+  "type": "fact",
+  "gold_ids": [
+   "026fa103a0f1f346"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] **S3 전 단계 완료.** 최종 보고서를 `jev-memory-middleware/docs/design/embed-benchmark-final-report.md`에 작성했습니다.\n\n## 핵심 결과\n\n**P3 vec-only gold (20쿼리, "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n023",
+  "query": "결정적 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+  "type": "error",
+  "gold_ids": [
+   "cb011c72739b1777"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] **결정적 발견입니다.**\n\n- 10-02 stored 24건 전부 `user:http-402 / asst:http-402` (403 4건) — **write_gate가 실패 사유를 decisions에 이미 기록합니다!**\n- 즉 **식별은 이미 "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n024",
+  "query": "라이브 시스템에서 방식의 관련해서 어떤 설정이 적용되어 있어?",
+  "type": "fact",
+  "gold_ids": [
+   "1348f4211a0633ba"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 두 방식의 차이를 명확히 설명드리겠습니다.\n\n## 방식 비교: pipeline 주입 vs core 내장 로더\n\n### 방식 A — pipeline 모듈 주입 (권장)\n\n```python\n# core/j1_engine.py — gateway를 imp"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n025",
+  "query": "마지막 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+  "type": "error",
+  "gold_ids": [
+   "f66a777d230b35df"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 마지막 답변(3개 AI의 v2 2차 검토 종합 보고)을 다시 보여드립니다.\n\n---\n\n# 📋 v2 설계안 — 2차 검토 3개 AI 종합 (재전송)\n\n## 1. 총평: 조건부 승인 — \"v2 방향 유지, v2.1 소폭 개정 후 구현\"\n\n- **A**"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n026",
+  "query": "라이브 시스템에서 다른 관련해서 어떤 설정이 적용되어 있어?",
+  "type": "fact",
+  "gold_ids": [
+   "f26a5a04273d3d9f"
+  ],
+  "gold_excerpts": [
+   "[USER] 다른 ai에선 이런 답변이 나왔어.\n\n---\n\n네. 이번 9차 결과는 이전보다 훨씬 중요한 실측입니다. 결론부터 말하면, **현재 v1 SUSPECT 규칙은 실제 Hermes shadow 환경에서는 폐기해야 합니다.** 다만 이것이 “completion s"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n027",
+  "query": "라이브 시스템에서 반영해둬 관련해서 어떤 설정이 적용되어 있어?",
+  "type": "fact",
+  "gold_ids": [
+   "22b0a7ae73c420d9"
+  ],
+  "gold_excerpts": [
+   "[USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데, 실제 효과가 있는 구조인지 실험이 필요해\n\n---\n\n이 리포지토리는 꽤 중요합니다. 오히려 지금까지 "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n028",
+  "query": "codex 작업을 할 때 어떤 도구나 절차를 사용해?",
+  "type": "fact",
+  "gold_ids": [
+   "a4b8a46a25272eb1"
+  ],
+  "gold_excerpts": [
+   "[codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 codex, opencodex의 모델별 adapter 설정 "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n029",
+  "query": "라이브 시스템에서 codex 관련해서 어떤 설정이 적용되어 있어?",
+  "type": "fact",
+  "gold_ids": [
+   "02b8344c325ea807"
+  ],
+  "gold_excerpts": [
+   "[codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 codex, opencodex의 모델별 adapter 설정 "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n030",
+  "query": "file 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+  "type": "error",
+  "gold_ids": [
+   "7f6666aa2ac72368"
+  ],
+  "gold_excerpts": [
+   "[USER] @file:`Downloads/c-ai-s4 임베딩 마이그레이션 수정 필요 항목.md`\n@file:`Downloads/b-ai-s4 임베딩 마이그레이션 수정 필요 항목.md`\n@file:`Downloads/a-ai-s4 임베딩 마이그레이션 수정 필요 항목."
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n031",
+  "query": "아니요 작업을 할 때 어떤 도구나 절차를 사용해?",
+  "type": "fact",
+  "gold_ids": [
+   "4f11d97159ad9621"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 아니요 — **임베딩 모델 단독 비교에는 JEV API가 전혀 필요 없습니다.** 이번 세션의 Run M/N이 정확히 그 방식으로 JEV 0회로 돌았습니다.\n\n## 단계별로 보면\n\n파이프라인에서 임베딩은 **vec lane(로컬)**이 담당하고, "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n032",
+  "query": "file 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+  "type": "error",
+  "gold_ids": [
+   "d41cb780a46c7e49"
+  ],
+  "gold_excerpts": [
+   "[USER] @file:`Downloads/c-ai-임베딩 마이그레이션 v2 검토.md`\n@file:`Downloads/b-ai-임베딩 마이그레이션 v2 검토.md`\n@file:`Downloads/a-ai-임베딩 마이그레이션 v2 검토.md`\n\n해당 계획서를 다시 한번"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n033",
+  "query": "IMPORTANT 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+  "type": "instruction",
+  "gold_ids": [
+   "9ee99cb62a078578"
+  ],
+  "gold_excerpts": [
+   "[USER] [IMPORTANT: Background process proc_23e1daad5bf0 completed normally (exit code 0).\nCommand: \"$LOCALAPPDATA/jev-mem/venv-qwen3test/Scripts/pytho"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n034",
+  "query": "opencode 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+  "type": "error",
+  "gold_ids": [
+   "6cefa169e5011c45"
+  ],
+  "gold_excerpts": [
+   "[opencode session] task: 정지되었었는데, 다시 이어서 시작해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nworktree: C:\\Users\\mandu\\Documents\\opencode\\testp"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n035",
+  "query": "IMPORTANT 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+  "type": "error",
+  "gold_ids": [
+   "1bbc55c3267df3c0"
+  ],
+  "gold_excerpts": [
+   "[USER] [IMPORTANT: Background process proc_c9ff94a12ed4 completed normally (exit code 0).\nCommand: cd \"C:/Users/mandu/AppData/Local/hermes/cache/scrat"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n036",
+  "query": "이어서 작업을 할 때 어떤 도구나 절차를 사용해?",
+  "type": "fact",
+  "gold_ids": [
+   "e1a28f0d76609137"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 이어서 답변드립니다.\n\n## 왜 `bench/bekko-a8m`인가\n\n맞습니다 — 원래 HF 모델명은 `hotchpotch/bekko-embedding-v1-a8m`입니다. `bench/bekko-a8m`은 제가 만든 **로컬 커스텀 별칭(alia"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n037",
+  "query": "S4 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+  "type": "error",
+  "gold_ids": [
+   "5af75316d57dfccf"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] **S4 리허설 완료 — 전 게이트 PASS.** 보고서 커밋 `083e622` 푸시됨 (`docs/design/s4-rehearsal-report-20261001.md`).\n\n| 항목 | 결과 |\n|---|---|\n| R1 preflight | "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n038",
+  "query": "이걸 작업을 할 때 어떤 도구나 절차를 사용해?",
+  "type": "fact",
+  "gold_ids": [
+   "ce9d5a702bb051c3"
+  ],
+  "gold_excerpts": [
+   "[USER] 이걸 승인하기 전에, 기존 다른 ai의 의견을 종합해서 나온 v2 설계안을 만들어야 하는 것 아니야?\n그래야 기존에 jev 장애 중 저장한 메모리를 제대로 재분류하는지 알수 있지 않나?"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n039",
+  "query": "The 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+  "type": "error",
+  "gold_ids": [
+   "958ea616816508b4"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] ⏳ The model is starting up — this takes about 14 minutes. Please wait…\n\n⚠️ File-mutation verifier: 1 file edit(s) FAILED this turn despite"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n040",
+  "query": "v3 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+  "type": "error",
+  "gold_ids": [
+   "e5c6a248e3eb246f"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] v3 설계 완료 — 커밋 `8059220`, push 완료.\n\n## 종합 요약\n\n**이번 검토의 결정적 발견: Mnemosyne 공식 `reindex_vectors()` API (beam.py:2394)**\n\n2차 검토 전 라이브 코드 실측에서, "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n041",
+  "query": "단계 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+  "type": "error",
+  "gold_ids": [
+   "2e19ba59ffcc1497"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] 전 단계 완료. 커밋 2건(`82f87bd` + `e5346c2`) push 완료, 저장소 clean, 라이브 데몬 정상 상태입니다.\n\n## 실행 완료 보고\n\n### 7단계 전체 완료\n\n| 단계 | 내용 | 결과 |\n|---|---|---|\n| 1"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n042",
+  "query": "나는 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+  "type": "error",
+  "gold_ids": [
+   "45417b4a4837daee"
+  ],
+  "gold_excerpts": [
+   "[USER] 나는 jev와 임베디드 모델을 같이 사용하고 있잖아. 그런데 jev를 대체할 수 있다고 주장하는 @url:`https://huggingface.co/fastino/GLiNER2.5-multi-Decide`이런 모델을 이용하면 jev와 임베디드를 같이 쓸 이"
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n043",
+  "query": "P0 작업을 할 때 어떤 도구나 절차를 사용해?",
+  "type": "fact",
+  "gold_ids": [
+   "c6e42681fc230289"
+  ],
+  "gold_excerpts": [
+   "[ASSISTANT] **P0' 완료 — A-AI 우려가 실제로 확인됐습니다!**\n\n## 결과: 맥락 결합 재평가 (JEV 5회, 키 정상)\n\n| # | assistant 발화 | 단독 평가 | 맥락 결합 | 변화 |\n|---|---|---|---|---|\n| 1 | "
+  ],
+  "auto": true
+ },
+ {
+  "qid": "n044",
+  "query": "이번엔 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+  "type": "instruction",
+  "gold_ids": [
+   "b259087788fb7975"
+  ],
+  "gold_excerpts": [
+   "[USER] 이번엔 다른 ai가 이런 답변을 줬어\n\n---\n\n이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **"
+  ],
+  "auto": true
+ }
+]

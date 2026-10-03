@@ -1,0 +1,402 @@
+[
+ {
+  "qid": "na001",
+  "query": "오늘 점심 뭐 먹을까?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na002",
+  "query": "주말에 영화 보러 갈까?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na003",
+  "query": "요즘 날씨가 어떤 것 같아?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na004",
+  "query": "가을 옷은 뭐가 유행이야?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na005",
+  "query": "서울에서 맛있는 맛집 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na006",
+  "query": "고양이 키우는 게 어때?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na007",
+  "query": "제주도 여행 계획 짜줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na008",
+  "query": "운동 루틴 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na009",
+  "query": "커피 vs 차 뭐가 더 좋아?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na010",
+  "query": "다이어트 식단 좀 짜줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na011",
+  "query": "인생 영화 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na012",
+  "query": "책 추천 받을 수 있어?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na013",
+  "query": "노래방 인기곡 뭐야?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na014",
+  "query": "주식 지금 사도 돼?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na015",
+  "query": "부동산 전세 vs 월세 뭐가 나아?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na016",
+  "query": "아이패드 vs 갤럭시 탭 뭐 살까?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na017",
+  "query": "게임 추천 좀 해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na018",
+  "query": "요리 초보인데 뭐부터 배울까?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na019",
+  "query": "혼자 여행 다녀본 적 있어?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na020",
+  "query": "반려견 훈련 방법 알려줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na021",
+  "query": "헬스 초보 루틴 알려줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na022",
+  "query": "필라테스 효과 있어?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na023",
+  "query": "수면 패턴 개선 방법?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na024",
+  "query": "명상 어플 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na025",
+  "query": "영어 공부 방법 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na026",
+  "query": "일본어 독학 가능해?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na027",
+  "query": "코딩 배우려면 뭐부터?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na028",
+  "query": "이력서 잘 쓰는 법?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na029",
+  "query": "면접 준비 어떻게 해?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na030",
+  "query": "연봉 협상 팁?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na031",
+  "query": "퇴사 고민인데 조언해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na032",
+  "query": "이직 준비 기간 얼마나 걸려?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na033",
+  "query": "자기계발서 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na034",
+  "query": "시간 관리 잘하는 법?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na035",
+  "query": "메모 앱 뭐 써?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na036",
+  "query": "다이어리 챌린지 해볼까?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na037",
+  "query": "친구 생일 선물 뭐가 좋아?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na038",
+  "query": "연인 기념일 이벤트 아이디어?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na039",
+  "query": "부모님 선물 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na040",
+  "query": "집들이 선물 뭐가 좋아?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na041",
+  "query": "크리스마스 선물 아이디어?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na042",
+  "query": "홈카페 용품 추천?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na043",
+  "query": "캠핑 장비 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na044",
+  "query": "등산 코스 추천해줘",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na045",
+  "query": "자전거 구매 팁?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na046",
+  "query": "차량 유지비 줄이는 법?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na047",
+  "query": "보험 뭐 들어야 해?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na048",
+  "query": "은행 이자 높은 곳?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na049",
+  "query": "알뜰폰 vs 통신사?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ },
+ {
+  "qid": "na050",
+  "query": "전기요금 절약 방법?",
+  "type": "NO_ANSWER",
+  "gold_ids": [],
+  "gold_excerpts": [],
+  "auto": true
+ }
+]
