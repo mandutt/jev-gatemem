@@ -1,3 +1,33 @@
+# Release Notes — v0.2.0 (2026-10-03)
+
+> **JEV-Mnemosyne Middleware v0.2.0** — Abstain 라벨 (Run O) 반영 릴리즈.
+> 무답 쿼리 오주입 완전 해결 + gold 정답 100% 보존.
+
+## 주요 변경 사항 (Highlights)
+
+- **Abstain 라벨**: JEV choice 질문에 "No candidate is usable evidence" 옵션 추가.
+  무답 쿼리의 오주입(lift-to-wrong)이 **10/10 → 0/10**으로 완전 제거됨 (운영 골든셋 100쿼리 A/B 실측).
+- **gold 정답 0 손실**: 59/59 보존, false abstention 0건.
+  wrong→none 17건 실사 결과 전부 "gold가 pool에 없는" 정당한 정화.
+- **비용 ~0**: 토큰 +34.6/콜 (+1.0%), 지연 p50 235→228ms.
+- **env 토글**: `JEV_ABSTAIN=0`으로 이전(비-abstain) 동작 복원 가능.
+
+## 아키텍처 변경
+
+- `gateway/j1_pipeline.py`: `_jev_choice` criteria에 abstain 라벨, `jev_rerank` → `(rows, abstained)` 튜플 반환
+- `gateway/gateway.py`, `jev_mem_core/pipeline.py`: `abstained=True` → 빈 결과 반환 (prefetch "메모리 없음")
+- `core/j1_engine.py` 및 실험 스크립트: 새 시그니처로 언패킹 갱신
+
+## ADR 영향
+
+- 이 저장소에는 ADR이 없습니다. 설계 결정은 `HANDOFF_NEXT_SESSION.md` +
+  `experiments/operational-golden/GOLDEN_RUNO_ABSTAIN.md`에 기록.
+
+---
+
+<details>
+<summary>v0.1.0 (2026-09-29)</summary>
+
 # Release Notes — v0.1.0 (2026-09-29)
 
 > **JEV-Mnemosyne Middleware** — Hermes 메모리 플러그인 첫 공개 릴리즈.
@@ -65,4 +95,4 @@ harnesses/                # Hermes 어댑터
 - **실사용**: 2026-09-29 데스크톱 세션 — G-AS 체크리스트 §8.5 전 항목 실측 통과
 - **Git**: working tree clean (커밋 `dbe7c01` 기준, 36커밋)
 
-**Judgement: READY FOR RELEASE (Final)**
+**Judgement: READY FOR RELEASE (Final)**</details>

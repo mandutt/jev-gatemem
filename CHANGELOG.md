@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.0] - 2026-10-03
+
+### Abstain 라벨 (Run O) — 무답 쿼리 오주입 완전 해결
+
+#### Added
+- JEV choice 질문에 abstain 라벨 `c<N>`("No candidate is usable evidence...") 추가
+- `JEV_ABSTAIN` env 토글 (기본 ON; `0`/`false`/`off`로 이전 동작 복원)
+- `jev_rerank`가 `(rows, abstained)` 튜플 반환 — abstain 시 lift 없이 `(pool, True)`
+- abstained=True → prefetch가 빈 context 반환 ("메모리 없음" 신호)
+
+#### Fixed
+- 무답 쿼리 오주입 10/10 → **0/10** (운영 골든셋 실측)
+- gold 정답 59/59 보존 (false abstention 0건), wrong→none 17/17 전부 정화 (gold pool 부재)
+- 토큰 +34.6/콜 (+1.0%), 지연 p50 235→228ms
+
+### 이전
 ## [0.1.0] - 2026-09-29
 
 ### 첫 릴리즈 — JEV-Mnemosyne Middleware (Hermes 메모리 플러그인)
