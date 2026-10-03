@@ -63,6 +63,18 @@ class Config:
     backup_interval_h: int = 24
     backup_keep: int = 7
     backup_lock_retries: int = 3  # 2s apart (D11d: spool/backup only)
+    # P3: 자동 재판정 (fail-open quarantine → rejudge worker)
+    #   - 회복 감지: 실제 사용자 호출 success streak (주기 프로브 금지)
+    #   - 실행 주체: core 내부 worker (외부 AI 3종 만장일치, D1-D8)
+    auto_rejudge: bool = True              # JEV_AUTO_REJUDGE=0 → 수동 도구만
+    rejudge_batch: int = 5                 # 1회 루프당 최대 재판정 수
+    rejudge_interval_s: int = 60           # worker 체크 주기 (requeue와 병렬)
+    rejudge_concurrency: int = 1           # JEV 동시 호출 상한 (foreground보다 낮게)
+    rejudge_streak: int = 3                # 회복 판정: 연속 성공 횟수
+    rejudge_cooldown_min: int = 30         # 회복 후 재판정 시작까지 대기 (히스테리시스)
+    rejudge_lease_s: int = 120             # 행 claim lease (만료 → pending 복구)
+    rejudge_billing_halt: bool = True      # 재판정 중 billing/auth 1회 실패 → 즉시 중단
+    rejudge_transient_halt: int = 3        # 일시 오류 연속 N회 → 중단
     # D-5 (2026-09-30, review F10): idle shutdown — graceful exit when all of:
     # no non-probe activity for N minutes, writer queue empty, no pending_gate
     # or spool backlog. 0 disables. Default 60 per review recommendation.
@@ -154,6 +166,24 @@ class Config:
                 cfg.idle_shutdown_min = int(ops["idle_shutdown_min"])
             if "store_redact" in ops:
                 cfg.store_redact = bool(ops["store_redact"])
+            if "auto_rejudge" in ops:
+                cfg.auto_rejudge = bool(ops["auto_rejudge"])
+            if "rejudge_batch" in ops:
+                cfg.rejudge_batch = int(ops["rejudge_batch"])
+            if "rejudge_interval_s" in ops:
+                cfg.rejudge_interval_s = int(ops["rejudge_interval_s"])
+            if "rejudge_concurrency" in ops:
+                cfg.rejudge_concurrency = int(ops["rejudge_concurrency"])
+            if "rejudge_streak" in ops:
+                cfg.rejudge_streak = int(ops["rejudge_streak"])
+            if "rejudge_cooldown_min" in ops:
+                cfg.rejudge_cooldown_min = int(ops["rejudge_cooldown_min"])
+            if "rejudge_lease_s" in ops:
+                cfg.rejudge_lease_s = int(ops["rejudge_lease_s"])
+            if "rejudge_billing_halt" in ops:
+                cfg.rejudge_billing_halt = bool(ops["rejudge_billing_halt"])
+            if "rejudge_transient_halt" in ops:
+                cfg.rejudge_transient_halt = int(ops["rejudge_transient_halt"])
             if "log_dir" in pth:
                 cfg.log_dir = Path(_expand(str(pth["log_dir"])))
 
@@ -164,6 +194,23 @@ class Config:
             cfg.mnemosyne_db = Path(_expand(os.environ[ENV_DB]))
         if os.environ.get(ENV_DATA_DIR):
             cfg.data_dir = Path(_expand(os.environ[ENV_DATA_DIR]))
+        # P3 rejudge env re-override (config.toml보다 env가 최종 승자)
+        if os.environ.get("JEV_AUTO_REJUDGE") is not None:
+            cfg.auto_rejudge = os.environ["JEV_AUTO_REJUDGE"].strip().lower() not in ("0", "false", "no")
+        if os.environ.get("JEV_REJUDGE_BATCH"):
+            cfg.rejudge_batch = int(os.environ["JEV_REJUDGE_BATCH"])
+        if os.environ.get("JEV_REJUDGE_STREAK"):
+            cfg.rejudge_streak = int(os.environ["JEV_REJUDGE_STREAK"])
+        if os.environ.get("JEV_REJUDGE_COOLDOWN_MIN"):
+            cfg.rejudge_cooldown_min = int(os.environ["JEV_REJUDGE_COOLDOWN_MIN"])
+        if os.environ.get("JEV_REJUDGE_LEASE_S"):
+            cfg.rejudge_lease_s = int(os.environ["JEV_REJUDGE_LEASE_S"])
+        if os.environ.get("JEV_REJUDGE_TRANSIENT_HALT"):
+            cfg.rejudge_transient_halt = int(os.environ["JEV_REJUDGE_TRANSIENT_HALT"])
+        if os.environ.get("JEV_REJUDGE_BILLING_HALT") is not None:
+            cfg.rejudge_billing_halt = os.environ["JEV_REJUDGE_BILLING_HALT"].strip().lower() not in ("0", "false", "no")
+        if os.environ.get("JEV_REJUDGE_CONCURRENCY"):
+            cfg.rejudge_concurrency = int(os.environ["JEV_REJUDGE_CONCURRENCY"])
 
         # default db path (P5: Hermes 실 메모리 DB 유지)
         if cfg.mnemosyne_db is None:

@@ -57,17 +57,62 @@ CREATE TABLE IF NOT EXISTS gate_outage (
   reason        TEXT NOT NULL,      -- http-402 / http-403 / no-key / kill ...
   failure_class TEXT NOT NULL,      -- billing / auth / transient / config ...
   count         INTEGER NOT NULL DEFAULT 0,
-  status        TEXT NOT NULL DEFAULT 'open',  -- open | closed
-  created_at    TEXT NOT NULL
+  status        TEXT NOT NULL DEFAULT 'open',  -- open | closed | rejudge_ready | rejudge_done
+  created_at    TEXT NOT NULL,
+  updated_at    TEXT NOT NULL DEFAULT '',
+  -- P3 (D7): 회복 판정 상태 — DB 영속 (재시작 안전, worker 메모리 금지)
+  recovery_success_count INTEGER NOT NULL DEFAULT 0,
+  recovery_confirmed_at  TEXT,
+  rejudge_eligible_at    TEXT,
+  rejudge_started_at     TEXT,
+  rejudge_finished_at    TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_outage_status ON gate_outage(status, started_at);
+
+-- P3: 재판정 행 lease (restart-safe claim — SQLite가 유일한 source of truth)
+CREATE TABLE IF NOT EXISTS rejudge_lease (
+  memory_id    TEXT PRIMARY KEY,
+  incident_id  TEXT NOT NULL,
+  leased_at    TEXT NOT NULL,
+  lease_until  TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_lease_until ON rejudge_lease(lease_until);
 """
 
 
 def init_schema(conn) -> None:
     conn.executescript(_SCHEMA)
     _migrate_status_check(conn)
+    _migrate_outage_p3(conn)
     conn.commit()
+
+
+def _migrate_outage_p3(conn) -> None:
+    """P3: 기존 gate_outage 테이블에 recovery/rejudge 컬럼 추가 (경량).
+
+    P2b 이전 DB는 status='open'|'closed' 2종 + P3 컬럼 없음. ALTER ADD COLUMN
+    (SQLite는 컬럼 추가만 지원 — DEFAULT 있으면 기존 행에 자동 채움).
+    """
+    cols = {r[1] for r in conn.execute(
+        "PRAGMA table_info(gate_outage)").fetchall()}
+    adds = {
+        "updated_at": "TEXT NOT NULL DEFAULT ''",
+        "recovery_success_count": "INTEGER NOT NULL DEFAULT 0",
+        "recovery_confirmed_at": "TEXT",
+        "rejudge_eligible_at": "TEXT",
+        "rejudge_started_at": "TEXT",
+        "rejudge_finished_at": "TEXT",
+    }
+    for name, ddl in adds.items():
+        if name not in cols:
+            conn.execute(f"ALTER TABLE gate_outage ADD COLUMN {name} {ddl}")
+    # 레거시 정정: ended_at이 찍혔는데 status='open'으로 남은 행 → closed
+    # (P2a outage_close가 ended_at만 기록하고 status 업데이트를 놓친 경우)
+    conn.execute(
+        "UPDATE gate_outage SET status = 'closed', updated_at = ended_at"
+        " WHERE status = 'open' AND ended_at IS NOT NULL AND ended_at != ''")
+    conn.commit()
+    log.info("gate_outage P3 columns migrated")
 
 
 def _migrate_status_check(conn) -> None:
@@ -319,3 +364,110 @@ def _parse_ts(s: str) -> float:
         return datetime.fromisoformat(s).timestamp()
     except Exception:
         return 0.0
+
+
+# ---- P3: 회복 감지 (D4, D7 — DB 영속, worker 메모리 금지) ----
+
+def recovery_record_success(conn, incident_id: str, *, streak: int,
+                            cooldown_min: int) -> bool:
+    """장애 incident에 성공 streak 1회 기록. 임계 도달 시 rejudge_ready 전이.
+
+    Returns True if the incident transitioned to rejudge_ready.
+    """
+    row = conn.execute(
+        "SELECT recovery_success_count, status FROM gate_outage"
+        " WHERE incident_id = ?", (incident_id,)
+    ).fetchone()
+    if not row or row["status"] != "open":
+        return False
+    n = int(row["recovery_success_count"] or 0) + 1
+    now = _now_iso()
+    confirmed = None
+    eligible = None
+    status = "open"
+    ready = False
+    if n >= streak:
+        confirmed = now
+        # 히스테리시스: confirmed_at + cooldown_min (UTC 비교)
+        eligible = time.strftime(
+            "%Y-%m-%dT%H:%M:%S%z",
+            time.localtime(time.time() + cooldown_min * 60))
+        status = "rejudge_ready"
+        ready = True
+    conn.execute(
+        "UPDATE gate_outage SET recovery_success_count = ?,"
+        " recovery_confirmed_at = COALESCE(?, recovery_confirmed_at),"
+        " rejudge_eligible_at = COALESCE(?, rejudge_eligible_at),"
+        " status = ?, updated_at = ? WHERE incident_id = ?",
+        (n, confirmed, eligible, status, now, incident_id))
+    conn.commit()
+    return ready
+
+
+def recovery_reset(conn, incident_id: str) -> None:
+    """장애 재발 시 streak 리셋 (open 유지)."""
+    conn.execute(
+        "UPDATE gate_outage SET recovery_success_count = 0,"
+        " recovery_confirmed_at = NULL, rejudge_eligible_at = NULL,"
+        " status = 'open', updated_at = ? WHERE incident_id = ?",
+        (_now_iso(), incident_id))
+    conn.commit()
+
+
+def recovery_ready_incidents(conn) -> list[Dict]:
+    """rejudge_ready 상태 + eligible_at 도달한 incident 목록."""
+    rows = conn.execute(
+        "SELECT * FROM gate_outage WHERE status = 'rejudge_ready'"
+        " ORDER BY started_at").fetchall()
+    out = []
+    now_ts = time.time()
+    for r in rows:
+        elig = _parse_ts(r["rejudge_eligible_at"] or "") if r["rejudge_eligible_at"] else 0
+        if elig and now_ts >= elig:
+            out.append(dict(r))
+    return out
+
+
+def outage_mark_rejudge_done(conn, incident_id: str) -> None:
+    """재판정 완료 시 incident 종결 (rejudge_done + closed)."""
+    now = _now_iso()
+    conn.execute(
+        "UPDATE gate_outage SET status = 'rejudge_done', ended_at = ?,"
+        " rejudge_finished_at = ? WHERE incident_id = ?",
+        (now, now, incident_id))
+    conn.commit()
+
+
+# ---- P3: 행 lease (restart-safe claim, D3) ----
+
+def rejudge_claim(conn, memory_id: str, incident_id: str, lease_s: int) -> bool:
+    """행 claim. 이미 유효 lease 있으면 False. 만료된 lease는 재claim."""
+    now = _now_iso()
+    until = time.strftime(
+        "%Y-%m-%dT%H:%M:%S%z",
+        time.localtime(time.time() + lease_s))
+    row = conn.execute(
+        "SELECT lease_until FROM rejudge_lease WHERE memory_id = ?",
+        (memory_id,)).fetchone()
+    if row:
+        if row["lease_until"] and _parse_ts(row["lease_until"]) > time.time():
+            return False  # 타 worker가 점유 중
+        conn.execute(
+            "UPDATE rejudge_lease SET incident_id=?, leased_at=?, lease_until=?"
+            " WHERE memory_id=?", (incident_id, now, until, memory_id))
+    else:
+        conn.execute(
+            "INSERT INTO rejudge_lease (memory_id, incident_id, leased_at, lease_until)"
+            " VALUES (?,?,?,?)", (memory_id, incident_id, now, until))
+    conn.commit()
+    return True
+
+
+def rejudge_release(conn, memory_id: str) -> None:
+    conn.execute("DELETE FROM rejudge_lease WHERE memory_id = ?", (memory_id,))
+    conn.commit()
+
+
+def rejudge_leases(conn) -> list[Dict]:
+    rows = conn.execute("SELECT * FROM rejudge_lease").fetchall()
+    return [dict(r) for r in rows]

@@ -82,7 +82,26 @@ class SingleWriter:
     def depth(self) -> int:
         return self._q.qsize()
 
-    def submit(self, fn: Callable[[WriterContext], Any], label: str = "job") -> asyncio.Future:
+    def submit(self, fn: Callable[[WriterContext], Any], label: str = "job"):
+        """이벤트 루프 스레드면 wrap_future(await 가능), 아니면 raw Future."""
+        fut = self.submit_sync(fn, label)
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            return fut
+        return asyncio.wrap_future(fut)
+
+    def submit_sync(self, fn: Callable[[WriterContext], Any],
+                    label: str = "job") -> Future:
+        """동기 대기(.result()) 전용 — 컨텍스트 무관 raw concurrent Future.
+
+        이벤트 루프 스레드에서 .result()로 대기하면 그동안 루프가 블록되므로
+        (짧은 DB 작업 한정 — JEV 등 네트워크 작업 금지) 루프 경로는
+        asyncio.to_thread 워커 안에서 호출하라. P3a 라이브 실측(2026-10-03):
+        submit()이 루프 스레드에서 wrap_future를 반환하는데 recover.py가
+        즉시 .result()를 불러 InvalidStateError — 회복 감지/streak 기록이
+        매 tick 실패했다 (core.log 'recovery_ready_incidents failed').
+        """
         if not self._accepting:
             raise WriterStopped()
         fut: "Future[Any]" = Future()
@@ -90,7 +109,7 @@ class SingleWriter:
             self._q.put_nowait(_Job(fn, fut, label, time.monotonic()))
         except queue.Full:
             raise QueueFull() from None
-        return asyncio.wrap_future(fut)
+        return fut
 
     # ---- writer thread ------------------------------------------------
     def _run(self) -> None:

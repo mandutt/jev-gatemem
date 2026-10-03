@@ -12,6 +12,7 @@ import asyncio
 import json
 import logging
 import secrets
+import sqlite3
 import time
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -279,6 +280,45 @@ class CoreServer:
         # 임계값: billing/auth가 1회라도 있으면 degraded (KEEP 저장이 quarantine로
         # 오염되므로 즉시 표면화). transient는 5회 streak로 기존 규칙 사용.
         human_alert = bool(gate_fail_billing or gate_fail_auth)
+        # P3 (D5, b-ai ④): 재판정 상태 노출 — SKIP staged 방치 방지.
+        #   - pending: 재판정 대기 quarantine 수
+        #   - ready_incidents: 회복 판정 완료 + eligible 도달 incident
+        #   - skip_staged: 승인 대기 (rejudged:skip) 수
+        #   - oldest_staged_days: 최고령 승인 대기 일수 (0 = 없음)
+        rejudge = {"pending": -1, "ready_incidents": [], "skip_staged": -1,
+                   "oldest_staged_days": 0}
+        try:
+            from . import ledger
+            mconn = sqlite3.connect(
+                f"file:{self.cfg.mnemosyne_db.as_posix()}?mode=ro", uri=True)
+            mconn.row_factory = sqlite3.Row
+            try:
+                n = mconn.execute(
+                    "SELECT COUNT(*) AS n FROM working_memory"
+                    " WHERE metadata_json LIKE '%fail_open%'"
+                    " AND metadata_json NOT LIKE '%rejudged%'").fetchone()
+                rejudge["pending"] = int(n["n"]) if n else 0
+                s = mconn.execute(
+                    "SELECT COUNT(*) AS n, MAX(timestamp) AS mx FROM working_memory"
+                    " WHERE metadata_json LIKE '%rejudged:skip%'").fetchone()
+                rejudge["skip_staged"] = int(s["n"]) if s else 0
+                if s and s["mx"]:
+                    try:
+                        from datetime import datetime
+                        mx = datetime.fromisoformat(s["mx"]).timestamp()
+                        rejudge["oldest_staged_days"] = max(
+                            0, round((time.time() - mx) / 86400, 1))
+                    except Exception:
+                        pass
+            finally:
+                mconn.close()
+            ready = await self.ctx.writer.submit(
+                lambda w: ledger.recovery_ready_incidents(w.state),
+                "status_rejudge_ready")
+            rejudge["ready_incidents"] = [i["incident_id"] for i in ready]
+        except Exception:
+            log.exception("status rejudge block failed")
+
         return web.json_response({
             "status": "ready",
             "degraded": bool(reasons),
@@ -293,6 +333,7 @@ class CoreServer:
                 "open": self.ctx.stats.get("outages_open", 0),
                 "open_incidents": self.ctx.stats.get("outage_incidents", []),
             },
+            "rejudge": rejudge,
             "uptime_s": round(time.monotonic() - self.ctx.started_at, 1),
             "version": __version__,
             "protocol": PROTOCOL,

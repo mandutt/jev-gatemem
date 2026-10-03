@@ -234,7 +234,23 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 | Run L PR full-scan | 운영 골든셋에서 Acc@1 **52.2% vs 83.3%** — 군집 코퍼스에서 rank2 밀림(31%) → **기각** | `275cd03` |
 | Run M 탈락 해부 | 탈락 9건 = 완전 의역 3(overlap=0) + 깊은 vec 순위 5 + 레인 부재 1. 예외 ≤20 확장도 회복 4/9 → **vec-rank 예외 레버 소진** | `159908d` |
 | Run N 어간 정규화 | 회복 **0건**, 90.0→82.2% 순손실 — **음절 단위 토큰화가 이미 pseudo-stemming 역할** → **기각** | `ca69db4` |
-| **Run O abstain** | **무답 오주입 10/10 → 0/10 (완전 해결), gold 59/59 보존, wrong→none 17/17 정화, 토큰 +1.0% → 채택·라이브 적용** (`JEV_ABSTAIN`, abstain 라벨 c<N>, abstained=True → 빈 context) | `(커밋 예정)` |
+| **Run O abstain** | **무답 오주입 10/10 → 0/10 (완전 해결), gold 59/59 보존, wrong→none 17/17 정화, 토큰 +1.0% → 채택·라이브 적용** (`JEV_ABSTAIN`, abstain 라벨 c<N>, abstained=True → 빈 context) | `556615922209` |
+
+**★ fail-open 장애 복구 파이프라인 완성 (2026-10-03) — P1/P2a/P2b/P3a 전체**
+
+> JEV API 장애(402/403) 기간 fail-open KEEP으로 저장된 메모리를 식별→격리→재판정하는 파이프라인.
+> 상세 문서: `docs/review/2026-10-03_failopen_{P1,P2a,P2b,P3a}_완료.md` + `2026-10-03_failopen_P3_설계안.md` (외부 AI 3종 검토 종합).
+
+| 단계 | 내용 | 상태 |
+|---|---|---|
+| P1 | 장애 기간 저장분 식별·태깅(`fail_open:*`) + 재판정 (49 keep / 15 skip archived) | ✅ |
+| P2a | fail-open 불변식 반전(allowlist 폐기 → NORMAL_REASONS 밖 전부 fail_open) + failure_class(billing/auth/transient) + `/v1/status` human_alert | ✅ |
+| P2b | 상태 머신 6→11 확장(fail_open_quarantine/rejudge_*) + gate_outage 테이블 + rename-swap 마이그레이션 | ✅ |
+| P3a | core 내부 자동 재판정 worker — 회복 감지(실호출 streak 3회) + lease + half-open 브레이커 연동 + op_loop 마이크로 배치. **실데이터 잔여 26건 소진(20 keep/6 skip), pending 0** | ✅ |
+
+- P3a 검증: `tools/jed_failopen_p3a_verify.py` 20/20 · `tools/jed_failopen_p3a_syncpath_verify.py` 7/7 (InvalidStateError 회귀) · `tools/jed_failopen_p3a_live_verify.py` 실통합 (실 JEV 호출)
+- **라이브 버그 3건 발견·수정**: ① HTTP 실패-응답 skip 오분류 → 예외 승격 ② quarantine 재처리 무한루프 → `NOT LIKE '%rejudged%'` 필터 ③ `writer.submit()` wrap_future vs `.result()` 불일치 → `submit_sync()` (raw Future) 신설 + sync 호출부 6곳 전환 + `_note_recovery`/op_loop `asyncio.to_thread` 경유
+- 자동 재판정 비활성 스위치: `JEV_AUTO_REJUDGE=0` (수동 도구만). 재판정은 KEEP 자동 승격만, SKIP은 staged(`rejudged:skip` + archived + valid_until)까지 — 수동 승인 불변식 유지
 
 - **최종 확정**: Pool Recall 90.0%는 현 구조의 사실상 상한. 커버리지 변수는 게이트 자체뿐
   (`min_coverage`/`min_distinctive`/vec-rank 예외) — POOL_BUDGET(40)/LANE_VEC_BUDGET(60)은

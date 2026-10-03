@@ -310,6 +310,48 @@ async def _op_loop(ctx: CoreContext, pipeline) -> None:
             log.warning("event loop lag %.1fs (watchdog)", lag)
         ctx._last_tick = time.monotonic()
 
+        # 5b) P3 자동 재판정 (JEV_AUTO_REJUDGE=0 → 수동 도구만)
+        if cfg.auto_rejudge and not ctx.breaker.is_open:
+            try:
+                from .recover import RejudgeEngine
+                engine = RejudgeEngine(ctx, cfg=cfg)
+                # 1) 회복 감지된 incident (rejudge_ready + eligible) 재판정
+                ready = await asyncio.to_thread(engine.ready_incidents)
+                for inc in ready:
+                    r = await asyncio.to_thread(
+                        engine.run_batch, incident_id=inc["incident_id"])
+                    if r.get("halted"):
+                        log.warning("rejudge halted for %s (재장애) — 다음 주기",
+                                    inc["incident_id"])
+                        break
+                    if r.get("rejudged"):
+                        log.info("rejudge %s: %s", inc["incident_id"], r)
+                # 2) open incident의 pending quarantine (재판정 대기) 처리
+                #    — 회복 감지 전이라도 quarantine 소진 진행 가능
+                opens = await asyncio.to_thread(engine.open_incidents)
+                for inc in opens:
+                    r = await asyncio.to_thread(
+                        engine.run_batch, incident_id=inc["incident_id"])
+                    if r.get("halted"):
+                        log.warning("rejudge halted for %s (재장애) — 다음 주기",
+                                    inc["incident_id"])
+                        break
+                    if r.get("rejudged"):
+                        log.info("rejudge (open) %s: %s", inc["incident_id"], r)
+                # 3) incident 미귀속/closed incident의 잔여 pending quarantine
+                #    (설계서 3.1 — incident 상태 무관, pending 전체 대상)
+                if ready or opens:
+                    # 위에서 이미 처리했으면 이번 주기 생략 (마이크로 배치 원칙)
+                    pass
+                else:
+                    r = await asyncio.to_thread(engine.run_batch)
+                    if r.get("halted"):
+                        log.warning("rejudge halted (재장애) — 다음 주기")
+                    elif r.get("rejudged"):
+                        log.info("rejudge (remnant): %s", r)
+            except Exception:
+                log.exception("auto rejudge loop error")
+
         # 6) D-5 idle shutdown: graceful exit when idle for idle_shutdown_min.
         # Conditions (ALL required, review F10):
         #   - no non-probe activity for N minutes

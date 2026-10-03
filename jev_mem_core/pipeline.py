@@ -170,6 +170,13 @@ class Pipeline:
                 lambda w: self._finish(w, idem_key, decisions, mem_ids), "ledger_finish")
             fo = any((decisions.get(r) or {}).get("fail_open") for r in ("user", "assistant"))
             status = "fail_open_quarantine" if fo else ("stored" if mem_ids else "skipped")
+            if not fo:
+                # P3 (D7): 실사용 호출 성공 → open incident recovery streak.
+                # 턴 단위 1회 — 같은 턴의 user/assistant 2회 호출이 streak을
+                # 부풀리지 않는다 (b-ai "3회 ≈ 1.5턴" 지적 해소: 서로 다른 턴 기준).
+                # to_thread: 내부 submit_sync().result()가 루프 스레드에서
+                # 실행되면 루프가 짧게 블록되므로 워커 스레드로 분리한다.
+                await asyncio.to_thread(self._note_recovery)
             self.ctx.stats["turns"][status] = self.ctx.stats["turns"].get(status, 0) + 1
             return {"ok": True, "status": status, "turn_id": turn_id,
                     "decisions": decisions, "memory_ids": mem_ids}
@@ -323,6 +330,32 @@ class Pipeline:
     def _ledger(self, w, idem_key, status, *, last_error=None):
         from . import ledger
         ledger.ledger_mark(w.state, idem_key, status, last_error=last_error)
+
+    def _note_recovery(self) -> None:
+        """P3 (D7): 실사용 호출 성공 1회 → open incident recovery streak 기록.
+
+        같은 턴 안의 2회 게이트 호출이 streak을 부풀리지 않도록 턴당 1회만.
+        open incident가 없으면 no-op. 회복 판정은 DB 영속 (재시작 안전).
+        """
+        try:
+            from .recover import RejudgeEngine
+            from . import ledger
+            if not getattr(self.ctx, "writer", None):
+                return
+            opens = self.ctx.writer.submit_sync(
+                lambda w: ledger.outage_open_incidents(w.state),
+                "outage_peek").result()
+            if not opens:
+                return
+            engine = RejudgeEngine(self.ctx, cfg=self.ctx.cfg)
+            for inc in opens:
+                try:
+                    engine.record_recovery_success(inc["incident_id"])
+                except Exception:
+                    log.exception("recovery streak failed for %s",
+                                  inc["incident_id"])
+        except Exception:
+            log.exception("_note_recovery failed")
 
     async def _gate_failure(self, req, rec, session_key, idem_key, turn_id, exc):
         """JEV unavailable -> pending_gate (B §8.2 default 'spool')."""
