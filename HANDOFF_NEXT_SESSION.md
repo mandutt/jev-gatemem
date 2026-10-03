@@ -256,7 +256,14 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - **결함 A**: P3 `recover.py`·`rejudge_v2.py`가 skip 시 `valid_until`을 metadata에만 쓰고 **컬럼 누락** → recall 필터(컬럼 기준: `valid_until IS NULL OR valid_until > ?`) 무력. P1 apply는 정상이었고 P3 경로만 누락. → writer 수정 + 24건 백필(컬럼 NULL 0 확인)
 - **결함 B**: 컬럼을 채워도 **FTS/imp/graph lane + hydration에 temporal 필터 없음**(vec lane만 보유) → archived 행이 FTS 경유로 pool 재유입(실측: '좋아 진행해줘' pool 3건). → hydration(`j1_engine.hydration_get`·`backends.get_hydrated` — pool 단일 choke point) + `_imp_search`·`_graph_lane_search`에 `superseded_by IS NULL AND (valid_until IS NULL OR valid_until > ?)` 강제
 - 검증: 신규 `tools/jed_failopen_archived_recall_regress.py` (수정 전 24/24 누출 FAIL → 후 8/8 PASS) + 라이브 E2E(`/v1/prefetch` pool_ids archived 0, JEV 200 OK) + p3a 20/20·syncpath 7/7 회귀
-- 상세: `docs/review/2026-10-03_failopen_archived_recall_누출_수정완료.md`. **미결**: rejudged 마커 포맷 2종(태그형/JSON형) 신규 기록부 단일화
+- 상세: `docs/review/2026-10-03_failopen_archived_recall_누출_수정완료.md`. **미결**: rejudged 마커 포맷 2종(태그형/JSON형) 신규 기록부 단일화 → **완료 (2026-10-03, 커밋 82f87bd)** 아래 참조
+
+**★ rejudged 마커 canonical 통일 + gate 원본 복원 (2026-10-03, 커밋 82f87bd)** — 외부 AI 3종 검토(a/b/c) 종합 반영:
+- 백필 96행: gate 원본 복원(스냅샷 체인 P1 13:10:28 + 403 13:32:31, 96/96 커버, 402:40 / 403:56) + canonical(`gate`=원인 불변 · `rejudged`=결과 + `rejudged_at`+`rejudged_at_source`). rejudged_at은 `rejudge_verdicts`(32) + P1 dry-run `run_at`(64) — 스냅샷 fallback 미사용. valid_until 컬럼 전 행 불변. 부수 결함(archived 2건 누락) 보충
+- 신규 기록부: `jev_mem_core/rejudge_markers.py` 공용 헬퍼(`apply_rejudge_patch`) — gate 불변·mutation 후 직렬화·metadata_json만 UPDATE. `recover.py`·`rejudge_v2.py` 이식. `server.py` pending predicate 공용 상수화
+- 레거시 tag-format writer(`403_apply.py`·`p1_apply.py`) → `tools/legacy/` 이동 + Exit Guard
+- 검증: markers_verify 22/22 · backfill post-verify PASS · recall regress(레거시 0건 포함) · p3a 20/20 · syncpath 7/7 · 라이브 `/v1/status` skip_staged=24 pending=0
+- **잔여(별도 승인 후)**: `rejudge_verdicts` P1 64건 백필(감사 SoT 정합 — recall/동작 무영향), 상세: `docs/review/2026-10-03_failopen_마커포맷_통일_완료.md`
 
 - **최종 확정**: Pool Recall 90.0%는 현 구조의 사실상 상한. 커버리지 변수는 게이트 자체뿐
   (`min_coverage`/`min_distinctive`/vec-rank 예외) — POOL_BUDGET(40)/LANE_VEC_BUDGET(60)은
