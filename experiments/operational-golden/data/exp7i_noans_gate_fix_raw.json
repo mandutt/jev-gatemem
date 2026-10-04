@@ -1,0 +1,76 @@
+{
+ "created_at": "2026-10-04T20:51:24+0900",
+ "model": "jev-latest",
+ "prompt": "Does this memory directly state or entail the answer to the question? Answer YES if it contains the specific fact/value/rule the question asks for. Answer NO if it only shares the topic, related keywords, or background.",
+ "mode": "noans-choice-fix",
+ "gate_limit": 800,
+ "n": 6,
+ "records": [
+  {
+   "qid": "nans2_001",
+   "query": "web_extract의 백엔드로 ddgs를 쓰고 있었던 기간이 언제야?",
+   "cand_id": "0ea67a3b101917e5",
+   "full": "웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이 extract. Exa 키리스는 한글 mojibake(ISO-8859-1) → tavily 권장. ①agent-browser CLI(npx) ②MCP nodriver stealth ③Camofox 미사용. 상세: hermes-web-tools-diagnostics. 소스 ~/AppData/Local/hermes/hermes-agent/.",
+   "verdict": "NO",
+   "err": null,
+   "cost": 0.0,
+   "full_len": 270,
+   "capped": false
+  },
+  {
+   "qid": "nans2_005",
+   "query": "Hermes config.yaml에서 browser.backend를 camofox로 설정한 적이 있어?",
+   "cand_id": "1928d454e0ed168b",
+   "full": "Hermes 내장 browser_* 도구 라우팅 설정 완료(2026-08-08): .env의 CAMOFOX_URL 활성 라인 제거(주석만 남음) → is_camofox_mode()=False. config: browser.engine=chrome(agent-browser --engine chrome), browser.headed=false(헤드리스 기본). 검증: 새 세션 hermes chat -q에서 browser_navigate(example.com) 성공, title=\"Example Domain\", HEADLESS_OK. nodriver MCP 컴패니언(browser)은 headless=true/stealth=true 유지, 로그인 시 set_headless(false)로 전환.",
+   "verdict": "YES",
+   "err": null,
+   "cost": 0.0,
+   "full_len": 387,
+   "capped": false
+  },
+  {
+   "qid": "nans2_008",
+   "query": "JEV_API_URL이 experientiallabs가 아니라 다른 URL이던 적이 있어?",
+   "cand_id": "74c7d39a23fa9b76",
+   "full": "[USER] 아니야. 기존 데몬은 typesafe api key를 사용하도록 그냥 그대로 놓고, 나중에 jev-mem 개발 중 테스트가 필요할 때 이 experientiallabs의 키를 활용하고 싶어",
+   "verdict": "YES",
+   "err": null,
+   "cost": 0.0,
+   "full_len": 112,
+   "capped": false
+  },
+  {
+   "qid": "nans2_009",
+   "query": "Free tier 한도가 $0.75/hour였던 시절이 있었어?",
+   "cand_id": "4fb122b04a3ef9f2",
+   "full": "[USER] experlabs 엔드포인트는 유료 크레딧 모델을 실행시켜도 무료 한도가 있으면 무료를 우선으로 쓰는 것 같아. experlabs의 무료 한도는 1시간 한도 0.5달러, 1일 한도 2달러로 보여. 네 예측에 따르면 0.5달러 이내이니 문제없지 않을까?",
+   "verdict": "NO",
+   "err": null,
+   "cost": 0.0,
+   "full_len": 147,
+   "capped": false
+  },
+  {
+   "qid": "nans2_011",
+   "query": "exa 검색이 키리스로 작동하던 기간이 언제야?",
+   "cand_id": "0ea67a3b101917e5",
+   "full": "웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이 extract. Exa 키리스는 한글 mojibake(ISO-8859-1) → tavily 권장. ①agent-browser CLI(npx) ②MCP nodriver stealth ③Camofox 미사용. 상세: hermes-web-tools-diagnostics. 소스 ~/AppData/Local/hermes/hermes-agent/.",
+   "verdict": "NO",
+   "err": null,
+   "cost": 0.0,
+   "full_len": 270,
+   "capped": false
+  },
+  {
+   "qid": "nans2_038",
+   "query": "메모리 저장을 승인 없이 자동으로 하던 규칙이 있었어?",
+   "cand_id": "e4359b175d387971",
+   "full": "[USER] assistant 발화를 저장하지 않는 건 므네모슈네 메모리 원본의 기본 작동 기준이야?",
+   "verdict": "NO",
+   "err": null,
+   "cost": 0.0,
+   "full_len": 56,
+   "capped": false
+  }
+ ]
+}
