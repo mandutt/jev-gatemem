@@ -35,9 +35,9 @@ for it in items:
     <div class="gold-body">{gold}</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button">? 모호<br><small>판단 필요</small></button>
+    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
+    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
+    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
 </div>""")
@@ -117,17 +117,10 @@ try {{
 }}
 try {{ localStorage.setItem(KEY, JSON.stringify({{}})); }} catch(e) {{ storageOK = false; }}
 
-// 이벤트 위임: main 전체에서 클릭을 받아 .vbtn을 찾는다 (자식 <small> 탭도 처리)
-document.getElementById('main').addEventListener('click', function(e) {{
-  const btn = e.target.closest('.vbtn');
-  if (!btn) return;
-  setV(btn);
-}});
-
-function setV(btn) {{
+// onclick="setV(this,'Y')" — 초기화 버튼과 동일한 직접 바인딩 방식 (모바일 호환 최대)
+function setV(btn, v) {{
   const card = btn.closest('.card');
   const n = card.dataset.n;
-  const v = btn.dataset.v;
   if (state[n] && state[n].v === v) {{
     delete state[n];
   }} else {{
