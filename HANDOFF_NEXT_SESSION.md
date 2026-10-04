@@ -204,6 +204,9 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - [ ] **Mnemosyne 업데이트 시** — `typed_memory.py` 한국어 패치 재적용: `.venv\Scripts\python.exe scripts\reapply_korean_classifier.py` (라이브 vs 재적용 40/40 검증됨). 업데이트 자체는 §7-12 정책(3.15.1 고정, 4.0.0 stable 확인 후) 따름
 - [ ] graph/fact lane — **실데이터 재평가**: facts/graph_edges/memoria_facts가 쌓이면 (수십 개 이상) verify_graph_lane_synthetic.py 방식으로 실데이터 gold 회수 확인 후 lane 상세 튜닝 (budget/confidence 임계값)
 - [x] **★ Hermes 종속성 독립화 (P1 일부)** — `core/j1_engine.py` 분리 완료 (hermes_j1은 얇은 어댑터로), smoke 7/7 + verify_core_j1_engine.py live DB PASS, 커밋 `140fa46`
+- [x] **★ 8차 400자 A + full-text 게이트 결합 (2026-10-04, 커밋 82cd674)** — 최종 아키텍처 확정: **400자 excerpt choice + full-text 게이트(≤800자) + R2(θ=0.5)**. 실측: op hit@3 **88.9%** (+8.9pp over 100자 A), noans FP **16.0%** (게이트 없이 28% → 적용 후 16%). **수동 3분류 판정 + 맹검 재판정(kappa 0.778)**: LGO 37건 중 32건(86.5%)이 VALID(대체 증거) — gate YES 100% 정밀도. 상세: `docs/review/2026-10-04_8차-*.md`, `7차-3분류-판정결과.md`.
+- [x] **★ Shadow 모니터링 구축 (2026-10-04, 커밋 fa451b6+bff76fc)** — Hermes cron 10분 배치(`jev_shadow_batch.py` → `shadow_batch.py`: query_log 신규 쿼리 → 400자 choice → full-text 게이트 → R2(θ=0.5) → shadow_log) + 매일 09:00 텔레그램 요약 cron(`jev_shadow_daily_summary.py`). **별도 데몬 없음** (Hermes cron이 실행). **판정(enforcement)**은 3~5일 shadow 축적 후: gate YES/NO/ABSTAIN 분포 + A vs R2 갈림률.
+- [x] **★ 데몬 typesafe→EXPERLABS 전환 (2026-10-04, 커밋 c4c61d9 + 3f3aa6f)** — 데몬이 `api.typesafe.ai 401`을 내던 2중 버그 수정: ① `_spawn_core()`가 HKCU에서 EXPLABS 키 주입 (Hermes env에 없어도) ② `_jev_choice()`가 `client._jev_api` 우선 (env JEV_API_URL 부재 시 typesafe 고정 버그). **SmartRotator 키 로테이션** (EXPLABS→EXPLABS2, 429 시 전환, 무료 소진 키는 **다음 정각(HH:00)까지** 제외 후 자동 복귀). 실측: `api.experientiallabs.ai 200 OK + idx 선택` 성공. **데몬 재시작 후** query_log 0건→활성화 (버그: `w.state.conn`→`w.state`).
 - [x] **★ 멀티 에이전트 전환 (Core-as-Writer) — 2026-09-29 P5 완료 (전체 완료)** — `docs/design/p1-core-server-report.md` (P1) + `docs/design/p2-spool-breaker-report.md` (P2) + `docs/design/p3-pi-extension-report.md` (P3) + `docs/design/p4-codex-opencode-report.md` (P4) + `docs/design/p5-hermes-rpc-report.md` (P5). **P5 완료**: Hermes rpc 전환(JevRpcProvider 기본, embedded 롤백), mnemosyne_* 툴 `/v1/tools` 프록시(단일 writer 직렬화), core DB → Hermes 실 DB 전환, 세션 접두사 `hermes_<sid>` 규칙 유지. 검증: §16.2 동시성 7/7 (1760 요청, 0 BUSY, p95 508ms), RPC 8/8+롤백 3/3, 전 회귀(smoke/P1/P2 chaos/redact) ALL, **재시작 후 라이브 실측** (activated, prefetch 200, turns.stored→실DB, tools 200, 행수 967→969). 커밋 `d2f6a05`. 잔여: ~~core 데몬 부팅 자동화~~ → **해소: on-demand 기동 확정** (client auto-start 수정 `2c1845e`+`46e24cc` — 첫 에이전트 요청 시 pythonw 무창 기동, 부팅 상주 불필요; 2026-09-29 사용자 확정), `/v1/tools` remember류 세션 스코프 확인
 
 **★ 임베딩 모델 교체 벤치마크 S3 완료 + bekko-a8m 채택 확정 (2026-10-01)**
@@ -331,9 +334,9 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 | Mnemosyne | v0.15.1, DB 766 working / 113 episodic / 95 memoria facts |
 | DB 경로 | `C:\Users\mandu\AppData\Local\hermes\mnemosyne\data\mnemosyne.db` |
 | 플러그인 | `C:\Users\mandu\AppData\Local\hermes\plugins\jev-mem\` (설치본) |
-| 키 | `TYPESAFE_API_KEY` → `C:\Users\mandu\AppData\Local\hermes\.env` (등록 완료) |
+| 키 | `EXPLABS_API_KEY` + `EXPLABS_API_KEY2` (HKCU\Environment) — 2026-10-04부터 데몬/게이트 모두 이 우선, `TYPESAFE_API_KEY` 최후 폴백 |
 | 런타임 venv | `C:\Users\mandu\AppData\Local\hermes\installs\315db7b763fb0d0a\environments\746564964b1042b79add42260378503b\venv\` |
-| Jev API | `https://api.typesafe.ai/v1/systemone`, model `jev-latest`, TYPESAFE_API_KEY |
+| Jev API | `https://api.experientiallabs.ai/v1/systemone` (EXPLABS 키 존재 시), model `jev-latest`, 무료 레인 자동 우선 (cost=0.0) |
 | 스냅샷 | `data/snapshots/snap-20260927.db` (실험용, 프로덕션 DB와 분리) |
 | 평가셋 | `data/dataset_curated.json` (52쿼리, 6유형, gold 16자리 ID) |
 | 로그 | `C:\Users\mandu\AppData\Local\hermes\logs\agent.log` (`grep "Jev choice"`) |
