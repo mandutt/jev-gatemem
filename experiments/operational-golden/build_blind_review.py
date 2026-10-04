@@ -54,7 +54,7 @@ for new_i, old_i in enumerate(order):
     r = targets[old_i]
     q = (r["query"] or "").replace("\n", " ").strip()
     cand_id = r.get("cand_id")
-    full = fetch_full(cand_id) or r.get("cand") or ""
+    full = fetch_full(cand_id) or r.get("full") or r.get("cand") or ""
     cards.append(
         f'''<div class="card" data-i="{new_i}" data-old="{old_i}">
   <div class="card-head"><span class="num">#{new_i + 1}</span></div>
