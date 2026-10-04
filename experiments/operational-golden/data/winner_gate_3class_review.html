@@ -20,6 +20,7 @@
   .badge.lgo{background:#4a148c;} .badge.noans{background:#004d40;}
   .qid{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .gate{font-size:10px;padding:2px 6px;border:1px solid var(--border);border-radius:8px;}
+  .note{font-size:9px;color:var(--muted);border:1px dashed var(--border);padding:1px 5px;border-radius:6px;}
   .q{font-size:14px;font-weight:600;line-height:1.5;margin-bottom:8px;}
   details{margin-bottom:10px;}
   summary{font-size:12px;color:var(--accent);cursor:pointer;}
@@ -50,387 +51,430 @@
   <div class="prog"><div class="bar"><div id="barFill"></div></div></div>
 </header>
 <div class="card" data-i="0">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">618362fc6d33e3c1</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">618362fc6d33e3c1</span><span class="gate">gate:NO</span><span class="note">전문 269자</span></div>
   <div class="q">🗨️ camelAI auto 라우팅에서 어려운 과제는 어떤 모델로 보내졌어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[2026-08-26 재검증으로 부분 기각] camelAI auto 라우팅 플립 트리거(08-25, 24호출): 당일엔 패딩 ~242~296토큰</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[2026-08-26 재검증으로 부분 기각] camelAI auto 라우팅 플립 트리거(08-25, 24호출): 당일엔 패딩 ~242~296토큰에서 gemini→luna 전환이 결정적으로 관측됐으나, 다음날(08-26, 92호출) 미재현 — 필러 1,458~1,938ptok에서도 luna 유지, 플립은 순수 크기 함수가 아님(라우터 버전 변경 또는 프롬프트캐시 왜곡 가능성). 유지되는 결론: 내용 무관 패딩으로 플립 가능, '복잡→gemini' 규칙은 클린 단발 프롬프트 한정.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r0" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r0" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r0" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="1">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">9d4feaccfa1020b4</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">9d4feaccfa1020b4</span><span class="gate">gate:YES</span><span class="note">전문 270자</span></div>
   <div class="q">🗨️ web_extract API 키 없이 쓸 수 있어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이 extract. Exa 키리스는 한글 mojibake(ISO-8859-1) → tavily 권장. ①agent-browser CLI(npx) ②MCP nodriver stealth ③Camofox 미사용. 상세: hermes-web-tools-diagnostics. 소스 ~/AppData/Local/hermes/hermes-agent/.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r1" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r1" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r1" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="2">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">9d4feaccfa1020b4</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">9d4feaccfa1020b4</span><span class="gate">gate:YES</span><span class="note">전문 270자</span></div>
   <div class="q">🗨️ 키리스 웹 추출 설정 어떻게 돼 있지?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이 extract. Exa 키리스는 한글 mojibake(ISO-8859-1) → tavily 권장. ①agent-browser CLI(npx) ②MCP nodriver stealth ③Camofox 미사용. 상세: hermes-web-tools-diagnostics. 소스 ~/AppData/Local/hermes/hermes-agent/.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r2" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r2" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r2" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="3">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">a112c8b5932fbc1f</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">a112c8b5932fbc1f</span><span class="gate">gate:NO</span><span class="note">전문 150자</span></div>
   <div class="q">🗨️ 입력 토큰 늘어나면 응답 지연도 늘어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 커뮤니티에서 인풋토큰이 많을 때 지연이 꽤 늘어난다는 이야기를 들었어. 그리고 high, xhigh, max별로도 다르다는 이야기를</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 커뮤니티에서 인풋토큰이 많을 때 지연이 꽤 늘어난다는 이야기를 들었어. 그리고 high, xhigh, max별로도 다르다는 이야기를 들었는데, 사실상 대부분의 경우 제미나이가 호출된다면 high로 작동하니 차이가 없어야 하는 것 아니야? 이 부분을 실험해줘</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r3" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r3" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r3" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="4">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">a112c8b5932fbc1f</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">a112c8b5932fbc1f</span><span class="gate">gate:NO</span><span class="note">전문 150자</span></div>
   <div class="q">🗨️ TTFT가 입력 길이에 영향 받아?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 커뮤니티에서 인풋토큰이 많을 때 지연이 꽤 늘어난다는 이야기를 들었어. 그리고 high, xhigh, max별로도 다르다는 이야기를</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 커뮤니티에서 인풋토큰이 많을 때 지연이 꽤 늘어난다는 이야기를 들었어. 그리고 high, xhigh, max별로도 다르다는 이야기를 들었는데, 사실상 대부분의 경우 제미나이가 호출된다면 high로 작동하니 차이가 없어야 하는 것 아니야? 이 부분을 실험해줘</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r4" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r4" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r4" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="5">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">098d90e014006142</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">098d90e014006142</span><span class="gate">gate:NO</span><span class="note">전문 93자</span></div>
   <div class="q">🗨️ max 추론 레벨 미지원 모델 어떻게 처리돼?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] deepcombo의 ox alpha 모델은 추론레벨 low high max가 가능한걸로 알고 있는데, pi에선 max레벨이 설정 불</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] deepcombo의 ox alpha 모델은 추론레벨 low high max가 가능한걸로 알고 있는데, pi에선 max레벨이 설정 불가능해. 조치 가능할까?</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r5" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r5" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r5" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="6">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">e481f1a2bb8f7969</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">e481f1a2bb8f7969</span><span class="gate">gate:NO</span><span class="note">전문 269자</span></div>
   <div class="q">🗨️ 같은 프롬프트 여러 번 보내면 라우팅 고정돼?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[2026-08-26 재검증으로 부분 기각] camelAI auto 라우팅 플립 트리거(08-25, 24호출): 당일엔 패딩 ~242~296토큰</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[2026-08-26 재검증으로 부분 기각] camelAI auto 라우팅 플립 트리거(08-25, 24호출): 당일엔 패딩 ~242~296토큰에서 gemini→luna 전환이 결정적으로 관측됐으나, 다음날(08-26, 92호출) 미재현 — 필러 1,458~1,938ptok에서도 luna 유지, 플립은 순수 크기 함수가 아님(라우터 버전 변경 또는 프롬프트캐시 왜곡 가능성). 유지되는 결론: 내용 무관 패딩으로 플립 가능, '복잡→gemini' 규칙은 클린 단발 프롬프트 한정.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r6" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r6" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r6" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="7">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">e481f1a2bb8f7969</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">e481f1a2bb8f7969</span><span class="gate">gate:NO</span><span class="note">전문 102자</span></div>
   <div class="q">🗨️ auto 라우팅이 확률적이라는 결론이었나?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] auto 모델 세팅에서 여러번 호출해서 모델이 변동되는지 확인해보고 싶은데 가능할까? 짧은 응답과 긴 추론별로도 응답 모델이 달라지</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] auto 모델 세팅에서 여러번 호출해서 모델이 변동되는지 확인해보고 싶은데 가능할까? 짧은 응답과 긴 추론별로도 응답 모델이 달라지는지, 아니면 그냥 랜덤인지도 알고 싶어</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r7" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r7" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r7" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="8">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">e5bbd0063f1356f6</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">e5bbd0063f1356f6</span><span class="gate">gate:NO</span><span class="note">전문 53자</span></div>
   <div class="q">🗨️ 프록시에서 특정 모델 강제 지정 기능 있어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 프록시 model_override로 제미나이를 고정하는 게 가능해? 안 되지 않아?</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 프록시 model_override로 제미나이를 고정하는 게 가능해? 안 되지 않아?</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r8" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r8" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r8" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="9">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">d1c90516d9870c95</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">d1c90516d9870c95</span><span class="gate">gate:YES</span><span class="note">전문 126자</span></div>
   <div class="q">🗨️ 한국어 말투 규칙 뭐지?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">언어: 한국어/영어 혼용. Structural/metadata(분류·상태·step label)는 한국어, code/기술 설명은 영어. 완전 번역</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">언어: 한국어/영어 혼용. Structural/metadata(분류·상태·step label)는 한국어, code/기술 설명은 영어. 완전 번역 금지. 한국어 출력은 존댓말(합니다체)로 통일 — 반말·해요체·무종결 혼용 금지.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r9" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r9" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r9" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="10">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">d1c90516d9870c95</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">d1c90516d9870c95</span><span class="gate">gate:YES</span><span class="note">전문 84자</span></div>
   <div class="q">🗨️ 반말 써도 돼?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 지금 네 한국어 말투가 반말과 존댓말이 섞여서 조금 이상해. 존댓말로 통일해 줘. 헤르메스 메모리도 이 부분을 기억하는 게 좋을 것</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 지금 네 한국어 말투가 반말과 존댓말이 섞여서 조금 이상해. 존댓말로 통일해 줘. 헤르메스 메모리도 이 부분을 기억하는 게 좋을 것 같아.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r10" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r10" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r10" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="11">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">2ecef73164830638</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">2ecef73164830638</span><span class="gate">gate:NO</span><span class="note">전문 95자</span></div>
   <div class="q">🗨️ 자동 시작 설정 어떻게 하는 게 원칙이야?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 자동 시작 방식은 이 프록시를 시작프로그램에 등록하는 형태로 하는 건 어떨까? 그리고 카멜 ai api의 큐 헤더가 이 프록시의 작</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 자동 시작 방식은 이 프록시를 시작프로그램에 등록하는 형태로 하는 건 어떨까? 그리고 카멜 ai api의 큐 헤더가 이 프록시의 작동 방식에 고려되어 있을까?</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r11" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r11" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r11" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="12">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">9f04ed2c8e14f11b</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">9f04ed2c8e14f11b</span><span class="gate">gate:NO</span><span class="note">전문 172자</span></div>
   <div class="q">🗨️ 설계 확정 후 리팩터 제안해도 돼?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r12" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r12" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r12" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="13">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">a68b370287d1892f</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">a68b370287d1892f</span><span class="gate">gate:YES</span><span class="note">전문 131자</span></div>
   <div class="q">🗨️ 사용자 언어 습관이 어때?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립).</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r13" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r13" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r13" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="14">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">a68b370287d1892f</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">a68b370287d1892f</span><span class="gate">gate:YES</span><span class="note">전문 126자</span></div>
   <div class="q">🗨️ 한국어 영어 어떻게 섞어 써?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">언어: 한국어/영어 혼용. Structural/metadata(분류·상태·step label)는 한국어, code/기술 설명은 영어. 완전 번역</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">언어: 한국어/영어 혼용. Structural/metadata(분류·상태·step label)는 한국어, code/기술 설명은 영어. 완전 번역 금지. 한국어 출력은 존댓말(합니다체)로 통일 — 반말·해요체·무종결 혼용 금지.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r14" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r14" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r14" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="15">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">1cef4743165b7707</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">1cef4743165b7707</span><span class="gate">gate:NO</span><span class="note">전문 172자</span></div>
   <div class="q">🗨️ 아키텍처 설계 시 분리 원칙이 뭐였지?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r15" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r15" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r15" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="16">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">f2421b7b489858bb</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">f2421b7b489858bb</span><span class="gate">gate:YES</span><span class="note">전문 168자</span></div>
   <div class="q">🗨️ verifier-pilot은 코딩 품질만 보면 돼?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 지적하고 싶은 게 있어. 내 목표는 "코딩 품질" 향상이 아니라, "더 나은 답변 품질"이야. 코딩에 한정되지 않아. 따라서 코딩에</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 지적하고 싶은 게 있어. 내 목표는 "코딩 품질" 향상이 아니라, "더 나은 답변 품질"이야. 코딩에 한정되지 않아. 따라서 코딩에만 한정되는 형태의 품질게이트는 내 목적에 어긋나. 품질 평가에 llm 호출이 들어가더라도, 대상이 코딩에 한정되지는 않아야 해. 이 부분을 지시문에 반영해줘</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r16" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r16" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r16" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="17">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">e941022a685c2be1</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">e941022a685c2be1</span><span class="gate">gate:NO</span><span class="note">전문 733자</span></div>
   <div class="q">🗨️ opencode에서 메모리 자동 기록돼?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘 projec</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘
+project: C:\Users\mandu\Documents\opencode\environment
+worktree: /
+turns: 2
+commands: Get-ChildItem -Path "C:\Users\mandu\.config\opencode" -Recurse
+outcome: **원인 분석** 1. **상대 경로 참조 문제**: `~/.config/opencode/opencode.jsonc`에 `"plugin": ["./plugin/mnemosyne-session-memory.ts"]`와 같이 **상대 경로(`./`)**로 등록되어 있습니다. 2. **실행 위치(CWD) 차이**: CLI 실행 시에는 작업 디렉토리가 global 설정 경로이거나 자동 해석될 수 있지만, OpenChamber는 현재 세션/프로젝트의 작업 디렉토리(예: `C:\Users\mandu\Documents\opencode\environment`)를 기준(relative base)으로 `./plugin/...`을 찾기 때문에 파일을 찾지 못합니다. --- **해결 방법** `~/.config/opencode/opencode.jsonc` 파일의 `plugin` 배열 경로를 **절대 경로**로 수정합니다: ```jsonc "plugin": [ "C:/Users/mandu/.config/o…</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r17" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r17" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r17" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="18">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">c69c459c7c67c2d1</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">c69c459c7c67c2d1</span><span class="gate">gate:NO</span><span class="note">전문 507자</span></div>
   <div class="q">🗨️ hermes update 후 cua-driver 왜 실패해?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 헤르메스 업데이트가 끝나고 나면 cua driver를 refresh 하는데, 문제는 자꾸 그 과정에서 타임아웃이 걸려. 이번이 두</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 헤르메스 업데이트가 끝나고 나면 cua driver를 refresh 하는데, 문제는 자꾸 그 과정에서 타임아웃이 걸려. 이번이 두 번째야. 그래서 수동으로 해야 했어.
+
+아래 로그를 보고 뭐가 문제였는지 확인해줘
+
+✓ Update complete!
+
+→ Refreshing cua-driver (Computer Use)...
+⚠     cua-driver refreshing timed out after 660s.
+      Re-run manually:  powershell -NoProfile -ExecutionPolicy Bypass -Command "irm @url:`https://raw.githubusercontent.com/trycua/cua/main/libs/cua-driver/scripts/install.ps1` | iex"
+  ✓ Refreshed Windows gateway launcher scripts
+
+  ✓ Restarting Windows gatewa</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r18" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r18" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r18" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="19">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">ac6b11080109c3fe</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">ac6b11080109c3fe</span><span class="gate">gate:NO</span><span class="note">전문 85자</span></div>
   <div class="q">🗨️ start_proxy.cmd 재부팅 후 왜 안 돌아가?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 재부팅 후에 8780 프록시가 또 작동하지 않아. start_proxy.cmd 실행해도 반응이 없는데 왜 이러지? 확실하게 원인을</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 재부팅 후에 8780 프록시가 또 작동하지 않아. start_proxy.cmd 실행해도 반응이 없는데 왜 이러지? 확실하게 원인을 파악해줘.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r19" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r19" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r19" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="20">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">efb4e9a38f6ee270</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">efb4e9a38f6ee270</span><span class="gate">gate:NO</span><span class="note">전문 144자</span></div>
   <div class="q">🗨️ 프록시 대시보드에 종료 버튼 있어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 수정할 사항이 있어. 1. 대시보드 안에 프록시 종료버튼 만들기 2. 기존의 설정 기억하는 기능 만들기 (현재는 재부팅 때마다 설정</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 수정할 사항이 있어.
+1. 대시보드 안에 프록시 종료버튼 만들기
+2. 기존의 설정 기억하는 기능 만들기 (현재는 재부팅 때마다 설정이 되돌아가서 동시 스트림도 1로 돌아감)
+3. 대시보드에서 활성/최근 요청 칸을 실시간 상태 칸 아래로 위치 변경</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r20" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r20" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r20" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="21">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">b5f5672a2446d4e8</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">b5f5672a2446d4e8</span><span class="gate">gate:NO</span><span class="note">전문 116자</span></div>
   <div class="q">🗨️ 데스크톱 앱 띄우면 텔레그램 수신 끊겨?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 정확히는 헤르메스 '데스크탑'을 실행하면 헤르메스 게이트웨이도 실행이 되는 걸로 알고 있는데, 텔레그램을 수신하려면 hermes g</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 정확히는 헤르메스 '데스크탑'을 실행하면 헤르메스 게이트웨이도 실행이 되는 걸로 알고 있는데, 텔레그램을 수신하려면 hermes gateway start가 필요하다고 해서 그 부분이 이해가 안 돼</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r21" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r21" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r21" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="22">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">d28786a095ace1ae</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">d28786a095ace1ae</span><span class="gate">gate:NO</span><span class="note">전문 339자</span></div>
   <div class="q">🗨️ X1 외부 데이터셋 실험에서 bekko 성능?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">임베딩 벤치 S3 최종(2026-10-01): bekko-a8m 조건부 채택 권고 — vec-only gold MRR 0.780>R@1 0.75</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">임베딩 벤치 S3 최종(2026-10-01): bekko-a8m 조건부 채택 권고 — vec-only gold MRR 0.780>R@1 0.75, p95 1.5ms, RAM -35%, 접두어 불필요. koen 대안(MRR 0.726, T3 부정역전 최강 9/10, RAM -37%). baseline 948MB 커밋 실측→G1 500MB 게이트 자체 무효. 통계 유의성 미확보(20쿼리)→gold 50 확장+하이브리드 F1+트랩세트v2가 채택 전제조건. bekko 배치4 필수. 최종보고: jev-memory-middleware/docs/design/embed-benchmark-final-report.md</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r22" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r22" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r22" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="23">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">2f199c68ab243ff8</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">2f199c68ab243ff8</span><span class="gate">gate:NO</span><span class="note">전문 86자</span></div>
   <div class="q">🗨️ best-of-5에 recovery 얹으면 개선돼?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 원본이 best-of-n을 거쳐 최선의 결과를 얻어내는 방식이라면, 우리는 recovery routing을 하는데, 여기서 뭘 얻을</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 원본이 best-of-n을 거쳐 최선의 결과를 얻어내는 방식이라면, 우리는 recovery routing을 하는데, 여기서 뭘 얻을 수 있지?</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r23" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r23" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r23" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="24">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">7a3675ebfc5a1829</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">7a3675ebfc5a1829</span><span class="gate">gate:YES</span><span class="note">전문 411자</span></div>
   <div class="q">🗨️ S3에서 임베딩 모델 최종 선택 근거?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">임베딩 벤치 P3b 보강 완료(2026-10-01): gold 50 확장 결과 bekko vec-only MRR 0.772>R@1 0.72 1위</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">임베딩 벤치 P3b 보강 완료(2026-10-01): gold 50 확장 결과 bekko vec-only MRR 0.772>R@1 0.72 1위 유지, baseline vs koen CI [-0.240,-0.072]로 후보 우위 통계 유의 확정. bekko vs koen은 여전히 동등. 하이브리드 스윕: lex-only BM25 MRR 0.824(쿼리-문서 어휘 중복 편향 경계), 최적은 koen vw=0.3 MRR 0.843 R@10 0.98, bekko 최적 0.829 — vec_weight 0.3(어휘 우세)이 양쪽 최적. granite 배치4 사후탐색: 63.8초 인덱싱 후 50.8GB OOM(B 비례 확인), 운영 불가 최종 확정. bekko 채택 권고 강화, T1/T2 v2는 권고로 하향. 최종보고 §5-6 갱신됨.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r24" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r24" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r24" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="25">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">1928d454e0ed168b</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">1928d454e0ed168b</span><span class="gate">gate:YES</span><span class="note">전문 150자</span></div>
   <div class="q">🗨️ CAMOFOX_URL 제거한 이유?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] camofox 관련 흔적은 제거하고, agent browser를 chrome으로 하고, nodriver로 스텔스를 챙길 수 있도록</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] camofox 관련 흔적은 제거하고, agent browser를 chrome으로 하고, nodriver로 스텔스를 챙길 수 있도록 하고 싶어. 기본은 헤드리스 모드로 포커스를 가져가지 않고, 로그인과 같이 사용자 확인이 필요한 상황에만 창을 띄우는 식으로.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r25" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r25" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r25" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="26">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">f9d466b9cdc3cd88</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">f9d466b9cdc3cd88</span><span class="gate">gate:NO</span><span class="note">전문 69자</span></div>
   <div class="q">🗨️ pi 에이전트에 등록된 프록시 목록?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 나는 pi coding agent를 설치했어. 여기에 20128과 18080 프록시를 프로바이더로 추가하고 싶어</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 나는 pi coding agent를 설치했어. 여기에 20128과 18080 프록시를 프로바이더로 추가하고 싶어</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r26" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r26" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r26" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="27">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">09547ea49fc36991</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">09547ea49fc36991</span><span class="gate">gate:NO</span><span class="note">전문 150자</span></div>
   <div class="q">🗨️ webdriver 숨김이 필요한 경우가 뭐지?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] camofox 관련 흔적은 제거하고, agent browser를 chrome으로 하고, nodriver로 스텔스를 챙길 수 있도록</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] camofox 관련 흔적은 제거하고, agent browser를 chrome으로 하고, nodriver로 스텔스를 챙길 수 있도록 하고 싶어. 기본은 헤드리스 모드로 포커스를 가져가지 않고, 로그인과 같이 사용자 확인이 필요한 상황에만 창을 띄우는 식으로.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r27" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r27" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r27" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="28">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">ed3a3442d3bcbb33</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">ed3a3442d3bcbb33</span><span class="gate">gate:YES</span><span class="note">전문 162자</span></div>
   <div class="q">🗨️ 메모리 백엔드 뭐 쓰고 있어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 내가 이 JEV + 경량 sqlite 방식 메모리를 택한 이유는 메모리 사용량이 적고, 별개의 llm 호출이 없기 때문이야 (JEV</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 내가 이 JEV + 경량 sqlite 방식 메모리를 택한 이유는 메모리 사용량이 적고, 별개의 llm 호출이 없기 때문이야 (JEV는 매우 저렴해서 예외)
+그렇다면 현 시점이 이 경량 sqlite 방식에서의 성능 향상 한계라고 봐야 할까? 아니면 좀 더 향상시킬 여지가 있을까?</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r28" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r28" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r28" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="29">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">dce5e8ceddf18db9</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">dce5e8ceddf18db9</span><span class="gate">gate:NO</span><span class="note">전문 507자</span></div>
   <div class="q">🗨️ hermes update 중간에 꺼지면 어떻게 해?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 방금 터미널에서 헤르메스를 업데이트했는데, 중간에 경고가 뜨면서 몇몇 패키지가 설치되지 않은 것 같아. 어떤 문제인지 한번 봐 줘.</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 방금 터미널에서 헤르메스를 업데이트했는데, 중간에 경고가 뜨면서 몇몇 패키지가 설치되지 않은 것 같아. 어떤 문제인지 한번 봐 줘. 그리고 마지막에는 아무리 기다려도cua-driver 리프레시가 안 끝나서 그냥 종료시켰어.
+
+PS C:\Users\mandu> hermes update
+⚕ Updating Hermes Agent...
+
+→ Fetching updates...
+→ Found 213 new commit(s)
+→ Pulling updates...
+  ✓ Cleared 117 stale __pycache__ directories
+→ Updating Python dependencies...
+Using Python 3.13.14 environment at: venv
+Resolved 100 packages in 1.71s
+      Built hermes-agent @ file:///C:/Users/mandu/AppData/Local/hermes/hermes-age</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r29" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r29" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r29" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="30">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">edf486fa0d3cd079</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">edf486fa0d3cd079</span><span class="gate">gate:NO</span><span class="note">전문 208자</span></div>
   <div class="q">🗨️ deepseek 장문 스트림에서 뭐가 문제였어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 이 플러그인과 관계가 있는 문제인지는 잘 모르겠는데, 지금 이렇게 길게 세션을 이어갈 때 네 답변이 헤르메스 데스크탑 세션창에서 두</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 이 플러그인과 관계가 있는 문제인지는 잘 모르겠는데, 지금 이렇게 길게 세션을 이어갈 때 네 답변이 헤르메스 데스크탑 세션창에서 두번 중복되어 보이거나, 이전 답변이 최신인 것처럼 보일 떄가 있어. 헤르메스 데스크탑을 끄고 다시 켜면 정상으로 돌아오는 걸로 봐서 세션 데이터 자체가 손상되는 것 같지는 않은데, 이런 문제가 헤르메스 깃허브에도 보고되어 있을까?</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r30" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r30" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r30" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="31">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">3581b9a33901eba4</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">3581b9a33901eba4</span><span class="gate">gate:YES</span><span class="note">전문 251자</span></div>
   <div class="q">🗨️ statem controller 버전 뭐였어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). hardened(08-21): contro</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). hardened(08-21): controller 2.0.0 managed, provider방식(config 무변경). 33/33+MB1/2+smoke 통과. 미니A/B(statem-bench/minab): C 2/4 vs A 1/4, 실BLOCK 확인, 공백=plan세션 타임아웃 크래시·게이트 의미론 부족. 상세 minab/ANALYSIS.md</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r31" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r31" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r31" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="32">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">3581b9a33901eba4</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">3581b9a33901eba4</span><span class="gate">gate:NO</span><span class="note">전문 126자</span></div>
   <div class="q">🗨️ TimeoutExpired 처리 어떻게 바뀌지?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 한 가지 의문점이 더 있어. 이렇게 프록시에서 강제로 직렬화를 해서 동시호출을 하지 않고 줄세운다 쳐도, 에이전트의 타임아웃이 바뀌</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 한 가지 의문점이 더 있어. 이렇게 프록시에서 강제로 직렬화를 해서 동시호출을 하지 않고 줄세운다 쳐도, 에이전트의 타임아웃이 바뀌는 건 아니잖아? 프록시가 에이전트에 중간에서 신호를 보내서 타임아웃을 유예시키나?</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r32" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r32" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r32" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="33">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">0ea67a3b101917e5</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">0ea67a3b101917e5</span><span class="gate">gate:NO</span><span class="note">전문 507자</span></div>
   <div class="q">🗨️ 웹 추출 백엔드 뭘로 설정했지?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.  ## 배경 - Hermes config에 'browser'라는 M</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 지금 이 세션에서 브라우저 기반 웹 추출 실험을 진행해줘.
+
+## 배경
+- Hermes config에 'browser'라는 MCP 서버가 등록되어 있음 (Nodriver + Chrome, 헤드리스 기본).
+- 목적: web_extract가 API 키 부재로 실패하는 환경에서, 브라우저가 페이지를 열어 렌더링된 본문을 추출하는 대체 경로 검증.
+- 이 세션엔 browser 서버의 도구가 (이름은 mcp_browser_* 또는 mcp__browser__* 형태로) 주입되어 있어야 함.
+
+## 검증 절차 (순서대로, 실제 실행 결과로 증명)
+1. 도구 확인
+- 이 세션에서 browser 서버 도구가 노출되어 있는지 확인 (없으면 mcp_real_estate처럼 이름 확인).
+- 안 보이면 터미널에서 `hermes mcp list` → browser가 enabled인지, `hermes mcp test browser` → 29 tools 발견되는지 보고.
+2. 기본 추출 </div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r33" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r33" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r33" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="34">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">5e8516d6f91b46dd</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">5e8516d6f91b46dd</span><span class="gate">gate:YES</span><span class="note">전문 389자</span></div>
   <div class="q">🗨️ 18080 프록시가 뭐 하는 거야?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">18080 camelai-serial-proxy에 모델 스위치(model_override)·라우팅 표시(routed_model)·추론레벨 주입(</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">18080 camelai-serial-proxy에 모델 스위치(model_override)·라우팅 표시(routed_model)·추론레벨 주입(default_reasoning_effort + effort_injection_mode respect/force) 추가됨(2026-08-26, 10/10 와이어 검증). camelAI auto 실측: 내부 모델 직접 지정은 404로 불가 → 모델별 effort 매핑 불가, 글로벌만 가능. responses는 reasoning={"effort":..} 중첩 형식만 수용(top-level은 400). high/max effort는 max_tokens 부족 시 본문 0자(finish=length). 상세: openai-compatible-proxy 스킬</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r34" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r34" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r34" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="35">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">5e8516d6f91b46dd</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">5e8516d6f91b46dd</span><span class="gate">gate:NO</span><span class="note">전문 389자</span></div>
   <div class="q">🗨️ camelai-serial-proxy 기능 정리해줘</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">18080 camelai-serial-proxy에 모델 스위치(model_override)·라우팅 표시(routed_model)·추론레벨 주입(</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">18080 camelai-serial-proxy에 모델 스위치(model_override)·라우팅 표시(routed_model)·추론레벨 주입(default_reasoning_effort + effort_injection_mode respect/force) 추가됨(2026-08-26, 10/10 와이어 검증). camelAI auto 실측: 내부 모델 직접 지정은 404로 불가 → 모델별 effort 매핑 불가, 글로벌만 가능. responses는 reasoning={"effort":..} 중첩 형식만 수용(top-level은 400). high/max effort는 max_tokens 부족 시 본문 0자(finish=length). 상세: openai-compatible-proxy 스킬</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r35" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r35" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r35" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="36">
-  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">132fb95d922f9bc5</span><span class="gate">gate:YES</span></div>
+  <div class="card-head"><span class="badge lgo">LGO</span><span class="qid">132fb95d922f9bc5</span><span class="gate">gate:YES</span><span class="note">전문 121자</span></div>
   <div class="q">🗨️ 전환 전 어떤 문제 있었지?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 이 세션은 8780 프록시에 연결되어 있었는데, 8780 프록시가 제대로 재시작되지 않으면서 연결이 끊겼어. 그래서 내가 프록시를</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 이 세션은 8780 프록시에 연결되어 있었는데, 8780 프록시가 제대로 재시작되지 않으면서 연결이 끊겼어. 그래서 내가 프록시를 거치지 않는 직결 api로 변경했어. 중간에 중단된 부분부터 이어서 해줘.</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r36" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r36" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r36" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="37">
-  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_001</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_001</span><span class="gate">gate:NO</span><span class="note">한정 발췌 80자 (원문 미확보)</span></div>
   <div class="q">🗨️ web_extract의 백엔드로 ddgs를 쓰고 있었던 기간이 언제야?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r37" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r37" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r37" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="38">
-  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_005</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_005</span><span class="gate">gate:NO</span><span class="note">한정 발췌 80자 (원문 미확보)</span></div>
   <div class="q">🗨️ Hermes config.yaml에서 browser.backend를 camofox로 설정한 적이 있어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">Hermes 내장 browser_* 도구 라우팅 설정 완료(2026-08-08): .env의 CAMOFOX_URL 활성 라인 제거(주석만 남음)</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">Hermes 내장 browser_* 도구 라우팅 설정 완료(2026-08-08): .env의 CAMOFOX_URL 활성 라인 제거(주석만 남음)</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r38" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r38" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r38" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="39">
-  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_008</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_008</span><span class="gate">gate:NO</span><span class="note">한정 발췌 79자 (원문 미확보)</span></div>
   <div class="q">🗨️ JEV_API_URL이 experientiallabs가 아니라 다른 URL이던 적이 있어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 좋아 이제 1~3단계에 착수해도 될 것 같아. 다만, 실측 테스트에 jev 호출이 필요하다면 기존의 typesafe api key</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 좋아 이제 1~3단계에 착수해도 될 것 같아. 다만, 실측 테스트에 jev 호출이 필요하다면 기존의 typesafe api key</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r39" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r39" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r39" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="40">
-  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_009</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_009</span><span class="gate">gate:NO</span><span class="note">한정 발췌 80자 (원문 미확보)</span></div>
   <div class="q">🗨️ Free tier 한도가 $0.75/hour였던 시절이 있었어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] experlabs 엔드포인트는 유료 크레딧 모델을 실행시켜도 무료 한도가 있으면 무료를 우선으로 쓰는 것 같아. experlabs의</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] experlabs 엔드포인트는 유료 크레딧 모델을 실행시켜도 무료 한도가 있으면 무료를 우선으로 쓰는 것 같아. experlabs의</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r40" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r40" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r40" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="41">
-  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_011</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_011</span><span class="gate">gate:NO</span><span class="note">한정 발췌 79자 (원문 미확보)</span></div>
   <div class="q">🗨️ exa 검색이 키리스로 작동하던 기간이 언제야?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">web_extract 키리스 해결 (2026-08-21): v0.20.4부터 plugins/web/keyless_mcp.py 키리스 티어 존재</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">web_extract 키리스 해결 (2026-08-21): v0.20.4부터 plugins/web/keyless_mcp.py 키리스 티어 존재</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r41" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r41" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
     <label class="vbtn v-irrel"><input type="radio" name="r41" value="IRREL"><span>✗ IRREL</span><small>무관</small></label>
   </div>
 </div><div class="card" data-i="42">
-  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_038</span><span class="gate">gate:NO</span></div>
+  <div class="card-head"><span class="badge noans">NOANS</span><span class="qid">nans2_038</span><span class="gate">gate:NO</span><span class="note">한정 발췌 80자 (원문 미확보)</span></div>
   <div class="q">🗨️ 메모리 저장을 승인 없이 자동으로 하던 규칙이 있었어?</div>
-  <details><summary>메모리 전문 (탭하여 펼치기)</summary><div class="mem">[USER] 나는 대부분의 경우 한국어 출력이 필요해. 하지만 그렇다고 매 턴마다 1500토큰이 증가하는 메모리 저장 방식은 쓰기 싫어. 어떻게</div></details>
+  <details open><summary>메모리 원문 (전문)</summary><div class="mem">[USER] 나는 대부분의 경우 한국어 출력이 필요해. 하지만 그렇다고 매 턴마다 1500토큰이 증가하는 메모리 저장 방식은 쓰기 싫어. 어떻게</div></details>
   <div class="verdict">
     <label class="vbtn v-valid"><input type="radio" name="r42" value="VALID"><span>✓ VALID</span><small>대체 증거 유효</small></label>
     <label class="vbtn v-plaus"><input type="radio" name="r42" value="PLAUS"><span>⚠ PLAUS</span><small>그럴듯하지만 틀림</small></label>
