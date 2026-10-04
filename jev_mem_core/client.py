@@ -140,6 +140,22 @@ class JevMemClient:
                 py = pyw
         cmd = [py, "-m", "jev_mem_core", "--serve"]
         env = dict(os.environ)
+        # 키 주입 (2026-10-04): Hermes 프로세스 env에 EXPLABS_API_KEY가 없어도
+        # 데몬이 EXPERLABS 무료 레인을 쓰도록, 사용자 레지스트리(HKCU\Environment)에서
+        # 읽어 명시적으로 주입한다. 없으면 기존 env 그대로 (typesafe 폴백).
+        try:
+            import winreg as _wr
+            _hk = _wr.OpenKey(_wr.HKEY_CURRENT_USER, r"Environment")
+            try:
+                for _name in ("EXPLABS_API_KEY", "EXPLABS_API_KEY2"):
+                    if _name not in env or not env.get(_name):
+                        _val, _ = _wr.QueryValueEx(_hk, _name)
+                        if _val:
+                            env[_name] = str(_val).strip().strip('"')
+            finally:
+                _wr.CloseKey(_hk)
+        except Exception:
+            pass  # 레지스트리 접근 실패 시 기존 env 사용 (호환 유지)
         # jev_mem_core lives in the middleware repo, not on sys.path of the
         # spawning interpreter — inject the repo (parent of the package dir)
         # so `python -m jev_mem_core` resolves anywhere (measured failure:

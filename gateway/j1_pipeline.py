@@ -456,7 +456,10 @@ def _jev_choice(client, state: dict, labels: list, timeout: float) -> Optional[i
     }
     try:
         import os as _os
-        _api = _os.environ.get("JEV_API_URL") or "https://api.typesafe.ai/v1/systemone"
+        # URL 결정: client에 실측된 URL(_jev_api)이 있으면 우선, 없으면 env/기본
+        _api = getattr(client, "_jev_api", None) or (
+            _os.environ.get("JEV_API_URL") or "https://api.typesafe.ai/v1/systemone"
+        )
         resp = client.post(
             _api,
             json={"state": state, "questions": questions, "model": "jev-latest"},
