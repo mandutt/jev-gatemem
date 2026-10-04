@@ -126,8 +126,9 @@ Q2 "classify" (choice): 13종 배타 유형 중 하나
 
 **2.2.5 중요 한계 (자기 고백)**
 
-- **SKIP된 발화는 그 순간 mnemosyne.db에 저장되지 않습니다.** 원문은 ledger(payload, durable)에는 남지만, **검색 가능한 저장소에는 들어가지 않습니다.** 즉 "그때는 잡담이라고 판단했지만 나중 질문에 필요해지는 정보"는 의도적으로 버려집니다 (ledger에서 수동 복구 외 경로 없음).
+- **SKIP된 발화는 그 순간 mnemosyne.db에 저장되지 않습니다.** ~~원문은 ledger(payload, durable)에는 남지만,~~ **`payload_json`은 338/338 전부 NULL로 실측 확인** — 원문 미저장 (3차 후회율 감사, 2026-10-03). **검색 가능한 저장소에는 들어가지 않습니다.** 즉 "그때는 잡담이라고 판단했지만 나중 질문에 필요해지는 정보"는 의도적으로 버려집니다 (ledger에서 수동 복구 외 경로 없음).
 - 게이트는 발화 단위 분류 — 대화 문맥(직전 턴들)을 보지 않음 (발화 원문 + 1500자 컷만).
+- **Phase 1 skip_shadow (2026-10-03)**: SKIP 발화의 `idem_key`를 별도 `skip_shadow` 테이블에 기록 (UNIQUE, 1,500자 캡, TTL 90일) — 추후 후회율 감사의 최소 근거. 단, 원문 본문은 여전히 미저장.
 
 ### 2.3 READ PATH 상세 (J1 rerank)
 
@@ -176,7 +177,7 @@ Q2 "classify" (choice): 13종 배타 유형 중 하나
 
 | 항목 | 수치 | 상태 |
 |---|---|---|
-| read: 운영 골든셋 90쿼리 (한국어) | Acc@1 = 90.0% (bekko-a8m) | 실측 |
+| read: 운영 골든셋 90쿼리 (한국어) | Acc@1 = 90.0% (bekko-a8m) → **7차 A 재실행 hit@1 77.8% (70/90)** | 실측 (회귀/노이즈: Wilson 중첩) |
 | read: 합성 180쿼리 | Acc@1 0.539 (gate 완화 + Jev choice) | 실측 |
 | read: Jev choice 기여 | 0.467→0.489 (현행 gate) / 0.467→0.539 (gate 완화) | 실측 |
 | read: lane pool gold 커버 | 80.6% (커버 145/180) | 실측 |
@@ -200,7 +201,7 @@ Q2 "classify" (choice): 13종 배타 유형 중 하나
 - **배경 consolidation**: topic timelines/value histories 등 인덱스 오버레이 (raw를 rewrite하지 않고 그 위에 얹음).
 - **결과 (자체 보고 + OmniMemEval 재평가)**: LoCoMo 91.7% (15개 시스템 중 1위), LongMemEval-S 83.8% (2/13), ECI 0.259 (최저). 전부 gpt-4.1-mini 답변. BEAM-100K→10M (80배 record)에서 질문 비용 1.11배 (검색만 248ms로 증가).
 - **System 1 vs LLM 판정 실측**: 같은 14,359 record에서 Jev AUC 0.942 vs DeepSeek 0.900 vs gpt-4.1-mini 0.853 (LLM 대비 3~11x 빠름).
-- **Jev-Mem(별개 논문)과의 대조 실험**: write-time 그래프 계열(Jev-Mem released code)이 **LoCoMo 84.4% vs Mnemon 91.7%** (7.3pp, CI 5.5-9.2). multi-hop 77.7 vs 91.8, temporal 82.9 vs 91.3.
+- **Jev-Mem(별개 논문)과의 대조 실험**: write-time 그래프 계열(Jev-Mem released code)이 **LoCoMo 84.4% vs Mnemon 91.7%** (7.3pp, CI 5.5-9.2) — 전체 재실행 수치. **유형별 수치는 미공개** (2차 종합보고서에서 전사 오류로 판명: multi-hop 77.7‡는 Table 3의 Jev-Mem overall 값, temporal 82.9는 원문에 없는 역산값, 84.11은 EverMemOS의 temporal 값).
 - **한계**: 영어 벤치만. 한국어/다국어 미검증. 연구 스냅샷 (제품화 예정은 별도 mnemon/dsh-mnemon). gpt-4.1-mini/DeepSeek API 의존.
 
 ### 3.2 Jev-Mem (arXiv 2609.23986, Jiang/Li/Li @ UT Dallas, github.com/libingzheren/Jev-Mem)
@@ -218,7 +219,7 @@ Q2 "classify" (choice): 13종 배타 유형 중 하나
   - traversal: 후보별 4 Noul (relevance/relation_usefulness/new_information/supports_current_evidence) + cosine + edge prob 결합, beam 10.
   - **evidence-based stopping**: evidence_sufficient ≥0.95 && missing_evidence/contradiction <0.15 → 정지. continue_useful <0.15 → 정지. 하드 리밋: depth 8 / visited 60 / edges 2400 / Jev 16콜 / 15s.
 - **결과 (자체 보고, gpt-4o-mini LLM-as-Judge)**: LoCoMo 0.777 overall (baseline 대비 +11.0% relative). Adversarial 0.962 (baseline 0.742). build 158s (baseline 1044s, 6.6x speedup), query latency 0.93s (baseline 1.47s).
-- **중요 맥락**: Mnemon 측이 Jev-Mem released code를 **동일 프로토콜(gpt-4.1-mini, 1회 답변 — Jev-Mem 기본 best-of-3 끔)로 재실행**한 결과는 84.4% (vs 자체 보고 프로토콜에서 나타나는 더 높은 수치). 자기 보고 수치의 프로토콜 의존성 사례.
+- **중요 맥락**: Mnemon 측이 Jev-Mem released code를 **동일 프로토콜(gpt-4.1-mini, 1회 답변 — Jev-Mem 기본 best-of-3 끔)로 재실행**한 결과는 **84.4%** — 이는 자체 보고(프로토콜 상이, 0.777 0-1 스케일)보다 **높은** 수치. (2차 종합보고서에서 "자체 보고에서 더 높은 수치" 표현 방향 오류로 판명 → 수정) 자기 보고 수치의 프로토콜 의존성 사례.
 - **모델·런타임**: Jev = TypeSafe SystemOne (`TypeSafeClient.system_one`에 배치 호출 — state + typed questions 묶음).
 
 ### 3.3 PerfectRecall (github.com/arslanr-com/perfectrecall)
@@ -246,13 +247,13 @@ Q2 "classify" (choice): 13종 배타 유형 중 하나
 | 코퍼스 | 1,319행 (해시 `1d60bce8`) | **1,351행 (해시 `1cd0a33f`)** |
 | lane | 레인 혼합 | **FREE 전부** |
 
-hit@3 변동 4건 (5차 hit → 7차 miss): `b2ed9f4d` (camelAI 라우팅 rank 1→5), `5e8516d6` (18080 프록시 rank 1→20), `7de2c1df`/`498bb204` (rank 1→abstain).
+hit@3 변동 5건 (5차 hit → 7차 miss): `b2ed9f4d` (camelAI 라우팅 rank 1→5), `5e8516d6` (18080 프록시 rank 1→20), `7de2c1df`/`498bb204` (rank 1→abstain), + **rank 3 경계 miss 1건** (gold_rank 3, hit@3 정의상 rank≤3에 걸림 — 7차 raw `exp7a` 검증).
 
-**해석**: -5.6pp는 abstain 증가(-2건) + 순위 하락(-2건)의 조합. 코퍼스 32행 증가(+2.4%)가 원인인지, 노이즈인지는 단일 실행으로 확정 불가 — **5차 85.6%와 7차 80.0% 모두 Wilson 구간 [76.4~91.3%] / [70.3~87.2%]로 중첩**.
+**해석**: -5.6pp는 abstain 증가(-2건) + 순위 하락(-2건) + 경계 miss(+1건)의 조합. 코퍼스 32행 증가(+2.4%)가 원인인지, 노이즈인지는 단일 실행으로 확정 불가 — **5차 85.6% [76.4~91.3%] / 7차 80.0% [70.3~87.2%]의 Wilson 구간이 겹치지만, 구간 중첩은 "차이가 없다"의 증명이 아니라 "변동성을 시사"할 뿐. 정밀 판정은 paired McNemar / paired bootstrap 필요**.
 
-### 4.2 leave-gold-out (정답 제거 시 오주입)
+### 4.2 leave-gold-out (gold 제거 시 hard-negative acceptance rate)
 
-op 90건에서 gold 행을 코퍼스에서 제거하고 오주입률 측정 (B #3 대응):
+op 90건에서 gold 행을 코퍼스에서 제거하고 **hard-negative acceptance rate**(= gold가 제거된 상태에서 그럴듯한 다른 후보를 선택하는 비율) 측정 (B #3 대응). **주의: gold가 해당 query의 유일한 evidence라는 보장이 없으므로 이 수치는 오주입률의 "상한"이며, 진짜 오주입률은 수동 판정으로만 확정 가능**:
 
 | 조건 | 오주입 | 비고 |
 |---|---|---|
@@ -271,7 +272,7 @@ op 90건에서 gold 행을 코퍼스에서 제거하고 오주입률 측정 (B #
 - **결과**: 44건 전부 자동 생성. **사용자가 실제로 한 질문 아님.**
 
 **벤치 부적격 실측 근거 3건**:
-1. **hit@3 = 0.0%** (A/B/C/D 전 조건) — 자동 생성 질문은 어색·부분적이라 gold가 pool에 아예 안 들어감
+1. **hit@3 = 0.0%** (A/B/C/D 전 조건) — 자동 생성 질문은 어색·부분적이라 gold가 답으로 선택되지 않음. (D는 pool 제약 없는 전체 스캔 조건에서도 0/30 — **풀 부재 가설은 기각**, 라벨 결함임을 뒷받침)
 2. **gold_score mean 0.328** (0.5 초과 5건뿐) — gold 라벨이 query의 답을 직접 담지 않음
 3. **12건 샘플 육안 판정** ([7차 §3]):
    - `[01]` "다른 구성을 바꾼 적이 있어?" → gold: "다른 ai에게서 이런 답변이 나왔어" (**무관**)
@@ -309,7 +310,7 @@ op 90건에서 gold 행을 코퍼스에서 제거하고 오주입률 측정 (B #
 
 ### 4.6 abstain 문구 강화 (사용자 요청)
 
-leave-gold-out에서 choice의 abstain 문구를 강화하면 오주입이 줄어드는가 (30×3, seed=42):
+leave-gold-out에서 choice의 abstain 문구를 강화하면 오주입이 줄어드는가 (**LGO 90건 중 seed=42로 뽑은 30건 부분표본**, 30×3=90콜):
 
 | 문구 | abstain(안전) | 오주입 |
 |---|---|---|
@@ -330,9 +331,9 @@ leave-gold-out에서 choice의 abstain 문구를 강화하면 오주입이 줄�
 | "개선 문구가 gold 점수 개선" | Δ=-0.095 (악화) | ❌ **철회** |
 
 **유지되는 판정**:
-- **A 유지 (read path 기본)**: A가 C보다 일관되게 우월 (op 80.0% vs C τ적용 후 74/90, 하드 noans 12.0% vs 16.0%) — 그러나 둘 다 90% 목표 미달 + 가드레일 위반
+- **A 유지 (read path 기본)**: op 80.0% vs C τ적용 후 74/90, 하드 noans 12.0% vs 16.0%로 **A가 더 안전한 신호를 보이지만, 동일조건 반복 전 최종 우열은 미확정** (op에선 C 82.2% > A 80.0%) — 또한 둘 다 90% 목표 미달 + 가드레일 위반
 - **leave-gold-out/fresh noans가 새 기준선**: 향후 모든 read 실험은 이 두 세트를 가드레일로 사용
-- **5차 85.6% vs 7차 80.0% = 노이즈 구간** (Wilson 중첩)
+- **5차 85.6% vs 7차 80.0%**: Wilson 구간 중첩 — "변동성 시사" 수준 (차이 없음의 증명 아님, paired McNemar 필요)
 
 **새로 열린 문제**:
 1. **gold 라벨 품질**: new 44건(그리고 op 90건 일부)의 gold가 query의 직접 답이 아닐 가능성
@@ -353,13 +354,13 @@ leave-gold-out에서 choice의 abstain 문구를 강화하면 오주입이 줄�
 
 ### Q2. "A 유지"의 최종 확정 기준 (op 80.0% / LGO 41.1% / noans 12.0%)
 
-A hit@3 80.0% (5차 85.6% -5.6pp, Wilson 중첩), leave-gold-out 41.1%, fresh noans 12.0%.
+A hit@3 80.0% (5차 85.6% -5.6pp, Wilson 구간 중첩 — 변동성 시사 수준), leave-gold-out 41.1%, fresh noans 12.0%.
 
 **(a)** A 유지 — op hit@3 최고 + abstain이 유일한 방어선. 5% 가드레일은 모든 조건이 위반하므로 상대 비교만 유효
 **(b)** 레인/캡/스냅샷 정리 후 **3회 반복 재측정**이 선행 — 단일 실행은 노이즈 구간
 **(c)** A 대 C를 같은 조건·같은 날·3회 반복 **paired 비교** 후 결정
 
-→ op 90/LGO 90/noans 50의 오주입 방어와 hit@3 트레이드오프를 함께 평가.
+→ op 90/LGO 90/noans 50의 **hard-negative 방어**와 hit@3 트레이드오프를 함께 평가.
 
 ### Q3. C′ 실험 결과 해석 (Δ=-0.095)
 
@@ -373,7 +374,7 @@ A hit@3 80.0% (5차 85.6% -5.6pp, Wilson 중첩), leave-gold-out 41.1%, fresh no
 
 **(a)** 실제 운영 리스크 — 코퍼스와 이웃한 유사 주제 질문에 그럴듯한 오답 제시
 **(b)** 하드셋이 과도 — 실제 사용자는 코퍼스와 이렇게 비슷한 질문을 하지 않음
-**(c)** A의 abstain이 여전히 방어선 — 58.9% abstain은 과방어지만 오주입 절반 이하로 감소
+**(c)** A의 abstain이 방어선 — LGO에서 abstain(58.9%)은 **오주입이 아니라 정답 처리** (gold가 제거된 상태에서 기권이 올바른 행동). 진짜 "과방어"는 답 있는 op에서의 abstain 11.1% 쪽
 
 ### Q5. [핵심] 3종에서 "배울 점" — 실측 빈틈을 메울 아이디어
 
