@@ -11,6 +11,8 @@
   body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,Roboto,'Noto Sans KR',sans-serif;padding-bottom:120px;}
   header{position:sticky;top:0;z-index:10;background:var(--bg);padding:12px 14px 8px;border-bottom:1px solid var(--border);}
   header h1{margin:0 0 6px;font-size:16px;}
+  .crit{font-size:10px;color:var(--muted);line-height:1.6;margin:6px 0 4px;padding:6px 8px;background:#12151b;border:1px solid var(--border);border-radius:8px;}
+  .crit b{color:var(--txt);}
   .prog{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);}
   .bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
   #barFill{height:100%;width:0;background:var(--accent);transition:width .2s;}
@@ -47,6 +49,7 @@
 <body>
 <header>
   <h1>🧠 Winner Gate 3분류 판정 <span id="count">0/43</span></h1>
+  <div class="crit"><b>기준</b> — <b>VALID</b>: 메모리에 질문이 묻는 <b>그 사실/값/규칙이 실제로</b> 들어 있음 (의역·중간 위치여도 OK) · <b>PLAUS</b>: 주제·키워드는 비슷하지만 <b>그 특정 답은 없음</b> (배경·관련 얘기만) · <b>IRREL</b>: 주제조차 무관</div>
   <div class="prog"><span id="stat">VALID 0 · PLAUS 0 · IRREL 0</span></div>
   <div class="prog"><div class="bar"><div id="barFill"></div></div></div>
 </header>
