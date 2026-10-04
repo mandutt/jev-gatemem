@@ -462,6 +462,20 @@ def _jev_choice(client, state: dict, labels: list, timeout: float) -> Optional[i
             json={"state": state, "questions": questions, "model": "jev-latest"},
             timeout=timeout,
         )
+        # 키 스위칭 (2026-10-04): 429 rate-limit 시 다른 키로 전환 후 1회 재시도
+        if resp.status_code == 429:
+            rot = getattr(client, "_jev_rotator", None)
+            keys = getattr(client, "_jev_keys", None)
+            if rot is not None and keys is not None and len(keys) > 1:
+                nk = rot.on_429()
+                if nk:
+                    client.headers["Authorization"] = f"Bearer {nk}"
+                    log.info("Jev choice 429 → 키 전환 (다른 계정) 재시도")
+                    resp = client.post(
+                        _api,
+                        json={"state": state, "questions": questions, "model": "jev-latest"},
+                        timeout=timeout,
+                    )
         if resp.status_code != 200:
             log.info("Jev choice HTTP %s", resp.status_code)
             return None

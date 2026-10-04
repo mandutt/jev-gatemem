@@ -28,7 +28,14 @@ JEV_WRITE_GATE_ENV = "JEV_WRITE_GATE"
 JEV_WRITE_GATE_TIMEOUT_S = 15.0
 JEV_WRITE_GATE_RETRIES = 1
 
-API_URL = os.environ.get("JEV_API_URL") or "https://api.typesafe.ai/v1/systemone"
+def _api_url() -> str:
+    """Jev API URL — EXPERLABS 키 존재 시 experientiallabs 게이트웨이 우선 (2026-10-04)."""
+    if os.environ.get("EXPLABS_API_KEY"):
+        return os.environ.get("JEV_API_URL") or "https://api.experientiallabs.ai/v1/systemone"
+    return os.environ.get("JEV_API_URL") or "https://api.typesafe.ai/v1/systemone"
+
+
+API_URL = _api_url()
 MODEL = "jev-latest"
 
 TYPES = [
@@ -239,10 +246,43 @@ def _post_systemone(client, *, utterance: str, timeout: float) -> tuple:
         last_status = resp.status_code
         if resp.status_code == 200:
             return 200, (resp.json().get("answers") or {})
+        if resp.status_code == 429:
+            # 키 스위칭 (2026-10-04): 429 시 다른 계정 키로 전환 후 1회 재시도
+            rot = getattr(client, "_jev_rotator", None)
+            if rot is None:
+                try:
+                    from .keyring import SmartRotator
+                    rot = SmartRotator()
+                    client._jev_rotator = rot  # type: ignore[attr-defined]
+                except Exception:
+                    rot = None
+            if rot is not None and attempt < attempts - 1:
+                nk = rot.on_429()
+                if nk:
+                    client.headers["Authorization"] = f"Bearer {nk}"  # type: ignore[attr-defined]
+                    log.info("write-gate 429 → 키 전환 재시도")
+                    continue
+            return resp.status_code, {}
         if resp.status_code >= 500 and attempt < attempts - 1:
             continue  # server error (503/520) — retry
         return resp.status_code, {}
     return last_status or 0, last_answers
+
+
+def _gate_key() -> str:
+    """write-gate Jev 키 — SmartRotator 기반 (2026-10-04).
+
+    우선순위: EXPLABS_API_KEY → EXPLABS_API_KEY2 → TYPESAFE_API_KEY.
+    EXPERLABS 키가 있으면 무료 레인 자동 적용 + 429/소진 시 키 전환 가능.
+    """
+    try:
+        from .keyring import SmartRotator
+        rot = SmartRotator()
+        if rot.keys:
+            return rot.keys[0]
+    except Exception:
+        pass
+    return os.environ.get("EXPLABS_API_KEY") or os.environ.get("TYPESAFE_API_KEY") or ""
 
 
 def evaluate(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIMEOUT_S) -> Dict:
@@ -255,9 +295,9 @@ def evaluate(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIM
     if not gate_enabled():
         return {"keep": True, "reason": "killswitch-off"}
 
-    key = os.environ.get("TYPESAFE_API_KEY") or ""
+    key = _gate_key()
     if not key:
-        log.debug("write-gate: no TYPESAFE_API_KEY -> KEEP")
+        log.debug("write-gate: no API key -> KEEP")
         return {"keep": True, "reason": "no-key"}
 
     try:
@@ -271,6 +311,12 @@ def evaluate(utterance: str, *, client=None, timeout: float = JEV_WRITE_GATE_TIM
                 "Content-Type": "application/json",
             },
         )
+        if own_client:
+            try:
+                from .keyring import SmartRotator
+                c._jev_rotator = SmartRotator()  # type: ignore[attr-defined]
+            except Exception:
+                pass
         t0 = time.perf_counter()
         try:
             status_code, answers = _post_systemone(c, utterance=utterance, timeout=timeout)
@@ -357,9 +403,9 @@ def evaluate_assistant(utterance: str, *, client=None, timeout: float = JEV_WRIT
     if not gate_enabled():
         return {"keep": True, "reason": "killswitch-off"}
 
-    key = os.environ.get("TYPESAFE_API_KEY") or ""
+    key = _gate_key()
     if not key:
-        log.debug("write-gate-as: no TYPESAFE_API_KEY -> KEEP")
+        log.debug("write-gate-as: no API key -> KEEP")
         return {"keep": True, "reason": "no-key"}
 
     try:
@@ -373,6 +419,12 @@ def evaluate_assistant(utterance: str, *, client=None, timeout: float = JEV_WRIT
                 "Content-Type": "application/json",
             },
         )
+        if own_client:
+            try:
+                from .keyring import SmartRotator
+                c._jev_rotator = SmartRotator()  # type: ignore[attr-defined]
+            except Exception:
+                pass
         t0 = time.perf_counter()
         try:
             status_code, answers = _post_systemone(c, utterance=utterance, timeout=timeout)

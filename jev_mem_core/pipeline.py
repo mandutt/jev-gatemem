@@ -677,7 +677,7 @@ def _log_query(w, *, query: str, agent: str, session_id: str,
         from .redact import redact_text_high_precision
         safe = redact_text_high_precision(query)[:1500]
         ledger.query_log_add(
-            w.state.conn, query=safe, agent=agent, session_id=session_id,
+            w.state, query=safe, agent=agent, session_id=session_id,
             pool_n=pool_n, abstained=abstained, latency_ms=latency_ms)
     except Exception:
         log.exception("query_log capture failed (non-fatal)")
@@ -690,15 +690,28 @@ def _jev_client():
       없으면 기존 TYPESAFE_API_KEY 폴백 (운영 데몬 호환 유지).
     - JEV_API_URL도 동일 우선순위로 해석: EXPLABS_API_KEY 존재 시
       https://api.experientiallabs.ai/v1/systemone 기본값 사용.
+    - 키 스위칭 (2026-10-04): SmartRotator 기반 — EXPLABS_API_KEY /
+      EXPLABS_API_KEY2 (별개 계정) 순환. 429 발생 시 다음 키로 전환,
+      무료 소진(cost>0) 시 해당 키 제외. TYPESAFE는 최후 폴백.
     """
     global _jev_client_cache
     if _jev_client_cache is None:
         import httpx
+        try:
+            from .keyring import SmartRotator
+        except Exception:
+            SmartRotator = None
+        if SmartRotator is not None:
+            rot = SmartRotator()
+            keys = rot.keys
+        else:
+            explabs_key = os.environ.get("EXPLABS_API_KEY") or ""
+            typesafe_key = os.environ.get("TYPESAFE_API_KEY") or ""
+            keys = [k for k in (explabs_key, typesafe_key) if k]
+        if not keys:
+            return None
         explabs_key = os.environ.get("EXPLABS_API_KEY") or ""
         typesafe_key = os.environ.get("TYPESAFE_API_KEY") or ""
-        key = explabs_key or typesafe_key
-        if not key:
-            return None
         if explabs_key:
             api = os.environ.get("JEV_API_URL") or \
                 "https://api.experientiallabs.ai/v1/systemone"
@@ -709,11 +722,13 @@ def _jev_client():
             _jev_client_cache = httpx.Client(
                 timeout=httpx.Timeout(5.0, connect=5.0),
                 headers={
-                    "Authorization": f"Bearer {key}",
+                    "Authorization": f"Bearer {keys[0]}",
                     "Content-Type": "application/json",
                 },
             )
             _jev_client_cache._jev_api = api  # j1_pipeline이 env에 의존하므로 실제 URL은 env 기준
+            _jev_client_cache._jev_rotator = rot if SmartRotator is not None else None
+            _jev_client_cache._jev_keys = keys
         except Exception:
             return None
     return _jev_client_cache
