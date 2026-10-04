@@ -1,0 +1,407 @@
+{
+ "created_at": "2026-10-04T12:20:57+0900",
+ "cond": "Cprime-wording",
+ "records": [
+  {
+   "qid": "65a2d2e303367481",
+   "query": "다른 구성을 바꾼 적이 있어? 구체적으로 어떻게 했어?",
+   "gold_id": "65a2d2e303367481",
+   "cand_len": 507,
+   "err": null,
+   "score_old": 0.48,
+   "score_new": 0.31
+  },
+  {
+   "qid": "8bfbe0fbc6e00f02",
+   "query": "정확히 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+   "gold_id": "8bfbe0fbc6e00f02",
+   "cand_len": 1494,
+   "err": null,
+   "score_old": 0.11,
+   "score_new": 0.1
+  },
+  {
+   "qid": "b0bbee5e935ac694",
+   "query": "원인 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+   "gold_id": "b0bbee5e935ac694",
+   "cand_len": 820,
+   "err": null,
+   "score_old": 0.45,
+   "score_new": 0.37
+  },
+  {
+   "qid": "a76c32f12f076745",
+   "query": "PR 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+   "gold_id": "a76c32f12f076745",
+   "cand_len": 1232,
+   "err": null,
+   "score_old": 0.12,
+   "score_new": 0.08
+  },
+  {
+   "qid": "8506be574ec916f4",
+   "query": "IMPORTANT에 대해 사용자가 선호하는 방식이 있어?",
+   "gold_id": "8506be574ec916f4",
+   "cand_len": 510,
+   "err": null,
+   "score_old": 0.09,
+   "score_new": 0.08
+  },
+  {
+   "qid": "8728c2146ec43427",
+   "query": "실측 작업을 할 때 어떤 도구나 절차를 사용해?",
+   "gold_id": "8728c2146ec43427",
+   "cand_len": 987,
+   "err": null,
+   "score_old": 0.28,
+   "score_new": 0.15
+  },
+  {
+   "qid": "d4c58b95c2c9ba35",
+   "query": "라이브 시스템에서 완료했습니다 관련해서 어떤 설정이 적용되어 있어?",
+   "gold_id": "d4c58b95c2c9ba35",
+   "cand_len": 1329,
+   "err": null,
+   "score_old": 0.81,
+   "score_new": 0.72
+  },
+  {
+   "qid": "10555641320fe37a",
+   "query": "양쪽 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+   "gold_id": "10555641320fe37a",
+   "cand_len": 5728,
+   "err": null,
+   "score_old": 0.53,
+   "score_new": 0.51
+  },
+  {
+   "qid": "93b35851040918f2",
+   "query": "라이브 시스템에서 url 관련해서 어떤 설정이 적용되어 있어?",
+   "gold_id": "93b35851040918f2",
+   "cand_len": 256,
+   "err": null,
+   "score_old": 0.26,
+   "score_new": 0.14
+  },
+  {
+   "qid": "d0348a43255994ac",
+   "query": "IMPORTANT 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+   "gold_id": "d0348a43255994ac",
+   "cand_len": 449,
+   "err": null,
+   "score_old": 0.18,
+   "score_new": 0.14
+  },
+  {
+   "qid": "5e41e1946a0bb6b5",
+   "query": "작업 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+   "gold_id": "5e41e1946a0bb6b5",
+   "cand_len": 365,
+   "err": null,
+   "score_old": 0.71,
+   "score_new": 0.55
+  },
+  {
+   "qid": "d5d3644d89f95f4e",
+   "query": "있습니다 구성을 바꾼 적이 있어? 구체적으로 어떻게 했어?",
+   "gold_id": "d5d3644d89f95f4e",
+   "cand_len": 1758,
+   "err": null,
+   "score_old": 0.68,
+   "score_new": 0.58
+  },
+  {
+   "qid": "4ab9e79c91569c95",
+   "query": "다른 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+   "gold_id": "4ab9e79c91569c95",
+   "cand_len": 507,
+   "err": null,
+   "score_old": 0.51,
+   "score_new": 0.41
+  },
+  {
+   "qid": "2aef8cb16e18507c",
+   "query": "모델 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+   "gold_id": "2aef8cb16e18507c",
+   "cand_len": 900,
+   "err": null,
+   "score_old": 0.43,
+   "score_new": 0.3
+  },
+  {
+   "qid": "ec3c24beb85d22f3",
+   "query": "조금 관련해서 생성한 파일이나 산출물이 있어? 어디에 저장돼?",
+   "gold_id": "ec3c24beb85d22f3",
+   "cand_len": 507,
+   "err": null,
+   "score_old": 0.57,
+   "score_new": 0.4
+  },
+  {
+   "qid": "282d1e2a2f69e399",
+   "query": "IMPORTANT 구성을 바꾼 적이 있어? 구체적으로 어떻게 했어?",
+   "gold_id": "282d1e2a2f69e399",
+   "cand_len": 2415,
+   "err": null,
+   "score_old": 0.12,
+   "score_new": 0.09
+  },
+  {
+   "qid": "63d57a8367423dcf",
+   "query": "원인 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+   "gold_id": "63d57a8367423dcf",
+   "cand_len": 2267,
+   "err": null,
+   "score_old": 0.59,
+   "score_new": 0.54
+  },
+  {
+   "qid": "01e11a9c3438d5d6",
+   "query": "opencode 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+   "gold_id": "01e11a9c3438d5d6",
+   "cand_len": 3247,
+   "err": null,
+   "score_old": 0.27,
+   "score_new": 0.21
+  },
+  {
+   "qid": "1a27e0b3af9c8294",
+   "query": "IMPORTANT 작업할 때 주의하거나 선호하는 점이 뭐야?",
+   "gold_id": "1a27e0b3af9c8294",
+   "cand_len": 507,
+   "err": null,
+   "score_old": 0.19,
+   "score_new": 0.14
+  },
+  {
+   "qid": "d7e42dafa3143a95",
+   "query": "검증 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+   "gold_id": "d7e42dafa3143a95",
+   "cand_len": 2209,
+   "err": null,
+   "score_old": 0.3,
+   "score_new": 0.18
+  },
+  {
+   "qid": "7cab2a81ca778295",
+   "query": "가지 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+   "gold_id": "7cab2a81ca778295",
+   "cand_len": 171,
+   "err": null,
+   "score_old": 0.29,
+   "score_new": 0.19
+  },
+  {
+   "qid": "026fa103a0f1f346",
+   "query": "S3 구성을 바꾼 적이 있어? 구체적으로 어떻게 했어?",
+   "gold_id": "026fa103a0f1f346",
+   "cand_len": 914,
+   "err": null,
+   "score_old": 0.11,
+   "score_new": 0.11
+  },
+  {
+   "qid": "cb011c72739b1777",
+   "query": "결정적 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+   "gold_id": "cb011c72739b1777",
+   "cand_len": 2089,
+   "err": null,
+   "score_old": 0.43,
+   "score_new": 0.27
+  },
+  {
+   "qid": "1348f4211a0633ba",
+   "query": "라이브 시스템에서 방식의 관련해서 어떤 설정이 적용되어 있어?",
+   "gold_id": "1348f4211a0633ba",
+   "cand_len": 812,
+   "err": null,
+   "score_old": 0.52,
+   "score_new": 0.48
+  },
+  {
+   "qid": "f66a777d230b35df",
+   "query": "마지막 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+   "gold_id": "f66a777d230b35df",
+   "cand_len": 3834,
+   "err": null,
+   "score_old": 0.41,
+   "score_new": 0.38
+  },
+  {
+   "qid": "f26a5a04273d3d9f",
+   "query": "라이브 시스템에서 다른 관련해서 어떤 설정이 적용되어 있어?",
+   "gold_id": "f26a5a04273d3d9f",
+   "cand_len": 507,
+   "err": null,
+   "score_old": 0.26,
+   "score_new": 0.16
+  },
+  {
+   "qid": "22b0a7ae73c420d9",
+   "query": "라이브 시스템에서 반영해둬 관련해서 어떤 설정이 적용되어 있어?",
+   "gold_id": "22b0a7ae73c420d9",
+   "cand_len": 507,
+   "err": null,
+   "score_old": 0.43,
+   "score_new": 0.28
+  },
+  {
+   "qid": "a4b8a46a25272eb1",
+   "query": "codex 작업을 할 때 어떤 도구나 절차를 사용해?",
+   "gold_id": "a4b8a46a25272eb1",
+   "cand_len": 854,
+   "err": null,
+   "score_old": 0.49,
+   "score_new": 0.35
+  },
+  {
+   "qid": "02b8344c325ea807",
+   "query": "라이브 시스템에서 codex 관련해서 어떤 설정이 적용되어 있어?",
+   "gold_id": "02b8344c325ea807",
+   "cand_len": 854,
+   "err": null,
+   "score_old": 0.49,
+   "score_new": 0.31
+  },
+  {
+   "qid": "7f6666aa2ac72368",
+   "query": "file 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+   "gold_id": "7f6666aa2ac72368",
+   "cand_len": 21089,
+   "err": null,
+   "score_old": 0.46,
+   "score_new": 0.28
+  },
+  {
+   "qid": "4f11d97159ad9621",
+   "query": "아니요 작업을 할 때 어떤 도구나 절차를 사용해?",
+   "gold_id": "4f11d97159ad9621",
+   "cand_len": 1092,
+   "err": null,
+   "score_old": 0.47,
+   "score_new": 0.28
+  },
+  {
+   "qid": "d41cb780a46c7e49",
+   "query": "file 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+   "gold_id": "d41cb780a46c7e49",
+   "cand_len": 19372,
+   "err": null,
+   "score_old": 0.15,
+   "score_new": 0.17
+  },
+  {
+   "qid": "9ee99cb62a078578",
+   "query": "IMPORTANT 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+   "gold_id": "9ee99cb62a078578",
+   "cand_len": 2192,
+   "err": null,
+   "score_old": 0.13,
+   "score_new": 0.09
+  },
+  {
+   "qid": "6cefa169e5011c45",
+   "query": "opencode 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+   "gold_id": "6cefa169e5011c45",
+   "cand_len": 3429,
+   "err": null,
+   "score_old": 0.48,
+   "score_new": 0.28
+  },
+  {
+   "qid": "1bbc55c3267df3c0",
+   "query": "IMPORTANT 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+   "gold_id": "1bbc55c3267df3c0",
+   "cand_len": 2446,
+   "err": null,
+   "score_old": 0.79,
+   "score_new": 0.63
+  },
+  {
+   "qid": "e1a28f0d76609137",
+   "query": "이어서 작업을 할 때 어떤 도구나 절차를 사용해?",
+   "gold_id": "e1a28f0d76609137",
+   "cand_len": 1142,
+   "err": null,
+   "score_old": 0.28,
+   "score_new": 0.18
+  },
+  {
+   "qid": "5af75316d57dfccf",
+   "query": "S4 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+   "gold_id": "5af75316d57dfccf",
+   "cand_len": 929,
+   "err": null,
+   "score_old": 0.78,
+   "score_new": 0.79
+  },
+  {
+   "qid": "ce9d5a702bb051c3",
+   "query": "이걸 작업을 할 때 어떤 도구나 절차를 사용해?",
+   "gold_id": "ce9d5a702bb051c3",
+   "cand_len": 110,
+   "err": null,
+   "score_old": 0.34,
+   "score_new": 0.19
+  },
+  {
+   "qid": "958ea616816508b4",
+   "query": "The 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+   "gold_id": "958ea616816508b4",
+   "cand_len": 530,
+   "err": null,
+   "score_old": 0.43,
+   "score_new": 0.28
+  },
+  {
+   "qid": "e5c6a248e3eb246f",
+   "query": "v3 관련해서 겪었던 오류(에러)는 뭐였어? 어떻게 해결했어?",
+   "gold_id": "e5c6a248e3eb246f",
+   "cand_len": 1379,
+   "err": null,
+   "score_old": 0.28,
+   "score_new": 0.3
+  },
+  {
+   "qid": "2e19ba59ffcc1497",
+   "query": "단계 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+   "gold_id": "2e19ba59ffcc1497",
+   "cand_len": 1261,
+   "err": null,
+   "score_old": 0.36,
+   "score_new": 0.26
+  },
+  {
+   "qid": "45417b4a4837daee",
+   "query": "나는 작업 중에 발생했던 문제가 있었어? 원인과 해결책이 뭐야?",
+   "gold_id": "45417b4a4837daee",
+   "cand_len": 15713,
+   "err": null,
+   "score_old": 0.22,
+   "score_new": 0.15
+  },
+  {
+   "qid": "c6e42681fc230289",
+   "query": "P0 작업을 할 때 어떤 도구나 절차를 사용해?",
+   "gold_id": "c6e42681fc230289",
+   "cand_len": 1270,
+   "err": null,
+   "score_old": 0.28,
+   "score_new": 0.14
+  },
+  {
+   "qid": "b259087788fb7975",
+   "query": "이번엔 작업을 할 때 따라야 하는 규칙이나 지침이 있어?",
+   "gold_id": "b259087788fb7975",
+   "cand_len": 507,
+   "err": null,
+   "score_old": 0.35,
+   "score_new": 0.2
+  }
+ ],
+ "lane": {
+  "free": 88,
+  "credit": 0,
+  "unknown": 0
+ }
+}
