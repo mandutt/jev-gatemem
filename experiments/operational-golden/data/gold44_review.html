@@ -10,7 +10,7 @@
     --y:#2e7d32; --n:#c62828; --m:#f9a825; --accent:#4fc3f7;
   }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body { margin:0; background:var(--bg); color:var(--txt); font-family:-apple-system,Roboto,'Noto Sans KR',sans-serif; padding-bottom:90px; }
+  body { margin:0; background:var(--bg); color:var(--txt); font-family:-apple-system,Roboto,'Noto Sans KR',sans-serif; padding-bottom:120px; }
   header { position:sticky; top:0; z-index:10; background:var(--bg); padding:12px 14px 8px; border-bottom:1px solid var(--border); }
   header h1 { margin:0 0 6px; font-size:16px; }
   .prog { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); }
@@ -35,8 +35,8 @@
   .vbtn.M { background:var(--m); border-color:var(--m); color:#111; }
   .vbtn.Y small, .vbtn.N small { color:rgba(255,255,255,.85); }
   .reason { width:100%; background:#12141a; border:1px solid var(--border); border-radius:8px; color:var(--txt); font-size:12px; padding:8px; resize:vertical; }
-  footer { position:fixed; bottom:0; left:0; right:0; background:var(--bg); border-top:1px solid var(--border); padding:10px 14px; display:flex; gap:8px; }
-  footer button { flex:1; padding:12px; border-radius:10px; border:none; font-size:13px; font-weight:700; cursor:pointer; }
+  footer { position:fixed; bottom:0; left:0; right:0; background:var(--bg); border-top:1px solid var(--border); padding:10px 14px; display:flex; gap:8px; pointer-events:none; }
+  footer button { flex:1; padding:12px; border-radius:10px; border:none; font-size:13px; font-weight:700; cursor:pointer; pointer-events:auto; }
   #exportBtn { background:var(--accent); color:#0b1220; }
   #resetBtn { background:var(--border); color:var(--txt); }
   .toast { position:fixed; bottom:84px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:8px 16px; border-radius:20px; font-size:12px; opacity:0; transition:opacity .3s; pointer-events:none; z-index:20; }
