@@ -43,16 +43,14 @@ class SmartRotator:
     """429/소진 인지 키 로테이터.
 
     - ``next()``: 다음 호출에 사용할 키 반환. last_cost>0 (크레딧 과금) 감지 시
-      해당 키를 **EXHAUST_TTL초간** 제외하고 다른 키로 이동.
+      해당 키를 **다음 정각(HH:00)까지** 제외하고 다른 키로 이동.
     - ``on_429()``: 429 발생 시 즉시 다른 키로 전환 (대기 없이 재시도용).
       (429는 계정별 rate limit — 키 제외 아님, 순서만 변경)
-    - **TTL 자동 복귀**: 무료 할당은 시간당/일당 리셋되므로, 제외된 키는
-      EXHAUST_TTL(기본 3600s) 경과 후 다시 사용 가능해짐.
-      → 시간당 무료 할당이 풀리면 자동으로 원래 키로 복귀.
+    - **정각 자동 복귀**: Experiential Labs 무료 레인 1시간 한도는
+      정각(HH:00) 리셋 가정 (2026-10-04 결정). 소진 키는 다음 정각에
+      자동으로 다시 사용 가능해짐.
     - 스레드 안전 (RLock).
     """
-
-    EXHAUST_TTL = 3600  # 무료 소진 후 복귀까지 대기 (1h — 시간당 리셋 대응)
 
     def __init__(self):
         self._lock = threading.RLock()
@@ -63,8 +61,18 @@ class SmartRotator:
         self.last_cost = None    # 마지막 요청의 usage.cost
         self.last_key = None     # 마지막 사용 키 이름
 
+    def _next_hour_boundary(self, now=None):
+        """다음 정각(HH:00)까지 남은 초 (무료 레인 리셋 시점).
+
+        2026-10-04 결정: Experiential Labs 무료 레인 1시간 한도는
+        **정각(HH:00) 기준**으로 리셋된다고 가정.
+        소진 키는 다음 정각까지 제외 후 자동 복귀.
+        """
+        now = now if now is not None else time.time()
+        return 3600 - (int(now) % 3600)
+
     def _active(self, now=None):
-        """사용 가능한 (이름, 키) 목록 — TTL 만료된 키는 자동 복귀."""
+        """사용 가능한 (이름, 키) 목록 — 다음 정각 도래 시 자동 복귀."""
         if now is None:
             now = time.monotonic()
         expired = [n for n, until in self.exhausted_until.items() if until <= now]
@@ -82,12 +90,14 @@ class SmartRotator:
     def next(self):
         with self._lock:
             now = time.monotonic()
-            # 직전 요청이 크레딧 과금이었다면 해당 키 TTL 제외
+            # 직전 요청이 크레딧 과금이었다면 해당 키를 다음 정각까지 제외
             if self.last_cost is not None and self.last_cost > 0 and self.last_key:
-                self.exhausted_until[self.last_key] = now + self.EXHAUST_TTL
+                until = now + self._next_hour_boundary()
+                self.exhausted_until[self.last_key] = until
                 self.last_cost = None
-                print(f"[keyring] 무료 소진 감지 (cost>0) → 키 TTL {self.EXHAUST_TTL}s 제외: "
-                      f"{self.last_key[:4]}...", flush=True)
+                remain = int(until - now)
+                print(f"[keyring] 무료 소진 감지 (cost>0) → 키를 다음 정각까지 제외 "
+                      f"({remain}s): {self.last_key[:4]}...", flush=True)
             self._active(now)
             active = self._active(now)
             if not active:
@@ -132,7 +142,7 @@ class SmartRotator:
             until = self.exhausted_until.get(n)
             if until and until > now:
                 remain = int(until - now)
-                out.append(f"{n}={k[:4]}...(len={len(k)},TTL제외 {remain}s)")
+                out.append(f"{n}={k[:4]}...(len={len(k)},정각제외 {remain}s)")
             else:
                 out.append(f"{n}={k[:4]}...(len={len(k)},free)")
         return out
