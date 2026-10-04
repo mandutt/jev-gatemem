@@ -16,7 +16,9 @@ def _remember_with_meta(beam, content: str, *, importance: float, source: str,
                         scope: str, session_key: str, idem_key: Optional[str],
                         source_agent: str, turn_id: str,
                         fail_open: Optional[str] = None,
-                        incident_id: Optional[str] = None) -> str:
+                        incident_id: Optional[str] = None,
+                        source_timestamp: Optional[str] = None,
+                        backfilled_at: Optional[str] = None) -> str:
     """beam.remember() with v1.1 D12 metadata. Returns memory_id."""
     meta: Dict[str, Any] = {
         "source_agent": source_agent,
@@ -32,6 +34,12 @@ def _remember_with_meta(beam, content: str, *, importance: float, source: str,
         # P2b: 장애 구간 연결 (재판정 batch 단위)
         if incident_id:
             meta["incident_id"] = incident_id
+    if source_timestamp:
+        # 사후 재주입(backfill) 메모리: 원본 발화 시각 (timestamp/created_at은
+        # '저장 시각'이므로 재주입분은 원발화 시각이 여기만 남는다)
+        meta["source_timestamp"] = source_timestamp
+    if backfilled_at:
+        meta["backfilled_at"] = backfilled_at
     return beam.remember(
         content=content,
         source=source,
