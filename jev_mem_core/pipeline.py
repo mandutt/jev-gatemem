@@ -350,7 +350,7 @@ class Pipeline:
         try:
             from . import ledger
             from .redact import redact_text_high_precision
-            row = w.state.conn.execute(
+            row = w.state.execute(
                 "SELECT agent, session_key, payload_json, received_at, turn_id"
                 " FROM ingest_ledger WHERE idem_key=?", (idem_key,)
             ).fetchone()
@@ -370,7 +370,7 @@ class Pipeline:
                 if d.get("keep") is False and (text or "").strip():
                     safe = redact_text_high_precision(text)[:1500]
                     ledger.shadow_add(
-                        w.state.conn, idem_key=idem_key, turn_id=turn_id or "",
+                        w.state, idem_key=idem_key, turn_id=turn_id or "",
                         agent=agent or "", session_key=session_key or "",
                         speaker=spk, content=safe,
                         reason=str(d.get("reason") or "skip"),
