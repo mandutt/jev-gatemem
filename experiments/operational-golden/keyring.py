@@ -7,6 +7,7 @@
 """
 import os
 import threading
+import time
 import winreg
 
 _NAMES = ("EXPLABS_API_KEY", "EXPLABS_API_KEY2")
@@ -42,34 +43,55 @@ class SmartRotator:
     """429/소진 인지 키 로테이터.
 
     - ``next()``: 다음 호출에 사용할 키 반환. last_cost>0 (크레딧 과금) 감지 시
-      해당 키를 제외하고 다른 키로 이동.
+      해당 키를 **EXHAUST_TTL초간** 제외하고 다른 키로 이동.
     - ``on_429()``: 429 발생 시 즉시 다른 키로 전환 (대기 없이 재시도용).
+      (429는 계정별 rate limit — 키 제외 아님, 순서만 변경)
+    - **TTL 자동 복귀**: 무료 할당은 시간당/일당 리셋되므로, 제외된 키는
+      EXHAUST_TTL(기본 3600s) 경과 후 다시 사용 가능해짐.
+      → 시간당 무료 할당이 풀리면 자동으로 원래 키로 복귀.
     - 스레드 안전 (RLock).
     """
+
+    EXHAUST_TTL = 3600  # 무료 소진 후 복귀까지 대기 (1h — 시간당 리셋 대응)
 
     def __init__(self):
         self._lock = threading.RLock()
         self.keys = get_keys()
         self.names = get_key_names()
-        self.exhausted = set()   # 무료 소진(크레딧 과금)으로 제외된 키 (이름)
+        self.exhausted_until = {}  # 이름 -> 제외 만료 시각 (monotonic)
         self.i = 0               # 현재 라운드로빈 인덱스
         self.last_cost = None    # 마지막 요청의 usage.cost
         self.last_key = None     # 마지막 사용 키 이름
 
-    def _active(self):
-        """사용 가능한 (이름, 키) 목록"""
-        return [(n, k) for n, k in zip(self.names, self.keys) if n not in self.exhausted]
+    def _active(self, now=None):
+        """사용 가능한 (이름, 키) 목록 — TTL 만료된 키는 자동 복귀."""
+        if now is None:
+            now = time.monotonic()
+        expired = [n for n, until in self.exhausted_until.items() if until <= now]
+        for n in expired:
+            del self.exhausted_until[n]
+        # TTL 만료 키가 있으면 원래 순서로 복원 (429 재정렬 복구)
+        if expired:
+            by_name = dict(zip(self.names, self.keys))
+            self.names = [n for n in _NAMES if n in by_name]
+            self.keys = [by_name[n] for n in self.names]
+            self.i = 0
+        return [(n, k) for n, k in zip(self.names, self.keys)
+                if n not in self.exhausted_until]
 
     def next(self):
         with self._lock:
-            # 직전 요청이 크레딧 과금이었다면 해당 키 제외
+            now = time.monotonic()
+            # 직전 요청이 크레딧 과금이었다면 해당 키 TTL 제외
             if self.last_cost is not None and self.last_cost > 0 and self.last_key:
-                self.exhausted.add(self.last_key)
+                self.exhausted_until[self.last_key] = now + self.EXHAUST_TTL
                 self.last_cost = None
-                print(f"[keyring] 무료 소진 감지 (cost>0) → 키 제외: {self.last_key[:4]}...", flush=True)
-            active = self._active()
+                print(f"[keyring] 무료 소진 감지 (cost>0) → 키 TTL {self.EXHAUST_TTL}s 제외: "
+                      f"{self.last_key[:4]}...", flush=True)
+            self._active(now)
+            active = self._active(now)
             if not active:
-                print("[keyring] 모든 키 무료 소진 — 첫 키로 계속 (크레딧 과금 감수)", flush=True)
+                print("[keyring] 모든 키 TTL 제외 중 — 첫 키로 계속 (크레딧 과금 감수)", flush=True)
                 return self.keys[0]
             if self.i >= len(active):
                 self.i = 0
@@ -80,7 +102,9 @@ class SmartRotator:
 
     def on_429(self):
         """429 발생: 현재 키를 끝으로 밀고 다른 키 반환 (대기 없음).
-        전환 불가(키 1개 or 전부 소진) 시 None."""
+        전환 불가(키 1개 or 전부 TTL 제외) 시 None.
+        429는 계정별 rate limit이므로 **영구 제외 아님** — 순서만 변경.
+        """
         with self._lock:
             active = self._active()
             if len(active) <= 1:
@@ -103,9 +127,14 @@ class SmartRotator:
     def stats(self):
         """보안: 접두 4자 + 길이 + 상태만 (키 원문 절대 아님)"""
         out = []
+        now = time.monotonic()
         for n, k in zip(self.names, self.keys):
-            status = "exhausted(크레딧)" if n in self.exhausted else "free"
-            out.append(f"{n}={k[:4]}...(len={len(k)},{status})")
+            until = self.exhausted_until.get(n)
+            if until and until > now:
+                remain = int(until - now)
+                out.append(f"{n}={k[:4]}...(len={len(k)},TTL제외 {remain}s)")
+            else:
+                out.append(f"{n}={k[:4]}...(len={len(k)},free)")
         return out
 
 
