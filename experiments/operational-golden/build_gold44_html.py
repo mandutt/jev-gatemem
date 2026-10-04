@@ -35,9 +35,9 @@ for it in items:
     <div class="gold-body">{gold}</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" onclick="setV(this)">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" onclick="setV(this)">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" onclick="setV(this)">? 모호<br><small>판단 필요</small></button>
+    <button class="vbtn" data-v="Y" type="button">✓ Y<br><small>직접 답</small></button>
+    <button class="vbtn" data-v="N" type="button">✗ N<br><small>답 아님</small></button>
+    <button class="vbtn" data-v="M" type="button">? 모호<br><small>판단 필요</small></button>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
 </div>""")
@@ -108,7 +108,21 @@ html_doc = f"""<!DOCTYPE html>
 <script>
 const KEY = 'gold44_verdicts';
 let state = {{}};
-try {{ state = JSON.parse(localStorage.getItem(KEY) || '{{}}'); }} catch(e) {{ state = {{}}; }}
+let storageOK = true;
+try {{
+  state = JSON.parse(localStorage.getItem(KEY) || '{{}}');
+}} catch(e) {{
+  storageOK = false;
+  state = {{}};
+}}
+try {{ localStorage.setItem(KEY, JSON.stringify({{}})); }} catch(e) {{ storageOK = false; }}
+
+// 이벤트 위임: main 전체에서 클릭을 받아 .vbtn을 찾는다 (자식 <small> 탭도 처리)
+document.getElementById('main').addEventListener('click', function(e) {{
+  const btn = e.target.closest('.vbtn');
+  if (!btn) return;
+  setV(btn);
+}});
 
 function setV(btn) {{
   const card = btn.closest('.card');
@@ -116,15 +130,15 @@ function setV(btn) {{
   const v = btn.dataset.v;
   if (state[n] && state[n].v === v) {{
     delete state[n];
-    btn.classList.remove(v);
   }} else {{
-    state[n] = {{ v, reason: (state[n] && state[n].reason) || '' }};
+    state[n] = {{ v: v, reason: (state[n] && state[n].reason) || '' }};
   }}
   card.querySelectorAll('.vbtn').forEach(b => b.classList.remove('Y','N','M'));
   if (state[n]) card.querySelector('.vbtn.' + state[n].v).classList.add(state[n].v);
   renderCard(card, n, true);
   save();
 }}
+
 function renderCard(card, n, keepReason) {{
   const s = state[n];
   card.classList.toggle('done-card', !!(s && s.v));
@@ -148,7 +162,9 @@ function bindReason() {{
   }});
 }}
 function save() {{
-  localStorage.setItem(KEY, JSON.stringify(state));
+  if (storageOK) {{
+    try {{ localStorage.setItem(KEY, JSON.stringify(state)); }} catch(e) {{ storageOK = false; }}
+  }}
   const done = Object.values(state).filter(s => s && s.v).length;
   document.getElementById('count').textContent = done + '/44';
   document.getElementById('barFill').style.width = (done/44*100) + '%';
@@ -173,7 +189,8 @@ function fallbackCopy(txt) {{
 }}
 function resetAll() {{
   if (!confirm('44건 판정을 모두 초기화할까요?')) return;
-  state = {{}}; localStorage.removeItem(KEY);
+  state = {{}};
+  if (storageOK) {{ try {{ localStorage.removeItem(KEY); }} catch(e) {{ storageOK = false; }} }}
   document.querySelectorAll('.card').forEach(c => {{
     c.querySelectorAll('.vbtn').forEach(b => b.classList.remove('Y','N','M'));
     c.querySelector('.reason').value = '';
