@@ -28,12 +28,15 @@
   .gold summary { font-size:12px; color:var(--accent); cursor:pointer; padding:4px 0; user-select:none; }
   .gold-body { font-size:12px; color:var(--muted); background:#12141a; border:1px solid var(--border); border-radius:8px; padding:8px; margin-top:4px; max-height:160px; overflow-y:auto; white-space:pre-wrap; line-height:1.45; }
   .verdict { display:flex; gap:8px; margin:10px 0 6px; }
-  .vbtn { flex:1; padding:10px 4px; font-size:13px; font-weight:700; border:2px solid var(--border); border-radius:10px; background:#12141a; color:var(--txt); cursor:pointer; }
-  .vbtn small { display:block; font-weight:400; font-size:10px; color:var(--muted); margin-top:2px; }
-  .vbtn.Y { background:var(--y); border-color:var(--y); color:#fff; }
-  .vbtn.N { background:var(--n); border-color:var(--n); color:#fff; }
-  .vbtn.M { background:var(--m); border-color:var(--m); color:#111; }
-  .vbtn.Y small, .vbtn.N small { color:rgba(255,255,255,.85); }
+  .vbtn { flex:1; position:relative; display:flex; flex-direction:column; align-items:center; gap:2px; padding:10px 4px; font-size:13px; font-weight:700; border:2px solid var(--border); border-radius:10px; background:#12141a; color:var(--txt); cursor:pointer; user-select:none; -webkit-user-select:none; }
+  .vbtn small { font-weight:400; font-size:10px; color:var(--muted); }
+  .vbtn input { position:absolute; opacity:0; width:0; height:0; }
+  .vbtn.sel-y { background:var(--y); border-color:var(--y); color:#fff; }
+  .vbtn.sel-n { background:var(--n); border-color:var(--n); color:#fff; }
+  .vbtn.sel-m { background:var(--m); border-color:var(--m); color:#111; }
+  .vbtn.sel-y small, .vbtn.sel-n small { color:rgba(255,255,255,.85); }
+  .vbtn.sel-m small { color:rgba(17,17,17,.7); }
+  .vbtn:active { transform:scale(0.97); }
   .reason { width:100%; background:#12141a; border:1px solid var(--border); border-radius:8px; color:var(--txt); font-size:12px; padding:8px; resize:vertical; }
   footer { position:fixed; bottom:0; left:0; right:0; background:var(--bg); border-top:1px solid var(--border); padding:10px 14px; display:flex; gap:8px; pointer-events:none; }
   footer button { flex:1; padding:12px; border-radius:10px; border:none; font-size:13px; font-weight:700; cursor:pointer; pointer-events:auto; }
@@ -72,12 +75,12 @@
 그리고 한 가지는 명확히 수정해야 합니다. 현재 데이터로 “R1은 관련 modification 자체에 반응하지 않고 wrongness evidence에 반응한다”고 표현하는 것은 너무 강합니다. 현재까지 확인된 것은 “특정 matched pair에서 correct refactor는 1.0을 유지했고, acceptance 관련 실패를 암시하는 observation은 0.2로 떨어졌다” 정도입니다. 이것을 일반적인 의미론적 판정 능력으로 확대하면 안 됩니다</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v1" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v1" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v1" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="2" data-qid="8bfbe0fbc6e00f02">
   <div class="card-head">
     <span class="num">02/44</span>
@@ -110,12 +113,12 @@ score+threshold는 **정상 쿼리든 무답 쿼리든 매 쿼리 동일한 페�
 이건 실측이 필요한 제안이긴 한데(abstain 라벨을 Jev가 실제로 어떤 비율로 고르는지, 무답 10쿼리에서 오주입 4건이 줄어드는지), score+threshold 도입(토큰 2배, threshold가 배치-상대적 Jev 점수에서 안정적인지 검증 필요)보다 훨씬 싼 첫 실험이 됩니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v2" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v2" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v2" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="3" data-qid="b0bbee5e935ac694">
   <div class="card-head">
     <span class="num">03/44</span>
@@ -140,12 +143,12 @@ score+threshold는 **정상 쿼리든 무답 쿼리든 매 쿼리 동일한 페�
 이건 사용자 원칙(원인 규명 후 판정)에 따라 필요한 단계입니다. 진행할까요, 아니면 이미 충분한 것으로 보고 판정하겠습니까? (참고로, 운영 관점에서 &quot;접두사를 어떻게 하든 한국어 검색이 망가진다&quot;는 사실만으로도 리젝트 사유는 충분합니다. 다만 **왜** 망가졌는지 — ONNX 변환 문제인지 모델 본질인지 — 가 남아 있어, 나중에 다른 모델 변환 시 같은 함정을 피하려면 확인 가치가 있습니다.)</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v3" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v3" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v3" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="4" data-qid="a76c32f12f076745">
   <div class="card-head">
     <span class="num">04/44</span>
@@ -188,12 +191,12 @@ PR의 구조는 **전체 코퍼스(419)를 레인 없이 전부 JEV에 노출**�
 즉 **&quot;우리가 100%를 못 하는&quot; 게 아니라 &quot;100%를 사면 정확도와 비용을 잃는&quot;** 트레이드오프이고, 운영 조건 실측에서 우리 쪽이 압도적으로 유리하다는 게 이번 사이클의 핵심 결론입니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v4" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v4" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v4" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="5" data-qid="8506be574ec916f4">
   <div class="card-head">
     <span class="num">05/44</span>
@@ -208,12 +211,12 @@ Output:
 ]</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v5" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v5" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v5" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="6" data-qid="8728c2146ec43427">
   <div class="card-head">
     <span class="num">06/44</span>
@@ -251,12 +254,12 @@ Output:
 **요약**: 실점유 **~672 MB** (모델 단독 ~617 MB), baseline(948 MB) 대비 **-29~35%** 절감 상태입니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v6" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v6" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v6" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="7" data-qid="d4c58b95c2c9ba35">
   <div class="card-head">
     <span class="num">07/44</span>
@@ -303,12 +306,12 @@ Output:
 운영 baseline이 확정됐습니다. 남은 개선 레버는 풀 진입률(어휘 게이트 경계 사례 처리 또는 vec k 상향)인데, 다음 세션으로 넘기고 오늘은 여기서 정리할까요?</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v7" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v7" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v7" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="8" data-qid="10555641320fe37a">
   <div class="card-head">
     <span class="num">08/44</span>
@@ -409,12 +412,12 @@ README에 직접 비교가 있습니다 (arXiv 2609.23986 = **Jev-Mem**: write-t
 참고: docs/design/perfectrecall-comparison-report-20261001.md에서 하신 PerfectRecall 대비와 이번 비교를 합치면, &quot;Jev를 회수 자체에 쓰는 계열(PerfectRecall) / write-time 분류 계열(jev-mem, Jev-Mem) / read-time 판정 계열(Mnemon)&quot; 3분류가 완성됩니다. 원하시면 이 3자 비교 리포트(또는 Jev-Mem 논문 arXiv 2609.23986 원문 대조)를 다음 작업으로 정리해 드리겠습니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v8" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v8" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v8" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="9" data-qid="93b35851040918f2">
   <div class="card-head">
     <span class="num">09/44</span>
@@ -429,12 +432,12 @@ README에 직접 비교가 있습니다 (arXiv 2609.23986 = **Jev-Mem**: write-t
 - @url:`https://github.com/Tiger3807861189/DeepSeek-V4-J-Space-Capability-Realization-Report`: no content extracted</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v9" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v9" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v9" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="10" data-qid="d0348a43255994ac">
   <div class="card-head">
     <span class="num">10/44</span>
@@ -449,12 +452,12 @@ Output:
 ]</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v10" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v10" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v10" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="11" data-qid="5e41e1946a0bb6b5">
   <div class="card-head">
     <span class="num">11/44</span>
@@ -472,12 +475,12 @@ Output:
 완료 기준: 세 파일 존재 + 각 파일에 필수 섹션(README: Usage, ARCHITECTURE: Structure, CHANGELOG: 날짜) 포함.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v11" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v11" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v11" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="12" data-qid="d5d3644d89f95f4e">
   <div class="card-head">
     <span class="num">12/44</span>
@@ -519,12 +522,12 @@ Output:
 **요약**: 더 좋은 모델은 있으나(특히 Qwen3-0.6B, KURE-v1), RAM +300~400MB 비용을 지불해야 하고 &quot;완전 의역 3건 회복&quot;이라는 구체 이득이 보장되지 않습니다. 현재 a8m의 운영 도메인 압도적 우위가 확인된 이상 교체는 보류가 맞고, 트리거 발생 시 Qwen3-0.6B·KURE-v1을 S3 벤치로 재실측하는 것이 합리적입니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v12" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v12" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v12" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="13" data-qid="4ab9e79c91569c95">
   <div class="card-head">
     <span class="num">13/44</span>
@@ -577,12 +580,12 @@ Implementation frozen.
 그리고 이후에는 Controller를 건드리지 않고 실제</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v13" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v13" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v13" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="14" data-qid="2aef8cb16e18507c">
   <div class="card-head">
     <span class="num">14/44</span>
@@ -611,12 +614,12 @@ Implementation frozen.
 기존 기준치 대비(직결 37.7 tok/s / 18080 프록시 23.2 tok/s) 현재 free provider 루트가 **약 10배 이상 빠른** 수준이며, TTFT도 2.4초로 무난합니다. 전반적으로 라우터·프로바이더·속도 모두 양호한 상태입니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v14" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v14" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v14" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="15" data-qid="ec3c24beb85d22f3">
   <div class="card-head">
     <span class="num">15/44</span>
@@ -640,12 +643,12 @@ patch 파라미터를 빼고 old_string+new_string+path 최상위로 정확히:
 patch 최상위 path 파라미터가 왜 안 먹는지 진단했습니다 — 실패하는 호출</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v15" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v15" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v15" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="16" data-qid="282d1e2a2f69e399">
   <div class="card-head">
     <span class="num">16/44</span>
@@ -680,12 +683,12 @@ T https://api.typesafe.ai/v1/systemone &quot;HTTP/1.1 200 OK&quot;
 ]</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v16" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v16" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v16" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="17" data-qid="63d57a8367423dcf">
   <div class="card-head">
     <span class="num">17/44</span>
@@ -733,12 +736,12 @@ T https://api.typesafe.ai/v1/systemone &quot;HTTP/1.1 200 OK&quot;
 구현 범위(1~3만 할지, 4 포함할지)와 데몬 재기동 시점(구현 후 검증에 재기동 필요 — 현재 라이브 세션 영향 있음)을 지시해 주시면 진행하겠습니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v17" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v17" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v17" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="18" data-qid="01e11a9c3438d5d6">
   <div class="card-head">
     <span class="num">18/44</span>
@@ -756,12 +759,12 @@ commands: Get-Process -Name &quot;notion-sync&quot; -ErrorAction SilentlyContinu
 outcome: handleModify Size fix 유지 확인 (`if entry.IsFile()` — Size&gt;0 조건 제거됨) ✅ 이제 Step 1 완료. TRACE 로그 제거 및 수정사항 유지 확인이 끝났습니다. 다음 단계(gofmt → build → vet → test -race)를 진행할지 확인합니다. **Step 1 (TRACE 제거): PASS** - TRACE 라인 0개 남음 - 실제 수정사항 4건 모두 유지 (Delete(oldID) fix, handleModify Size fix, resolver nil fix, Cache.DB) 종료합니다. 다음 지시 대기.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v18" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v18" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v18" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="19" data-qid="1a27e0b3af9c8294">
   <div class="card-head">
     <span class="num">19/44</span>
@@ -786,12 +789,12 @@ reverse-order: 40 sets × 5 = 200 G3 calls (역순 재평가)
 [C09] done (5</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v19" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v19" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v19" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="20" data-qid="d7e42dafa3143a95">
   <div class="card-head">
     <span class="num">20/44</span>
@@ -849,12 +852,12 @@ reverse-order: 40 sets × 5 = 200 G3 calls (역순 재평가)
 **결론**: 데몬 상태·쓰기·회수 모두 PASS. 라이브 파이프라인이 S4 컷오버 이후에도 a8m 기준으로 정상 동작 중이며, MiniLM fallback 재발 없음. 수정할 문제는 발견되지 않았습니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v20" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v20" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v20" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="21" data-qid="7cab2a81ca778295">
   <div class="card-head">
     <span class="num">21/44</span>
@@ -866,12 +869,12 @@ reverse-order: 40 sets × 5 = 200 G3 calls (역순 재평가)
     <div class="gold-body">[USER] 한 가지 궁금한 점이 있어. typed_memory.py에 아까 한글 어미 관련 사항을 넣었는데, 해당 문서에는 영어로 error, file, folder 등의 단어가 나왔을 때 분류하는 기준도 있어. 그런데 만약에 한글로 같은 뜻인 오류, 파일, 폴더 등의 단어를 썼을 경우, 똑같이 취급돼?</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v21" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v21" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v21" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="22" data-qid="026fa103a0f1f346">
   <div class="card-head">
     <span class="num">22/44</span>
@@ -902,12 +905,12 @@ reverse-order: 40 sets × 5 = 200 G3 calls (역순 재평가)
 다음 단계는 S4 마이그레이션 설계 전 보강 측정(gold 확장 + 하이브리드 F1 + 트랩 v2)입니다. 바로 진행할까요?</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v22" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v22" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v22" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="23" data-qid="cb011c72739b1777">
   <div class="card-head">
     <span class="num">23/44</span>
@@ -968,12 +971,12 @@ reverse-order: 40 sets × 5 = 200 G3 calls (역순 재평가)
 이 설계로 진행할까요? 아니면 삭제(옵션 a)까지 포함할까요?</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v23" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v23" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v23" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="24" data-qid="1348f4211a0633ba">
   <div class="card-head">
     <span class="num">24/44</span>
@@ -1015,12 +1018,12 @@ def _load_pipeline():
     # sys.modules.pop(&quot;gateway&quot;) → </div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v24" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v24" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v24" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="25" data-qid="f66a777d230b35df">
   <div class="card-head">
     <span class="num">25/44</span>
@@ -1099,12 +1102,12 @@ def _load_pipeline():
 **제안**: v2.1 개정안 작성 → 승인 → P0&#x27;(assistant 맥락 재평가) → P1 순으로 진행. v2.1 초안을 먼저 작성해 보여드릴까요? 아니면 P0&#x27;(assistant 5건 재평가 — JEV 5회, &lt;1¢)를 먼저 실측할까요?</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v25" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v25" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v25" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="26" data-qid="f26a5a04273d3d9f">
   <div class="card-head">
     <span class="num">26/44</span>
@@ -1124,12 +1127,12 @@ def _load_pipeline():
 Q1. 100% false trip은 규칙 문</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v26" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v26" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v26" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="27" data-qid="22b0a7ae73c420d9">
   <div class="card-head">
     <span class="num">27/44</span>
@@ -1149,12 +1152,12 @@ Q1. 100% false trip은 규칙 문</div>
 그리고 그 결과가 상당히 흥미롭습니다. Terminal-Bench 2.1에서 DeepSeek V4 Flash가 생성</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v27" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v27" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v27" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="28" data-qid="a4b8a46a25272eb1">
   <div class="card-head">
     <span class="num">28/44</span>
@@ -1169,12 +1172,12 @@ turns: 3
 outcome: 해결 방향을 찾았습니다. 핵심은 **Camel을 Responses로 바꾸는 것이 아니라, 현재처럼 Camel upstream을 Chat Completions로 고정하고 OpenCodex를 최신 버전으로 업데이트하는 것**입니다. **확인된 사실** 현재 로컬 설정: ```text provider: camelai adapter: openai-chat baseUrl: https://stream.camelai.com/v1 ``` 문제 세션의 실제 usage 기록도 다음과 같습니다. ```text inboundProtocol: responses upstream adapter: openai-chat reasoning wire field: reasoning_effort status: 200 first output: 약 67.8초 ``` 즉, Codex가 OpenCodex에 Responses 형식으로 들어온 것은 맞지만, Camel upstream에는 Chat 형식으로 전달됐습니다. 따라서 이전</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v28" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v28" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v28" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="29" data-qid="02b8344c325ea807">
   <div class="card-head">
     <span class="num">29/44</span>
@@ -1189,12 +1192,12 @@ turns: 1
 outcome: **결론부터 말하면, 진단 방향은 상당히 타당합니다.** 다만 현재 세션 기록만으로 “반드시 Responses 경로 전환이 원인”이라고 확정할 수는 없습니다. 가장 정확한 표현은 다음과 같습니다. &gt; Camel의 모델 adapter가 Chat Completions용 계약과 Responses용 계약을 혼용했고, Responses 경로로 라우팅되면서 호환성 문제가 드러났을 가능성이 높다. **세션 기록에서 확인된 사실** 세션 `01a005ed-a403-7d91-b885-2c7976ebb91c`의 로컬 기록에는 다음이 남아 있습니다. - `model_provider: openai` - 모델 지시문상 모델: `deepseek-v4-flash` - 원시 HTTP URL, adapter 이름, 실제 요청 JSON은 기록되지 않음 - 전체 응답 시간 약 75초 - 첫 토큰까지 약 71.8초 따라서 긴 첫 출력 지연은 확인되지만, 해당 세션만으로 `/v1/chat/completions`에서 `/</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v29" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v29" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v29" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="30" data-qid="7f6666aa2ac72368">
   <div class="card-head">
     <span class="num">30/44</span>
@@ -1528,12 +1531,12 @@ S3는 `mem.reindex_vectors()`로 int8 저장을 했습니다. S4의 &quot;a8m �
 ```</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v30" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v30" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v30" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="31" data-qid="4f11d97159ad9621">
   <div class="card-head">
     <span class="num">31/44</span>
@@ -1571,12 +1574,12 @@ S3는 `mem.reindex_vectors()`로 int8 저장을 했습니다. S4의 &quot;a8m �
 1단계에서 완전 의역 회복이 안 나오면 2단계를 안 돌려도 되므로, JEV 비용 리스크는 사실상 0에 가깝게 설계됩니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v31" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v31" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v31" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="32" data-qid="d41cb780a46c7e49">
   <div class="card-head">
     <span class="num">32/44</span>
@@ -1975,12 +1978,12 @@ v1에 존재했던 5가지 치명적 결함(P0-1 ~ P0-5)이 완벽히 해결되�
 ```</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v32" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v32" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v32" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="33" data-qid="9ee99cb62a078578">
   <div class="card-head">
     <span class="num">33/44</span>
@@ -2014,12 +2017,12 @@ q4f16 {&#x27;dim&#x27;: 1024, &#x27;load_s&#x27;: 56.7519314289093, &#x27;rss_mb
 ]</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v33" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v33" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v33" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="34" data-qid="6cefa169e5011c45">
   <div class="card-head">
     <span class="num">34/44</span>
@@ -2037,12 +2040,12 @@ commands: Get-Process -Name &quot;notion-sync&quot; -ErrorAction SilentlyContinu
 outcome: **분석 완료.** 실제 코드와 실제 Notion 응답, sync 로그를 근거로 결론을 정리합니다. ## 실제 파일 업로드 경로 검증 결과 ### 1. 실제 Notion 응답 (gp-upload.txt, 로컬 파일 27바이트) ``` ID: 3af1f1de-06e4-812d-be96-cf3afdae078f Size: 0 ← 로컬 27바이트와 불일치! Hash: 0 items UploadID: 0 items UploadMode: NULL AttachedFile.files: 0개 ← 빈 배열 ``` ### 2. sync 로그 (UAT) ``` 13:46:33 Sync engine started 13:46:33 initial scan complete, files enqueued (업로드 오류 로그 없음) ``` **.txt 업로드가 시도됐다면 400 에러가 로그에 남아야 합니다. 에러가 없으므로 업로드가 아예 시도되지 않았습니다.** ### 3. 코드 경로 증명 **CreateEntry에…</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v34" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v34" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v34" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="35" data-qid="1bbc55c3267df3c0">
   <div class="card-head">
     <span class="num">35/44</span>
@@ -2068,12 +2071,12 @@ saved: qwen3_golden_bench_a8m.json
 ]</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v35" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v35" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v35" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="36" data-qid="e1a28f0d76609137">
   <div class="card-head">
     <span class="num">36/44</span>
@@ -2098,12 +2101,12 @@ saved: qwen3_golden_bench_a8m.json
 원하시면 별칭을 원본명 `hotchpotch/bekko-embedding-v1-a8m`으로 등록하도록 바꿔서(DB 태그 마이그레이션 1,153행 + 데몬 env 수정, 약 1분 작업) 가독성을 높일 수 있습니다. 다만 지금 컷오버 직후라 안정화 관찰(10-08까지)이 끝난 뒤 한 번에 하는 걸 권합니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v36" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v36" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v36" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="37" data-qid="5af75316d57dfccf">
   <div class="card-head">
     <span class="num">37/44</span>
@@ -2128,12 +2131,12 @@ saved: qwen3_golden_bench_a8m.json
 **다음 단계:** live cutover 최종 승인 — 창 시간은 리허설 실측(≈35s) + 여유로 5~8분 유지 권장합니다. 승인 주시면 ① 데몬 정지 → ② 백업 → ③ reindex → ④ orphan 정리 → ⑤ 검증 → ⑥ 재기동 순으로 실행합니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v37" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v37" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v37" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="38" data-qid="ce9d5a702bb051c3">
   <div class="card-head">
     <span class="num">38/44</span>
@@ -2146,12 +2149,12 @@ saved: qwen3_golden_bench_a8m.json
 그래야 기존에 jev 장애 중 저장한 메모리를 제대로 재분류하는지 알수 있지 않나?</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v38" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v38" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v38" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="39" data-qid="958ea616816508b4">
   <div class="card-head">
     <span class="num">39/44</span>
@@ -2166,12 +2169,12 @@ saved: qwen3_golden_bench_a8m.json
   • `C:\Users\mandu\AppData\Local\hermes\cache\scratch\key_check.py` — [write_file] Refusing to overwrite `C:\Users\mandu\AppData\Local\hermes\cache\scratch\key_check.py`: `C:\Users\mandu\AppData\Local\hermes\cache\scratch\key_check.py` exists but this task has not s…</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v39" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v39" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v39" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="40" data-qid="e5c6a248e3eb246f">
   <div class="card-head">
     <span class="num">40/44</span>
@@ -2203,12 +2206,12 @@ saved: qwen3_golden_bench_a8m.json
 판정 분포는 a=승인, c=P0 수정 후 승인, b=반영+리허설 후 승인 — v3는 전부 흡수했으므로 **다음 승인 시 실행 가능 상태**입니다. v1/v2는 버전 파일로 보존했습니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v40" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v40" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v40" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="41" data-qid="2e19ba59ffcc1497">
   <div class="card-head">
     <span class="num">41/44</span>
@@ -2250,12 +2253,12 @@ saved: qwen3_golden_bench_a8m.json
 AI-A의 제안: **`rejudge_verdicts` P1 64건 백필** — dry-run JSON에 verdict/reason/latency가 있어 채울 수 있고, &quot;감사 이력 SoT는 rejudge_verdicts&quot; 원칙(AI-C)과 정합됩니다. recall/동작에는 영향이 없어, 원하시면 다음에 진행하겠습니다.</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v41" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v41" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v41" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="42" data-qid="45417b4a4837daee">
   <div class="card-head">
     <span class="num">42/44</span>
@@ -2671,12 +2674,12 @@ To read the omitted middle: read_file path=&quot;C:\Users\mandu\AppData\Local\he
 ─────────────────────────────</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v42" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v42" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v42" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="43" data-qid="c6e42681fc230289">
   <div class="card-head">
     <span class="num">43/44</span>
@@ -2715,12 +2718,12 @@ To read the omitted middle: read_file path=&quot;C:\Users\mandu\AppData\Local\he
 **rejudge_result.json을 갱신(keeep 49/skip 15)하고 P1 승인 요청을 드릴까요?** 아니면 대조군(B-AI 제안, 정상 구간 KEEP 30~50건 재평가)까지 먼저 진행할까요?</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v43" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v43" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v43" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 <div class="card" data-n="44" data-qid="b259087788fb7975">
   <div class="card-head">
     <span class="num">44/44</span>
@@ -2742,12 +2745,12 @@ To read the omitted middle: read_file path=&quot;C:\Users\mandu\AppData\Local\he
 12차의 R2 `range=0.05`와 13차의 R2 `range=0.30`을 보면, 현재 데이터로는 R2가 R1보다 안정적이라고 결론 내릴 수 없습니다. </div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v44" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v44" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v44" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>
+ </div>
 </main>
 <footer>
   <button id="exportBtn" onclick="exportJSON()">📋 결과 내보내기</button>
@@ -2766,19 +2769,35 @@ try {
 }
 try { localStorage.setItem(KEY, JSON.stringify({})); } catch(e) { storageOK = false; }
 
-// onclick="setV(this,'Y')" — 초기화 버튼과 동일한 직접 바인딩 방식 (모바일 호환 최대)
-function setV(btn, v) {
-  const card = btn.closest('.card');
-  const n = card.dataset.n;
-  if (state[n] && state[n].v === v) {
-    delete state[n];
-  } else {
-    state[n] = { v: v, reason: (state[n] && state[n].reason) || '' };
-  }
-  card.querySelectorAll('.vbtn').forEach(b => b.classList.remove('Y','N','M'));
-  if (state[n]) card.querySelector('.vbtn.' + state[n].v).classList.add(state[n].v);
-  renderCard(card, n, true);
-  save();
+// 라디오 change → 상태 저장 (클릭은 브라우저 네이티브 라디오가 처리)
+function bindRadios() {
+  document.querySelectorAll('.card').forEach(card => {
+    const n = card.dataset.n;
+    // 초기 복원
+    const saved = state[n];
+    if (saved && saved.v) {
+      const radio = card.querySelector('input[value="' + saved.v + '"]');
+      if (radio) radio.checked = true;
+    }
+    card.querySelectorAll('input[type="radio"]').forEach(r => {
+      r.addEventListener('change', () => {
+        if (r.checked) {
+          state[n] = { v: r.value, reason: (state[n] && state[n].reason) || '' };
+          card.classList.add('done-card');
+          card.querySelectorAll('.vbtn').forEach(b => b.classList.remove('sel-y','sel-n','sel-m'));
+          const lbl = r.closest('.vbtn');
+          lbl.classList.add(r.value === 'Y' ? 'sel-y' : (r.value === 'N' ? 'sel-n' : 'sel-m'));
+        }
+        save();
+      });
+    });
+    // 저장된 판정 시각적 복원
+    if (saved && saved.v) {
+      const lbl = card.querySelector('input[value="' + saved.v + '"]').closest('.vbtn');
+      lbl.classList.add(saved.v === 'Y' ? 'sel-y' : (saved.v === 'N' ? 'sel-n' : 'sel-m'));
+      card.classList.add('done-card');
+    }
+  });
 }
 
 function renderCard(card, n, keepReason) {
@@ -2834,7 +2853,8 @@ function resetAll() {
   state = {};
   if (storageOK) { try { localStorage.removeItem(KEY); } catch(e) { storageOK = false; } }
   document.querySelectorAll('.card').forEach(c => {
-    c.querySelectorAll('.vbtn').forEach(b => b.classList.remove('Y','N','M'));
+    c.querySelectorAll('.vbtn').forEach(b => b.classList.remove('sel-y','sel-n','sel-m'));
+    c.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
     c.querySelector('.reason').value = '';
     c.classList.remove('done-card');
   });
@@ -2845,8 +2865,8 @@ function toast(msg) {
   t.textContent = msg; t.classList.add('done');
   setTimeout(() => t.classList.remove('done'), 2000);
 }
-// 초기 복원
-document.querySelectorAll('.card').forEach(card => renderCard(card, card.dataset.n, false));
+// 초기화: 라디오 바인딩 + reason 복원
+bindRadios();
 document.querySelectorAll('.reason').forEach(ta => {
   const s = state[ta.closest('.card').dataset.n];
   if (s && s.reason) ta.value = s.reason;

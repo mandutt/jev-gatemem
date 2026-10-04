@@ -35,12 +35,12 @@ for it in items:
     <div class="gold-body">{gold}</div>
   </details>
   <div class="verdict">
-    <button class="vbtn" data-v="Y" type="button" onclick="setV(this,'Y')">✓ Y<br><small>직접 답</small></button>
-    <button class="vbtn" data-v="N" type="button" onclick="setV(this,'N')">✗ N<br><small>답 아님</small></button>
-    <button class="vbtn" data-v="M" type="button" onclick="setV(this,'M')">? 모호<br><small>판단 필요</small></button>
+    <label class="vbtn" data-verdict="Y"><input type="radio" name="v{n}" value="Y"><span>✓ Y</span><small>직접 답</small></label>
+    <label class="vbtn" data-verdict="N"><input type="radio" name="v{n}" value="N"><span>✗ N</span><small>답 아님</small></label>
+    <label class="vbtn" data-verdict="M"><input type="radio" name="v{n}" value="M"><span>? 모호</span><small>판단 필요</small></label>
   </div>
   <textarea class="reason" rows="2" placeholder="근거 (선택)"></textarea>
-</div>""")
+ </div>""")
 
 html_doc = f"""<!DOCTYPE html>
 <html lang="ko">
@@ -72,12 +72,15 @@ html_doc = f"""<!DOCTYPE html>
   .gold summary {{ font-size:12px; color:var(--accent); cursor:pointer; padding:4px 0; user-select:none; }}
   .gold-body {{ font-size:12px; color:var(--muted); background:#12141a; border:1px solid var(--border); border-radius:8px; padding:8px; margin-top:4px; max-height:160px; overflow-y:auto; white-space:pre-wrap; line-height:1.45; }}
   .verdict {{ display:flex; gap:8px; margin:10px 0 6px; }}
-  .vbtn {{ flex:1; padding:10px 4px; font-size:13px; font-weight:700; border:2px solid var(--border); border-radius:10px; background:#12141a; color:var(--txt); cursor:pointer; }}
-  .vbtn small {{ display:block; font-weight:400; font-size:10px; color:var(--muted); margin-top:2px; }}
-  .vbtn.Y {{ background:var(--y); border-color:var(--y); color:#fff; }}
-  .vbtn.N {{ background:var(--n); border-color:var(--n); color:#fff; }}
-  .vbtn.M {{ background:var(--m); border-color:var(--m); color:#111; }}
-  .vbtn.Y small, .vbtn.N small {{ color:rgba(255,255,255,.85); }}
+  .vbtn {{ flex:1; position:relative; display:flex; flex-direction:column; align-items:center; gap:2px; padding:10px 4px; font-size:13px; font-weight:700; border:2px solid var(--border); border-radius:10px; background:#12141a; color:var(--txt); cursor:pointer; user-select:none; -webkit-user-select:none; }}
+  .vbtn small {{ font-weight:400; font-size:10px; color:var(--muted); }}
+  .vbtn input {{ position:absolute; opacity:0; width:0; height:0; }}
+  .vbtn.sel-y {{ background:var(--y); border-color:var(--y); color:#fff; }}
+  .vbtn.sel-n {{ background:var(--n); border-color:var(--n); color:#fff; }}
+  .vbtn.sel-m {{ background:var(--m); border-color:var(--m); color:#111; }}
+  .vbtn.sel-y small, .vbtn.sel-n small {{ color:rgba(255,255,255,.85); }}
+  .vbtn.sel-m small {{ color:rgba(17,17,17,.7); }}
+  .vbtn:active {{ transform:scale(0.97); }}
   .reason {{ width:100%; background:#12141a; border:1px solid var(--border); border-radius:8px; color:var(--txt); font-size:12px; padding:8px; resize:vertical; }}
   footer {{ position:fixed; bottom:0; left:0; right:0; background:var(--bg); border-top:1px solid var(--border); padding:10px 14px; display:flex; gap:8px; pointer-events:none; }}
   footer button {{ flex:1; padding:12px; border-radius:10px; border:none; font-size:13px; font-weight:700; cursor:pointer; pointer-events:auto; }}
@@ -117,19 +120,35 @@ try {{
 }}
 try {{ localStorage.setItem(KEY, JSON.stringify({{}})); }} catch(e) {{ storageOK = false; }}
 
-// onclick="setV(this,'Y')" — 초기화 버튼과 동일한 직접 바인딩 방식 (모바일 호환 최대)
-function setV(btn, v) {{
-  const card = btn.closest('.card');
-  const n = card.dataset.n;
-  if (state[n] && state[n].v === v) {{
-    delete state[n];
-  }} else {{
-    state[n] = {{ v: v, reason: (state[n] && state[n].reason) || '' }};
-  }}
-  card.querySelectorAll('.vbtn').forEach(b => b.classList.remove('Y','N','M'));
-  if (state[n]) card.querySelector('.vbtn.' + state[n].v).classList.add(state[n].v);
-  renderCard(card, n, true);
-  save();
+// 라디오 change → 상태 저장 (클릭은 브라우저 네이티브 라디오가 처리)
+function bindRadios() {{
+  document.querySelectorAll('.card').forEach(card => {{
+    const n = card.dataset.n;
+    // 초기 복원
+    const saved = state[n];
+    if (saved && saved.v) {{
+      const radio = card.querySelector('input[value="' + saved.v + '"]');
+      if (radio) radio.checked = true;
+    }}
+    card.querySelectorAll('input[type="radio"]').forEach(r => {{
+      r.addEventListener('change', () => {{
+        if (r.checked) {{
+          state[n] = {{ v: r.value, reason: (state[n] && state[n].reason) || '' }};
+          card.classList.add('done-card');
+          card.querySelectorAll('.vbtn').forEach(b => b.classList.remove('sel-y','sel-n','sel-m'));
+          const lbl = r.closest('.vbtn');
+          lbl.classList.add(r.value === 'Y' ? 'sel-y' : (r.value === 'N' ? 'sel-n' : 'sel-m'));
+        }}
+        save();
+      }});
+    }});
+    // 저장된 판정 시각적 복원
+    if (saved && saved.v) {{
+      const lbl = card.querySelector('input[value="' + saved.v + '"]').closest('.vbtn');
+      lbl.classList.add(saved.v === 'Y' ? 'sel-y' : (saved.v === 'N' ? 'sel-n' : 'sel-m'));
+      card.classList.add('done-card');
+    }}
+  }});
 }}
 
 function renderCard(card, n, keepReason) {{
@@ -185,7 +204,8 @@ function resetAll() {{
   state = {{}};
   if (storageOK) {{ try {{ localStorage.removeItem(KEY); }} catch(e) {{ storageOK = false; }} }}
   document.querySelectorAll('.card').forEach(c => {{
-    c.querySelectorAll('.vbtn').forEach(b => b.classList.remove('Y','N','M'));
+    c.querySelectorAll('.vbtn').forEach(b => b.classList.remove('sel-y','sel-n','sel-m'));
+    c.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
     c.querySelector('.reason').value = '';
     c.classList.remove('done-card');
   }});
@@ -196,8 +216,8 @@ function toast(msg) {{
   t.textContent = msg; t.classList.add('done');
   setTimeout(() => t.classList.remove('done'), 2000);
 }}
-// 초기 복원
-document.querySelectorAll('.card').forEach(card => renderCard(card, card.dataset.n, false));
+// 초기화: 라디오 바인딩 + reason 복원
+bindRadios();
 document.querySelectorAll('.reason').forEach(ta => {{
   const s = state[ta.closest('.card').dataset.n];
   if (s && s.reason) ta.value = s.reason;
