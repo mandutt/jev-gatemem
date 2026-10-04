@@ -1,0 +1,526 @@
+{
+ "generated_at": "2026-10-05T02:40:51",
+ "api": "https://api.experientiallabs.ai/v1/systemone",
+ "records": [
+  {
+   "id": "dd4b0e9bf1d18a6f",
+   "utterance": "[ASSISTANT] 핵심 답: **아니요 — 지속적 수동 라벨링은 필요 없습니다.** 라벨은 3가지 원천이 있고, 그중 \"사람이 직접 붙이는\" 건 주기당 1회 소량(표본 20~50건, 기존 판정 시트 워크플로 재사",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "d32b245a94a9afdd",
+    "8f565ec5cfc9ed85"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.06,
+   "latency_ms": 490.128
+  },
+  {
+   "id": "c029529e72326627",
+   "utterance": "[ASSISTANT] 두 제안 각각을 \"거기서 어떻게 동작하는가 → 우리 시스템에 어떻게 옮겨오는가 → 정확히 무엇이 이득인가 → 비용·리스크\" 순서로 풀어드립니다. 결론부터: 둘 다 매력적이지만, **fit은 우리",
+   "candidate_ids": [
+    "d0864cfa9f969e2b",
+    "7573faf81d0c2b54",
+    "b9471a093f4a58b4"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.26,
+   "latency_ms": 361.697
+  },
+  {
+   "id": "7573faf81d0c2b54",
+   "utterance": "[USER] fit 피드백 루프: 우리 게이트에는 라벨 기반 자동 튜닝이 없는데, trace 로그에 keep=keep/skip이 쌓이므로 같은 메커니즘 도입 가능성은 있음\naudit stale 플래그: repo 스냅",
+   "candidate_ids": [
+    "4f8278a370048252",
+    "c029529e72326627",
+    "7780f8489654eb65"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.06,
+   "latency_ms": 439.958
+  },
+  {
+   "id": "a36cbe27f1ecd318",
+   "utterance": "[ASSISTANT] 스킬에 정리된 실측 기준으로 답합니다 (2026-09-28~29 확정분, SoT: AB_WRITE_GATE_REPORT / ASSISTANT_GATE_REPORT).\n\n## G-AS 활성화의 효",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "d0864cfa9f969e2b",
+    "51c5c30e34763769"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.06,
+   "latency_ms": 395.885
+  },
+  {
+   "id": "49e06f4c8f1a35b2",
+   "utterance": "[ASSISTANT] 확인 완료했습니다. 정정합니다 — 제 표가 부정확했습니다.\n\n## 정답: 기본값은 지금도 1콜, \"2콜\"은 라이브 설정에서 활성화된 별도 기능\n\n| 시점 | 상태 |\n|---|---|\n| **2",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "3c412e6ce93a9c9b",
+    "ad9b124e282f3ef7"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.03,
+   "latency_ms": 426.301
+  },
+  {
+   "id": "1732d01161c2960f",
+   "utterance": "[USER] 잠깐, 내 jev-mem은 원래 1콜이 기본이었는데 언제 2콜이 되었지?",
+   "candidate_ids": [
+    "ad9b124e282f3ef7",
+    "4f8278a370048252",
+    "c7cca2afafbb47d0"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.09,
+   "latency_ms": 867.859
+  },
+  {
+   "id": "4f8278a370048252",
+   "utterance": "[ASSISTANT] 비교를 위해 Avinash-jetwani/jevmem의 README·how-it-works·cost 문서와 우리 jev-mem 스킬(references/external-fork-ab-compar",
+   "candidate_ids": [
+    "7573faf81d0c2b54",
+    "f81f3b1688262a4c",
+    "d0864cfa9f969e2b"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.06,
+   "latency_ms": 355.093
+  },
+  {
+   "id": "3f723bf0922cfe07",
+   "utterance": "[USER] @url:`https://github.com/Avinash-jetwani/jevmem` 이 프로젝트는 내 jev-mem과 어떻게 달라? 혼동을 방지하기 위해 Avinash-jetwani/jevmem라고 ",
+   "candidate_ids": [
+    "f29025d166cbdd06",
+    "70bed34918811b17",
+    "22d328894d2f4b73"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.06,
+   "latency_ms": 445.894
+  },
+  {
+   "id": "c3f4f2f508254472",
+   "utterance": "[ASSISTANT] 문서 기록 완료 (커밋 `412f379`, 푸시됨).\n\n## 기록 내용 요약\n\n**HANDOFF §2 작업로그에** `- [ ]` (미완료) 항목으로 추가:\n\n> **abstain 조기 기권 아",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "939e1921cec93dd5",
+    "537c3b9bc0a86047"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.03,
+   "latency_ms": 617.395
+  },
+  {
+   "id": "a5f16b092c460916",
+   "utterance": "[USER] shaodw 데이터 쌓인 뒤 함께 판정해보자. 다만 현재 아쉬움을 느꼈던 상황을 나중에 확인할 사항으로 문서에 기록은 필요할 것 같아.",
+   "candidate_ids": [
+    "3d63b44c8bbc371d",
+    "537c3b9bc0a86047",
+    "7dda6915f2fc7779"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.02,
+   "latency_ms": 380.618
+  },
+  {
+   "id": "8ff4957f412d0c48",
+   "utterance": "[ASSISTANT] 개선이 **불가능한 건 아니지만**, 쉽지 않은 trade-off 구간입니다. 구조를 정리하면:\n\n## 현재 구조에서 무슨 일이 벌어졌나\n\n```\n질문: \"아까 할 일이 shadow 비교만 남았",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "d6618e7fde518848",
+    "12ccd3f9a031ae97"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.14,
+   "latency_ms": 389.046
+  },
+  {
+   "id": "eddef354d1dee0cd",
+   "utterance": "[USER] 설계된 동작이긴 한데 실제로 메모리의 기억이 필요했던 상황인 것도 맞는 것 같아. 현 구조에선 개선이 힘든 부분일까?",
+   "candidate_ids": [
+    "ad9b124e282f3ef7",
+    "e273cfa6e4c5d4b6",
+    "8240074df79de086"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.06,
+   "latency_ms": 400.786
+  },
+  {
+   "id": "4ed9f466efae71a0",
+   "utterance": "[ASSISTANT] **완전히 규명됐습니다.** shadow 작업 메모리 8건의 overlap이 전부 **0~2**입니다:\n\n```\n\"아까 할 일이 shadow 비교만 남았었나?\"의 토큰 = {아까, 할, 일, s",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "3a02e7d4674537c2",
+    "939e1921cec93dd5"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.25,
+   "latency_ms": 406.983
+  },
+  {
+   "id": "84a4fdfe1d36d20c",
+   "utterance": "[USER] shadow키워드는 충분히 특징적이었다고 생각하는데, 아까 shadow 관련 네 답변이 메모리에 저장이 안되었던 걸까?",
+   "candidate_ids": [
+    "fd275c04735c3d6f",
+    "ad9b124e282f3ef7",
+    "c7cca2afafbb47d0"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.2,
+   "latency_ms": 403.685
+  },
+  {
+   "id": "3a02e7d4674537c2",
+   "utterance": "[USER] 그런데 아까 내가 '아까 할 일이 shadow 비교만 남았었나?' 라고 입력했는데, 이 때 메모리 recall 시도가 없었던 것 같아. 이건 정상적일까?",
+   "candidate_ids": [
+    "c7cca2afafbb47d0",
+    "7f6666aa2ac72368",
+    "4ed9f466efae71a0"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.4,
+   "latency_ms": 406.912
+  },
+  {
+   "id": "507f3c5cd02a946f",
+   "utterance": "[ASSISTANT] **miss 4건의 원인이 정확히 파악됐습니다:**\n\n## memoria_facts miss 4건 원인\n\n전부 `[opencode session]` / `[codex session] task:`",
+   "candidate_ids": [
+    "52b1085efe98c369",
+    "e16e2414ff5d16c1",
+    "939e1921cec93dd5"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.03,
+   "latency_ms": 401.42699999999996
+  },
+  {
+   "id": "df3bf927d6b6dee9",
+   "utterance": "[USER] memoria_facts의 miss 4건은 왜 발생한거야?",
+   "candidate_ids": [
+    "ad9b124e282f3ef7",
+    "4f8278a370048252",
+    "e0c752a687b1d4df"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.28,
+   "latency_ms": 682.8729999999999
+  },
+  {
+   "id": "e0c752a687b1d4df",
+   "utterance": "[ASSISTANT] 커밋·푸시 완료 (`f7eb79c`).\n\n## 4번(graph/fact lane 재평가) 검증 완료\n\n### 판정: **정상 — 튜닝 불필요**\n\n| 검증 대상 | 실데이터 | 결과 |\n|---",
+   "candidate_ids": [
+    "3c412e6ce93a9c9b",
+    "8f565ec5cfc9ed85",
+    "9de91b441d8ac8b9"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.06,
+   "latency_ms": 390.59
+  },
+  {
+   "id": "9824c8fff77a6dcb",
+   "utterance": "[USER] 일단 현 시점에서 검증만 해보자",
+   "candidate_ids": [
+    "c7cca2afafbb47d0",
+    "e12d337406add511",
+    "41da9da5bd27a1bd"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.2,
+   "latency_ms": 506.312
+  },
+  {
+   "id": "8998e0779c203a4c",
+   "utterance": "[ASSISTANT] 데이터가 조건을 **충분히 넘었습니다**:\n\n| 테이블 | 행 수 | 기준(수십 개) |\n|---|---|---|\n| `facts` | **30건** | ✅ 충족 |\n| `graph_edges`",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "939e1921cec93dd5",
+    "e9042132d94966a0"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.1,
+   "latency_ms": 420.98999999999995
+  },
+  {
+   "id": "e584c6f8936a9fa5",
+   "utterance": "[ASSISTANT] 완료했습니다 — 커밋 및 푸시까지 마쳤습니다 (커밋 `b226aef`).\n\n## 작업 요약\n\n### 1. 문서 반영\n| 문서 | 내용 |\n|---|---|\n| **HANDOFF_NEXT_SESS",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "2bab952f2410f5d4",
+    "537c3b9bc0a86047"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.31,
+   "latency_ms": 386.656
+  },
+  {
+   "id": "5ffa09d7ce4ccab7",
+   "utterance": "[ASSISTANT] 맞습니다. 정확히 그렇습니다.\n\n## 현재 구현상의 관계\n\n| 경로 | `source_timestamp` | `backfilled_at` |\n|---|---|---|\n| 평소 저장 (`store",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "7dda6915f2fc7779",
+    "7f6666aa2ac72368"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.04,
+   "latency_ms": 379.7
+  },
+  {
+   "id": "e559cb3623068f67",
+   "utterance": "[USER] 그렇다면 source_timestamp는 backfilled_at이 있을 때만 의미있는 속성이 되겠네",
+   "candidate_ids": [
+    "ad9b124e282f3ef7",
+    "e12d337406add511",
+    "5ffa09d7ce4ccab7"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.19,
+   "latency_ms": 406.677
+  },
+  {
+   "id": "66dafc2b5ee3ef5c",
+   "utterance": "[ASSISTANT] 커밋 완료 (`58e59fd`).\n\n## 최종 요약\n\n**중단 구간(2026-10-04 10:09 ~ 00:11)의 대화가 메모리에 재주입되었습니다** — 평소와 동일한 게이트 판정을 거쳐:\n\n",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "d0864cfa9f969e2b",
+    "7dda6915f2fc7779"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.06,
+   "latency_ms": 381.83
+  },
+  {
+   "id": "c8c9ea8b94411153",
+   "utterance": "[USER] b로 해줘",
+   "candidate_ids": [
+    "939e1921cec93dd5",
+    "a47baebbc60955cf",
+    "8240074df79de086"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.2,
+   "latency_ms": 368.369
+  },
+  {
+   "id": "45d4e6688baf56d1",
+   "utterance": "[ASSISTANT] **확인 완료** — 답은 **아니요, 평소 저장에는 `source_timestamp`가 기록되지 않습니다:**\n\n```\nstore_kept() → _remember_with_meta(beam,",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "7dda6915f2fc7779",
+    "537c3b9bc0a86047"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.02,
+   "latency_ms": 430.693
+  },
+  {
+   "id": "e54d7ab083987f18",
+   "utterance": "[USER] source_timestamp는 재주입때뿐만 아니라 평소 메모리 저장 때에도 작성되고 있어?",
+   "candidate_ids": [
+    "537c3b9bc0a86047",
+    "7dda6915f2fc7779",
+    "939e1921cec93dd5"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.02,
+   "latency_ms": 425.115
+  },
+  {
+   "id": "26c5605a9fdd2b7e",
+   "utterance": "[ASSISTANT] **B 방식 검증 완료** — 61건(user 30/assistant 31)으로 줄었고, assistant는 turn-final(중간 발화 제거)만 남았습니다. KEEP 42건.\n\n이제 **실제",
+   "candidate_ids": [
+    "537c3b9bc0a86047",
+    "7dda6915f2fc7779",
+    "ff9afd1186cccb36"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.05,
+   "latency_ms": 405.345
+  },
+  {
+   "id": "187eef0a27e82a11",
+   "utterance": "[ASSISTANT] **dry-run 완료 — 390건 추출, KEEP 200 / SKIP 190.** 게이트가 실제 JEV로 판정했고, 발화·타임스탬프 모두 정상입니다.\n\n다만 KEEP 200건 중에는 **중간 ",
+   "candidate_ids": [
+    "7dda6915f2fc7779",
+    "537c3b9bc0a86047",
+    "b9471a093f4a58b4"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.03,
+   "latency_ms": 642.439
+  },
+  {
+   "id": "30511e3615729bc7",
+   "utterance": "[ASSISTANT] 흥미로운 사실을 발견했습니다 — 실 DB에서 `timestamp`와 `created_at`이 **전부(1524/1524) 불일치**합니다:\n\n```\ntimestamp:  2026-10-05T00",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "537c3b9bc0a86047",
+    "fa2909eeb97688ce"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.02,
+   "latency_ms": 473.613
+  },
+  {
+   "id": "167b0d05919d6d73",
+   "utterance": "[ASSISTANT] **확인 완료** — `metadata_json`은 Mnemosyne의 **원래 지원되는 필드**입니다:\n\n```python\ndef remember(self, ..., metadata: Dict",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "7dda6915f2fc7779",
+    "1b8ee7c0920178fd"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.03,
+   "latency_ms": 348.379
+  },
+  {
+   "id": "8311801bbc264eda",
+   "utterance": "[USER] metadata_json을 활용하는 방안은 원래 므네모슈네 메모리에서 지원되던 방식이야?",
+   "candidate_ids": [
+    "ad9b124e282f3ef7",
+    "c8c9ea8b94411153",
+    "f81f3b1688262a4c"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.01,
+   "latency_ms": 568.643
+  },
+  {
+   "id": "97bca6e26edd3c63",
+   "utterance": "[ASSISTANT] 핵심 확인 완료 — **프리픽스 삽입이 메모리 호출에 미치는 영향을 정리합니다**:\n\n## 검토: 시각 프리픽스 삽입의 리스크\n\n### 1. 검색(recall) 영향 — **문제 가능성 있음 (",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "d0864cfa9f969e2b",
+    "7dda6915f2fc7779"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.12,
+   "latency_ms": 404.33000000000004
+  },
+  {
+   "id": "f3274758a4a88889",
+   "utterance": "[ASSISTANT] **확정됐습니다.** 코드에서 직접 확인:\n\n```python\n# mnemosyne/core/beam.py — remember()\ntimestamp = datetime.now().isoforma",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "7dda6915f2fc7779",
+    "350da7cc03aaefd7"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.04,
+   "latency_ms": 725.221
+  },
+  {
+   "id": "8fffb9e3ed7389b6",
+   "utterance": "[ASSISTANT] **완전히 확인됐습니다 — 원본 transcript가 state.db에 있습니다:**\n\n```\n세션: 20261004_225351_7c8fa4 (제목: jev-mem과 mnemon-memory-",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "f81f3b1688262a4c",
+    "d0864cfa9f969e2b"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.09,
+   "latency_ms": 383.76700000000005
+  },
+  {
+   "id": "0fdbdea2119f0bf7",
+   "utterance": "[ASSISTANT] 확인 완료입니다. **검토 결과**를 정리합니다.\n\n---\n\n## 검토: 세션 요약 1건으로 충분한가?\n\n### 핵심 발견: 원본 transcript가 디스크에 없다\n\n| 저장소 | 상태 |\n|",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "939e1921cec93dd5",
+    "7dda6915f2fc7779"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.07,
+   "latency_ms": 797.107
+  },
+  {
+   "id": "39b16642cdc5c6cb",
+   "utterance": "[ASSISTANT] 충분히 파악했습니다. 실행 없이 **검토 결과**만 제시합니다.\n\n---\n\n## 검토: 중단 구간 대화의 메모리 사후 기록\n\n### 1. 가능한가? → **기술적으로 가능하지만, \"평소처럼\"과는",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "d0864cfa9f969e2b",
+    "7dda6915f2fc7779"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.14,
+   "latency_ms": 413.64
+  },
+  {
+   "id": "72ecc451d326594d",
+   "utterance": "[ASSISTANT] 커밋 완료 (`5d9a0a1`). 재시작해주셔서 감사합니다 — **모든 것이 정상 동작 중입니다.**\n\n## 최종 확인 결과\n\n### ✅ Hermes 플러그인 정상 로드 (재시작 후)\n```\n0",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "7dda6915f2fc7779",
+    "c7cca2afafbb47d0"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.13,
+   "latency_ms": 498.816
+  },
+  {
+   "id": "f81f3b1688262a4c",
+   "utterance": "[USER] 이미 재시작했어",
+   "candidate_ids": [
+    "ad9b124e282f3ef7",
+    "4f8278a370048252",
+    "8fffb9e3ed7389b6"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.07,
+   "latency_ms": 342.86
+  },
+  {
+   "id": "928866862389e2d5",
+   "utterance": "[ASSISTANT] **퍼즐이 맞춰졌습니다:**\n\n- **09:26** = DB 마지막 저장 (오전 5~9시 활동)\n- **09:26~10:09** = **활동 없음** (세션 전환 대기 — 00:19 세션에서 1",
+   "candidate_ids": [
+    "b9471a093f4a58b4",
+    "aba6e4aa38393ddc",
+    "7dda6915f2fc7779"
+   ],
+   "verdict": "LIVE",
+   "choice": "c0",
+   "prob_stale": 0.04,
+   "latency_ms": 493.254
+  }
+ ]
+}

@@ -1,0 +1,1148 @@
+{
+ "generated_at": "2026-10-05T02:38:59",
+ "trace_file": "C:\\Users\\mandu\\AppData\\Local/hermes/logs/jev_trace.log",
+ "db": "C:\\Users\\mandu\\AppData\\Local/hermes/mnemosyne/data/mnemosyne.db",
+ "alpha_count": 113,
+ "beta_count": 1,
+ "alpha": [
+  {
+   "id": "8e12f1d11158fca9",
+   "content": "[opencode session] task: 정지된 곳부터 다시 이어서 시작해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\environment\nworktree: /\nturns: 1",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T19:44:18.018441",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.406071",
+   "meta": {}
+  },
+  {
+   "id": "23d9bae9023ccca3",
+   "content": "[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\env",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T19:45:23.364422",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.420253",
+   "meta": {}
+  },
+  {
+   "id": "a38de84f23cddf85",
+   "content": "[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\env",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T20:05:32.009114",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.469792",
+   "meta": {}
+  },
+  {
+   "id": "769e56524b6f2743",
+   "content": "[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\env",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T20:09:41.707406",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.523340",
+   "meta": {}
+  },
+  {
+   "id": "f28e74b1ff606bf6",
+   "content": "[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\env",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T20:22:33.446196",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.562704",
+   "meta": {}
+  },
+  {
+   "id": "10d99127d8fa2d0f",
+   "content": "[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\env",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T20:30:37.705742",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.614845",
+   "meta": {}
+  },
+  {
+   "id": "a412396a272fae6c",
+   "content": "[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\env",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T20:31:12.730990",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.616897",
+   "meta": {}
+  },
+  {
+   "id": "37124fd03148bee2",
+   "content": "[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\env",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T20:31:47.287699",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.625352",
+   "meta": {}
+  },
+  {
+   "id": "3c5f1652f041e103",
+   "content": "[opencode session] task: 현재 므네모슈네 메모리 플러그인에 자동으로 저장하는 게 정상적으로 작동 중인지 확인해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\env",
+   "session_id": "mcp_default",
+   "timestamp": "2026-07-31T20:33:00.593882",
+   "memory_type": "context",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.680306",
+   "meta": {}
+  },
+  {
+   "id": "ca88c3cc7b035549",
+   "content": "[opencode session] task: 정지되었었는데, 다시 이어서 시작해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nworktree: C:\\Users\\",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-01T11:58:26.296588",
+   "memory_type": "error",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.708707",
+   "meta": {}
+  },
+  {
+   "id": "37691fc654d86d5a",
+   "content": "[opencode session] task: 정지되었었는데, 다시 이어서 시작해줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nworktree: C:\\Users\\",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-01T12:15:55.407540",
+   "memory_type": "error",
+   "superseded_by": "38ec5743c09a2e99",
+   "valid_until": "2026-08-07T19:51:04.737366",
+   "meta": {}
+  },
+  {
+   "id": "d51bf1b875f55d08",
+   "content": "[codex session] task: 현재 모델 구동 상태를 점검해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-15\\d\nturns: 1\noutcome: 점검 완료했습니다",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T00:38:47.418005",
+   "memory_type": "fact",
+   "superseded_by": "1eb523a94992fb8c",
+   "valid_until": "2026-08-18T22:16:27.648032",
+   "meta": {}
+  },
+  {
+   "id": "8f29956602d89f77",
+   "content": "[codex session] task: 현재 모델 구동 상태를 점검해줘\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-15\\d\nturns: 3\noutcome: 레지스트리에서 `",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T00:46:10.319965",
+   "memory_type": "fact",
+   "superseded_by": "1eb523a94992fb8c",
+   "valid_until": "2026-08-18T22:16:27.650238",
+   "meta": {}
+  },
+  {
+   "id": "a25351a676e5978d",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T00:53:55.444893",
+   "memory_type": "context",
+   "superseded_by": "1eb523a94992fb8c",
+   "valid_until": "2026-08-18T22:16:27.656955",
+   "meta": {}
+  },
+  {
+   "id": "b982595c5c7f6977",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T01:04:02.870673",
+   "memory_type": "context",
+   "superseded_by": "1eb523a94992fb8c",
+   "valid_until": "2026-08-18T22:16:27.663559",
+   "meta": {}
+  },
+  {
+   "id": "bf01d99e80956e68",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T11:41:29.522544",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.319428",
+   "meta": {}
+  },
+  {
+   "id": "1c4eeb9613312eca",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T11:48:04.546698",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.350773",
+   "meta": {}
+  },
+  {
+   "id": "a67179f89d53496a",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T11:52:49.972044",
+   "memory_type": "preference",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.389554",
+   "meta": {}
+  },
+  {
+   "id": "92705415bf9f84f8",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T11:53:32.152770",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.414219",
+   "meta": {}
+  },
+  {
+   "id": "973948f30d0fd04e",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T11:57:48.569945",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.443364",
+   "meta": {}
+  },
+  {
+   "id": "7504e5a6f10b0ac8",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T12:17:50.689532",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.470697",
+   "meta": {}
+  },
+  {
+   "id": "2ca92dd831e60e95",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T12:51:55.464426",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.501167",
+   "meta": {}
+  },
+  {
+   "id": "18ffe40d2b997423",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T13:44:09.111437",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.527991",
+   "meta": {}
+  },
+  {
+   "id": "2d08588ccbcbf37a",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T14:04:48.427068",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.546576",
+   "meta": {}
+  },
+  {
+   "id": "13d87dfcd7d2c912",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T14:23:45.617355",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.563038",
+   "meta": {}
+  },
+  {
+   "id": "7d7ea43d9729e280",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T14:59:29.161849",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.577608",
+   "meta": {}
+  },
+  {
+   "id": "a748849643f39b08",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T15:23:26.046091",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.594008",
+   "meta": {}
+  },
+  {
+   "id": "de377235957504cc",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T18:01:46.698974",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.605962",
+   "meta": {}
+  },
+  {
+   "id": "b3acef74a1c2a5c5",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T19:21:17.988600",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.611927",
+   "meta": {}
+  },
+  {
+   "id": "980ee3072e9333f4",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T19:37:11.634338",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.618260",
+   "meta": {}
+  },
+  {
+   "id": "201b256f5e237263",
+   "content": "[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testproject - 목",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T19:41:26.965298",
+   "memory_type": "context",
+   "superseded_by": "2554a78ba36bc7df",
+   "valid_until": "2026-08-19T10:08:58.626293",
+   "meta": {}
+  },
+  {
+   "id": "6b3a695a8a6ad0de",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-15T22:17:46.885259",
+   "memory_type": "context",
+   "superseded_by": "b96546d8d25baad6",
+   "valid_until": "2026-08-19T22:33:14.238067",
+   "meta": {}
+  },
+  {
+   "id": "b04680169e0fa157",
+   "content": "[codex session] task: 현재 연결된 모델에서 다음과 같은 문제가 있었어. 어제 오늘 간에 codex, opencodex의 모델별 adapter 설정 변화 전후로, Camel 요청이 'Openai-ch",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T00:00:04.480086",
+   "memory_type": "context",
+   "superseded_by": "b96546d8d25baad6",
+   "valid_until": "2026-08-19T22:33:14.246894",
+   "meta": {}
+  },
+  {
+   "id": "92f416d0daa22e7e",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T14:43:45.065920",
+   "memory_type": "fact",
+   "superseded_by": "61bf06edb78cd766",
+   "valid_until": "2026-08-21T10:39:13.176996",
+   "meta": {}
+  },
+  {
+   "id": "d57dae97af6e64cd",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T14:48:48.627621",
+   "memory_type": "fact",
+   "superseded_by": "61bf06edb78cd766",
+   "valid_until": "2026-08-21T10:39:13.201708",
+   "meta": {}
+  },
+  {
+   "id": "bffe4e0696c7a9f9",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T15:03:31.666541",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:13.241127",
+   "meta": {}
+  },
+  {
+   "id": "88b04d5c88101207",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T15:08:51.794328",
+   "memory_type": "context",
+   "superseded_by": "ee72c79721f05c20",
+   "valid_until": "2026-08-21T10:39:13.259462",
+   "meta": {}
+  },
+  {
+   "id": "3cd87b86ffb1ae5d",
+   "content": "[USER] [IMPORTANT: Background process proc_642bb0a83422 completed normally (exit code 0).\nCommand: cd \"C:/Users/mandu/he",
+   "session_id": "hermes_20260815_230211_c8330c",
+   "timestamp": "2026-08-16T15:27:42.589474",
+   "memory_type": "preference",
+   "superseded_by": "c9251aea3b6fa237",
+   "valid_until": "2026-08-21T10:39:11.961653",
+   "meta": {}
+  },
+  {
+   "id": "985dc5ffb290cba7",
+   "content": "[USER] [IMPORTANT: Background process proc_507c506a6693 completed normally (exit code 0).\nCommand: cd \"C:/Users/mandu/he",
+   "session_id": "hermes_20260815_230211_c8330c",
+   "timestamp": "2026-08-16T15:40:41.383016",
+   "memory_type": "preference",
+   "superseded_by": "7b254ae8844a4ced",
+   "valid_until": "2026-08-21T10:39:11.966155",
+   "meta": {}
+  },
+  {
+   "id": "c9251aea3b6fa237",
+   "content": "[USER] [IMPORTANT: Background process proc_b8ebb3c3dd37 exited (exit code 1).\nCommand: cd \"C:/Users/mandu/hermes-made/ca",
+   "session_id": "hermes_20260815_230211_c8330c",
+   "timestamp": "2026-08-16T16:51:32.941790",
+   "memory_type": "context",
+   "superseded_by": "7b254ae8844a4ced",
+   "valid_until": "2026-08-21T10:39:11.968167",
+   "meta": {}
+  },
+  {
+   "id": "a958782e5bc08714",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T19:20:52.920211",
+   "memory_type": "context",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:13.316344",
+   "meta": {}
+  },
+  {
+   "id": "725f3f0f7780ee0e",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T19:25:13.271902",
+   "memory_type": "context",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:13.393973",
+   "meta": {}
+  },
+  {
+   "id": "8f2597cb0670e4bc",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T19:31:13.847524",
+   "memory_type": "fact",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:13.415871",
+   "meta": {}
+  },
+  {
+   "id": "e4ce6af83f5dee4e",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T19:35:03.928002",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:13.433967",
+   "meta": {}
+  },
+  {
+   "id": "a205c35003aa8337",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T19:40:19.637748",
+   "memory_type": "context",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:13.525566",
+   "meta": {}
+  },
+  {
+   "id": "8e69435d7fc24f1a",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T19:42:48.524418",
+   "memory_type": "context",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:13.539535",
+   "meta": {}
+  },
+  {
+   "id": "86d486e3dbe51ae5",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T19:53:14.068228",
+   "memory_type": "context",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:13.597239",
+   "meta": {}
+  },
+  {
+   "id": "54e2b9150e7cb914",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T21:19:09.161503",
+   "memory_type": "context",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:13.662371",
+   "meta": {}
+  },
+  {
+   "id": "ee72c79721f05c20",
+   "content": "[codex session] task: 현재 세션의 모델 api 구동 상태를 점검해줘. 어떤 모델인지, 초당 토큰은 어떤지 등등\nproject: C:\\Users\\mandu\\Documents\\Codex\\2026-08-",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T21:30:24.939853",
+   "memory_type": "context",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:13.754121",
+   "meta": {}
+  },
+  {
+   "id": "148e6cf739219675",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:07:27.186858",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:13.823515",
+   "meta": {}
+  },
+  {
+   "id": "93ab22cc44a1a80a",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 11\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:12:15.393910",
+   "memory_type": "error",
+   "superseded_by": "3dd226535ec3b54a",
+   "valid_until": "2026-08-21T10:39:13.886503",
+   "meta": {}
+  },
+  {
+   "id": "dddb0f61e102ae1b",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 14\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:24:23.071272",
+   "memory_type": "context",
+   "superseded_by": "3dd226535ec3b54a",
+   "valid_until": "2026-08-21T10:39:13.949804",
+   "meta": {}
+  },
+  {
+   "id": "9914a5ecda56f09a",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 15\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:27:01.151767",
+   "memory_type": "context",
+   "superseded_by": "3dd226535ec3b54a",
+   "valid_until": "2026-08-21T10:39:14.015201",
+   "meta": {}
+  },
+  {
+   "id": "07821188c8f97ef6",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 16\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:27:49.628343",
+   "memory_type": "error",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.076983",
+   "meta": {}
+  },
+  {
+   "id": "4676fc52f195c8a6",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 17\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:28:30.104596",
+   "memory_type": "context",
+   "superseded_by": "af632b8908cf8a3c",
+   "valid_until": "2026-08-21T10:39:14.079015",
+   "meta": {}
+  },
+  {
+   "id": "4b603b4acebb0896",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 18\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:28:59.582775",
+   "memory_type": "error",
+   "superseded_by": "242a4f40cf9169af",
+   "valid_until": "2026-08-21T10:39:14.088845",
+   "meta": {}
+  },
+  {
+   "id": "3ceb2752882ee0e8",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 20\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:35:41.111746",
+   "memory_type": "context",
+   "superseded_by": "5b8761795ff0d797",
+   "valid_until": "2026-08-21T10:39:14.152560",
+   "meta": {}
+  },
+  {
+   "id": "e2e8e224ee29660e",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 21\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:39:31.701491",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.218135",
+   "meta": {}
+  },
+  {
+   "id": "f69fd16bd022c7ce",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 22\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:41:18.571804",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.273874",
+   "meta": {}
+  },
+  {
+   "id": "0b69fece3a1019dd",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:42:06.060557",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.329524",
+   "meta": {}
+  },
+  {
+   "id": "99056232647ac6ad",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 23\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:47:25.735775",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:14.368684",
+   "meta": {}
+  },
+  {
+   "id": "34a109d365234dea",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 24\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:47:49.156979",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:14.408532",
+   "meta": {}
+  },
+  {
+   "id": "c6bb53b89d93692b",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 26\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:48:47.218291",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:14.445935",
+   "meta": {}
+  },
+  {
+   "id": "c478a0e7e37a6aa6",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 27\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:49:16.938087",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:14.485722",
+   "meta": {}
+  },
+  {
+   "id": "ae96145540760603",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 28\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:49:48.345732",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:14.525276",
+   "meta": {}
+  },
+  {
+   "id": "49609f7796a83bdc",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 29\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:50:59.174065",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.604526",
+   "meta": {}
+  },
+  {
+   "id": "626a016e77e26808",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:51:36.864268",
+   "memory_type": "fact",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.662158",
+   "meta": {}
+  },
+  {
+   "id": "4e6a245abe5a6250",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 31\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:56:47.063871",
+   "memory_type": "error",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.722916",
+   "meta": {}
+  },
+  {
+   "id": "32f2af4ee60b0614",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T22:57:10.281621",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.789497",
+   "meta": {}
+  },
+  {
+   "id": "bd30b4fd492420a4",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 32\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:01:37.184443",
+   "memory_type": "error",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:14.816272",
+   "meta": {}
+  },
+  {
+   "id": "288949cb8281e279",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 33\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:06:33.253061",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:14.904859",
+   "meta": {}
+  },
+  {
+   "id": "2d376eca076db5a3",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 34\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:10:57.288998",
+   "memory_type": "context",
+   "superseded_by": "51e1c19cfb1430ce",
+   "valid_until": "2026-08-21T10:39:14.945216",
+   "meta": {}
+  },
+  {
+   "id": "f2e71a6b6bde537b",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 35\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:12:04.380229",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.027203",
+   "meta": {}
+  },
+  {
+   "id": "e340a192124d22d4",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 36\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:15:39.581835",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.107405",
+   "meta": {}
+  },
+  {
+   "id": "b1bbd4f66f0d1cf5",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:16:53.663739",
+   "memory_type": "fact",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.157432",
+   "meta": {}
+  },
+  {
+   "id": "a4eb234c122ae4be",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 37\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:23:51.999252",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.222274",
+   "meta": {}
+  },
+  {
+   "id": "df2427c6633beca3",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:24:29.402829",
+   "memory_type": "fact",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.278547",
+   "meta": {}
+  },
+  {
+   "id": "761bdee8290422b0",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:28:14.297341",
+   "memory_type": "error",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.338463",
+   "meta": {}
+  },
+  {
+   "id": "4b6b6dcb8ddf1615",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 38\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:29:25.186440",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.408909",
+   "meta": {}
+  },
+  {
+   "id": "4f513753cb3bb0da",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 39\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:33:47.370514",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.493137",
+   "meta": {}
+  },
+  {
+   "id": "af632b8908cf8a3c",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 41\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:43:07.792850",
+   "memory_type": "error",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.564989",
+   "meta": {}
+  },
+  {
+   "id": "81b5c67545b18f27",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 42\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:55:33.888211",
+   "memory_type": "context",
+   "superseded_by": "28743a98aac79817",
+   "valid_until": "2026-08-21T10:39:15.587510",
+   "meta": {}
+  },
+  {
+   "id": "723382072a107127",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-16T23:56:40.633808",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.635224",
+   "meta": {}
+  },
+  {
+   "id": "85ffd017a5c1d6ad",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T11:53:48.325352",
+   "memory_type": "error",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.677325",
+   "meta": {}
+  },
+  {
+   "id": "2747cc91e7ddc529",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 43\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T11:55:36.271517",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:15.719776",
+   "meta": {}
+  },
+  {
+   "id": "722982caee20096d",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 45\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T12:11:06.618653",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.792654",
+   "meta": {}
+  },
+  {
+   "id": "930fd17f0f20b4d1",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 46\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T12:11:55.249893",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:15.852442",
+   "meta": {}
+  },
+  {
+   "id": "322a98c16d6bbbf4",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 47\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T12:15:02.146879",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:15.921617",
+   "meta": {}
+  },
+  {
+   "id": "242a4f40cf9169af",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T12:18:08.758180",
+   "memory_type": "error",
+   "superseded_by": "ef3d9670463aea79",
+   "valid_until": "2026-08-21T10:39:15.975689",
+   "meta": {}
+  },
+  {
+   "id": "e7a6daf8ce283ae5",
+   "content": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 48\noutcome:",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T12:21:07.161023",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:16.029743",
+   "meta": {}
+  },
+  {
+   "id": "c925fb27f99d9dc3",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T12:58:30.025162",
+   "memory_type": "error",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.095842",
+   "meta": {}
+  },
+  {
+   "id": "68ec87266a226bad",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T13:47:07.555827",
+   "memory_type": "context",
+   "superseded_by": "3dd226535ec3b54a",
+   "valid_until": "2026-08-21T10:39:16.124021",
+   "meta": {}
+  },
+  {
+   "id": "dc70778edea6c04f",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T13:48:08.402050",
+   "memory_type": "context",
+   "superseded_by": "5b8761795ff0d797",
+   "valid_until": "2026-08-21T10:39:16.158144",
+   "meta": {}
+  },
+  {
+   "id": "0087e502819d899e",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T14:23:31.798465",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.212192",
+   "meta": {}
+  },
+  {
+   "id": "31d07a9d09bb81af",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T14:25:50.954519",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:16.245899",
+   "meta": {}
+  },
+  {
+   "id": "061740f183af6eac",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T14:40:14.447056",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.300657",
+   "meta": {}
+  },
+  {
+   "id": "ef991558297f7d74",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T14:51:01.610861",
+   "memory_type": "error",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.353624",
+   "meta": {}
+  },
+  {
+   "id": "85ccad5197964577",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T14:57:51.170242",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.411809",
+   "meta": {}
+  },
+  {
+   "id": "56ffb2840ad24acc",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T14:58:39.386992",
+   "memory_type": "error",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.460079",
+   "meta": {}
+  },
+  {
+   "id": "38f4510ddfa934ff",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T16:11:47.347291",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.490257",
+   "meta": {}
+  },
+  {
+   "id": "a91edb7c70cacc8e",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T16:29:50.604886",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:16.500273",
+   "meta": {}
+  },
+  {
+   "id": "105d31e9dcc32609",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T16:30:15.961226",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.506191",
+   "meta": {}
+  },
+  {
+   "id": "4c7b54637250d4ad",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T16:33:47.838144",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:16.508200",
+   "meta": {}
+  },
+  {
+   "id": "2bfb2624e726dcb4",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T16:34:12.038609",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.514391",
+   "meta": {}
+  },
+  {
+   "id": "e08586b7c5241ca9",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T16:38:05.809695",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.524578",
+   "meta": {}
+  },
+  {
+   "id": "b7dbcbfc2edebf1f",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T16:47:54.361515",
+   "memory_type": "fact",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.530568",
+   "meta": {}
+  },
+  {
+   "id": "9cf8054f5999fb74",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T16:49:55.548369",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.540905",
+   "meta": {}
+  },
+  {
+   "id": "61bf06edb78cd766",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T17:01:34.190117",
+   "memory_type": "fact",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.547112",
+   "meta": {}
+  },
+  {
+   "id": "28743a98aac79817",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T17:05:35.115498",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.555415",
+   "meta": {}
+  },
+  {
+   "id": "51e1c19cfb1430ce",
+   "content": "[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T17:06:15.886950",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.559839",
+   "meta": {}
+  },
+  {
+   "id": "255b9d0a8d9b6ae8",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T17:09:33.140483",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.562239",
+   "meta": {}
+  },
+  {
+   "id": "c0380ccf3ff473fd",
+   "content": "[codex session] task: 이 세션은 test-a 세션이야. 별도의 명령을 대기해 줘\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 1\no",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T17:11:11.473658",
+   "memory_type": "context",
+   "superseded_by": "a10d456086d18f87",
+   "valid_until": "2026-08-21T10:39:16.564441",
+   "meta": {}
+  },
+  {
+   "id": "424783789ebd4e86",
+   "content": "[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\\Users\\mandu\\Documents\\opencode\\testpr",
+   "session_id": "mcp_default",
+   "timestamp": "2026-08-17T17:15:32.930546",
+   "memory_type": "context",
+   "superseded_by": "0192afce46680d1c",
+   "valid_until": "2026-08-21T10:39:16.566543",
+   "meta": {}
+  }
+ ],
+ "beta": [
+  {
+   "ts": "2026-10-05T02:22:43.713",
+   "kind": "write-gate",
+   "keep": "keep",
+   "reason": "low-conf",
+   "utterance": "잠깐,"
+  }
+ ]
+}
