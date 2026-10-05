@@ -86,4 +86,40 @@
 ## 파일
 - stage29_noul_choice_api_probe.py / stage30_hybrid_limit_probe.py / stage31_hybrid_scan.py
 - stage32_hybrid_pool30.py / stage33_2call_noul5.py / stage34_2call_smoke_live.py / stage35_2call_full_regression.py
+- stage38_abstain_label.py / stage39_abstain_label_poolfixed.py
 - data: stage32_hybrid_pool30.json / stage33_2call_noul5.json / stage35_2call_full_regression.json
+- data: stage38_abstain_label.json / stage39_abstain_label_poolfixed.json
+
+---
+
+## stage38/39: abstain 라벨 문구 개선 실측 — **보류 (채택 여부 추후 결정)**
+
+### 배경
+세 AI(A·B·C) 공통 제안: "same topic is not evidence" + 시점·버전 불일치 배제 명시.
+- 현행: "No candidate is usable evidence for answering the question"
+- 개선: "No candidate contains the specific fact, value, version, or decision the
+  question asks for — same-topic mention alone is not evidence"
+
+### stage38 (live DB 현재 시점, 70콜×2: noans 50 + op-sample 20)
+- current: noans FP 25/50 (50.0%), op-sample hit@3 11/20
+- improved: noans FP 28/50 (56.0%), op-sample hit@3 15/20
+- **그러나 current FP 25는 기존 실측(stage26/35: 16)과 큰 차이** — 원인: **DB 시점 변화**
+  (working_memory 1701행 — 시간 경과로 noans 하드셋의 "답 없음" 전제가 깨짐:
+  새 메모리가 hard-neighbor 생성). stage38 FP 8건은 stage35에선 abstain이던 쿼리
+  (예: 임베딩 모델 버전, deepseek 스트림 오류, skip_shadow 누락 — 실제 답을 담은
+  메모리가 DB에 추가됨)
+
+### stage39 (stage32 raw pool 고정 — 비결정성·DB 시점 격리, 50콜×2)
+- current: noans FP 22/50 (44.0%)
+- improved: noans FP **20/50 (40.0%)** — **-2 FP** ✅
+- 개별 변화 2건이 정확히 의도한 패턴 (current FP → improved abstain):
+  - "exa 검색이 키리스로 작동하던 기간이 언제야?" (p 0.17 → 0.32)
+  - "diag63이 pointwise 대신 choice를 쓰는 옵션?" (p 0.22 → 0.32)
+
+### 판정 (2026-10-06)
+- **보류** — 채택 여부 추후 결정 (사용자 결정)
+- 신호: pool 고정 -2 FP (긍정) vs live DB +3 FP (부정, 그러나 DB 변질 때문)
+- 두 결과 모두 비결정성 범위(±3~5) 안 — 확정적 우위/열위 없음
+- 개별 사례는 세 AI가 지적한 실패 모드(과거 시점 질문)를 정확히 차단하는 방향
+- 후속 조치: 채택 시 `gateway/j1_pipeline.py`의 `ABSTAIN_LABEL` 교체 (0콜 추가, 무비용).
+  noans 셋 재구성(시점 고정/신선 셋) 후 재검증 권장.

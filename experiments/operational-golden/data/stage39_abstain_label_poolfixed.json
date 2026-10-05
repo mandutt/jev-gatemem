@@ -1,0 +1,906 @@
+{
+ "created_at": "2026-10-06T08:38:13+0900",
+ "cond": "abstain-label-poolfixed",
+ "records": [
+  {
+   "cond": "current",
+   "query": "web_extract의 백엔드로 ddgs를 쓰고 있었던 기간이 언제야?",
+   "abstained": false,
+   "abstain_p": 0.08,
+   "idx": 1,
+   "pool_n": 27,
+   "lat_ms": 979
+  },
+  {
+   "cond": "current",
+   "query": "tavily API key가 환경변수에 설정된 날짜가 언제야?",
+   "abstained": true,
+   "abstain_p": 0.92,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 531
+  },
+  {
+   "cond": "current",
+   "query": "임베딩 모델을 bekko-a8m으로 바꾸기 전에 쓰던 모델의 정확한 버전이 뭐야?",
+   "abstained": false,
+   "abstain_p": 0.06,
+   "idx": 6,
+   "pool_n": 30,
+   "lat_ms": 526
+  },
+  {
+   "cond": "current",
+   "query": "sqlite-vec 확장의 정확한 설치 경로가 어디야?",
+   "abstained": true,
+   "abstain_p": 0.9,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 461
+  },
+  {
+   "cond": "current",
+   "query": "Hermes config.yaml에서 browser.backend를 camofox로 설정한 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.0,
+   "idx": 2,
+   "pool_n": 30,
+   "lat_ms": 478
+  },
+  {
+   "cond": "current",
+   "query": "Mnemosyne DB 파일의 WAL 모드가 꺼져 있던 시기가 언제야?",
+   "abstained": true,
+   "abstain_p": 0.44,
+   "idx": 13,
+   "pool_n": 30,
+   "lat_ms": 420
+  },
+  {
+   "cond": "current",
+   "query": "텔레그램 게이트웨이의 chat_id가 1234567890이던 때가 있었어?",
+   "abstained": true,
+   "abstain_p": 0.94,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 541
+  },
+  {
+   "cond": "current",
+   "query": "JEV_API_URL이 experientiallabs가 아니라 다른 URL이던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.09,
+   "idx": 8,
+   "pool_n": 30,
+   "lat_ms": 464
+  },
+  {
+   "cond": "current",
+   "query": "Free tier 한도가 $0.75/hour였던 시절이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.49,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 429
+  },
+  {
+   "cond": "current",
+   "query": "RRF pool 크기가 60이던 시점의 성능이 어땠어?",
+   "abstained": false,
+   "abstain_p": 0.01,
+   "idx": 26,
+   "pool_n": 30,
+   "lat_ms": 1087
+  },
+  {
+   "cond": "current",
+   "query": "exa 검색이 키리스로 작동하던 기간이 언제야?",
+   "abstained": false,
+   "abstain_p": 0.17,
+   "idx": 4,
+   "pool_n": 27,
+   "lat_ms": 522
+  },
+  {
+   "cond": "current",
+   "query": "BrokenPipeError가 처음 발생한 날짜가 언제야?",
+   "abstained": true,
+   "abstain_p": 0.91,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 494
+  },
+  {
+   "cond": "current",
+   "query": "Windows 진단 스크립트가 ps1이 아니라 cmd로 작성되던 때가 있었어?",
+   "abstained": true,
+   "abstain_p": 0.4,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 829
+  },
+  {
+   "cond": "current",
+   "query": "Hermes v0.19.x 시절 browser.backend 설정값이 뭐였어?",
+   "abstained": false,
+   "abstain_p": 0.17,
+   "idx": 1,
+   "pool_n": 30,
+   "lat_ms": 450
+  },
+  {
+   "cond": "current",
+   "query": "pip install uv를 처음 실행한 날짜가 언제야?",
+   "abstained": true,
+   "abstain_p": 0.63,
+   "idx": 26,
+   "pool_n": 26,
+   "lat_ms": 431
+  },
+  {
+   "cond": "current",
+   "query": "임베딩 OOM이 GPU 메모리 부족 때문에 발생했던 적이 있어?",
+   "abstained": true,
+   "abstain_p": 0.83,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 442
+  },
+  {
+   "cond": "current",
+   "query": "camelai 프록시 429가 API 키 만료 때문이었던 적이 있어?",
+   "abstained": true,
+   "abstain_p": 0.94,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 564
+  },
+  {
+   "cond": "current",
+   "query": "벤치마크 실패 원인이 네트워크 지연이었던 경우가 있었어?",
+   "abstained": false,
+   "abstain_p": 0.1,
+   "idx": 6,
+   "pool_n": 30,
+   "lat_ms": 496
+  },
+  {
+   "cond": "current",
+   "query": "state.db 손상이 디스크 용량 부족 때문에 발생했어?",
+   "abstained": true,
+   "abstain_p": 0.85,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 556
+  },
+  {
+   "cond": "current",
+   "query": "텔레그램 수신 끊김이 인터넷 연결 문제 때문이던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.14,
+   "idx": 16,
+   "pool_n": 30,
+   "lat_ms": 512
+  },
+  {
+   "cond": "current",
+   "query": "deepseek 스트림 오류가 프롬프트 길이 초과 때문이었던 적 있어?",
+   "abstained": false,
+   "abstain_p": 0.14,
+   "idx": 21,
+   "pool_n": 30,
+   "lat_ms": 457
+  },
+  {
+   "cond": "current",
+   "query": "임베딩 모델 교체 후 성능이 하락했던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.11,
+   "idx": 27,
+   "pool_n": 30,
+   "lat_ms": 477
+  },
+  {
+   "cond": "current",
+   "query": "skip_shadow 테이블이 처음엔 없어서 누락됐던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.12,
+   "idx": 8,
+   "pool_n": 30,
+   "lat_ms": 512
+  },
+  {
+   "cond": "current",
+   "query": "Jev 호출 타임아웃이 30초였던 시절이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.65,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 439
+  },
+  {
+   "cond": "current",
+   "query": "Mnemosyne consolidation이 중복 메모리를 생성했던 버그가 있었어?",
+   "abstained": true,
+   "abstain_p": 0.39,
+   "idx": 20,
+   "pool_n": 30,
+   "lat_ms": 467
+  },
+  {
+   "cond": "current",
+   "query": "pipeline.py에 json import가 없어서 실패했던 게 언제야?",
+   "abstained": true,
+   "abstain_p": 0.92,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 432
+  },
+  {
+   "cond": "current",
+   "query": "레이트 리밋 429가 hourly limit 때문이었던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.0,
+   "idx": 4,
+   "pool_n": 30,
+   "lat_ms": 1068
+  },
+  {
+   "cond": "current",
+   "query": "golden 쿼리의 pool_rank가 항상 1이었던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.08,
+   "idx": 18,
+   "pool_n": 30,
+   "lat_ms": 626
+  },
+  {
+   "cond": "current",
+   "query": "choice criteria 64개 초과로 500 에러가 났던 적이 있어?",
+   "abstained": true,
+   "abstain_p": 0.9,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 479
+  },
+  {
+   "cond": "current",
+   "query": "diag6 스크립트가 API 호출 없이 오프라인으로 돌았던 적이 있어?",
+   "abstained": true,
+   "abstain_p": 0.76,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 502
+  },
+  {
+   "cond": "current",
+   "query": "커밋 메시지를 한국어로만 쓰는 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.72,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 414
+  },
+  {
+   "cond": "current",
+   "query": "모든 실험을 Docker로 돌리는 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.96,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 442
+  },
+  {
+   "cond": "current",
+   "query": "브라우저 자동화를 항상 창 모드로 하던 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.03,
+   "idx": 7,
+   "pool_n": 30,
+   "lat_ms": 1175
+  },
+  {
+   "cond": "current",
+   "query": "HEAD 브랜치에 직접 실험 커밋을 올리던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.84,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 443
+  },
+  {
+   "cond": "current",
+   "query": "API 키를 코드에 하드코딩하던 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.13,
+   "idx": 13,
+   "pool_n": 30,
+   "lat_ms": 480
+  },
+  {
+   "cond": "current",
+   "query": "실험 보고서를 파일로 남기지 않고 채팅으로만 정리하던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.54,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 408
+  },
+  {
+   "cond": "current",
+   "query": "주석을 영어로만 쓰는 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.24,
+   "idx": 2,
+   "pool_n": 30,
+   "lat_ms": 1130
+  },
+  {
+   "cond": "current",
+   "query": "메모리 저장을 승인 없이 자동으로 하던 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.05,
+   "idx": 18,
+   "pool_n": 30,
+   "lat_ms": 453
+  },
+  {
+   "cond": "current",
+   "query": "모든 검색을 Exa로 통일하던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.8,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 466
+  },
+  {
+   "cond": "current",
+   "query": "릴리스마다 버전을 0.1씩 올리던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.8,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 440
+  },
+  {
+   "cond": "current",
+   "query": "테스트를 실행하지 않고 커밋하던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.38,
+   "idx": 13,
+   "pool_n": 30,
+   "lat_ms": 499
+  },
+  {
+   "cond": "current",
+   "query": "Tailscale 대신 ngrok을 쓰던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.95,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 527
+  },
+  {
+   "cond": "current",
+   "query": "pip 대신 항상 conda를 쓰던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.97,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 529
+  },
+  {
+   "cond": "current",
+   "query": "로그를 한국어로 남기던 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.18,
+   "idx": 10,
+   "pool_n": 30,
+   "lat_ms": 407
+  },
+  {
+   "cond": "current",
+   "query": "매주 일요일에 메모리를 백업하던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.94,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 428
+  },
+  {
+   "cond": "current",
+   "query": "web_extract가 JS 렌더링을 기본으로 켜는 옵션이 있어?",
+   "abstained": false,
+   "abstain_p": 0.08,
+   "idx": 3,
+   "pool_n": 30,
+   "lat_ms": 462
+  },
+  {
+   "cond": "current",
+   "query": "keyring.py가 3개 이상의 API 키를 지원하는 옵션이 있어?",
+   "abstained": true,
+   "abstain_p": 0.88,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 462
+  },
+  {
+   "cond": "current",
+   "query": "run_ablation이 GPU를 사용하는 모드가 있어?",
+   "abstained": true,
+   "abstain_p": 0.98,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 494
+  },
+  {
+   "cond": "current",
+   "query": "golden_eval_v2에 영어 쿼리가 포함된 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.11,
+   "idx": 5,
+   "pool_n": 30,
+   "lat_ms": 542
+  },
+  {
+   "cond": "current",
+   "query": "diag63이 pointwise 대신 choice를 쓰는 옵션이 있어?",
+   "abstained": false,
+   "abstain_p": 0.22,
+   "idx": 15,
+   "pool_n": 30,
+   "lat_ms": 510
+  },
+  {
+   "cond": "improved",
+   "query": "web_extract의 백엔드로 ddgs를 쓰고 있었던 기간이 언제야?",
+   "abstained": false,
+   "abstain_p": 0.11,
+   "idx": 1,
+   "pool_n": 27,
+   "lat_ms": 474
+  },
+  {
+   "cond": "improved",
+   "query": "tavily API key가 환경변수에 설정된 날짜가 언제야?",
+   "abstained": true,
+   "abstain_p": 0.96,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 446
+  },
+  {
+   "cond": "improved",
+   "query": "임베딩 모델을 bekko-a8m으로 바꾸기 전에 쓰던 모델의 정확한 버전이 뭐야?",
+   "abstained": false,
+   "abstain_p": 0.08,
+   "idx": 6,
+   "pool_n": 30,
+   "lat_ms": 475
+  },
+  {
+   "cond": "improved",
+   "query": "sqlite-vec 확장의 정확한 설치 경로가 어디야?",
+   "abstained": true,
+   "abstain_p": 0.93,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 526
+  },
+  {
+   "cond": "improved",
+   "query": "Hermes config.yaml에서 browser.backend를 camofox로 설정한 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.02,
+   "idx": 2,
+   "pool_n": 30,
+   "lat_ms": 484
+  },
+  {
+   "cond": "improved",
+   "query": "Mnemosyne DB 파일의 WAL 모드가 꺼져 있던 시기가 언제야?",
+   "abstained": true,
+   "abstain_p": 0.59,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 473
+  },
+  {
+   "cond": "improved",
+   "query": "텔레그램 게이트웨이의 chat_id가 1234567890이던 때가 있었어?",
+   "abstained": true,
+   "abstain_p": 0.99,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 491
+  },
+  {
+   "cond": "improved",
+   "query": "JEV_API_URL이 experientiallabs가 아니라 다른 URL이던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.27,
+   "idx": 8,
+   "pool_n": 30,
+   "lat_ms": 706
+  },
+  {
+   "cond": "improved",
+   "query": "Free tier 한도가 $0.75/hour였던 시절이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.57,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 438
+  },
+  {
+   "cond": "improved",
+   "query": "RRF pool 크기가 60이던 시점의 성능이 어땠어?",
+   "abstained": false,
+   "abstain_p": 0.03,
+   "idx": 26,
+   "pool_n": 30,
+   "lat_ms": 414
+  },
+  {
+   "cond": "improved",
+   "query": "exa 검색이 키리스로 작동하던 기간이 언제야?",
+   "abstained": true,
+   "abstain_p": 0.32,
+   "idx": 4,
+   "pool_n": 27,
+   "lat_ms": 416
+  },
+  {
+   "cond": "improved",
+   "query": "BrokenPipeError가 처음 발생한 날짜가 언제야?",
+   "abstained": true,
+   "abstain_p": 0.96,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 428
+  },
+  {
+   "cond": "improved",
+   "query": "Windows 진단 스크립트가 ps1이 아니라 cmd로 작성되던 때가 있었어?",
+   "abstained": true,
+   "abstain_p": 0.45,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 689
+  },
+  {
+   "cond": "improved",
+   "query": "Hermes v0.19.x 시절 browser.backend 설정값이 뭐였어?",
+   "abstained": false,
+   "abstain_p": 0.23,
+   "idx": 1,
+   "pool_n": 30,
+   "lat_ms": 514
+  },
+  {
+   "cond": "improved",
+   "query": "pip install uv를 처음 실행한 날짜가 언제야?",
+   "abstained": true,
+   "abstain_p": 0.72,
+   "idx": 26,
+   "pool_n": 26,
+   "lat_ms": 445
+  },
+  {
+   "cond": "improved",
+   "query": "임베딩 OOM이 GPU 메모리 부족 때문에 발생했던 적이 있어?",
+   "abstained": true,
+   "abstain_p": 0.86,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 532
+  },
+  {
+   "cond": "improved",
+   "query": "camelai 프록시 429가 API 키 만료 때문이었던 적이 있어?",
+   "abstained": true,
+   "abstain_p": 0.97,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 484
+  },
+  {
+   "cond": "improved",
+   "query": "벤치마크 실패 원인이 네트워크 지연이었던 경우가 있었어?",
+   "abstained": false,
+   "abstain_p": 0.18,
+   "idx": 6,
+   "pool_n": 30,
+   "lat_ms": 483
+  },
+  {
+   "cond": "improved",
+   "query": "state.db 손상이 디스크 용량 부족 때문에 발생했어?",
+   "abstained": true,
+   "abstain_p": 0.89,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 571
+  },
+  {
+   "cond": "improved",
+   "query": "텔레그램 수신 끊김이 인터넷 연결 문제 때문이던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.23,
+   "idx": 16,
+   "pool_n": 30,
+   "lat_ms": 501
+  },
+  {
+   "cond": "improved",
+   "query": "deepseek 스트림 오류가 프롬프트 길이 초과 때문이었던 적 있어?",
+   "abstained": false,
+   "abstain_p": 0.28,
+   "idx": 21,
+   "pool_n": 30,
+   "lat_ms": 527
+  },
+  {
+   "cond": "improved",
+   "query": "임베딩 모델 교체 후 성능이 하락했던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.22,
+   "idx": 27,
+   "pool_n": 30,
+   "lat_ms": 546
+  },
+  {
+   "cond": "improved",
+   "query": "skip_shadow 테이블이 처음엔 없어서 누락됐던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.22,
+   "idx": 28,
+   "pool_n": 30,
+   "lat_ms": 775
+  },
+  {
+   "cond": "improved",
+   "query": "Jev 호출 타임아웃이 30초였던 시절이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.87,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 453
+  },
+  {
+   "cond": "improved",
+   "query": "Mnemosyne consolidation이 중복 메모리를 생성했던 버그가 있었어?",
+   "abstained": true,
+   "abstain_p": 0.6,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 544
+  },
+  {
+   "cond": "improved",
+   "query": "pipeline.py에 json import가 없어서 실패했던 게 언제야?",
+   "abstained": true,
+   "abstain_p": 0.94,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 468
+  },
+  {
+   "cond": "improved",
+   "query": "레이트 리밋 429가 hourly limit 때문이었던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.02,
+   "idx": 4,
+   "pool_n": 30,
+   "lat_ms": 427
+  },
+  {
+   "cond": "improved",
+   "query": "golden 쿼리의 pool_rank가 항상 1이었던 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.16,
+   "idx": 18,
+   "pool_n": 30,
+   "lat_ms": 387
+  },
+  {
+   "cond": "improved",
+   "query": "choice criteria 64개 초과로 500 에러가 났던 적이 있어?",
+   "abstained": true,
+   "abstain_p": 0.92,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 402
+  },
+  {
+   "cond": "improved",
+   "query": "diag6 스크립트가 API 호출 없이 오프라인으로 돌았던 적이 있어?",
+   "abstained": true,
+   "abstain_p": 0.87,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 507
+  },
+  {
+   "cond": "improved",
+   "query": "커밋 메시지를 한국어로만 쓰는 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.8,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 392
+  },
+  {
+   "cond": "improved",
+   "query": "모든 실험을 Docker로 돌리는 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.99,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 422
+  },
+  {
+   "cond": "improved",
+   "query": "브라우저 자동화를 항상 창 모드로 하던 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.06,
+   "idx": 7,
+   "pool_n": 30,
+   "lat_ms": 394
+  },
+  {
+   "cond": "improved",
+   "query": "HEAD 브랜치에 직접 실험 커밋을 올리던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.9,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 432
+  },
+  {
+   "cond": "improved",
+   "query": "API 키를 코드에 하드코딩하던 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.28,
+   "idx": 13,
+   "pool_n": 30,
+   "lat_ms": 470
+  },
+  {
+   "cond": "improved",
+   "query": "실험 보고서를 파일로 남기지 않고 채팅으로만 정리하던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.69,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 481
+  },
+  {
+   "cond": "improved",
+   "query": "주석을 영어로만 쓰는 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.27,
+   "idx": 2,
+   "pool_n": 30,
+   "lat_ms": 512
+  },
+  {
+   "cond": "improved",
+   "query": "메모리 저장을 승인 없이 자동으로 하던 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.19,
+   "idx": 18,
+   "pool_n": 30,
+   "lat_ms": 493
+  },
+  {
+   "cond": "improved",
+   "query": "모든 검색을 Exa로 통일하던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.84,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 467
+  },
+  {
+   "cond": "improved",
+   "query": "릴리스마다 버전을 0.1씩 올리던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.88,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 430
+  },
+  {
+   "cond": "improved",
+   "query": "테스트를 실행하지 않고 커밋하던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.39,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 491
+  },
+  {
+   "cond": "improved",
+   "query": "Tailscale 대신 ngrok을 쓰던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.97,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 567
+  },
+  {
+   "cond": "improved",
+   "query": "pip 대신 항상 conda를 쓰던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.97,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 522
+  },
+  {
+   "cond": "improved",
+   "query": "로그를 한국어로 남기던 규칙이 있었어?",
+   "abstained": false,
+   "abstain_p": 0.23,
+   "idx": 10,
+   "pool_n": 30,
+   "lat_ms": 464
+  },
+  {
+   "cond": "improved",
+   "query": "매주 일요일에 메모리를 백업하던 규칙이 있었어?",
+   "abstained": true,
+   "abstain_p": 0.98,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 508
+  },
+  {
+   "cond": "improved",
+   "query": "web_extract가 JS 렌더링을 기본으로 켜는 옵션이 있어?",
+   "abstained": false,
+   "abstain_p": 0.15,
+   "idx": 3,
+   "pool_n": 30,
+   "lat_ms": 738
+  },
+  {
+   "cond": "improved",
+   "query": "keyring.py가 3개 이상의 API 키를 지원하는 옵션이 있어?",
+   "abstained": true,
+   "abstain_p": 0.9,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 539
+  },
+  {
+   "cond": "improved",
+   "query": "run_ablation이 GPU를 사용하는 모드가 있어?",
+   "abstained": true,
+   "abstain_p": 0.99,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 533
+  },
+  {
+   "cond": "improved",
+   "query": "golden_eval_v2에 영어 쿼리가 포함된 적이 있어?",
+   "abstained": false,
+   "abstain_p": 0.17,
+   "idx": 5,
+   "pool_n": 30,
+   "lat_ms": 521
+  },
+  {
+   "cond": "improved",
+   "query": "diag63이 pointwise 대신 choice를 쓰는 옵션이 있어?",
+   "abstained": true,
+   "abstain_p": 0.32,
+   "idx": 30,
+   "pool_n": 30,
+   "lat_ms": 607
+  }
+ ]
+}
