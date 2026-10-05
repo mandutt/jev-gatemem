@@ -1,0 +1,1489 @@
+{
+  "generated_at": "PLACEHOLDER",
+  "verdict": "기각",
+  "verdict_rationale": "사전 고정 기준(유실 0 유지 9/10) 도달 불가 — gold50 내 conf<0.65 KEEP 행(82964 goal 0.62, 83512 commitment 0.69)이 존재하여 τ를 켜면 어떤 헬드아웃에서도 유실 3이 발생(0/10). '유실 0 + FP 절감'은 gold50에서 동시 불가(conf 분포가 두 목표 직교). McNemar p=0.0243는 유의하지만 FP-2.4 vs 유실+1 trade-off는 운영 '데이터 유실 금지' 원칙 위반. conf 기반 threshold fit은 gold50 규모에서 구조적 기각.",
+  "stats": {
+  "full_data": {
+   "base_fp": 10,
+   "base_lost": 2,
+   "tau65_fp": 7,
+   "tau65_lost": 2
+  },
+  "protocol_b": {
+   "repeats": 10,
+   "lost0_repeats": 0,
+   "lost0_rate": 0.0,
+   "b_fp_list": [
+    8,
+    8,
+    7,
+    8,
+    8,
+    7,
+    7,
+    8,
+    7,
+    8
+   ],
+   "b_lost_list": [
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3
+   ],
+   "mean_fp_cut_vs_baseline": 2.4,
+   "fp_cut_min": 2,
+   "fp_cut_max": 3,
+   "tau_histogram": {
+    "0.65": 32,
+    "0.6": 7,
+    "0.75": 9,
+    "0.7": 1,
+    "0.55": 1
+   },
+   "mcnemar": {
+    "correct_cuts": 24,
+    "wrong_cuts": 10,
+    "p_exact": 0.024306510109454393
+   },
+   "wilson_fp_rate": {
+    "baseline": [
+     0.31707482511825114,
+     0.7267049451255145
+    ],
+    "tau65_fixed": [
+     0.1914927237627384,
+     0.5896084250184327
+    ]
+   },
+   "wilson_lost_rate": {
+    "baseline": [
+     0.017874407775063144,
+     0.20718988318746434
+    ],
+    "tau65_fixed": [
+     0.017874407775063144,
+     0.20718988318746434
+    ]
+   }
+  },
+  "knife_edge_rows": [
+   {
+    "id": "82403",
+    "gold": "NO_STORE",
+    "jev_type": "goal",
+    "store_conf": 0.67,
+    "type_conf": 0.58,
+    "max_conf": 0.67
+   },
+   {
+    "id": "82561",
+    "gold": "NO_STORE",
+    "jev_type": "commitment",
+    "store_conf": 0.69,
+    "type_conf": 0.3,
+    "max_conf": 0.69
+   },
+   {
+    "id": "82964",
+    "gold": "STORE",
+    "jev_type": "goal",
+    "store_conf": 0.62,
+    "type_conf": 0.46,
+    "max_conf": 0.62
+   },
+   {
+    "id": "83512",
+    "gold": "STORE",
+    "jev_type": "commitment",
+    "store_conf": 0.53,
+    "type_conf": 0.69,
+    "max_conf": 0.69
+   },
+   {
+    "id": "83671",
+    "gold": "STORE",
+    "jev_type": "instruction",
+    "store_conf": 0.55,
+    "type_conf": 0.71,
+    "max_conf": 0.71
+   },
+   {
+    "id": "82614",
+    "gold": "NO_STORE",
+    "jev_type": "commitment",
+    "store_conf": 0.6,
+    "type_conf": 0.27999999999999997,
+    "max_conf": 0.6
+   },
+   {
+    "id": "82681",
+    "gold": "NO_STORE",
+    "jev_type": "context",
+    "store_conf": 0.7,
+    "type_conf": 0.29000000000000004,
+    "max_conf": 0.7
+   },
+   {
+    "id": "82336",
+    "gold": "NO_STORE",
+    "jev_type": "goal",
+    "store_conf": 0.61,
+    "type_conf": 0.53,
+    "max_conf": 0.61
+   },
+   {
+    "id": "82409",
+    "gold": "STORE",
+    "jev_type": "commitment",
+    "store_conf": 0.56,
+    "type_conf": 0.68,
+    "max_conf": 0.68
+   },
+   {
+    "id": "83038",
+    "gold": "NO_STORE",
+    "jev_type": "event",
+    "store_conf": 0.68,
+    "type_conf": 0.25,
+    "max_conf": 0.68
+   }
+  ]
+ },
+ "repeats": [
+  {
+   "rep": 0,
+   "seed": 42,
+   "b_fp": 8,
+   "b_lost": 3,
+   "tau_choices": [
+    0.65,
+    0.65,
+    0.65,
+    0.6,
+    0.75
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "82792",
+      "82872",
+      "82405",
+      "82804",
+      "82494",
+      "82364",
+      "83518",
+      "82681",
+      "82561",
+      "82671",
+      "82413"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "83671",
+      "83365",
+      "82820",
+      "82418",
+      "82480",
+      "82359",
+      "82901",
+      "82375",
+      "83580",
+      "82357"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 2,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "82964",
+      "83314",
+      "82575",
+      "83512",
+      "82796",
+      "82790",
+      "82403",
+      "83666",
+      "82336",
+      "82555"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 2,
+     "flipped": [
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "83585",
+      "83389",
+      "83644",
+      "83658",
+      "83626",
+      "83490",
+      "83697",
+      "82614",
+      "83130",
+      "83038"
+     ],
+     "fitted_tau": 0.6,
+     "test_fp": 2,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "82409",
+      "82868",
+      "83363",
+      "82624",
+      "83566",
+      "82444",
+      "82894",
+      "82557",
+      "82607"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 2,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rep": 1,
+   "seed": 43,
+   "b_fp": 8,
+   "b_lost": 3,
+   "tau_choices": [
+    0.65,
+    0.75,
+    0.65,
+    0.65,
+    0.6
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "82575",
+      "82364",
+      "82872",
+      "83512",
+      "83566",
+      "83671",
+      "82418",
+      "83666",
+      "82403",
+      "82901",
+      "83580"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": []
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "82409",
+      "83314",
+      "82359",
+      "83363",
+      "82444",
+      "83626",
+      "82607",
+      "82357",
+      "82555",
+      "82336"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 2,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      },
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      },
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "82820",
+      "82494",
+      "83518",
+      "83490",
+      "82804",
+      "83585",
+      "82557",
+      "82894",
+      "82561",
+      "82375"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 3,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "82790",
+      "82624",
+      "83365",
+      "82868",
+      "82480",
+      "83644",
+      "83038",
+      "82671",
+      "83130",
+      "82413"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "83658",
+      "82964",
+      "82796",
+      "82792",
+      "83389",
+      "82405",
+      "83697",
+      "82681",
+      "82614"
+     ],
+     "fitted_tau": 0.6,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": []
+    }
+   ]
+  },
+  {
+   "rep": 2,
+   "seed": 44,
+   "b_fp": 7,
+   "b_lost": 3,
+   "tau_choices": [
+    0.65,
+    0.65,
+    0.65,
+    0.75,
+    0.65
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "82418",
+      "82804",
+      "82964",
+      "83566",
+      "82790",
+      "83365",
+      "83512",
+      "82607",
+      "82336",
+      "82681",
+      "83038"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 2,
+     "test_lost": 2,
+     "flipped": []
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "83518",
+      "82624",
+      "83626",
+      "82792",
+      "83490",
+      "82444",
+      "82901",
+      "82561",
+      "83697",
+      "82671"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 2,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "82796",
+      "82868",
+      "83389",
+      "82480",
+      "82405",
+      "83644",
+      "82403",
+      "83130",
+      "83666",
+      "82375"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 2,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "83671",
+      "82409",
+      "82359",
+      "83658",
+      "82364",
+      "82494",
+      "82614",
+      "82894",
+      "82413",
+      "82557"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      },
+      {
+       "id": "82614",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "82575",
+      "82872",
+      "83585",
+      "82820",
+      "83314",
+      "83363",
+      "82555",
+      "82357",
+      "83580"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 0,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      },
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rep": 3,
+   "seed": 45,
+   "b_fp": 8,
+   "b_lost": 3,
+   "tau_choices": [
+    0.65,
+    0.65,
+    0.65,
+    0.6,
+    0.7
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "83365",
+      "83585",
+      "83626",
+      "82418",
+      "82790",
+      "82405",
+      "82359",
+      "82403",
+      "82671",
+      "83038",
+      "82555"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 0,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "82364",
+      "83518",
+      "83644",
+      "83658",
+      "82804",
+      "82624",
+      "82336",
+      "82561",
+      "82681",
+      "83697"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 2,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "82796",
+      "82872",
+      "82480",
+      "82792",
+      "82820",
+      "82575",
+      "83580",
+      "82357",
+      "82607",
+      "82413"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "83314",
+      "82494",
+      "83363",
+      "83566",
+      "83490",
+      "82868",
+      "82557",
+      "82375",
+      "82614",
+      "83666"
+     ],
+     "fitted_tau": 0.6,
+     "test_fp": 3,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "82409",
+      "83389",
+      "83671",
+      "82444",
+      "82964",
+      "83512",
+      "82894",
+      "83130",
+      "82901"
+     ],
+     "fitted_tau": 0.7,
+     "test_fp": 2,
+     "test_lost": 3,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rep": 4,
+   "seed": 46,
+   "b_fp": 8,
+   "b_lost": 3,
+   "tau_choices": [
+    0.6,
+    0.65,
+    0.65,
+    0.75,
+    0.65
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "83671",
+      "83389",
+      "83644",
+      "82964",
+      "83566",
+      "82820",
+      "82804",
+      "82894",
+      "82614",
+      "83666",
+      "82901"
+     ],
+     "fitted_tau": 0.6,
+     "test_fp": 2,
+     "test_lost": 1,
+     "flipped": []
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "82872",
+      "83585",
+      "82575",
+      "82796",
+      "83626",
+      "83658",
+      "82403",
+      "83580",
+      "82561",
+      "82671"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "82790",
+      "83365",
+      "82792",
+      "83490",
+      "83363",
+      "82418",
+      "82357",
+      "82413",
+      "82555",
+      "82681"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 0,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      },
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "82405",
+      "82480",
+      "83512",
+      "82409",
+      "83518",
+      "83314",
+      "83697",
+      "82557",
+      "83038",
+      "82336"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 2,
+     "test_lost": 2,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      }
+     ]
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "82444",
+      "82359",
+      "82868",
+      "82494",
+      "82364",
+      "82624",
+      "82375",
+      "83130",
+      "82607"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 3,
+     "test_lost": 0,
+     "flipped": []
+    }
+   ]
+  },
+  {
+   "rep": 5,
+   "seed": 47,
+   "b_fp": 7,
+   "b_lost": 3,
+   "tau_choices": [
+    0.6,
+    0.65,
+    0.65,
+    0.65,
+    0.75
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "82868",
+      "82575",
+      "82790",
+      "82444",
+      "82480",
+      "83658",
+      "83389",
+      "82894",
+      "82614",
+      "82557",
+      "82375"
+     ],
+     "fitted_tau": 0.6,
+     "test_fp": 3,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "82405",
+      "83566",
+      "82364",
+      "83490",
+      "83314",
+      "83671",
+      "83038",
+      "82403",
+      "82681",
+      "82607"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "83585",
+      "82872",
+      "83518",
+      "82804",
+      "83363",
+      "82494",
+      "83580",
+      "82671",
+      "82555",
+      "82901"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "82796",
+      "83365",
+      "83626",
+      "82418",
+      "82359",
+      "83512",
+      "82336",
+      "82357",
+      "82413",
+      "83666"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "82409",
+      "82820",
+      "83644",
+      "82792",
+      "82964",
+      "82624",
+      "83130",
+      "83697",
+      "82561"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 1,
+     "test_lost": 2,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      },
+      {
+       "id": "82561",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rep": 6,
+   "seed": 48,
+   "b_fp": 7,
+   "b_lost": 3,
+   "tau_choices": [
+    0.75,
+    0.65,
+    0.65,
+    0.65,
+    0.65
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "82796",
+      "83389",
+      "82624",
+      "82820",
+      "83365",
+      "82409",
+      "82494",
+      "83130",
+      "82614",
+      "83038",
+      "83697"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      },
+      {
+       "id": "82614",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "82792",
+      "83585",
+      "83671",
+      "82364",
+      "83512",
+      "83644",
+      "82403",
+      "82894",
+      "82557",
+      "82561"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 2,
+     "test_lost": 1,
+     "flipped": []
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "83518",
+      "83490",
+      "82480",
+      "82868",
+      "82872",
+      "82575",
+      "82555",
+      "82375",
+      "82901",
+      "83666"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 2,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "82418",
+      "83658",
+      "82359",
+      "82444",
+      "83363",
+      "83626",
+      "82681",
+      "82357",
+      "82413",
+      "83580"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 0,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "83566",
+      "82790",
+      "83314",
+      "82804",
+      "82405",
+      "82964",
+      "82671",
+      "82336",
+      "82607"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 2,
+     "test_lost": 1,
+     "flipped": []
+    }
+   ]
+  },
+  {
+   "rep": 7,
+   "seed": 49,
+   "b_fp": 8,
+   "b_lost": 3,
+   "tau_choices": [
+    0.6,
+    0.65,
+    0.75,
+    0.65,
+    0.65
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "83314",
+      "82790",
+      "83365",
+      "82364",
+      "83644",
+      "83585",
+      "82624",
+      "82894",
+      "82671",
+      "83130",
+      "82614"
+     ],
+     "fitted_tau": 0.6,
+     "test_fp": 2,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "82796",
+      "82820",
+      "83566",
+      "83518",
+      "82480",
+      "82964",
+      "82403",
+      "83580",
+      "83038",
+      "82555"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 0,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "82575",
+      "82409",
+      "83658",
+      "83671",
+      "82418",
+      "82444",
+      "82336",
+      "83666",
+      "82357",
+      "82607"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 2,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      },
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "82868",
+      "83490",
+      "82405",
+      "83626",
+      "83363",
+      "83512",
+      "82413",
+      "82557",
+      "82681",
+      "83697"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": []
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "82792",
+      "82872",
+      "82804",
+      "82359",
+      "82494",
+      "83389",
+      "82901",
+      "82375",
+      "82561"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 3,
+     "test_lost": 0,
+     "flipped": []
+    }
+   ]
+  },
+  {
+   "rep": 8,
+   "seed": 50,
+   "b_fp": 7,
+   "b_lost": 3,
+   "tau_choices": [
+    0.65,
+    0.65,
+    0.6,
+    0.65,
+    0.75
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "83658",
+      "83363",
+      "82796",
+      "83626",
+      "82494",
+      "82364",
+      "82868",
+      "83038",
+      "82555",
+      "83666",
+      "82357"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 0,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82555",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      },
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "83490",
+      "82872",
+      "83671",
+      "82480",
+      "82624",
+      "83518",
+      "82336",
+      "82375",
+      "83130",
+      "82894"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 3,
+     "test_lost": 0,
+     "flipped": []
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "82792",
+      "83314",
+      "82418",
+      "82820",
+      "82964",
+      "83389",
+      "82607",
+      "82614",
+      "83580",
+      "83697"
+     ],
+     "fitted_tau": 0.6,
+     "test_fp": 2,
+     "test_lost": 1,
+     "flipped": []
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "82804",
+      "82405",
+      "83512",
+      "83566",
+      "82575",
+      "82359",
+      "82901",
+      "82403",
+      "82413",
+      "82671"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": []
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "82790",
+      "82444",
+      "83365",
+      "83585",
+      "83644",
+      "82409",
+      "82561",
+      "82681",
+      "82557"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      },
+      {
+       "id": "82561",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "rep": 9,
+   "seed": 51,
+   "b_fp": 8,
+   "b_lost": 3,
+   "tau_choices": [
+    0.65,
+    0.65,
+    0.55,
+    0.75,
+    0.65
+   ],
+   "folds": [
+    {
+     "fold": 0,
+     "test_ids": [
+      "82480",
+      "82444",
+      "83490",
+      "83389",
+      "82790",
+      "82575",
+      "82364",
+      "82413",
+      "83580",
+      "82336",
+      "82357"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 0,
+     "flipped": [
+      {
+       "id": "82357",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 1,
+     "test_ids": [
+      "83585",
+      "83644",
+      "82868",
+      "82964",
+      "83314",
+      "83365",
+      "82375",
+      "83038",
+      "82901",
+      "83130"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 3,
+     "test_lost": 1,
+     "flipped": []
+    },
+    {
+     "fold": 2,
+     "test_ids": [
+      "82796",
+      "83512",
+      "82792",
+      "82804",
+      "82359",
+      "82494",
+      "82614",
+      "82555",
+      "82671",
+      "82681"
+     ],
+     "fitted_tau": 0.55,
+     "test_fp": 2,
+     "test_lost": 1,
+     "flipped": []
+    },
+    {
+     "fold": 3,
+     "test_ids": [
+      "82624",
+      "83658",
+      "83626",
+      "83518",
+      "82409",
+      "83363",
+      "82561",
+      "83666",
+      "82894",
+      "82607"
+     ],
+     "fitted_tau": 0.75,
+     "test_fp": 1,
+     "test_lost": 1,
+     "flipped": [
+      {
+       "id": "82409",
+       "gold": "STORE",
+       "direction": "cut",
+       "correct": false
+      },
+      {
+       "id": "82561",
+       "gold": "NO_STORE",
+       "direction": "cut",
+       "correct": true
+      }
+     ]
+    },
+    {
+     "fold": 4,
+     "test_ids": [
+      "82405",
+      "82418",
+      "82872",
+      "83671",
+      "83566",
+      "82820",
+      "82557",
+      "83697",
+      "82403"
+     ],
+     "fitted_tau": 0.65,
+     "test_fp": 1,
+     "test_lost": 0,
+     "flipped": []
+    }
+   ]
+  }
+ ],
+ "note": "Protocol A 고정규칙은 결정론적이라 분할 무관 = full-data와 동일(참조값)."
+}
