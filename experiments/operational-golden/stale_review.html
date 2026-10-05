@@ -1,0 +1,2391 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stale 판정 시트 (119건)</title>
+<style>
+  body { font-family: -apple-system, sans-serif; max-width: 720px; margin: 0 auto; padding: 12px; }
+  .banner { background: #fff3cd; border: 1px solid #ffe08a; padding: 10px; border-radius: 8px; margin-bottom: 12px; }
+  .banner b { color: #7a5c00; }
+  .item { border: 1px solid #ddd; border-radius: 8px; padding: 10px; margin: 10px 0; background: #fff; }
+  .q { font-size: 13px; color: #555; margin-bottom: 6px; }
+  .badge { background: #eee; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+  .id { float: right; color: #999; font-size: 11px; }
+  pre.content { white-space: pre-wrap; word-break: break-all; background: #f6f6f6; padding: 8px; border-radius: 6px; font-size: 13px; max-height: 240px; overflow-y: auto; }
+  .opts { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .opts label { display: inline-flex; align-items: center; border: 1px solid #ccc; border-radius: 20px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
+  .opts label:has(input:checked) { background: #e8f0fe; border-color: #4285f4; }
+  .opts input { margin-right: 6px; }
+  button { font-size: 15px; padding: 10px 20px; border-radius: 8px; border: none; background: #1a73e8; color: #fff; }
+  details { margin-top: 20px; }
+</style></head><body>
+<div class="banner">
+  <b>판정 기준</b><br>
+  <b>REAL_STALE</b>: 지금 이 메모리를 참고하면 틀린 답을 주는 것 (대체·폐기·옛 상태)<br>
+  <b>PAST_REPORT</b>: 과거 행위/완료 보고 — 기록일 뿐, 참고해도 해롭지 않음<br>
+  <b>STILL_TRUE</b>: 여전히 참인 사실 (시스템 오판)<br>
+  <b>SKIP</b>: 판정 불가
+</div>
+<div><b>샘플 20건</b> (prob 내림차순 상위) — 우선 판정, 이후 전체로 이동</div>
+
+    <div class="item" id="item-0">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.92
+        <span class="id">id=ef750625 ts=2026-10-04T11:11</span>
+      </div>
+      <pre class="content">[ASSISTANT] **6-2차 τ 트레이드오프 실행 완료 + 커밋 + 푸시** ✅ (커밋 `6a2ed73`)
+
+## 결과 요약
+
+### τ=0.65 채택 시 op 손실 — **극소 (4건, 4.4%)**
+| 지표 | τ=0.5 (현행) | **τ=0.65** | τ=0.8 |
+|---|---|---|---|
+| gold1 유지 | 70/71 (98.6%) | **68/71 (95.8%)** | 44/71 (62.0%) |
+| hit@3 유지 | 77/78 (98.7%) | **74/78 (94.9%)** | 47/78 (60.3%) |
+| 손실 쿼리 | 회색지대 1건 | **4건 (전부 max 0.50~0.59)** | 31건 |
+
+- 손실 4건 전부 **저신뢰 회색지대** ("한국어 말투 규칙", "gold50 기준선", "venv 복구", "자동 시작") — 고신뢰 답은 무손실
+- pointwise 단독 op hit@3 = **86.7%** (C=choice의 85.6%와 동급) → **A 유지 근거 강화**
+
+### 부수 발견 — 400 오류 근본 원인 규명
+- run_diag62 최초 실행 28건 400 → **정밀 스윕으로 게이트웨이 상한 규명**
+  - 후보당 **1,350자 × 32질문 = 200, 1,351자 × 32 = 400** (정밀 경계 확인)
+  - 라이브 코퍼스 150행이 1,350자 초과 (최대 35,871자)가 원인
+- 수정: `MAX_CAND_CHARS=1350` 캡 → **90/90 성공 (err 0)**
+- 본실험 op_C가 성공한 이유도 설명 — scratch pool은 짧은 후보였기 때문
+
+### 레인 실측
+- 6-2차 122콜 전부 **FREE (크레딧 0원)** — 재현 테스트 포함 총 ~400콜 무료
+
+**산출물**: `run_diag62.py` + `diag6_op_scores.json` + `docs/review/2026-10-04_6-2차-τ재산정-트레이드오프.md` (커밋 `6a2ed73`)
+
+**종합 권고**: ① A 유지 ② C 재평가 시 τ=0.65 ③ new gold 재큐레이션 ④ 게이트웨이 후보당 1,350자 캡 문서화
+
+다음 단계로 추천: **C 조건 + τ=0.65 로의 단일 재실행** (noans 50 + op 90, ~280콜, 무료 레인)으로 "C+τ0.65가 가드레일 통과"를 end-to-end로 확정하거나, 6차+6-2차 결과를 종합한 **6차 종합 보고서 후 외부 AI 검토 요청** 문서 작성을 진행할 수 있습니다. 어느 쪽으로 할까요?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v0" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v0" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v0" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v0" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-1">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.89
+        <span class="id">id=19bed462 ts=2026-08-22T00:34</span>
+      </div>
+      <pre class="content">StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). controller 2.0.1(08-21): TimeoutExpired 흡수(timed_out/exit -9) — 실전 성공(hard-kill 런이 게이트 통과로 전환). gate_check에 dong별 기대값 매트릭스(단위오류 감지, 단위검증됨). 미니A/B(minab): R1 C 2/4 vs A 1/4 + R2 t04 C 2/2 vs A 1/2 → 누적 A 2/4 vs C 3/4, C 시간 +32%. 잔여공백: plan 세션 budget(480s) 초과 631s 관측. 상세 minab/ANALYSIS.md</pre>
+      <div class="opts">
+        <label><input type="radio" name="v1" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v1" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v1" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v1" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-2">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.88
+        <span class="id">id=d6e44c36 ts=2026-10-01T12:17</span>
+      </div>
+      <pre class="content">[ASSISTANT] **bekko-a25m 중간 결론 확정 (gold 50, 배치 1):**
+
+| 지표 | a25m | bekko-a8m | koen |
+|---|---|---|---|
+| Recall@1 | 0.44 | **0.72** | 0.70 |
+| MRR | 0.501 | **0.772** | 0.757 |
+
+**a25m은 품질에서 a8m보다 명확하게 낮습니다** (MRR -0.27). 이번 gold 세트는 a25m DB 자체 문서로 구성한 구조적 동등 비교라 절대 비교는 유효하며, 같은 레시피에서 a8m이 0.772를 기록했던 것과 격차가 명확합니다. 활성 파라미터가 3배 커도 품질 이득이 없는 결과로, HF 리더보드의 MMTEB +1.3 차이는 이 도메인(한국어 코딩 기억)에서 재현되지 않았습니다.
+
+또한 확인된 운영 리스크:
+- 배치 4 OOM (4.29GB 그래프 버퍼) — 배치 1에서만 안정
+- G5 int8 드리프트 93% (a8m/koen 100% 대비 유일 미달)
+- RAM commit 689MB (a8m 617MB보다 +72MB)
+- 지연 p95 5.2ms (a8m 1.5ms의 3.5배)
+
+지금 배치 1 전체 재인덱스를 돌리는 중인데, 이는 a25m의 완전한 성능 프로파일 확정용입니다. 다만 **이미 결론에 충분**합니다: a25m은 품질·RAM·지연·안정성 전 항목에서 a8m 대비 열세 또는 동급이고 우위 지표가 없어 **탈락 처리가 타당**합니다. 재인덱스 완료를 기다리지 않고 이대로 보고서에 반영할지, 아니면 완주 후 확정할지 선택해주시면 됩니다. 기본 권고는 **a8m 채택 유지, a25m 탈락 확정**입니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v2" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v2" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v2" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v2" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-3">
+      <div class="q">
+        <span class="badge">fact</span> prob_stale=0.85
+        <span class="id">id=b398c832 ts=2026-10-04T12:29</span>
+      </div>
+      <pre class="content">[ASSISTANT] 이 알림은 **수정 전 첫 번째 exp7a 실행**(구버전 gold_rank 로직)의 완료 통지입니다. 이미 처리된 사항입니다:
+
+- 첫 실행이 끝난 직후 **gold_rank 계산 버그를 발견** (pool 원순서 기준 → hit@3 58건 64.4%, hit@1 71건보다 낮은 모순)
+- `run_exp7a.py`를 수정(choice 선택 후보를 1위로 하는 순서) 후 **재실행 완료** — hit@3 **72건 (80.0%)** 로 확정
+- 현재 `exp7a_A_rerun_raw.json`은 수정본 결과이며, 종합 보고서(`a66500f`)에도 80.0%로 반영됨
+
+추가 조치 필요 없습니다. 대기 중인 항목은 **gold44_human_review.md 44건 라벨 판정** (완료하시면 7차 검토 요청서에 반영하겠습니다) 입니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v3" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v3" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v3" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v3" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-4">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.82
+        <span class="id">id=0a13cf10 ts=2026-08-21T23:32</span>
+      </div>
+      <pre class="content">StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). hardened(08-21): controller 2.0.0 managed, provider방식(config 무변경). 33/33+MB1/2+smoke 통과. 미니A/B(statem-bench/minab): C 2/4 vs A 1/4, 실BLOCK 확인, 공백=plan세션 타임아웃 크래시·게이트 의미론 부족. 상세 minab/ANALYSIS.md</pre>
+      <div class="opts">
+        <label><input type="radio" name="v4" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v4" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v4" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v4" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-5">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.81
+        <span class="id">id=059adbee ts=2026-10-05T00:49</span>
+      </div>
+      <pre class="content">[ASSISTANT] Startup 등록 완료 — **모든 파일이 제자리에** 있고, **재부팅 시 자동으로 데몬이 뜨는 경로가 실측 검증됐습니다.**
+
+## 완료 요약
+
+### Startup 자동시작 구성
+| 파일 | 역할 |
+|---|---|
+| `Startup\start-jev-mem.bat` | 부팅 시 실행되는 래퍼 (supermemory와 동일 패턴) |
+| `C:\Users\mandu\jev-mem-startup\start-jev-mem.ps1` | 실제 시작 로직 (포트 체크 → 데몬 기동) |
+
+### ps1 동작
+1. **47821 포트가 이미 LISTEN**이면 → 중복 기동 없이 종료
+2. 아니면 → 프로젝트 루트에서 `pythonw -m jev_mem_core --serve` (창 숨김)
+3. **데몬이 죽어 있어도 부팅/수동 실행 시 자동 복구**
+
+### 실측 검증 결과
+```
+[jev-mem] started → 8초 후 포트 47821 LISTEN (PID 28544) → 준비 완료 로그
+prefetch 3,586자 응답 → query_log 5건 기록 ✅
+```
+
+### 이제부터 운영 상태
+- ✅ **추가 개발: 없음** — 키 스위칭, query_log, Startup 등 전부 완료
+- ✅ **사용 + 관찰만**: Hermes가 매 턴 prefetch → query_log → 10분 shadow cron → shadow_log → 매일 09:00 텔레그램 요약
+- ✅ **재부팅 안전**: 데몬 자동 재기동
+
+마무리로 커밋하고, 3~5일 후 shadow 축적 데이터로 enforcement 판정 보고를 드리겠습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v5" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v5" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v5" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v5" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-6">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.78
+        <span class="id">id=c6bb53b8 ts=2026-08-16T22:48</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 26
+outcome: C:\Users\mandu\Documents\opencode\testproject — shell tool call completed.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v6" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v6" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v6" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v6" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-7">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.78
+        <span class="id">id=0087e502 ts=2026-08-17T14:23</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 3
+outcome: 모든 검증이 통과했어. 최종 검증 요약: - `gofmt -l service/app_impl.go`: 통과 (포맷 이상 없음) - `go build ./service`: 통과 - `go test -race ./desktop/... ./service ./core/sync`: 전부 `ok` - `go vet ./...`: 통과 - 기존에 실패하던 `TestSVC16_NetworkFlapStress` 데이터 레이스(DATA RACE) 해소 확인 변경 내역: activity 로그 저장 구조를 지시대로 재구성했어. 1. `App`에 `actMu sync.Mutex`를 추가하고 `activity` 슬라이스 접근을 `actMu` 전용으로 분리했어. 이전엔 `a.mu`가 잡혀 있는 `publishEventLocked` → `recordActivityLocked` 경로와 `a.mu`가 없는 `TestSVC16` 등이 같은 슬라이스를 동시에 만져서 레이스가 발생했는데, `actMu` 하나로 통일되어 </pre>
+      <div class="opts">
+        <label><input type="radio" name="v7" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v7" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v7" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v7" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-8">
+      <div class="q">
+        <span class="badge">fact</span> prob_stale=0.78
+        <span class="id">id=61bf06ed ts=2026-08-17T17:01</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 39
+outcome: 추가 진단 결과, 원인을 다음 수준까지 좁혔습니다. **확인된 사실** - `camelaiprox/deepseek-v4-flash`는 `openai-chat` upstream adapter를 사용합니다. - Codex 요청 자체는 `/v1/responses`로 들어오고, OpenCodex가 custom tool을 Chat function tool로 변환합니다. - `tool_choice:auto`와 `required` 모두 단일 custom `exec` 호출에서 정상 동작했습니다. - 동일한 nested JS smoke 문장도 정상 동작했습니다. - `stream:true`에서도 다음 이벤트가 정상 발생했습니다. `response.custom_tool_call_input.delta` `response.custom_tool_call_input.done` `response.output_item.done` `response.completed` - reasoning `high`를 포함한 s</pre>
+      <div class="opts">
+        <label><input type="radio" name="v8" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v8" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v8" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v8" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-9">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.77
+        <span class="id">id=061740f1 ts=2026-08-17T14:40</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 5
+outcome: 모든 검증이 통과했어. 최종 결과를 보고할게. **검증 결과** - `go test ./desktop/... ./service ./core/sync` 전부 `ok` - `go test -race` 전부 `ok` (data race 없음) - `go vet ./...` 통과 - `gofmt` 통과 **확인된 흐름** Conflict Center 흐름은 resolver가 `LogLoser` → `PushError`(errors bucket)로 conflict를 기록하고, `Show()`/`HandleEvent`가 `GetConflicts`(`ListErrors`)로 읽어 `ConflictCenter`에 행을 그리고, `accept_local`/`accept_remote`/`keep_both` 버튼이 `onResolve` → `svc.ResolveConflicts` → `cache.Enqueue`로 이어져. 다만 resolution 뒤 errors 항목이 남아 `Show()`를 다시 열면</pre>
+      <div class="opts">
+        <label><input type="radio" name="v9" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v9" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v9" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v9" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-10">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.77
+        <span class="id">id=56ffb284 ts=2026-08-17T14:58</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 33
+outcome: 최신 Worker-A 세션으로 작업을 이어서 완료했고, 회귀 검증까지 통과했습니다. 수정 내용: - 충돌 해결 후 stale error 레코드가 남지 않도록 수정 - 캐시가 없어도 충돌 삭제 가능하도록 보완 - resolved 이벤트 메시지에 EntryID fallback 추가 - Conflict Center 닫기 상태 정리 및 빈 모달 재오픈 방지 - 관련 목업 테스트 추가 주요 파일: - [service/app_impl.go](C:/Users/mandu/Documents/opencode/testproject/service/app_impl.go) - [desktop/presenter/conflict_presenter.go](C:/Users/mandu/Documents/opencode/testproject/desktop/presenter/conflict_presenter.go) - [desktop/ui/conflict_center.go](C:/Users/mandu/Documents/</pre>
+      <div class="opts">
+        <label><input type="radio" name="v10" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v10" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v10" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v10" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-11">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.77
+        <span class="id">id=6b20b597 ts=2026-08-21T23:04</span>
+      </div>
+      <pre class="content">[USER] 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\minab\runs\t04-data-processing_C_r1_20260821T135744Z\workspace
+모든 파일 생성/수정은 반드시 이 디렉토리 안에서 하세요. 이 디렉토리 밖의 파일은 건드리지 마세요.
+
+이 작업은 raw_sales.csv를 정제해 clean_sales.csv와 summary.md를 만드는 것이다. progress.md를 생성하고 (1) 처리 단계 개요, (2) '## verification' 섹션에 'python gate_check.py 통과'를 명시하세요.
+
+[중요] 이 세션에서는 'statem', 'runbook', '.statem' 관련 명령을 절대 실행하지 마세요. 상태 관리 도구는 사용하지 않습니다. 오직 작업 파일만 다루세요.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v11" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v11" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v11" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v11" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-12">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.76
+        <span class="id">id=de377235 ts=2026-08-15T18:01</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 12
+outcome: 현재 새 요구사항은 아직 수정 완료되지 않았습니다. 재현된 문제는 다음과 같습니다. - 실행 중 파일 추가 시 GUI가 자동 갱신되지 않음 - 수동 Refresh 기능 없음 - 로컬 파일이 중앙 목록이 아니라 좌측 Folders에 폴더처럼 표시됨 Worker-A에게 watcher→GUI refresh, Refresh 버튼, 파일/폴더 타입 분리 수정을 지시했지만 아직 실제 변경과 검증 결과가 나오지 않았습니다. Notion DB/API 변경은 수행하지 않았습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v12" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v12" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v12" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v12" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-13">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.76
+        <span class="id">id=5cc706d7 ts=2026-10-03T17:49</span>
+      </div>
+      <pre class="content">[ASSISTANT] # archived(skip) recall 누출 — 2중 결함 수정·검증 완료
+
+이어서 진행한 작업에서 **중대한 실결함**을 발견해 수정을 끝냈습니다.
+
+## 발견
+
+P3a 완료 점검 중, P3가 마지막으로 skip 처리한 기억(`feaf9c35`)이 `/v1/prefetch` 결과에 **계속 노출되는 것**을 확인. 추적 결과 두 결함이 겹쳐 있었습니다:
+
+| 결함 | 내용 | 실측 |
+|---|---|---|
+| **A** | P3 `recover.py`·`rejudge_v2.py`가 skip 시 `valid_until`을 **metadata에만** 쓰고 컬럼 누락 → recall 필터(컬럼 기준) 무력화 | skip 24건 전부 컬럼 NULL |
+| **B** | 컬럼을 채워도 **FTS/imp/graph lane + hydration에 temporal 필터 없음**(vec lane만 보유) → archived 행이 pool 재유입 | '좋아 진행해줘' pool에 archived **3건** |
+
+P1 apply(수동 반영)는 처음부터 컬럼을 썼고 **P3 자동 경로만 누락**이었습니다.
+
+## 수정 (커밋 `f5aa4ef`)
+
+1. **컬럼 기록**: `recover.py` + `rejudge_v2.py` 수정 → `SET metadata_json=?, valid_until=?` / 기존 24건 백필
+2. **Choke point 필터**: `hydration_get`(데몬 경로) + `get_hydrated`(backend 경로) — hydration은 pool의 단일 경유지 → `superseded_by IS NULL AND (valid_until IS NULL OR valid_until &gt; ?)` 강제
+3. **Defense in depth**: `_imp_search`·`_graph_lane_search` 필터 추가
+
+## 검증 (전부 실측)
+
+- **회귀 테스트 신규**: `jed_failopen_archived_recall_regress.py` — 수정 전 **24/24 누출 FAIL** → 후 **8/8 PASS**
+- **라이브 E2E** (데몬 재기동 후 실호출): 쿼리 2종 pool/final에서 **archived 0건**, JEV 200 OK (`idx=8`/`idx=0`), `rejudge batch: claimed=0` (P3 워커 정상)
+- **과잉 필터 확인**: 필터로 빠진 6건 전부 정당(superseded 5 + skip 1) — 정상 행 손실 **0**
+- 기존 스위트: p3a 20/20, syncpath 7/7
+
+문서 3곳(완료 보고서 · HANDOFF · 스킬 reference) 갱신, 전부 GitHub 푸시 완료(`f5aa4ef`→`89b3f1d`→`f749f0c`).
+
+**미결 1건**: `rejudged` 마커가 태그형(`rejudged:skip`)/JSON형(`"rejudged": "skip"`) 2종 혼재 — 카운트는 둘 다 검사하도록 수정했으나, 신규 기록부 단일 포맷 통일은 남아 있습니다.
+
+⚠️ File-mutation verifier: 1 file edit(s) FAILED this turn despite any wording above that may suggest otherwise. Run `git status` or `read_file` to confirm what actually landed.
+  • `C:\Users\mandu\AppData\Local\hermes\cache\scratch\pf_body.json` — [write_file] Refusing to overwrite `C:\Users\mandu\AppData\Local\hermes\cache\scratch\pf_body.json`: `C:\Users\mandu\AppData\Local\hermes\cache\scratch\pf_body.json` exists but this task has not s…</pre>
+      <div class="opts">
+        <label><input type="radio" name="v13" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v13" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v13" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v13" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-14">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.74
+        <span class="id">id=2747cc91 ts=2026-08-17T11:55</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 43
+outcome: 현재 작업 디렉터리: `C:\Users\mandu\Documents\opencode\testproject`. exec smoke test 성공입니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v14" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v14" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v14" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v14" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-15">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.73
+        <span class="id">id=678497a2 ts=2026-08-21T23:14</span>
+      </div>
+      <pre class="content">[USER] 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\minab\runs\t04-data-processing_C_r1_20260821T135744Z\workspace
+모든 파일 생성/수정은 반드시 이 디렉토리 안에서 하세요. 이 디렉토리 밖의 파일은 건드리지 마세요.
+
+process_data.py를 작성해 raw_sales.csv를 정제하라: price 문자열('5억 2000만원', '8000만원')을 만원 단위 정수로 변환해 clean_sales.csv 생성. 구별 평균 price 표를 summary.md에 작성(강남구 포함). 완성 후 `python process_data.py`를 실행해 산출물을 확인하고 progress.md에 결과를 기록한 뒤 종료하세요.
+
+[중요] 이 세션에서는 'statem', 'runbook', '.statem' 관련 명령을 절대 실행하지 마세요. 상태 관리 도구는 사용하지 않습니다. 오직 작업 파일만 다루세</pre>
+      <div class="opts">
+        <label><input type="radio" name="v15" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v15" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v15" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v15" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-16">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.72
+        <span class="id">id=035a05ed ts=2026-10-04T11:30</span>
+      </div>
+      <pre class="content">[ASSISTANT] 스킬에 기록 완료했습니다. 정리하면:
+
+## 스킬 업데이트 내역
+
+**① rate limit 항목 교체** (기존 "병렬 8 = 429 붕괴, 병렬 2 + 2초 대기 = 10회 무실패")
+→ **"분당 240 platform-funded dispatches (조직 단위, 모든 API 키 합산)"** — 실측 근거(60초 부하 240콜 후 429, 오류 본문 인용) + 의미:
+- 429 시 60초 윈도우 드레인 대기 후 재개
+- $5 크레딧 구매 시 한도 상향, BYOK는 카운트 안 됨
+- 키 2개 같은 조직이면 합산 → **2배 받으려면 다른 조직이어야 함**
+- 안전 운영값: 병렬 3 sleep 0 ≈ 150콜/분 (62%) — 기존 병렬 2는 한도의 20%만 쓰던 과보수 값
+
+**② 부정확했던 "1,200 req/min" 표기 제거** → "240/분 (EXPERLABS 실측, TypeSafe 원래 한도 1,200/분과 혼동 금지)" — 이전 문서에 1,200은 TypeSafe 기준으로 EXPERLABS와 다른 값이 섞여 있었습니다.
+
+이제 이 실측 한도를 반영해 **대안 3 (C + τ=0.65 end-to-end)을 병렬 3 + 240/분 소프트 캡 + 429 retry로 실행**하면 수 분 내 완료됩니다. 진행할까요?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v16" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v16" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v16" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v16" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-17">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.71
+        <span class="id">id=3ceb2752 ts=2026-08-16T22:35</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 20
+outcome: 작업 트리 상태 확인 완료: 수정된 tracked 파일 다수와 untracked 파일 다수가 있으며, 프로젝트 파일 수정 없이 `git status --short`만 읽기 전용으로 실행했습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v17" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v17" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v17" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v17" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-18">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.70
+        <span class="id">id=92705415 ts=2026-08-15T11:53</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 9
+outcome: 네 가지 GUI 요구사항을 구현했습니다. 코드 수정은 모두 Worker-A가 수행했습니다. 변경 내용: - Sync Root 입력창 오른쪽에 `Browse...` 폴더 선택 버튼 추가 - Search 입력 최소 폭을 240px로 확대하고 남은 공간을 유연하게 사용 - 메인 콘텐츠와 Activity 사이에 상단 리사이저 추가 - Activity와 StatusBar 사이의 하단 리사이저 구조 수정 - 관련 회귀 테스트 추가 변경 파일: - [toolbar.go](C:/Users/mandu/Documents/opencode/testproject/desktop/ui/toolbar.go) - [settings_window.go](C:/Users/mandu/Documents/opencode/testproject/desktop/ui/settings_window.go) - [main_window.go](C:/Users/mandu/Documents/opencode/testproject/desktop</pre>
+      <div class="opts">
+        <label><input type="radio" name="v18" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v18" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v18" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v18" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-19">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.70
+        <span class="id">id=722982ca ts=2026-08-17T12:11</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 45
+outcome: 중지 요청을 받아 같은 턴이 이미 중단 지시가 있었으므로 추가 수정 없이 현재 상태만 보고합니다. **실제 적용된 변경 파일 (성공)** - [service/app.go](/Users/mandu/Documents/opencode/testproject/service/app.go): `ActivityItem`에 additive `Event`, `Path` 필드 추가 (`gofmt` 후 정렬 필요) - [service/app_impl.go](/Users/mandu/Documents/opencode/testproject/service/app_impl.go): `App.activity []ActivityItem` 필드 + `NewApp` 초기화, `publishEventLocked`에서 `recordActivityLocked` 호출, `GetActivity` 최신순+limit 구현, `maxActivityEntries=200`, `recordActivityLocked`, `activityTy</pre>
+      <div class="opts">
+        <label><input type="radio" name="v19" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v19" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v19" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v19" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+<details><summary>전체 99건 (샘플 외, 접힘)</summary>
+
+    <div class="item" id="item-100">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.70
+        <span class="id">id=8511fc99 ts=2026-08-21T23:17</span>
+      </div>
+      <pre class="content">[USER] 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\minab\runs\t01-cli-tool_C_r0_20260821T141435Z\workspace
+모든 파일 생성/수정은 반드시 이 디렉토리 안에서 하세요. 이 디렉토리 밖의 파일은 건드리지 마세요.
+
+main.py를 작성하라: argparse로 --input/--output을 받아 name,amount 행 중 amount&gt;=10000만 필터링하고 name,amount,rank(amount 내림차순 순위) 형식으로 저장. 완성 후 `python main.py --input sample.csv --output result.csv`를 직접 실행해 확인하고 progress.md에 결과를 기록한 뒤 종료하세요.
+
+[중요] 이 세션에서는 'statem', 'runbook', '.statem' 관련 명령을 절대 실행하지 마세요. 상태 관리 도구는 사용하지 않습니다. 오직 작업 파일만 다루세요.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v100" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v100" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v100" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v100" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-101">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.69
+        <span class="id">id=95465fb8 ts=2026-09-29T10:58</span>
+      </div>
+      <pre class="content">[USER] 스킬 자동 로드보다는 단순히 지시 한줄 정도로 해결 가능하지 않을까? fluent-korean 스킬은 유용하지만 항상 쓰기에는 기본 컨텍스트가 너무 늘어날 것 같아.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v101" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v101" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v101" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v101" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-102">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.69
+        <span class="id">id=48c78475 ts=2026-09-29T13:03</span>
+      </div>
+      <pre class="content">[ASSISTANT] P1 설계안을 작성했습니다. 승인을 요청합니다.
+
+## P1 설계안 — `core/j1_engine.py` 분리
+
+**문서**: `docs/design/p1-core-j1-engine.md`
+
+### 핵심 요지
+
+| 항목 | 내용 |
+|---|---|
+| **Scope** | `hermes_j1.py`의 순수 함수 5개(`_jev_on`, `_hydration_get`, `_prefetch_with_j1`, `_typesafe_client`, `_format_block`) → `core/j1_engine.py` 이동. `hermes_j1.py`는 Hermes 상속 클래스 + 얇은 어댑터로 |
+| **Public API** | `run(beam, query, *, client, top_k, timeout)` — **provider 인자 제거**, beam+client만 받음 (Hermes 무관) |
+| **범위 밖** | `gateway` rename(P2), opencode 어댑터(P3), sync_turn 분기 이동(어댑터 잔존) |
+| **DoD** | smoke 7/7 PASS + `hermes_j1.py`에 Hermes 외 순수 로직 0 + 커밋 |
+| **리스크** | `## Mnemosyne Context` 포맷 불일치 → 기존 출력과 byte 비교. 롤백은 v0.1.0 태그로 가능 |
+
+**설계 원칙 반영**: Hermes base API에 묶인 `sync_turn` 4-way 분기는 어댑터에 남기고(어댑터는 각 에이전트마다 달라야 함), **순수 로직만 core로** — SRP/순수함수 원칙에 </pre>
+      <div class="opts">
+        <label><input type="radio" name="v102" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v102" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v102" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v102" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-103">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.67
+        <span class="id">id=de66e16f ts=2026-08-13T22:54</span>
+      </div>
+      <pre class="content">[USER] 중간에 중단된 것 같은데 이어서 해줘</pre>
+      <div class="opts">
+        <label><input type="radio" name="v103" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v103" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v103" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v103" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-104">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.67
+        <span class="id">id=958ea616 ts=2026-10-03T16:15</span>
+      </div>
+      <pre class="content">[ASSISTANT] ⏳ The model is starting up — this takes about 14 minutes. Please wait…
+
+⚠️ File-mutation verifier: 1 file edit(s) FAILED this turn despite any wording above that may suggest otherwise. Run `git status` or `read_file` to confirm what actually landed.
+  • `C:\Users\mandu\AppData\Local\hermes\cache\scratch\key_check.py` — [write_file] Refusing to overwrite `C:\Users\mandu\AppData\Local\hermes\cache\scratch\key_check.py`: `C:\Users\mandu\AppData\Local\hermes\cache\scratch\key_check.py` exists but this task has not s…</pre>
+      <div class="opts">
+        <label><input type="radio" name="v104" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v104" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v104" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v104" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-105">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.66
+        <span class="id">id=34a109d3 ts=2026-08-16T22:47</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 24
+outcome: C:\Users\mandu\Documents\opencode\testproject — shell tool call completed.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v105" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v105" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v105" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v105" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-106">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.65
+        <span class="id">id=2cd216e6 ts=2026-08-07T21:15</span>
+      </div>
+      <pre class="content">[USER] 므네모슈네 업데이트 시 recall.py와 record.py가 바뀌지 않는다면, 옵션 A도 괜찮은 선택 아닐까?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v106" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v106" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v106" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v106" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-107">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.65
+        <span class="id">id=973948f3 ts=2026-08-15T11:57</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 10
+outcome: Computer Use 시각 검증을 완료했습니다. - 초기 화면이 `Not connected`이고 파일 목록이 비어 있음 - Search 영역이 넓어짐 - Activity 상단 분할바 드래그 작동 확인 - Activity 하단 분할바도 드래그 작동 확인 - Settings의 Sync Root 옆 `Browse...` 버튼 표시 확인 - Browse 버튼으로 폴더 선택 창이 열리는 것까지 확인 - 폴더 선택·저장 없이 모두 취소하여 로컬 파일과 Notion DB는 변경하지 않음 Worker-A는 현재 Computer Use 도구가 없어 실제 네이티브 GUI 조작은 맡길 수 없습니다. Worker-A는 코드 수정과 테스트·결과 리뷰를 담당하고, 이번 시각 검증은 제가 현재 세션에서 수행했습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v107" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v107" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v107" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v107" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-108">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.65
+        <span class="id">id=5dd6175a ts=2026-08-17T17:24</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 42
+outcome: 추가 실험을 완료했습니다. `test-a` 세션 결과: - 일반 도구 호출: 30/30 성공 - 대량 출력 호출: `PROJECT_STATUS.md` 24회 + 20회, 총 44회 모두 성공 - 중첩 패턴: `exec → tools.exec_command` 20/20 성공 - raw JS·DSML·`&lt;core&gt;` 태그 없음 - 파일·Notion·외부 상태 변경 없음 - `contextCompaction` 이벤트는 이번 실험에서는 발생하지 않음 따라서 다음은 더욱 명확해졌습니다. - DeepSeek의 다량 도구 호출 문제 아님 - nested `exec` 패턴 자체의 문제 아님 - 단순히 큰 도구 출력 때문도 아님 - 실패는 Worker-A의 특정 장기 대화와 실제 compaction 전환 시점에 한정될 가능성이 큼 현재 남은 핵심 검증은 실제 `contextCompaction` 이벤트를 발생시킨 직후 동일한 nested 도구 호출을 실행하는 것입니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v108" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v108" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v108" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v108" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-109">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.65
+        <span class="id">id=842da046 ts=2026-08-17T17:29</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 43
+outcome: 추가 실험 결과를 확인했습니다. - 약 589,000자 규모의 컨텍스트를 `test-a`에 주입 - 실제 요청은 `Get-Date` 1회뿐이었지만, 최종 답변이 `성공: 4999`로 잘못 집계되고 날짜 결과를 누락 - 이후 단순 `Get-Date` 호출은 정상 성공 - 큰 컨텍스트 이후 `exec → tools.exec_command → Get-Location`도 정상 성공 - raw JS·DSML·`&lt;core&gt;` 태그는 없음 - 명시적인 `contextCompaction` 이벤트는 기록되지 않음 확정된 사실은 다음과 같습니다. 1. 큰 컨텍스트에서 도구 호출 결과의 개수·추적 정보가 틀어질 수 있습니다. 2. 하지만 도구 호출 자체가 영구적으로 깨지거나 nested `exec`가 실패하지는 않습니다. 3. 원래 Worker-A의 문제는 단순한 컨텍스트 크기보다, 실제 `contextCompaction` 이벤트 직후 모델이 도구 호출 코드를 일반 텍스트로 출력한 상황과 더 밀접합니다</pre>
+      <div class="opts">
+        <label><input type="radio" name="v109" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v109" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v109" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v109" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-110">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.65
+        <span class="id">id=e273cfa6 ts=2026-09-27T21:58</span>
+      </div>
+      <pre class="content">[USER] 1번이 맞는 것 같아.  해당 형태로 진행하자</pre>
+      <div class="opts">
+        <label><input type="radio" name="v110" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v110" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v110" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v110" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-111">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.65
+        <span class="id">id=3534f134 ts=2026-10-01T09:47</span>
+      </div>
+      <pre class="content">[ASSISTANT] S3-P1 G4 트랩 측정(트랩 3계층 × 10쌍씩, koen/bekko 대상)을 백그라운드로 실행했습니다. 트랩 세트는 a-AI 프로토콜에 따라 인라인 정의했습니다(T1 의미-vs-어휘 마진 ≥ 0.15 / T2 한↔영 교차 ≥ 0.65 / T3 부정·상태 역전 승률 ≥ 8/10). 완료 시 결과를 분석해 G4 통과 여부와 함께 G5 int8 drift 측정으로 이어가겠습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v111" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v111" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v111" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v111" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-112">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.64
+        <span class="id">id=1eb523a9 ts=2026-08-15T02:14</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 6
+outcome: 수정 및 검증을 완료했습니다. 모든 코드 수정은 Worker-A가 수행했습니다. 주요 수정: - GUI 초기화 시 provider가 있으면 원격 전체 snapshot으로 캐시 재구축 - 원격이 비어 있으면 로컬 BoltDB 캐시도 비움 - provider가 없거나 초기 동기화 실패 시 stale cache를 표시하지 않음 - 성공적인 Sync 전까지 `GetTree/GetChildren/Search`에서 캐시 항목 차단 - GC metadata, 삭제 항목, 빈 이름 엔트리 필터링 - `remoteVerified` 접근을 mutex로 보호해 data race 방지 변경 파일: - [service/app_impl.go](C:/Users/mandu/Documents/opencode/testproject/service/app_impl.go) - [service/reconcile_test.go](C:/Users/mandu/Documents/opencode/testproject/service</pre>
+      <div class="opts">
+        <label><input type="radio" name="v112" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v112" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v112" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v112" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-113">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.64
+        <span class="id">id=419383c5 ts=2026-08-15T21:12</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 14
+outcome: 새 Worker-A 세션에 작업 지시는 전달했고, `UpdateSettings`의 `oldRoot` 비교 수정은 실제 반영됐습니다. 하지만 이후 세션이 다시 `inProgress` 상태에서 멈췄고, 다음 수정인 중앙 root 파일 목록 초기화와 테스트는 아직 수행되지 않았습니다. 현재 확인 결과: - `oldRoot` watcher 비교 수정: 반영됨 - `Coordinator.Start()`의 초기 파일 목록 로딩: 미반영 - Refresh 경로 정리: 미반영 - 검증 테스트: 아직 미실행 - 기존 변경 삭제·커밋·Notion 변경: 없음 새 Worker-A 세션도 실행 루프에 진입하지 못한 상태로 보입니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v113" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v113" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v113" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v113" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-114">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.64
+        <span class="id">id=e08586b7 ts=2026-08-17T16:38</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 37
+outcome: 결론부터 말하면, 제시한 `tool_choice:required` 우회는 가능성은 있지만 이번 실패의 직접 원인으로 확인되지는 않았습니다. 확인된 사실은 다음과 같습니다. | 항목 | 확인 결과 | |---|---| | 첫 smoke tool call | `Get-Location` 구조화 호출 성공 | | 이후 Worker-A 동작 | 컨텍스트 압축 뒤 JS 실행 코드를 도구 호출하지 않고 최종 답변 텍스트로 출력 | | 출력 형태 | `const r = await tools.exec_command(...)` 코드가 그대로 노출 | | 실제 프로젝트 수정 | 없음 | | API/Notion 작업 | 수행되지 않음 | 즉 이번 사례는 “첫 도구 호출이 `auto`에서 누락됨”이라기보다, 첫 호출 성공 후 다음 도구 호출에서 DeepSeek가 `exec`를 실제 호출하지 않고 호출 코드를 일반 텍스트로 반환한 문제입니다. OpenAI Responses API에서 `auto`는 모델이 메</pre>
+      <div class="opts">
+        <label><input type="radio" name="v114" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v114" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v114" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v114" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-115">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.64
+        <span class="id">id=281e4ac9 ts=2026-08-17T17:22</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션은 test-a 세션이야. 별도의 명령을 대기해 줘
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 4
+outcome: 성공: 20 / 실패: 0</pre>
+      <div class="opts">
+        <label><input type="radio" name="v115" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v115" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v115" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v115" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-116">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.64
+        <span class="id">id=8c7b3441 ts=2026-10-03T13:21</span>
+      </div>
+      <pre class="content">[ASSISTANT] # ✅ P2a 완료 보고
+
+## 불변식 반전 + failure_class + 경보 시스템 구축 완료
+
+### 변경 내역 (커밋 `c161e6c`, 푸시 완료)
+
+| 구성 | 내용 |
+|---|---|
+| **`write_gate.py`** | `_classify_http()` — 402→billing, 401/403→auth, 429/5xx→transient, 기타→unknown / `_failure_result()` — 실패 시 KEEP+클래스+재시도/프로브 정책 반환 |
+| **`pipeline.py`** | 🔄 **allowlist 폐기 → 불변식 반전**: "정상 판정(8개 규칙)이 아닌 모든 KEEP = fail_open" — http-402/403, no-key, kill, parse, no-wg 전부 포착 + `gate_fail_{class}` 카운터 |
+| **`server.py`** | `/v1/status`에 **`human_alert`** + **`gate_fail_classes`** — billing/auth는 1회만으로 degraded + 경보 이유 |
+
+### 라이브 실측 (3회 데몬 재시작)
+
+**① 정상 상태** — `degraded: False, human_alert: False` (거짓 경보 없음 ✅)
+
+**② 킬스위치** — `fail_open: killswitch-off` + `gate_fail_config: 2` ✅ (config 클래스로 보완)
+
+**③ HTTP 402 목 서버 에뮬레이션** (실 API 안 건드림):
+```
+reasons: ['gate_billing_exhausted']   ← 402 = "충전 필요" 경보
+human_alert: True                      ← 사람 개입 필요
+classes: {'gate_fail_billing': 2}
+```
+
+### 이번 장애(10-02/10-03)에 적용하면
+- 61건의 HTTP 402가 **무감지로 지나가지 않고** 첫 호출부터 `gate_billing_exhausted` + `human_alert`로 표면화
+- allowlist(4개)에 http-402가 없어 빠졌던 **식별 누락 구조적 해결**
+
+### 검증/정리
+- 킬스위치·목 테스트로 저장된 fail_open 메모리 **4건 삭제** (오염 제거)
+- 데몬 **정상 복원** (실 API, circuit closed, `human_alert: False`)
+- 문서: `docs/review/2026-10-03_failopen_P2a_완료.md`
+
+### 남은 단계
+- **P2b**: 상태 직교 컬럼(quarantine/incident_id/rejudge_state) + 원자성(reconcile) + 승인 흐름 — 다음 장애 데이터가 재판정 가능한 상태로 남는 구조
+- **P3**: 자동화 (수동 관찰 후)
+
+P2b로 진행할까요? 아니면 여기서 멈추고 다음 장애 시 실제 경보 동작을 관찰하면서 쉬어가는 것도 가능합니다.
+
+⚠️ File-mutation verifier: 1 file edit(s) FAILED this turn despite any wording above that may suggest otherwise. Run `git status` or `read_file` to confirm what actually landed.
+  • `C:\Users\mandu\AppData\Local\Temp\jev_procs.ps1` — [write_file] Refusing to overwrite `C:\Users\mandu\AppData\Local\Temp\jev_procs.ps1`: `C:\Users\mandu\AppData\Local\Temp\jev_procs.ps1` exists but this task has not seen its full current content (…</pre>
+      <div class="opts">
+        <label><input type="radio" name="v116" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v116" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v116" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v116" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-117">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.63
+        <span class="id">id=980ee307 ts=2026-08-15T19:37</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 13
+outcome: 파악 결과, Worker-A 자체가 문제입니다. - 기존 작업 중 `apply_patch` 도구 호출이 문자열로 깨지며 중단됨 - 재지시 후에도 `inProgress` 상태에서 1분 이상 출력 없음 - 중단·복구 지시를 두 차례 보냈지만 정상 응답하지 않음 - 작업 트리에는 일부 수정만 반영됨 - watcher 이벤트 연결 일부 - 파일을 좌측 트리에서 제외하는 필터 - Refresh 버튼 경로 - 하지만 `UpdateSettings`의 watcher 교체 조건과 선택 폴더 새로고침 경로는 아직 수정되지 않음 - 현재 반영된 부분의 대상 테스트는 통과했지만 전체 수정 완료 상태는 아님 기존 변경을 되돌리거나 커밋하지 않았고, Notion DB/API도 건드리지 않았습니다. 현재 Worker-A 세션은 정상 복구가 어려워 보이므로, 다음 단계는 새 Worker-A 실행 세션에 현재 작업 트리와 미완료 항목만 넘겨 이어서 수정하는 것입니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v117" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v117" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v117" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v117" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-118">
+      <div class="q">
+        <span class="badge">fact</span> prob_stale=0.63
+        <span class="id">id=626a016e ts=2026-08-16T22:51</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 23
+outcome: 추가 테스트 결과, 현재 Worker-A는 모델별로 차이가 확인됩니다. | 모델 | 결과 | |---|---| | `gpt-5.5` | 도구 호출 정상 | | `gpt-5.4-mini` | 도구 호출 정상 | | `gpt-5.6-luna` | 도구 호출 정상 | | `camelaiprox/deepseek-v4-flash` | 단일·다중 도구 호출 정상, `&lt;core&gt;` 미노출 | | `camelai/deepseek-v4-flash` | 도구 호출 정상 | | `opencode-free/deepseek-v4-flash-free` | 도구 호출 전 429 재시도 한도 초과 | 특히 `camelaiprox/deepseek-v4-flash`에 대해 `Get-Location`, 파일 목록, `git status`를 각각 별도 도구 호출로 실행했으며 세 호출 모두 성공했습니다. 해당 테스트의 내부 로그에서도 도구 이벤트 6건, `&lt;core&gt;` 태그 0건, 429 오류 0건을 확인했습니다. 따라</pre>
+      <div class="opts">
+        <label><input type="radio" name="v118" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v118" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v118" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v118" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-119">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.63
+        <span class="id">id=2bfb2624 ts=2026-08-17T16:34</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 36
+outcome: Worker-A가 이번 DeepSeek turn에서 도구 호출에 실패했습니다. Smoke test용 JS 코드를 실제 실행하지 않고 답변으로 그대로 출력한 뒤 작업을 종료했습니다. 따라서 이번 시도에서는: - 코드 수정 없음 - Notion 스키마 변경 없음 - 추가 E2E 실행 없음 - 기존 DB 레코드 변경 없음 현재 확인된 실제 문제는 그대로입니다. `GCMeta` 속성이 Notion DB 스키마에 없어 provider 생성 계열 E2E가 400으로 실패하고 있습니다. Worker-A가 정상적으로 도구를 호출할 수 있는 상태로 복구된 뒤, 스키마 보장 로직 분석부터 다시 진행해야 합니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v119" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v119" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v119" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v119" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-120">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.63
+        <span class="id">id=255b9d0a ts=2026-08-17T17:09</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 40
+outcome: 현재 가장 유력한 원인은 `tool_choice:auto` 자체가 아니라, `contextCompaction` 이후 Worker-A의 도구 호출 상태가 깨지는 문제입니다. 확인된 증거는 다음과 같습니다. - 실패한 turn은 일반 진행 메시지 후 `contextCompaction`이 발생했고, 이후 구조화된 도구 호출 없이 JS 코드를 최종 답변으로 출력했습니다. - 동일 Worker-A에서 최근 `Get-Location → Get-Date` 순차 호출은 정상 성공했습니다. - 실제 경로는 `Responses ingress → openai-chat adapter → 127.0.0.1:8780 → DeepSeek`입니다. - `tool_choice:auto`와 `required`를 직접 비교한 결과 둘 다 정상적인 `custom_tool_call`을 반환했습니다. - 현재 provider 설정에는 첫 도구 호출을 `required`로 강제하는 설정이 없습니다. - `reasoning_</pre>
+      <div class="opts">
+        <label><input type="radio" name="v120" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v120" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v120" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v120" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-121">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.63
+        <span class="id">id=42478378 ts=2026-08-17T17:15</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 41
+outcome: 실험 완료했습니다. - 세션: `01a00ec5-e742-7673-9848-18419c3c20a7` - 별도 복구 지침·스킬 미적용 - `Get-Location` / `Get-Date`를 각각 별도 도구 호출로 30회 순차 실행 - 결과: **30/30 성공** - 소요 시간: 약 168초 - raw JS·DSML·`&lt;core&gt;` 태그 노출 없음 - 프로젝트·Notion·설정 변경 없음 이 결과로 다음은 확실해졌습니다. - DeepSeek의 일반적인 다량 도구 호출 능력 자체는 정상 - `tool_choice:auto`의 일반적인 실패도 아님 - 단순히 도구 호출이 많아서 실패한 것도 아님 - 문제는 Worker-A의 특정 장기 대화 상태, context compaction 이후 재구성, 또는 복잡한 실제 도구 카탈로그와 관련될 가능성이 더 높음 다음 실험은 `test-a`에서 긴 대화 컨텍스트나 context compaction을 의도적으로 포함한 뒤 동일한 30회 호출을 수행하는</pre>
+      <div class="opts">
+        <label><input type="radio" name="v121" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v121" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v121" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v121" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-122">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.63
+        <span class="id">id=14e42757 ts=2026-08-17T18:04</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션은 test-a 세션이야. 별도의 명령을 대기해 줘
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 9
+outcome: 2026-08-17T18:04:22.0537711+09:00</pre>
+      <div class="opts">
+        <label><input type="radio" name="v122" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v122" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v122" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v122" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-123">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.63
+        <span class="id">id=f0907ec8 ts=2026-08-21T17:16</span>
+      </div>
+      <pre class="content">[USER] calc.py에 버그가 있습니다. `pytest test_calc.py -q`를 실행해 어떤 테스트가 실패하는지 확인하세요. **수정은 하지 마세요.** 실패 원인만 파악하고 종료하세요.
+
+[중요] 이 세션에서는 'statem', 'runbook', '.statem' 관련 명령을 절대 실행하지 마세요. 상태 관리 도구는 사용하지 않습니다. 오직 작업 파일만 다루세요.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v123" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v123" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v123" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v123" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-124">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.63
+        <span class="id">id=5e52b249 ts=2026-10-04T11:13</span>
+      </div>
+      <pre class="content">[ASSISTANT] 비용 계산에 필요한 모든 실측 데이터가 모였습니다. 정확히 계산합니다:
+
+## 'C + τ=0.65 end-to-end 확정' 실행 비용
+
+### 실행 내용 (설계 기준)
+- **op 90건**: pointwise(후보별 noul 점수) → τ=0.65 적용 → abstain/발동 판정
+- **noans 50건**: C 조건 pointwise → τ=0.65 적용 → 오주입률 확인
+- (필요시 A comparison용 choice 1콜 추가)
+
+### 실측 기반 콜 수
+| 구성 | 쿼리 수 | 콜/쿼리 | 총 콜 |
+|---|---|---|---|
+| op pointwise (6-2차 실측: 평균 1.36콜) | 90 | ~1.36 | **~122** |
+| noans pointwise (pool 40) | 50 | ~1.5 | **~75** |
+| **합계** | 140 | — | **~197콜** |
+
+### 비용 (실측 토큰 기준)
+- pointwise 1콜 ≈ 32질문 × 후보 1,350자 ≈ **~20K input tokens/콜** (실측: 6-2차 평균 27.4 후보)
+- 총 ≈ 197콜 × 20K ≈ **~4M tokens**
+- Experiential Labs 가격: input $1.5/M tokens (jev-latest) → **~$6.0**
+
+### ⚠️ 그런데 — 무료 한도 초과!
+- **시간당 $0.5 / 일당 $2.0** 한도 (사용자 확인)
+- 위 ~$6.0 중 **무료 한도 사용분**: 최대 $2.0/일 (오늘 이미 6차·6-2차에서 일부 소진)
+- **크레딧 청구 예상: ~$4.0~6.0** (무료 한도 초과분 전액)
+
+### 그렇다면 현재 제안은?
+**핵심: 6-2차에서 이미 op 90건 pointwise 점수를 확보했습니다.**
+- τ=0.65 적용은 **오프라인 판정** — API 콜 0회
+- noans 50건 C pointwise만 새로 필요: **~75콜 ≈ $2.3** (무료 한도 $2.0/일 초과분 $0.3~ 크레딧)
+
+**비용 절감 대안**:
+1. **오프라인 end-to-end 시뮬레이션 (비용 $0)**: 확보된 op 90점수 + 6차 noans A/B(choice) 결과 + C/D noans max_score(본실험)에서 τ=0.65 재판정 — **API 콜 0회로 "C+τ0.65 가드레일 통과"를 합성 확정**
+2. **C noans 50건만 실행 (~75콜, ~$2.3)**: 유일한 신규 실측 — 무료 한도 초과는 $0.3~ 수준
+3. **전체 C end-to-end (~197콜, ~$6.0)**: 크레딧 $4~6 — 무료 한도 크게 초과
+
+**권고: 대안 1(오프라인 시뮬레이션, $0) 또는 대안 2(C noans 50건만, ~$2.3)로 진행**하는 것이 무료 한도 내에서 목적("C+τ0.65 가드레일 통과 확인")을 달성하는 최적 경로입니다. 크레딧 $4~6을 지출할 가치는 현재 단계에서 낮아 보입니다.
+
+어느 대안으로 진행할까요?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v124" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v124" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v124" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v124" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-125">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.62
+        <span class="id">id=2554a78b ts=2026-08-15T21:52</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 15
+outcome: 확인 결과, Worker-A의 작업은 실제로 진행됐고 현재 정상 완료됐습니다. 반영·검증된 내용: - `UpdateSettings`의 Sync Root 변경 시 watcher 재연결 - 앱 시작 시 중앙 파일 목록에 실제 Sync Root 내용 표시 - Refresh 시 현재 선택 폴더 유지 - 파일이 좌측 폴더 트리에 표시되지 않도록 타입 필터 유지 - `FilePresenter`와 `FileExplorer`의 data race 수정 - watcher 이벤트와 GUI 갱신 경로 보강 독립 재검증도 모두 통과했습니다. - `go test ./core/watcher ./service ./desktop/...` - `go test -race ./core/watcher ./service ./desktop/...` - `go vet ./...` - `go build ./cmd/notion-desktop` - `git diff --check` 이전 race 실패도 현재는 재현되지 않았습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v125" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v125" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v125" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v125" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-126">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.62
+        <span class="id">id=9914a5ec ts=2026-08-16T22:27</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 15
+outcome: `SyncReadModel` 컴파일 검증이 통과했다. 이제 2단계 GUI 전환을 진행한다. 먼저 현재 `FilePresenter`와 `ui.FileRow`를 읽어 전환 지점을 잡는다. &lt;core&gt;FilePresenter.ShowChildren은 GetChildren을 호출한다. GetSyncItems로 바꾸고 SyncItem→FileRow 변환. FileRow는 ui 패키지 타입이라 ui 파일에 필드 추가.&lt;/core&gt; `file_presenter.go`와 `ui/file_explorer.go`의 FileRow를 읽는다. &lt;core&gt;FileRow에 SyncStatus/LocalExists/RemoteExists/RelativePath additive 추가. 이건 ui.FileRow.&lt;/core&gt; 읽기: &lt;core&gt;앞서 file_explorer.go에서 FileRow는 Name/Path/Size/Status/Modified/IsDir. Status는 문자열. 여기에 SyncStatus</pre>
+      <div class="opts">
+        <label><input type="radio" name="v126" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v126" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v126" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v126" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-127">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.62
+        <span class="id">id=105d31e9 ts=2026-08-17T16:30</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 35
+outcome: 실제 Notion DB 연결 테스트를 진행했고, API 도달과 일부 E2E 성공을 확인했습니다. 결과: - `TestE2EZipFallbackSingle` 통과 - `TestE2EZipFallbackMultiPart` 통과 - `TestE2EMultipartUpload` 통과 - `TestE2ELWWTwoDevice` 통과 - `TestE2EPullMaterialization` 통과 - leftover cleanup 결과: 0건 - 기존 사용자 레코드는 삭제·Trash 처리하지 않음 다만 provider 생성 계열 테스트는 모두 다음 오류로 실패했습니다. `GCMeta is not a property that exists (400 validation_error)` 즉, 현재 사용 중인 Notion DB 스키마에 코드가 기대하는 `GCMeta` 속성이 없습니다. 반면 sync LWW와 Pull materialization 경로는 실제 DB에서 정상 동작했습니다. 다음 남은 작업은 다음</pre>
+      <div class="opts">
+        <label><input type="radio" name="v127" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v127" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v127" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v127" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-128">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.62
+        <span class="id">id=ea67fb98 ts=2026-08-22T00:17</span>
+      </div>
+      <pre class="content">[USER] 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\minab\runs\t04-data-processing_C_r0_20260821T145543Z\workspace
+모든 파일 생성/수정은 반드시 이 디렉토리 안에서 하세요. 이 디렉토리 밖의 파일은 건드리지 마세요.
+
+process_data.py를 작성해 raw_sales.csv를 정제하라: price 문자열('5억 2000만원', '8000만원')을 만원 단위 정수로 변환해 clean_sales.csv 생성. 구별 평균 price 표를 summary.md에 작성(강남구 포함). 완성 후 `python process_data.py`를 실행해 산출물을 확인하고 progress.md에 결과를 기록한 뒤 종료하세요.
+
+[중요] 이 세션에서는 'statem', 'runbook', '.statem' 관련 명령을 절대 실행하지 마세요. 상태 관리 도구는 사용하지 않습니다. 오직 작업 파일만 다루세</pre>
+      <div class="opts">
+        <label><input type="radio" name="v128" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v128" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v128" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v128" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-129">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.62
+        <span class="id">id=c562e252 ts=2026-10-03T17:51</span>
+      </div>
+      <pre class="content">[ASSISTANT] 确认完毕。**没有实际问题**——这个警告是解释结果和原因。
+
+## 警告的含义
+
+警告说："`C:\Users\mandu\AppData\Local\hermes\cache\scratch\pf_body.json` 写入被拒（Refusing to overwrite）。"
+
+这是写保护机制正常工作的情况——不是错误。
+
+## 实际经过（我自己在会话中经历的顺序）
+
+1. **第一次尝试**：用 bash heredoc 写了 `"$TMPDIR/pf_body.json"`。
+   - 这个 shell 中 `TMPDIR` 被设为 `/tmp`，因此文件实际生成在 **MSYS 路径 `/tmp/pf_body.json`**（已确认：刚才发现该文件实际存在）。
+   - 提交给 curl 时使用 `--data-binary @"$TMPDIR/pf_body.json"`（=`/tmp/...`，MSYS 路径），原生 curl 无法读取 → `error encountered when reading a file`。
+
+2. **第二次尝试**：尝试用 write_file 工具直接写入 scratch 路径，但因为那是此前任务已经创建的**已有的无关文件**（`{"agent":"verify",...}`，17:34 生成），所以 write_file 的 read-before-write 保护拒绝了覆盖。
+   - 这个保护正常工作：阻止了无意中覆盖已有文件。
+
+3. **第三次尝试（成功）**：改名为 `pf_body2.json` 写新文件，用 **Windows 绝对路径**（`C:/Users/...`）交给 curl → 两个 E2E 查询全部成功，获得了 pool/final 的 archived 为 0 的结果。
+
+## 实际影响 = 无
+
+| 确认项目 | 结果 |
+|---|---|
+| 被拒的文件（scratch 的 `pf_body.json`） | **保持不变**（17:34 的原本未被覆盖，内容也相同） |
+| 临时文件（`/tmp/pf_body.json`） | 创建后只用于 curl 尝试（现在只是残留物；会被 scratch 清理策略自动删除） |
+| 实际使用的 E2E 文件（`pf_body2/3.json`） | 正常存在，且用于验证 |
+| 仓库 | **git clean** — 所有提交都已落盘（f749f0c 为 HEAD），j1_engine·mnemosyne·j1_pipeline·recover 的 valid_until 修改均在文件中确认 |
+| E2E 验证结果 | 有效 — 使用成功读取的文件实施，`archived in pool: 0` 结果真实 |
+
+也就是说，**验证过程中自己的临时文件处理失败了一次，但立即用其他方法绕过后成功，因此这个任务的所有结论都基于实际测量**——警告只是忠实记录了这一失败事实。
+
+附带一提，当时会话结束时我下载文件清单中曾把 `pf_body2.json` 写成了 `pf_body.json`（笔误），但这也不影响实际 E2E 结果。
+
+**结论：无需担心的警告。** 如果每次出现文件操作警告都方便地区分真假，可以采取"① `git status --short` 是否 clean→确认是否反映到产物 ② `read_file` 该文件确认内容"的顺序进行筛选。</pre>
+      <div class="opts">
+        <label><input type="radio" name="v129" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v129" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v129" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v129" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-130">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.61
+        <span class="id">id=72338207 ts=2026-08-16T23:56</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 29
+outcome: 남은 작업을 계속 진행했습니다. 구현 완료: - ghost 파일 단일 다운로드 API 추가 - `service.MaterializeSyncItem(...)` - 기존 `core/provider.FileMaterializer` 재사용 - 정확한 파일 하나만 Sync Root에 materialize - 실패 시 로컬 파일을 성공으로 표시하지 않음 - GUI의 ghost `Download` 액션을 전체 Sync가 아닌 단일 파일 materialize로 변경 - `FILE_DOWNLOADED` 이벤트와 Activity/목록 갱신 연결 - 관련 mock 테스트 및 오류 테스트 추가 주요 파일: - [service/read_model.go](C:/Users/mandu/Documents/opencode/testproject/service/read_model.go) - [service/app.go](C:/Users/mandu/Documents/opencode/testproject/service/a</pre>
+      <div class="opts">
+        <label><input type="radio" name="v130" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v130" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v130" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v130" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-131">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.61
+        <span class="id">id=24a27644 ts=2026-09-30T15:36</span>
+      </div>
+      <pre class="content">[USER] 8787 webui에서 세션에 뭔가 입력하면 [Error: Failed to initialize OpenAI client: No module named 'pydantic_core._pydantic_core'] 라면서 오류가 뜨고 입력이 안돼. 뭐가 문제일까?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v131" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v131" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v131" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v131" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-132">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.61
+        <span class="id">id=9e214457 ts=2026-10-03T15:08</span>
+      </div>
+      <pre class="content">[USER] 나는 스킬이 항상 작동하지는 않는다고 생각해서 되도록이면 스킬 참조 없이 플러그인 구동구조 그 자체에서 작동을 보장하고 싶어.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v132" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v132" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v132" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v132" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-133">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.60
+        <span class="id">id=857a7aaf ts=2026-07-31T15:58</span>
+      </div>
+      <pre class="content">[USER] 이 real-estate mcp는 항상 메모리에 올라와 있는 상태야?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v133" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v133" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v133" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v133" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-134">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.60
+        <span class="id">id=2e89a1eb ts=2026-08-15T21:52</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 8
+outcome: `git diff --check`는 후행 공백 오류 없이 EXIT=0으로 통과했고, (경고는 모두 CRLF 자동 변환 노이즈다). 최종 상태는 정리됐다. 내가 이번 작업에서 추가/수정한 실제 변경은 5개 파일이다: - [file_presenter.go](C:/Users/mandu/Documents/opencode/testproject/desktop/presenter/file_presenter.go): `currentPath`를 `pathMu`로 보호, `getCurrentPath`/`setCurrentPath` 헬퍼 추가로 watcher 고루틴과 UI 고루틴이 같은 경로 상태를 안전하게 공유. - [file_explorer.go](C:/Users/mandu/Documents/opencode/testproject/desktop/ui/file_explorer.go): `Update`/`RowFiles`/`selectRow`를 `mu`로 직렬화해 `rows`, `fileRows`, `se</pre>
+      <div class="opts">
+        <label><input type="radio" name="v134" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v134" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v134" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v134" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-135">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.60
+        <span class="id">id=4676fc52 ts=2026-08-16T22:28</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 17
+outcome: `ui.FileRow`에 네 필드만 추가한다. 정확한 위치는 이미 확인했다(144~151 라인). &lt;core&gt;FileRow struct: Name/Path/Size/Status/Modified/IsDir 뒤에 additive 4필드. IsDir과 닫는 } 사이 삽입. 앵커는 `IsDir bool` + `}` + `func FormatSize`.&lt;/core&gt; 패치 적용: &lt;core&gt;컨텍스트: `Modified string`, `IsDir bool`, `}`. 그 뒤 닫는 } 앞에 추가. 사실 마지막 필드 `IsDir bool` 뒤에 추가하려면 `IsDir bool`을 컨텍스트로.&lt;/core&gt; &lt;core&gt;struct 필드 추가: `IsDir bool` 아래 새 줄들, 그 다음 `}`.&lt;/core&gt;</pre>
+      <div class="opts">
+        <label><input type="radio" name="v135" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v135" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v135" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v135" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-136">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.60
+        <span class="id">id=761bdee8 ts=2026-08-16T23:28</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 28
+outcome: 현재는 전체적으로 6단계 중반까지 진행됐고, 7단계는 아직 시작하지 않았습니다. | 단계 | 상태 | 현재 구현 | |---|---|---| | 1. reconciliation read model | 완료 | `service.GetSyncItems()`가 로컬 파일과 원격 cache를 상대경로로 병합 | | 2. 상태 계산 | 부분 완료 | `local`, `ghost`, `synced`, `conflict` 계산 완료. `syncing`, `error`는 enum만 있고 항목별 실시간 계산은 미완료 | | 3. service API·이벤트 정리 | 부분 완료 | `SyncItem`, `GetSyncItems`, sync/file 이벤트 연결 완료. 이벤트 payload는 아직 `FileInfo`·문자열 중심 | | 4. 중앙 파일 목록 재구현 | 완료 | 파일/폴더 구분, 상대경로, local/ghost/synced 표시, 폴더 트리 연동 완료 | | 5. 상태별 액션 | 부분 완</pre>
+      <div class="opts">
+        <label><input type="radio" name="v136" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v136" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v136" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v136" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-137">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.60
+        <span class="id">id=a40f6cdb ts=2026-08-17T17:39</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 44
+outcome: 원인을 확정하려면 동일한 실패 요청을 세 지점에서 동시에 관찰해야 합니다. | 관찰 지점 | 확인할 내용 | 판정 | |---|---|---| | Responses 입력 | `context_compaction`, `tools`, `tool_choice`, `previous_response_id` | compaction 후 도구가 요청에서 사라졌는지 | | Chat 변환 요청 | `tool_count`, `tool_choice`, `reasoning_effort`, 메시지 수 | Responses→Chat adapter가 도구를 누락했는지 | | 실제 SSE 응답 | `custom_tool_call`, `function_call`, text delta, finish event | DeepSeek가 도구 대신 텍스트를 반환했는지 | | Worker transcript | tool marker 또는 raw JS 최종 답변 | 정상 SSE가 클라이언트에서 유실됐는지 | 판정 기준은 다음과 </pre>
+      <div class="opts">
+        <label><input type="radio" name="v137" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v137" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v137" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v137" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-138">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.60
+        <span class="id">id=3dd22653 ts=2026-08-17T18:05</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 45
+outcome: 요청 수준의 추적을 먼저 완료했습니다. `test-a`에서 약 276KB의 추가 컨텍스트를 넣은 뒤 nested 도구 호출을 실행했고, provider debug 결과는 다음과 같습니다. - upstream 요청 2회 모두 `stream:true` - `toolCount: 4` 유지 - `messageCount: 213 → 215` - 요청 본문 약 1.01MB - 최종 `Get-Date` 결과 정상 - debug는 다시 `off`로 복구 즉, 대형 컨텍스트 이후에도 Responses→Chat 변환 단계에서 도구가 사라지지는 않았습니다. 따라서 현재 남은 가능성은 다음 하나로 좁혀집니다. `DeepSeek/Camel 응답 SSE → OpenCodex openai-chat parser/bridge → Worker-A transcript` 정확한 확정을 위해서는 실패 turn의 SSE 이벤트를 기록해야 합니다. 현재 provider debug는 요청 요약만 남기고 응답 이벤트는 기록하지</pre>
+      <div class="opts">
+        <label><input type="radio" name="v138" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v138" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v138" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v138" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-139">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.60
+        <span class="id">id=0192afce ts=2026-08-17T18:16</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 46
+outcome: 추적 결과, 원인이 상당히 좁혀졌습니다. 정상 호출에서는 DeepSeek 응답이 다음 순서였습니다. `custom_tool_call → input.delta → input.done → output_item.done → response.completed` 반면 대형 컨텍스트 이후의 이상 turn에서는: - upstream HTTP 상태: `200` - DeepSeek 입력 토큰: 약 33k~35k - 응답 초반이 여러 차례 `reasoning_text.delta`로만 구성 - 캡처된 응답 구간에는 `custom_tool_call`이 없음 - 최종적으로 요청한 `Get-Date`가 아니라 `Get-Location`을 실행했다고 보고 - “이전 내용이 잘렸다”는 잘못된 상태 설명을 출력 동시에 provider request 로그에서는 도구 목록이 계속 `toolCount: 4`로 유지되었습니다. 따라서 도구가 Responses→Chat 변환 과정에서 삭제된 것은 아닙니다. 현재 가장 근거</pre>
+      <div class="opts">
+        <label><input type="radio" name="v139" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v139" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v139" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v139" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-140">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.60
+        <span class="id">id=60511f41 ts=2026-08-22T00:06</span>
+      </div>
+      <pre class="content">[USER] 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\minab\runs\t04-data-processing_C_r0_20260821T145543Z\workspace
+모든 파일 생성/수정은 반드시 이 디렉토리 안에서 하세요. 이 디렉토리 밖의 파일은 건드리지 마세요.
+
+이 작업은 raw_sales.csv를 정제해 clean_sales.csv와 summary.md를 만드는 것이다. progress.md를 생성하고 (1) 처리 단계 개요, (2) '## verification' 섹션에 'python gate_check.py 통과'를 명시하세요.
+
+[중요] 이 세션에서는 'statem', 'runbook', '.statem' 관련 명령을 절대 실행하지 마세요. 상태 관리 도구는 사용하지 않습니다. 오직 작업 파일만 다루세요.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v140" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v140" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v140" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v140" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-141">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.60
+        <span class="id">id=34af478b ts=2026-09-28T19:31</span>
+      </div>
+      <pre class="content">[USER] 그래 정리해 줘</pre>
+      <div class="opts">
+        <label><input type="radio" name="v141" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v141" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v141" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v141" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-142">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.59
+        <span class="id">id=1f728ca6 ts=2026-08-15T22:15</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 10
+outcome: 모두 완료됐다. 요구사항 A와 B가 구현됐고, 전체 검증이 통과했다. **요구사항 B — Path 줄바꿈** - `desktop/ui/inspector_panel.go`: Path 라벨을 `fyne.TextWrapBreak`로 설정해, 빈칸 없는 긴 Windows 절대 경로도 Inspector 컬럼 폭 안에서 줄바꿈된다. `Path()` getter는 `Text`를 그대로 돌려줘 원문이 잘리거나 대체되지 않는다. - 테스트: `inspector_panel_test.go` — 원문 보존(`Path() == input`), 200자 무공백 경로도 그대로 유지. **요구사항 A — Upload Changes 액션** - `desktop/presenter/coordinator.go`: `selectedLocal` 필드로 현재 선택을 추적하고 `UploadChanges()` 추가. 선택된 로우가 실존 로컬 파일(`!IsDir &amp;&amp; Status=="local"`)일 때만 동작하고, 그 외(폴더</pre>
+      <div class="opts">
+        <label><input type="radio" name="v142" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v142" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v142" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v142" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-143">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.59
+        <span class="id">id=93ab22cc ts=2026-08-16T22:12</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 11
+outcome: 구조 파악이 끝났다. 이제 1단계 통합 read model을 설계한다. **핵심 흐름 요약**: - 로컬: `syncRoot` walk로 실존 파일/폴더. 상대경로 = `filepath.ToSlash(filepath.Rel(syncRoot, path))`. - 원격: `cache.AllEntries()`의 `CachedPath` (슬래시 상대경로, `/docs/a.txt`). `filterVisible`로 메타/삭제/무명 제외. - 로컬↔원격 매핑: `CachedPath`의 선행 `/` 제거 후 Sync Root 기준 슬래시 상대경로로 통일. - `GetConflicts()`는 index error 기록에서 읽는다. Entries는 `cache.AllEntries`. **1단계 설계 — service에 additive read model 추가**: - 새 타입: `SyncItem` (UI 전용, FileInfo와 분리), `SyncItemType`, `SyncItemStatus`. </pre>
+      <div class="opts">
+        <label><input type="radio" name="v143" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v143" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v143" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v143" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-144">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.59
+        <span class="id">id=dddb0f61 ts=2026-08-16T22:24</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 14
+outcome: 이제 `SyncReadModel` interface를 `ServiceContract` 다음에 추가한다. `ServiceContract` 주석 뒤에 붙인다. &lt;core&gt;SyncReadModel 옵셔널 인터페이스. 데스크톱은 *service.App 또는 이 인터페이스로 사용. 주석에 목적 명시.&lt;/core&gt; `app.go` 패치로 interface 추가: &lt;core&gt;ServiceContract type 선언 끝난 직후, AppState 전에.&lt;/core&gt;</pre>
+      <div class="opts">
+        <label><input type="radio" name="v144" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v144" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v144" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v144" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-145">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.59
+        <span class="id">id=4b603b4a ts=2026-08-16T22:28</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 18
+outcome: `ui.FileRow`에 네 필드를 추가한다. &lt;core&gt;struct 문맥: `IsDir bool` 다음에 필드 추가 후 `}`. 마지막 필드 라인을 앵커로.&lt;/core&gt; &lt;core&gt;정확한 라인: 150=`IsDir bool`, 151=`}`. 그 사이 삽입.&lt;/core&gt; Apply Patch 호출: &lt;core&gt; *** Begin Patch *** Update File: .../desktop/ui/file_explorer.go @@ Status string Modified string IsDir bool + // SyncStatus is the unified drive state (local/ghost/synced/conflict/error). + SyncStatus string + LocalExists bool + RemoteExists bool + RelativePath string } *** End Patch &lt;/core&gt;</pre>
+      <div class="opts">
+        <label><input type="radio" name="v145" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v145" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v145" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v145" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-146">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.59
+        <span class="id">id=4e6a245a ts=2026-08-16T22:56</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 31
+outcome: 중지합니다. 이번 턴은 실제 파일 수정 없이 종료합니다. 상태 보고: - 진행한 작업: 읽기 전용으로 현재 구현 상태만 확인했습니다. `service/app.go`의 `SyncReadModel`/`SyncItem`, `service/read_model.go`의 `GetSyncItems`와 테스트가 이미 존재하고, `desktop/ui/file_explorer.go`의 `FileRow`에 additive 필드(4개)가 아직 없으며, `desktop/presenter/file_presenter.go`의 `ShowChildren`이 여전히 레거시 `GetChildren`을 호출하는 GUI 미연결 상태를 확인했습니다. - 실패한 도구 호출: `FileRow` 필드 추가를 위한 apply_patch 시도가 여러 번 실패했습니다. `exec`에 patch 텍스트를 그대로 넘기면 `missing field 'cmd'` 파싱 오류, JS로 `tools.apply_patch(...)`를 호출하면 P</pre>
+      <div class="opts">
+        <label><input type="radio" name="v146" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v146" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v146" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v146" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-147">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.59
+        <span class="id">id=4b6b6dcb ts=2026-08-16T23:29</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 38
+outcome: 현재 작업 디렉터리는 `C:\Users\mandu\Documents\opencode\testproject`입니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v147" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v147" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v147" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v147" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-148">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.59
+        <span class="id">id=c925fb27 ts=2026-08-17T12:58</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 32
+outcome: 현재는 Activity 영속화 작업에서 차단되었습니다. 확인된 문제: - `TestActivity_PersistsAndRestoresAcrossRestart`: 저장 후 복원 결과가 0건 - `TestReconcile_ConcurrentVerifiedNoRace`: 30초 timeout - 원인: `a.mu`와 `persistMu`를 서로 반대 순서로 획득하는 deadlock - `activity.json.tmp` 동시 접근 오류도 발생 Worker-A의 기존 검증 명령이 실패한 상태에서 세션이 계속 `active`로 고정되어 새 수정 지시를 처리하지 못하고 있습니다. 현재 변경을 되돌리거나 Notion/API를 건드리지는 않았습니다. 따라서 새 Worker-A 세션을 지정해 주시면, 현재 dirty worktree를 그대로 이어받아 deadlock과 Activity 복원 실패부터 수정하겠습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v148" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v148" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v148" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v148" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-149">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.59
+        <span class="id">id=0e27c69a ts=2026-08-17T17:15</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션은 test-a 세션이야. 별도의 명령을 대기해 줘
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 2
+outcome: 성공: 30 / 실패: 없음</pre>
+      <div class="opts">
+        <label><input type="radio" name="v149" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v149" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v149" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v149" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-150">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.59
+        <span class="id">id=c6b91761 ts=2026-09-28T00:22</span>
+      </div>
+      <pre class="content">[USER] 현재까지의 작업 내용이 기존 문서에도 반영되었을까?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v150" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v150" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v150" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v150" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-151">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.59
+        <span class="id">id=523d38f8 ts=2026-09-28T17:28</span>
+      </div>
+      <pre class="content">[USER] 다음단계로 일단 3번을 진행해보자</pre>
+      <div class="opts">
+        <label><input type="radio" name="v151" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v151" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v151" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v151" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-152">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.59
+        <span class="id">id=97d00dc8 ts=2026-09-29T23:26</span>
+      </div>
+      <pre class="content">[ASSISTANT] 문서 반영 완료 (`981cdf3` 푸시).
+
+## 문서 반영 내역
+- **P5 보고서** (`docs/design/p5-hermes-rpc-report.md`): §5 운영 관측 → **해소**로 갱신 (on-demand 기동 확정, auto-start 결함 2건 수정, pythonw 무창 기동), §7 커밋 이력 표 신설
+- **HANDOFF §8**: 잔여 항목 중 "core 데몬 부팅 자동화"를 해소 처리 (사용자 확정: 부팅 상주 불필요)
+
+## 설계서(B 스펙 v1.1) 대비 현 구현 차이
+
+### ✅ 설계 준수 (일치)
+| 항목 | 상태 |
+|---|---|
+| D1~D11 (단일 writer, HTTP 47821, 멱등성, 스풀, 보안 Bearer/Origin/127.0.1) | 준수 |
+| D12~D15 (P0 결정: metadata idem, RO ReaderPool, writer 임베딩 통째, PRAGMA 동일) | 준수 |
+| §5 API (health/prefetch/turns/turns{id}/spool/flush/status/metrics/admin/shutdown) | 전부 구현 |
+| §15 P0~P5 단계 + §16.2 동시성 게이트 | 전부 통과 |
+| D9 순서 (Hermes 마지막, 플래그 뒤 rpc/embedded) | 준수 |
+
+### ⚠️ 설계와 다른 점 (의사결정된 편차)
+1. **자동 기동 방식 (§4.3)**: 설계는 "pythonw + 플래그, health 5초 폴링, **쿨다운 30초**, 작업 스케줄러 상시 등록". 구현은 **쿨다운 없음**(싱글턴이 폭주 방지하므로 생략) + **작업 스케줄러 등록 안 함**(사용자 확정: on-demand만 — 첫 에이전트 요청 시 기동, health 폴링 20초). **사용자 의사결정으로 설계를 의도적 갱신한 사례** — 다음 스펙 개정 시 §4.3 반영 대상.
+2. **prefetch `options.scope` (§5.3)**: 설계엔 `all|agent` 스코프 옵션이 있으나 서버가 미구현 (D8 "source_agent=provenance, 격리 아님"과 실질 동일 — 스코프 격리 수요가 없어 생략).
+3. **§16.1 골든 테스트 축소**: 설계는 "대표 20개 이상 임베디드 vs core 출력 동일 비교". 구현은 `verify_p1_core.py`(골든 3/3) + `verify_p5_rpc.py`의 prefetch 결정론(동일 쿼리 2회)으로 대체 — **20개 대규모 골든 비교는 미실행**. 로직 무수정이라 위험 낮지만, 공식 수용 기준 관점에선 미달 항목.
+4. **§16.4 게이트 품질 재측정 미실행**: "core 이전 후 gold50 지표 저하 없음 확인" — 로직 무수정 원칙으로 동일하다고 간주하고 생략.
+5. **origin 검증 상세**: 설계 §10 Origin 헤더 있는 요청 거부 — 구현 확인 필요(미검증). Bearer+127.0.0.1 bind는 검증됨.
+
+### 남은 실질 과제
+- `/v1/tools` remember류 툴 호출의 세션 스코프 (`hermes_core-tools` 고정값) — 잔여
+- 원하시면 §16.1 대규모 골든 비교(20+ 쿼리 임베디드 vs core)를 실행해 수용 기준을 완전히 닫을 수 있습니다</pre>
+      <div class="opts">
+        <label><input type="radio" name="v152" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v152" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v152" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v152" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-153">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.58
+        <span class="id">id=a25351a6 ts=2026-08-15T00:53</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 2
+outcome: 좋은 질문이에요. 지금 내가 실제로 하고 있는 방식을 정리하면 이렇습니다. 진행 중에는 전체 트랜스크립트를 읽지 않습니다. Worker-A가 도는 동안은 `wait_threads`의 **compact snapshot**(최신 진행 요약과 최근 commentary 한두 줄 + 어떤 도구를 마지막에 호출했는지 같은 마커)만 보고 있어요. 이건 전체 기록이 아니라 잘린 상태 요약이라 토큰 부담이 작습니다. 그리고 Worker-A가 끝나면 `read_thread`로 읽는데, 지금까지는 `turnLimit:6`(처음 세션 조사 때)이나 `turnLimit:2` + `maxOutputCharsPerItem` 제한으로 **마지막 턴 정도만** 가져온 게 전부였어요. 이때 전체 세션의 전체 기록을 다 읽지는 않았습니다. 정리하면: - 전체 세션 작업내용을 통째로 읽는 방식은 아니었습니다. - 다만 마지막 답변보다 약간 더(직전 수 턴 및 일부 commentary) 읽은 경우는 있긴 했습니다. 특히</pre>
+      <div class="opts">
+        <label><input type="radio" name="v153" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v153" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v153" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v153" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-154">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.58
+        <span class="id">id=f2e71a6b ts=2026-08-16T23:12</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 35
+outcome: 현재 작업 디렉터리는 `C:\Users\mandu\Documents\opencode\testproject`입니다. exec 오케스트레이터 호출이 정상 완료됐습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v154" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v154" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v154" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v154" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-155">
+      <div class="q">
+        <span class="badge">fact</span> prob_stale=0.58
+        <span class="id">id=b1bbd4f6 ts=2026-08-16T23:16</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 26
+outcome: 원인을 확인하고 해결했습니다. 원인은 `camelaiprox/deepseek-v4-flash`가 `exec`와 `exec_command`를 혼동해, `exec_command`에 `input` 또는 JavaScript를 전달한 것이었습니다. `exec_command`는 `{cmd: "PowerShell 명령"}`만 받아야 하므로 파싱 오류가 발생했습니다. 조치 결과: - DeepSeek 전용 도구 호출 규칙을 적용했습니다. - 모든 작업은 `exec`로 호출 - 셸 실행은 `tools.exec_command({cmd: ...})` - 파일 수정은 `tools.apply_patch(...)` - DeepSeek로 실제 `apply_patch` 및 프로젝트 수정이 정상 수행됨 - `&lt;core&gt;`/DSML 노출 없음 - GUI 폴더 트리의 ID 불일치 버그도 수정 [tree_presenter.go](C:/Users/mandu/Documents/opencode/testproject/deskt</pre>
+      <div class="opts">
+        <label><input type="radio" name="v155" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v155" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v155" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v155" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-156">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.58
+        <span class="id">id=329fb315 ts=2026-10-03T12:52</span>
+      </div>
+      <pre class="content">[ASSISTANT] 세 AI의 v2 2차 검토를 모두 확인했습니다. 종합 보고입니다.
+
+---
+
+# 📋 v2 설계안 — 2차 검토 3개 AI 종합 보고
+
+## 1. 총평: **조건부 승인 — "v2 방향 유지, v2.1 소폭 개정 후 구현"**
+
+| AI | 판정 | 한 줄 요약 |
+|---|---|---|
+| **A** | **조건부 승인** | 설계 훌륭, P2 구현 시 3가지 명세 추가 (skip_staged·G-AS 맥락·402 프로브 백오프) |
+| **B** | **수정 후 승인** | D1~D8 방향 동의, ①~④ 확인 + 3-1~3-6 수정 반영 후 |
+| **C** | **승인 가능 수준** | "새 아키텍처 만들 단계 아님 — v2.1로 소폭 개정 후 확정" (수정 우선순위 10건 제시) |
+
+**세 AI 모두 "D1~D8 방향은 유지" 합의.** 새로 다시 설계할 필요는 없다는 게 공통 결론입니다.
+
+## 2. 공통 지적 (3개 AI가 모두 말한 것 — 반드시 반영)
+
+| # | 지적 | 해결안 (합의) |
+|---|---|---|
+| 1 | **D4(수동 승인)와 상태 머신 불일치** — `rejudge_running → rejudge_invalidated` 직행 | **`rejudge_skip_staged`(승인 대기) 상태 삽입**: SKIP → staged(recall에서 가역적 숨김) → 승인 시 invalidated / 거부 시 kept |
+| 2 | **§3.3 "30일 후 hard delete" ↔ §8 "hard delete 자동화 비수용" 모순** | 30일 = **"삭제 가능 시점(purge eligible)"** — 실제 삭제는 항상 명시적 수동 명령 |
+| 3 | **수치 정의 불일치** (35건 vs 64건) | metric 분리: `gate_attempts` / `affected_turns` / `stored_quarantine_memories` / `rejudge_candidates` / `rejudge_keep·skip` (→ 우리의 경우 32턴·64메모리·35는 이전의 턴 기준 추정값) |
+| 4 | **상태를 lifecycle과 직교 속성으로 분리** (B·C) | `status`(기존 6개 유지) + `preservation`(normal/quarantine) + `rejudge_status`(none/pending/running/completed) + `rejudge_verdict`(keep/skip/null) 컬럼 — 상태 폭발 12개 방지, 기존 통계·`recover_incomplete` 보호 |
+
+## 3. AI별 독자 지적 (핵심만)
+
+### 🔥 A만 지적했지만 **우리 dry-run 결과에 직접 영향** — G-AS 맥락 결손
+&gt; assistant 재판정을 **저장 본문 단독**으로 하면, 직전 user 질문이 없어 **문맥 부재로 대량 SKIP 오판** 가능.
+
+- 우리 dry-run의 **assistant SKIP 5건**(No reply 경고, a8m 실행 중, 9router 완료, 모델 시작 대기, GLiNER 알림)은 전부 `context` 판정인데, **직전 user 턴을 결합하면 판정이 달라질 수 있음**
+- → **assistant 재판정은 `session_key`+`turn_id`로 직전 user 발화를 역추적해 "user + assistant 세트"로 평가**해야 함 (A의 보완책)
+- 이건 **P1 승인 전에 실측으로 확인**할 가치가 있음 (assistant 5건 재평가, JEV 5회 추가 호출)
+
+### B 특유 지적 (운영 실무 관점)
+- **① skip 25% &gt; 평소 14%**: **대조군** 필요 — 정상 구간 KEEP 30~50건을 같은 엔진에 넣어 불일치율 기준선 측정
+- **③ 재판정은 실시간 게이트와 같은 함수·입력**: strict 모드로 같은 함수 호출, `gate_version` 기록 ("`[:1500]` 선절단 금지" 문구가 오해 소지 — gate 내부 truncation은 동일해야 함)
+- **P2를 </pre>
+      <div class="opts">
+        <label><input type="radio" name="v156" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v156" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v156" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v156" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-157">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.57
+        <span class="id">id=6e71c363 ts=2026-08-14T12:15</span>
+      </div>
+      <pre class="content">[USER] 아, 내가 실수했어. 내 관심 라인은 101동 1호~3호가 아니라  108동 1호~3호야. 다시 알려줄래?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v157" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v157" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v157" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v157" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-158">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.57
+        <span class="id">id=7b45efc7 ts=2026-08-15T21:42</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 7
+outcome: 확실해졌다. `ui.FileExplorer`는 GUI 스레드 전용으로 설계됐는데, watcher 이벤트를 Coordinator 가져다 직접 `FilePresenter.Update`로 호출하는 현재 배선이 이를 두 고루틴에서 돌려 race를 만든다. Fyne은 GUI 조작을 `fyne.Do`(main goroutine)로 넣도록 요구한다. 가장 안전하고 일관된 수정은 UI 갱신을 Fyne 메인 스레드로 강제하는 것이다. `ui` 패키지에 thread-safe 갱신 유틸리티가 없는지, `fyne.Do` 사용 패턴을 먼저 확인하겠다. &lt;core_maybe_sensitive&gt;Pause: UI 스레드 모델 확인&lt;/core_maybe_sensitive&gt; &lt;core&gt; 현재 상태: race가 잡힌 건 내가 `Start()`에서 잘못 진단한 문제가 아니라, 실제 설계 gap이 맞다. 이전 Worker-A 패치가 `Coordinator.routeEvent`가 이벤트 루프 고루틴에서 직접 `FilePr</pre>
+      <div class="opts">
+        <label><input type="radio" name="v158" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v158" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v158" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v158" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-159">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.57
+        <span class="id">id=07821188 ts=2026-08-16T22:27</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 16
+outcome: 구조를 확인했다. 이제: 1. `ui.FileRow`에 `SyncStatus`, `LocalExists`, `RemoteExists`, `RelativePath` 필드 추가. 2. `FilePresenter.ShowChildren`을 `GetSyncItems`로 전환. 단 `svc`가 `*service.App` 타입이므로 `SyncReadModel` interface로 캐스팅하거나 `*App`에 직접 호출한다. `p.svc`가 `*service.App`이므로 `p.svc.GetSyncItems` 직접 호출 가능하다. 3. `updateExplorer`를 `[]*service.SyncItem` 기반으로 오버로드하고, 기존 `[]*service.FileInfo` 경로(Search 등)도 계속 컴파일되도록 별도 함수를 둔다. `ui.FileRow`부터 패치한다. &lt;core&gt;FileRow에 additive 필드. Status(legacy)는 유지, SyncStatus 추가. Relative</pre>
+      <div class="opts">
+        <label><input type="radio" name="v159" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v159" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v159" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v159" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-160">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.57
+        <span class="id">id=0b69fece ts=2026-08-16T22:42</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 22
+outcome: 문제 원인을 확인하고 수정했습니다. - 원인: `camelaiprox`와 `camelai`가 `openai-responses`로 설정되어 Camel에 `/responses` 요청을 그대로 전달하고 있었습니다. - 수정: 두 provider를 `openai-chat`으로 변경했고, OpenAI provider는 기존 `openai-responses`를 유지했습니다. [config.json](&lt;C:/Users/mandu/.opencodex/config.json:61&gt;) - live 설정도 갱신되어 재시작 없이 반영됐습니다. - 검증 결과: - Worker-A DeepSeek가 실제 `exec_command` 도구 호출 성공 - `&lt;core&gt;` 태그 미노출 - 프록시 경로가 `/responses`에서 `/chat/completions`로 변경 - 프로젝트 파일과 기존 변경사항은 수정하지 않음 참고로 Codex 내부의 client-facing Responses 요청 자체는 정상 동작이며, </pre>
+      <div class="opts">
+        <label><input type="radio" name="v160" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v160" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v160" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v160" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-161">
+      <div class="q">
+        <span class="badge">fact</span> prob_stale=0.57
+        <span class="id">id=47125286 ts=2026-08-19T22:57</span>
+      </div>
+      <pre class="content">[USER] 그래 확인해줘</pre>
+      <div class="opts">
+        <label><input type="radio" name="v161" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v161" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v161" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v161" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-162">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.57
+        <span class="id">id=cec7faed ts=2026-09-29T00:17</span>
+      </div>
+      <pre class="content">[USER] 2번 진행해보자</pre>
+      <div class="opts">
+        <label><input type="radio" name="v162" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v162" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v162" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v162" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-163">
+      <div class="q">
+        <span class="badge">fact</span> prob_stale=0.56
+        <span class="id">id=4fb3c1d9 ts=2026-08-16T21:53</span>
+      </div>
+      <pre class="content">[USER] 그래 확인해줘</pre>
+      <div class="opts">
+        <label><input type="radio" name="v163" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v163" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v163" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v163" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-164">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.56
+        <span class="id">id=32f2af4e ts=2026-08-16T22:57</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 24
+outcome: Worker-A 작업을 중지했습니다. 이번 턴에서 DeepSeek Worker-A가 `apply_patch` 도구 호출을 반복 실패했습니다. - `cmd` 필드 누락 오류 - PowerShell에서 JavaScript 호출을 해석하는 ParserError - 실제 GUI 파일 수정은 발생하지 않음 - `git status` 변경 파일 수는 작업 전과 동일하게 102개 - 임시 `%TEMP%\patch1.diff`만 남아 있으며 실제 적용되지 않음 따라서 이전 GUI 작업은 아직 `FileRow`와 `FilePresenter` 연결 단계에서 중단된 상태입니다. 사용자가 지정한 조건에 따라 자동 재시도나 다른 모델 전환은 하지 않았습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v164" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v164" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v164" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v164" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-165">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.56
+        <span class="id">id=c0380ccf ts=2026-08-17T17:11</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션은 test-a 세션이야. 별도의 명령을 대기해 줘
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 1
+outcome: test-a 세션이 준비되었습니다. 명령을 기다리겠습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v165" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v165" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v165" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v165" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-166">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.55
+        <span class="id">id=7d7ea43d ts=2026-08-15T14:59</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 11
+outcome: 진행 결과입니다. 통과: - Sync Root 입력칸 확대 - Windows 네이티브 폴더 선택창 - 하단 Activity 영역 초기 높이 축소 - Settings Cancel 동작 - 로컬 스캔 service 테스트 - GUI mock 업로드 테스트 및 실제 파일 내용 검증 - 일반/race 테스트, vet, build 통과 미해결: - 실제 GUI에서 로컬 파일을 선택했을 때 `This folder is empty`로 표시됩니다. service 테스트는 통과하지만 TreePresenter/GetChildren 경로에서 문제가 남아 있어 Worker-A가 수정 중입니다. Notion DB/API 변경은 수행하지 않았고, 임시 UAT 파일도 삭제했습니다. 따라서 현재 작업은 아직 최종 완료로 판정하지 않았습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v166" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v166" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v166" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v166" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-167">
+      <div class="q">
+        <span class="badge">fact</span> prob_stale=0.55
+        <span class="id">id=df2427c6 ts=2026-08-16T23:24</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 27
+outcome: 완료했습니다. - DeepSeek 오류 대응 스킬 생성 및 검증 완료 [SKILL.md](C:/Users/mandu/.codex/skills/deepseek-tool-call-recovery/SKILL.md) - `exec`와 `exec_command` 혼동 진단 - `input`/잘못된 인자 검출 - smoke test - 1회 재시도 및 중지 조건 - `camelaiprox/deepseek-v4-flash` 전용 구현 규칙 - GUI 구현을 DeepSeek Worker-A로 계속 진행 - local 파일: `Sync Changes` - ghost 파일: `Download` - synced/폴더: 액션 비활성화 - 기존 `StartSync` 경로 재사용 - 긴 Inspector path 줄바꿈 유지 주요 변경 파일: - [coordinator.go](C:/Users/mandu/Documents/opencode/testproject/desktop/presenter/coordinato</pre>
+      <div class="opts">
+        <label><input type="radio" name="v167" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v167" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v167" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v167" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-168">
+      <div class="q">
+        <span class="badge">artifact</span> prob_stale=0.55
+        <span class="id">id=77f9a2b2 ts=2026-10-01T18:05</span>
+      </div>
+      <pre class="content">[ASSISTANT] 커밋·푸시 완료 (`fa138f6`). 이제 종합 결과를 보고합니다.
+
+---
+
+## PerfectRecall vs 내 구현 — 격리 A/B 비교 결과
+
+**프로토콜**: 스크래치 전용 DB(코퍼스 419 스팬, 쿼리 180, 동일 seed), 실 Hermes/데몬/DB 무접촉, 동일 Jev 엔드포인트·키. 내 쪽은 라이브 파이프라인 로직(`build_lane_pool + _filter_and_rank + jev_rerank`) 그대로, PR은 `jev_recall._rank` (full-corpus Jev relevance).
+
+### 📊 실측 결과
+
+| 지표 | 내 구현 (lane pool + Jev rerank) | PerfectRecall (full-scan) |
+|---|---|---|
+| **Acc@1** | 0.489 | **0.806** |
+| **MRR** | 0.556 | **0.849** |
+| **지연/쿼리** | **0.23 s** | 0.38 s |
+| **Jev 요청 (180쿼리)** | **179** (쿼리당 1) | 1,800 (쿼리당 10) |
+| **추정 비용** | **~$0** | ~$0.05~0.15 (usage.cost 미반환) |
+| **프로세스 메모리** | a8m 615 MB | **12 MB** (모델 없음) |
+
+### 🔍 원인 분석 (격리 중 발견)
+
+1. **PR venv로 만든 스크래치 DB는 임베딩 0건** — PR은 임베딩 모델 없는 포크라 `memory_embeddings`/`vec_working`이 비어 있었음. **a8m으로 419건 백필 후 재측정** (안 했으면 내 vec lane이 죽은 채 FTS만으로 측정됐을 것 — 이 발견 자체가 격리 검증의 가치).
+2. **lane pool 정답 커버 = 145/180 (80.6%)** — raw pool(RRF) Acc 0.467 ≈ **PR Acc 0.806과 정확히 일치**. 즉 PR의 우위는 "전체 코퍼스를 Jev에 노출"해서 lane이 놓치는 19.4%를 회수하는 것.
+3. **`_filter_and_rank` 어휘 게이트가 한국어 단답 추가 탈락** — `min_distinctive=2, min_coverage=0.30`이 "뭐 좀?" 같은 반응형 후보를 토큰 중첩 부족으로 제거 (pool 60→4~11). rerank는 pool 내 1등만 lift하므로 pool에 정답이 없으면 회생 불가.
+4. **PR 12MB vs a8m 615MB** — 임베딩 모델 없이 SQLite 스트리밍 스캔. 대신 비용이 코퍼스 크기에 정비례.
+
+### 🎯 결론
+
+- **정확도는 PR 우위 (0.806 vs 0.489)** — 단, 이 태스크(짧은 한국어 대화 5지선다)는 내 운영 도메인인 장기기억 회수와 다름. §8b 실측에서 지시문(0.980)·문서 QA(1.000)는 내 파이프라인이 강함.
+- **자원/비용은 내 구현 압도적** — 요청 1/10, 지연 -40%. PR은 recall 품질을 Jev API 비용으로 사는 설계.
+- **트레이드오프 실측 확정**: PR = "전부 Jev에 던진다" (정확도↑, 비용∝코퍼스), 내 구현 = "lane pool로 좁힌다" (비용 고정, 누락 리스크). 15.6GB RAM 환경에선 내 설계가 적합하나 **lane pool 커버리지 80%대 한계는 운영 문서에 명시**.
+
+**산출물**:
+- `docs/design/embed-benchmark-final-report.md` §8c (비교표 + 원인분석 + 결론)
+- `experiments/perfectrecall-ab/` (평가 스크립트 5종 + 결과 JSON + 재현 README)
+- 커밋 `fa138f6`, 푸시 완료
+
+참고: 닫힌 채팅창에서 작업했지만 스크래치 파일(`scratch_eval.db`, 결과 JSON)은 `$LOCALAPPDATA/hermes/cache/scratch/`에 남아 있습니다.
+
+⚠️ File-mutation verifier: 2 file edit(s) FAILED thi</pre>
+      <div class="opts">
+        <label><input type="radio" name="v168" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v168" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v168" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v168" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-169">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.55
+        <span class="id">id=68d6bded ts=2026-10-02T23:31</span>
+      </div>
+      <pre class="content">[USER] 나는 jev와 임베디드 모델을 같이 사용하고 있잖아. 그런데 jev를 대체할 수 있다고 주장하는 @url:`https://huggingface.co/fastino/GLiNER2.5-Decide`이런 모델을 이용하면 jev와 임베디드를 같이 쓸 이유가 없을 수 있지 않을까?
+
+--- Attached Context ---
+
+🌐 @url:`https://huggingface.co/fastino/GLiNER2.5-Decide` (3795 tokens)
+![Hugging Face's logo](/front/assets/huggingface_logo-noborder.svg)
+
+# [fastino](/fastino) / [GLiNER2.5-Decide](/fastino/GLiNER2.5-Decide) Like 32 Follow fastino 376
+
+![](https://cdn-avatars.huggingface.co/v1/production/uploads/645bc01df6ce7202d776f68f/rVvt1tvnZ9Xg56TbGn1Pq.png)
+![](https://cdn-avatars.huggingface.co/v1/production/uploads/645bc01df6ce7202d776f68f/rVvt1tvnZ9Xg56TbGn1Pq.png)
+
+### Instructions to use fastino/GLiNER2.5-Decide with libraries, inference providers, notebooks, and local apps. Follow these links to get started.
+
+How to use fastino/GLiNER2.5-Decide with GLiNER2:
+
+![Fastino Agent - Fine-tune GLiNER with a single prompt](/fastino/GLiNER2.5-Decide/resolve/main/GLiNER-2.5-Decision-HF-Banner.png)
+![Fine-tune and Deploy GLiNER2.5 with Fastino Agent](https://img.shields.io/badge/Finetune-GLiNER2.5-EA4335)
+![arXiv Paper](https://img.shields.io/badge/arXiv-2507.18546-b31b1b.svg?logo=arxiv)
+![GitHub](https://img.shields.io/badge/GitHub-GLiNER2-black?logo=github)
+![Follow @fastinoAI](https://img.shields.io/twitter/follow/:fastinoAI)
+
+# GLiNER2.5-Decide
+
+**The classification model in the GLiNER2.5 family.** One 340M checkpoint, any label set you pass at call time: intent, routing, sentiment, priority, policy, and multi-label tags, in a single forward pass. No prompt template. No generated tokens. Load it with `AutoExtractor` and ship it locally.
+
+`AutoExtractor`
+
+On a 17-domain held-out suite it leads open typed-decision models, including a 1B GLiNER2 and a 4B generative baseline. A single call can score several heads at once. Single-label tasks return one string. Multi-label tasks return every label above the threshold.
+
+This release is not a general-purpose model. It does not reason, explain, or ans</pre>
+      <div class="opts">
+        <label><input type="radio" name="v169" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v169" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v169" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v169" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-170">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.55
+        <span class="id">id=fd2d0668 ts=2026-10-03T19:10</span>
+      </div>
+      <pre class="content">[ASSISTANT] 내역 정리 완료했습니다. 실측 기준으로 보고드립니다.
+
+## 💾 3.9GB 사용 내역 — 무엇이 어디 있나
+
+```
+run-20261003-mdenseon/          총 3.9GB (이번 벤치에서 생성)
+├── mdenseon-export/  1.2GB   ← ONNX 변환본 model.onnx (fp32, 307M)
+│                            · 이게 fastembed가 실제 로드한 모델
+├── .venv-mdenseon/   1.5GB   ← torch CPU + transformers + onnx (임시 venv)
+│                            · 원본 safetensors 로드/변환용
+└── fe-cache/         1.2GB   ← stage_cache.py가 만든 복제본 (실험용 캐시)
+     └── models--lightonai--mDenseOn/ (1.2GB)
+
+~/.cache/huggingface/       2.6GB ← 사용자 전역 캐시 (bench 밖)
+├── models--lightonai--mDenseOn  1.2GB ← 원본 safetensors (HF에서 다운로드)
+├── models--fastino--GLiNER2.5    1.1GB ← ★기존 것 (이번 벤치와 무관)
+└── 나머지 (kompress 등)          0.3GB
+```
+
+**구성원리**: 같은 mDenseOn 모델이 3번 중복 저장돼 있습니다 — ① HF 원본 safetensors(1.2G) → ② ONNX 변환본(1.2G) → ③ fastembed 캐시 복제본(1.2G). venv(torch 1.5G)는 변환 도구입니다.
+
+**이번 벤치가 만든 것 = ~3.9GB + 1.2GB(HF 캐시) = 총 ~5.1GB**. (GLiNER 1.1GB는 기존 파일 — 건드리지 않아야 합니다)
+
+---
+
+## 정리 제안
+
+**삭제 가능 (벤치 산출물, 재현 스크립트는 남음):**
+| 대상 | 크기 |
+|---|---|
+| `mdenseon-export/` (ONNX 변환본) | 1.2GB |
+| `fe-cache/` (실험 캐시) | 1.2GB |
+| `~/.cache/huggingface/hub/models--lightonai--mDenseOn/` (원본) | 1.2GB |
+| `.venv-mdenseon/` (torch venv — 재실험 시 재생성) | 1.5GB |
+
+**보존:** 스크립트·결과 JSON(`cand/*.json` 5건) — 총 수 MB뿐 (재현·추후 참조용)
+
+전부 지우면 **~5.1GB 확보**, 스크립트만 남습니다. 재실험이 필요하면 `uv venv` + `pip install`로 5분이면 재구성 가능합니다.
+
+진행할까요? 삭제 대상 선택지:
+1. **전부 삭제** (5.1GB 확보, 재현은 스크립트로 가능) — 추천
+2. HF 원본 safetensors만 보존 (ONNX 재변환 시 재다운로드 절약)
+3. 그대로 보존</pre>
+      <div class="opts">
+        <label><input type="radio" name="v170" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v170" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v170" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v170" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-171">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.54
+        <span class="id">id=6b3a695a ts=2026-08-15T22:17</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 16
+outcome: 수정 및 독립 검증을 완료했습니다. - Properties에 `Upload Changes` 버튼 추가 - 로컬 파일 선택 시 활성화 - 기존 `StartSync` 경로를 호출해 실제 provider 업로드 수행 - 현재 API 특성상 선택 파일만이 아니라 전체 pending 변경을 업로드하므로 버튼명을 정직하게 지정 - mock provider 업로드 테스트 통과 - 긴 Windows 경로는 [inspector_panel.go](C:/Users/mandu/Documents/opencode/testproject/desktop/ui/inspector_panel.go)에서 `TextWrapBreak`로 줄바꿈 - `Path()`는 원문 전체를 유지 - 긴 무공백 경로 테스트 추가 검증 통과: - `go test ./core/watcher ./service ./desktop/...` - `go test -race ./core/watcher ./service ./desktop/...` - `</pre>
+      <div class="opts">
+        <label><input type="radio" name="v171" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v171" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v171" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v171" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-172">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.54
+        <span class="id">id=5f5315af ts=2026-09-29T20:23</span>
+      </div>
+      <pre class="content">[ASSISTANT] 확인 완료했습니다. 제가 놓쳤던 부분을 정정합니다.
+
+## 정정: opencode v2는 **WSL 안에** 설치되어 있습니다
+
+아까 제 조사가 틀렸던 이유: Windows PATH(bun)만 봤지, **WSL 환경**을 안 봤습니다. 사용자님이 말씀하신 `curl -fsSL https://opencode.ai/v2/install | bash` 설치 결과는 이렇습니다:
+
+| 항목 | 값 |
+|---|---|
+| 설치 위치 | **WSL** `~/.opencode/bin/opencode` (`/home/mandu/.opencode/bin/`) |
+| 버전 | **v2.0.19** (오늘 9월 29일 16:53 설치) |
+| PATH 등록 | WSL `~/.bashrc` 119-120행: `export PATH=/home/mandu/.opencode/bin:$PATH` |
+| `opencode2` 레거시 shim | 생성됨 (`exec "$(dirname "$0")/opencode" "$@"`) — 정상 |
+
+**설치 확인**: WSL에서 `opencode --version` → `v2.0.19` 정상 동작. Windows측에는 `~/.opencode/`가 없는데, 이는 정상입니다 — v2 인스톨러는 Windows 네이티브(bash)에선 `MINGW/MSYS` 감지 후 `~/.opencode/bin/opencode.exe`를 설치하려다가도, 실제로는 **WSL bash**에서 실행됐기 때문에 WSL 홈에 설치된 것입니다(인스톨러 출력의 `MINGW*|MSYS*|CYGWIN*` 분기는 git-bash에서 실행됐을 </pre>
+      <div class="opts">
+        <label><input type="radio" name="v172" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v172" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v172" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v172" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-173">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.54
+        <span class="id">id=20daa87c ts=2026-10-01T13:45</span>
+      </div>
+      <pre class="content">[ASSISTANT] DATA 구조의 언패킹 버그 수정 후 재실행했습니다. 완료되면 언어별 결과를 정리해 답변드리겠습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v173" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v173" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v173" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v173" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-174">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.53
+        <span class="id">id=40fd9b06 ts=2026-08-15T11:12</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 14
+outcome: `@@`도 안 됩니다. `apply_patch` 포맷 설명에 따르면 `*** Add File: path` 다음에 바로 내용이 와야 하고, 부분 표시는 `*** Begin Patch`/`*** End Patch` 사이에 추가 파일의 경우 내용 앞에 `@@`를 넣지 않는 게 일반적입니다. 하지만 검증이 `@@`를 요구하는 건 아니라, `*** Add File:` 다음 줄이 빈 줄이 되어 "invalid hunk"가 나는 것일 수 있습니다. 정확한 포맷 확인: 보통 `*** Add File: path` 다음에 `+` 접두 없이 raw 내용이 갑니다. `apply_patch`가 "invalid hunk at line 3, 'package ui'"라고 한 것은 `*** Add File:` 뒤의 `@@`가 아니라 `@@` 줄을 잘못 본 것 같습니다. 첫 시도에서 `@@` 없이 `package ui`가 3번째 줄이라 그 줄을 hunk header로 잘못 해석했습니다. 즉 `*** Add File</pre>
+      <div class="opts">
+        <label><input type="radio" name="v174" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v174" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v174" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v174" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-175">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.53
+        <span class="id">id=7504e5a6 ts=2026-08-15T12:17</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 22
+outcome: 좋은 지적입니다. PowerShell 셸 실행(`os/exec`로 powershell 호출)은 앱 내 임의 명령 실행 구조를 만들어 보안·안정성 리스크가 큽니다. 대신 **Win32 COM `IFileOpenDialog` + `FOS_PICKFOLDERS`** 를 `golang.org/x/sys/windows`와 `syscall`로 직접 호출하는 네이티브 경계를 만들겠습니다. 이러면 프로세스 생성이 없고, 취소/오류 처리가 명시적이며, `//go:build windows`로 비-Windows 빌드와 분리됩니다. 먼저 Fyne의 `settings_window.go`에서 `chooseSyncRoot`가 `applyFolderPath`를 호출하는 구조를 유지하면서, 어느 플랫폼이든 `pickFolderWithDialog(win, apply)` 하나로 위임하도록 수정합니다. windows 구현 시 필요한 COM GUID와 `IFileOpenDialog` vtable 오프셋을 `golang.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v175" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v175" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v175" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v175" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-176">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.53
+        <span class="id">id=201b256f ts=2026-08-15T19:41</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 68
+outcome: 현재 상태 확인 및 종료합니다. 추가 코드 변경은 없습니다. **마지막 완료된 실제 변경** - `service/app_impl.go` `UpdateSettings`: `oldRoot := a.cfg.SyncRoot`를 cfg 대입 전에 저장하고, `s.SyncRoot != oldRoot`일 때만 기존 watcher를 `Pause()` 후 새 root로 `wireWatcher()` 재연결하도록 수정(660, 679~689행). 기존에 비교가 항상 false였던 버그가 해소된 상태. **직전까지 완료/통과한 검증** - `go build ./cmd/notion-desktop`: PASS - `go test ./service`: PASS - `go test ./desktop/...`: PASS - `go vet ./desktop/...`: PASS (Go 1.22.5, `t.Context` 미사용으로 전환 후) - gofmt: 직전 터치 파일들 `gofmt -l` 결과 없음 **미검증 </pre>
+      <div class="opts">
+        <label><input type="radio" name="v176" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v176" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v176" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v176" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-177">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.53
+        <span class="id">id=49609f77 ts=2026-08-16T22:50</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 29
+outcome: 세 호출 모두 실제 실행 완료: 작업 디렉토리 `C:\Users\mandu\Documents\opencode\testproject`, 상위 3개 항목은 `.github`, `.gocache`, `00_Governance`, `git status --short` 첫 3줄은 `.gitignore`, `KNOWN_LIMITATIONS.md`, `PROJECT_STATUS.md` 수정 상태.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v177" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v177" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v177" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v177" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-178">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.53
+        <span class="id">id=4c7b5463 ts=2026-08-17T16:33</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션은 worker-a 세션으로 지정되었어. 추가 명령을 대기해
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 9
+outcome: smoke test부터 진행할게. ```js // @exec: {"max_output_tokens": 2000} const r = await tools.exec_command({ cmd: "Get-Location" }); text(r.output); exit(); ```</pre>
+      <div class="opts">
+        <label><input type="radio" name="v178" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v178" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v178" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v178" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-179">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.53
+        <span class="id">id=fc40d210 ts=2026-08-21T19:52</span>
+      </div>
+      <pre class="content">[USER] 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\u1-work
+모든 파일 생성/수정은 반드시 이 디렉토리 안에서 하세요. 이 디렉토리 밖의 파일은 건드리지 마세요.
+
+SPEC.md의 요구사항에 맞게 stats.py를 새로 구현하고, 각 함수를 한 번씩 호출하는 사용 예시가 들어간 stats_demo.py도 만드세요. test_stats.py와 SPEC.md는 수정하지 마세요. 완성 후 `python -m pytest test_stats.py -q`를 실행해 통과를 확인하고 progress.md에 결과를 기록한 뒤 종료하세요.
+
+[중요] 이 세션에서는 'statem', 'runbook', '.statem' 관련 명령을 절대 실행하지 마세요. 상태 관리 도구는 사용하지 않습니다. 오직 작업 파일만 다루세요.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v179" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v179" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v179" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v179" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-180">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.53
+        <span class="id">id=4650cd6e ts=2026-09-27T19:05</span>
+      </div>
+      <pre class="content">[USER] system prompt에서 지금 '## Mnemosyne Context' 블록이 보이니? 있다면 상위 3개 항목만 말해줘. 없으면 '블록 없음'이라고만 답해.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v180" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v180" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v180" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v180" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-181">
+      <div class="q">
+        <span class="badge">error</span> prob_stale=0.53
+        <span class="id">id=650987ce ts=2026-10-03T11:06</span>
+      </div>
+      <pre class="content">[ASSISTANT] # Run O 실측 결과 — abstain 라벨 실험 **대성공**
+
+실측이 완료됐고 결과가 아주 깨끗합니다.
+
+## 핵심 수치 (n=98: gold 88 + 무답 10)
+
+| 지표 | baseline | abstain | Δ |
+|---|---|---|---|
+| **무답 오주입** | 10/10 (100%) | **0/10 (0%)** | **-10건, 완전 해결** |
+| **gold 정답 유지** | 59/88 | **59/88** | **0 손실** |
+| gold 오답(lift-to-wrong) | 29 | 12+17(none) | 오답 중 17건이 abstain으로 정화 |
+| 토큰 증가 | — | **+34.6 tokens/콜 (+1.0%)** | 사실상 무비용 |
+| 지연 | p50 235ms | p50 228ms | 변화 없음 |
+| 오류 | 0 | 0 | — |
+
+## 해석
+
+1. **무답 쿼리 10/10 전부 abstain** — 이전까지 항상 무관 후보를 1위로 lift해 Hermes가 오답 맥락을 받던 문제가 **구조적으로 제거**됨. 궁극적으로 Hermes 답변 계층의 책임이었던 "무답 lift 4/10"의 **근본 소스가 사라짐**.
+2. **gold 정답 59건이 abstain에서도 100% 보존** — abstain 옵션이 "정답은 여전히 고르되, 답이 없을 때만 none"을 정확히 학습. **0건의 false abstention**.
+3. **gold 오답 29건 중 17건이 abstain으로 전환** — 이건 기대 이상의 보너스: 단순히 "무답만 잡는" 게 아니라, **gold 쿼리에서 잘못 고르던 후보까지 abstain이 정화**. (Lift-to-wrong의 27/39가 none으로.)
+4. 토큰 +1%, 지연 동일 — **score+threshold(+50~100% 토큰) 대비 압도적으로 싼 동일 효과**.
+
+## 판정
+
+**abstain 라벨 채택 추천** — 비용 ~0, 정답 보존 100%, 무답·오주입 완전 제거. 단 한 가지 주의: abstain 17건이 "정말 답이 없는 쿼리"인지, 혹은 "답이 있는데 JEV가 none을 골라 정답을 놓친" 건인지 gold 쿼리 17건을 개별 확인할 필요가 있습니다(위 표에서 gold wrong→none 17건 — 이 17건의 gold가 실제로 풀에 있었고 답 가능했는지).
+
+이 17건 실사부터 하고, 통과하면 라이브 데몬에 abstain 라벨을 적용(질문 1줄 + criteria 1줄 + 결과 처리)하는 구현을 진행할 수 있습니다. **17건 실사부터 진행할까요, 아니면 바로 구현 승인을 받으시겠어요?**
+
+⚠️ File-mutation verifier: 1 file edit(s) FAILED this turn despite any wording above that may suggest otherwise. Run `git status` or `read_file` to confirm what actually landed.
+  • `C:\Users\mandu\AppData\Local\hermes\cache\scratch\jev_daemon_snapshot.ps1` — [write_file] Refusing to overwrite `C:\Users\mandu\AppData\Local\hermes\cache\scratch\jev_daemon_snapshot.ps1`: `C:\Users\mandu\AppData\Local\hermes\cache\scratch\jev_daemon_snapshot.ps1` exists b…</pre>
+      <div class="opts">
+        <label><input type="radio" name="v181" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v181" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v181" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v181" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-182">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.53
+        <span class="id">id=9410236e ts=2026-10-03T18:10</span>
+      </div>
+      <pre class="content">[ASSISTANT] 검토요청서를 작성했습니다.
+
+**파일**: `docs/review/2026-10-03_failopen_마커포맷_통일_검토요청.md` (`C:\Users\mandu\hermes-made\jev-memory-middleware\docs\review\`)
+
+이전 P3 실행주체 검토요청서와 동일한 구조(배경 → 확정 설계 → 쟁점 → 성향 → 요청사항 → 답변 형식)로, **AI가 추가 정보 없이 판단 가능하도록 실측 데이터 전부를 문서에 포함**했습니다:
+
+- **2장 — 현재 상태 실측**: 스키마(정확한 경로), 마커 2종 분포표(태그형 68 / 필드형 28, 기록 도구별), 부수 결함(archived 누락 2건), gate 원본 복원 실현성(스냅샷 2개로 68/68 커버, 402:40·403:28)
+- **3장 — 제안 설계**: Canonical 포맷 JSON 예시, 백필 절차, 코드 통일 대상(파일·라인 지정), 소비처 정리표, 검증·롤백 계획
+- **4장 — 검토 쟁점 Q1~Q6**: Canonical 분리 타당성, 68행 원본 복원의 감사 연속성(가장 불확실한 지점으로 명시), `rejudged_at` 복원 소스 우선순위, 과거 스크립트 보존 정책, 소비 predicate 정리 범위, 누락 리스크
+- **5장 — 의뢰자 성향**: 분리 보관 찬성 근거(P3a 필드형 24건이 무결함 동작), Q2 반대 의견 환영 명시
+- **7장 참고**: 검토 대상 코드 파일·라인 번호 명시
+
+커밋은 검토 결과 반영 후 수정본과 함께 하는 게 낫다고 보고 하지 않았습니다. AI 검토 진행하시면 결과를 공유해 주세요.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v182" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v182" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v182" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v182" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-183">
+      <div class="q">
+        <span class="badge">preference</span> prob_stale=0.52
+        <span class="id">id=a67179f8 ts=2026-08-15T11:52</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 20
+outcome: 모든 작업과 검증이 완료됐습니다. 변경 사항을 최종 정리합니다. **변경 파일** Toolbar 렌더링 수정: - `desktop/ui/toolbar.go` — 비위젯 `sizedBox` 래퍼 제거. `canvas.NewRectangle(color.Transparent)`에 `SetMinSize(fyne.NewSize(240, 0))`를 주고 `container.NewMax(rect, entry)`를 Border center에 배치해 검색 입력이 실제 렌더 트리에 들어가면서 최소 폭 240을 유지하도록 수정. `theme.TransparentColor`(존재하지 않는 API)를 `color.Transparent`로 교체. - `desktop/ui/main_window.go` — `NewMainWindow`에서 `NewToolbar(...).CanvasObject()`(실제 `*fyne.Container`)를 저장해 Border에 배치. `SetToolbar(fyne.CanvasObj</pre>
+      <div class="opts">
+        <label><input type="radio" name="v183" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v183" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v183" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v183" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-184">
+      <div class="q">
+        <span class="badge">fact</span> prob_stale=0.52
+        <span class="id">id=c343303f ts=2026-10-04T11:45</span>
+      </div>
+      <pre class="content">[ASSISTANT] MEDIA:C:\Users\mandu\hermes-made\jev-memory-middleware\docs\review\2026-10-04_external-ai-review-request-6th_τ0.65-검증확정.md
+
+6차 검토 요청서 원본(14.7KB, 216줄) 첨부합니다. 커밋 `90ad66f`로 GitHub에도 반영되어 있습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v184" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v184" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v184" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v184" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-185">
+      <div class="q">
+        <span class="badge">instruction</span> prob_stale=0.51
+        <span class="id">id=493fee7c ts=2026-08-11T16:22</span>
+      </div>
+      <pre class="content">[USER] [System note: Your previous turn was interrupted mid-run — the app or its backend process stopped before the turn could finish. Some of the work may already be complete; check the current state before redoing anything, then finish the task. The interrupted request was:]
+
+헤르메스를 업데이트하다가 멈췄는데 제대로 업데이트가 된 건지 확인해줘</pre>
+      <div class="opts">
+        <label><input type="radio" name="v185" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v185" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v185" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v185" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-186">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.51
+        <span class="id">id=03ab4caa ts=2026-08-15T01:25</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 5
+outcome: 진단이 완료됐습니다. 데이터 흐름부터 최종 발견까지 모든 증거가 모였습니다. **최종 진단 보고** **확인된 사실 (fact)** - config: [config.json](/c:/Users/mandu/AppData/Roaming/notion-sync/config.json#L1)에 `syncRoot = C:\Users\mandu\Documents\opencode\testproject\test-sync-root`, `deviceId = a66b4b5e-...`, `notionDatabaseId = 3a51f1de...` 존재. - 그 `test-sync-root` 폴더는 **파일시스템에 존재하지 않음** (recursive 검색 실패). - `gp-upload.txt`, `gp-step2.txt`, `gp-via-newitem.txt`, `gp-e2e.txt`, `generation-counter`, `diag-mod.txt` 등은 **로컬 Documents/sync-root/UAT</pre>
+      <div class="opts">
+        <label><input type="radio" name="v186" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v186" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v186" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v186" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-187">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.51
+        <span class="id">id=ad4666a3 ts=2026-08-15T02:05</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 8
+outcome: 모든 검증이 통과했습니다. 작업 트리 커밋은 하지 않고 최종 보고만 하겠습니다. **최종 구현 보고** **변경 파일** - [service/app_impl.go](/c:/Users/mandu/Documents/opencode/testproject/service/app_impl.go): 초기 재동기화(initial reconciliation), 오프라인/검증 상태 정책, 빈-name 엔트리 필터 추가. - [service/reconcile_test.go](/c:/Users/mandu/Documents/opencode/testproject/service/reconcile_test.go): 신규 테스트 파일 (R-01~R-05). 추가로 `go build -o notion-desktop.exe`로 빌드 산출물을 갱신했으나, 이 파일은 기존 `.gitignore`(`*.exe`) 대상이고 git에 추적되지 않는 산출물입니다. 실제 코드 소스 변경은 위 두 파일뿐입니다. **실제 원인과 수</pre>
+      <div class="opts">
+        <label><input type="radio" name="v187" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v187" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v187" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v187" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-188">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.51
+        <span class="id">id=2ca92dd8 ts=2026-08-15T12:51</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 30
+outcome: 로컬 스캔 회귀 테스트와 UI flow 업로드 테스트를 추가하겠습니다. 먼저 `service/reconcile_test.go`에 로컬 SyncRoot 스캔 회귀 테스트를 추가합니다. 실제 SyncRoot 폴더에 파일/폴더를 만들고 `GetTree`/`GetChildren`이 그것을 표시하는지, 그리고 사라졌을 때 비는지 검증합니다. `UpdateSettings`가 `a.cfg.SyncRoot`를 바꾸므로, 테스트에서 `UpdateSettings`로 SyncRoot를 temp 폴더로 설정한 뒤(provider 없음 or 실패) `GetTree`가 그 폴더 항목을 반환하는지 확인하면 됩니다. 다만 `setupTestApp`이 provider를 세팅하므로 remoteVerified가 true여서 오프라인 분기를 안 탈 수 있습니다. 명시적으로 offline(provider 미연결) 앱을 만들어 테스트합니다. `service_test.go`의 `updateSettings`/app 구조를 확</pre>
+      <div class="opts">
+        <label><input type="radio" name="v188" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v188" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v188" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v188" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-189">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.51
+        <span class="id">id=a7488496 ts=2026-08-15T15:23</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 60
+outcome: `git diff --check` PASS. 모든 작업·검증이 완료됐습니다. **변경 파일 (이번 작업)** 로컬 파일 표시(UAT 요구사항 4): - `service/app_impl.go` — `GetChildren`을 로컬 경로 우선으로 재작성: `remoteVerified` 여부와 관계없이 SyncRoot(또는 하위 실재 경로)면 `localChildren`으로 실제 로컬 파일/폴더를 반환하고, 로컬 매칭 실패 시에만 캐시 트리로 폴백. `GetTree`의 오프라인 로컬 스캔(`localRootChildren`)은 유지. Settings 팝업 닫힘(UAT 요구사항: Cancel/dismiss): - `desktop/ui/settings_window.go` — `SettingsWindow`에 `parent fyne.Window` 필드 추가. Save/Cancel의 `sw.dialog.Hide()`를 `sw.closeDialog()`(`parent.Canvas().Overlays(</pre>
+      <div class="opts">
+        <label><input type="radio" name="v189" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v189" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v189" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v189" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-190">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.51
+        <span class="id">id=e2e8e224 ts=2026-08-16T22:39</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 21
+outcome: `Get-Location` 실행 결과: `C:\Users\mandu\Documents\opencode\testproject`.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v190" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v190" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v190" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v190" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-191">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.51
+        <span class="id">id=99056232 ts=2026-08-16T22:47</span>
+      </div>
+      <pre class="content">[codex session] task: 이 세션을 worker-a 세션으로 지정할게
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 23
+outcome: C:\Users\mandu\Documents\opencode\testproject — shell tool call completed.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v191" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v191" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v191" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v191" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-192">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.50
+        <span class="id">id=b982595c ts=2026-08-15T01:04</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion DB를 파일 저장소로 사용하는 로컬 파일 동기화 프로그램 - 구조: - core: 동기화·도메인·provider 인터페이스 - service: GUI 공용 서비스 계층 - desktop
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 4
+outcome: 이번에는 정상적으로 GUI 검증을 완료했습니다. - `notion-desktop.exe` 실행 및 창 식별 성공 - Computer Use helper와 앱 모두 `MANDU2\mandu`, Session 1 - 초기 화면: - 상태: `Not connected` - 파일 미선택 - Activity 비어 있음 - 폴더 선택: - 파일 목록 정상 표시 - 파일 선택: - `gp-upload.txt` - Inspector에 이름, 경로(`/gp-upload.txt`), 크기(`0 B`) 정상 표시 - Sync 버튼은 외부 API 변경을 피하기 위해 실행하지 않았으며, 현재 연결 상태 표시만 검증했습니다. GUI에서 즉시 수정이 필요한 문제는 발견되지 않았습니다. 로그인, 토큰 입력, 업로드·삭제, Notion DB 변경은 수행하지 않았고 코드도 수정하지 않았습니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v192" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v192" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v192" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v192" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-193">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.50
+        <span class="id">id=18ffe40d ts=2026-08-15T13:44</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 43
+outcome: `ui_flow_test.go` 끝에 업로드 assertion 테스트를 추가합니다. `filepath` import가 필요합니다. `os`는 이미 있습니다. 테스트에서 `svc`의 `UpdateSettings`를 직접 호출해 SyncRoot를 temp로 설정한 뒤 `c.OnSyncClicked()`를 돌립니다. 업로드가 provider에 도달하는지 `mp.contents`/`mp.entries`로 검증합니다. `filepath`를 import에 추가하고 테스트를 파일 끝에 넣습니다. --- `filepath` + 테스트를 한 번에 패치합니다. WARNING: `ui_flow_test.go`는 `desktop/presenter` 패키지라 `NewApp`, `setupUiFlowApp` 등이 있습니다. `filepath` 사용을 신규 테스트에서 하므로 추가합니다. 패치: ```go import ( "context" "errors" "io" "os" "path/filepath" "stri</pre>
+      <div class="opts">
+        <label><input type="radio" name="v193" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v193" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v193" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v193" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-194">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.50
+        <span class="id">id=13d87dfc ts=2026-08-15T14:23</span>
+      </div>
+      <pre class="content">[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android 구현은 아직 시작하지 않음 현재 구현: 
+project: C:\Users\mandu\Documents\opencode\testproject
+turns: 53
+outcome: 모든 수정 파일이 gofmt 통과입니다. 최종적으로 변경 파일 목록과 검증 결과를 정리해 보고합니다. **변경 파일 (이번 작업)** 구현: - `service/app_impl.go` — `UpdateSettings`에서 `a.engine.SetSyncRoot(s.SyncRoot)` 추가(저장된 SyncRoot가 다음 업로드 대상이 되도록). `GetTree`/`GetChildren`에 오프라인 로컬 스캔(`localRootChildren`/`localChildren`) 추가: remote 미검증 시 실제 존재하는 SyncRoot의 1-level 파일/폴더를 실경로+metadata로 노출, SyncRoot 없으면 빈 children 유지. - `desktop/ui/settings_window.go` — Sync Root 입력 폭을 transparent min-width rectangle + `container.NewMax`(360px)로 보장(Entry.SetMinSize 제거), </pre>
+      <div class="opts">
+        <label><input type="radio" name="v194" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v194" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v194" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v194" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-195">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.50
+        <span class="id">id=fdba62d8 ts=2026-09-28T00:25</span>
+      </div>
+      <pre class="content">[USER] 한 가지 궁금한 점이 있어. 그렇다면 현재는 en_patterns에 대응하는 한글 단어는 typed_memory.py에 들어가있지 않은 상태인데, 그래도 메모리 기록 신뢰성에 문제는 없는 거야?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v195" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v195" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v195" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v195" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-196">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.50
+        <span class="id">id=4e3f87f3 ts=2026-09-29T23:09</span>
+      </div>
+      <pre class="content">[ASSISTANT] 3번 실측 결과를 정리합니다.
+
+## 3번 실측 결과 (재시작 후 라이브 세션)
+
+### ✅ 확인된 것
+1. **rpc 모드 로드 성공**: `JEV memory provider mode=rpc` → `Memory provider 'jev-mem' activated` (agent.log 23:05:31) — 1번의 수정이 실제 재시작에서 유효
+2. **툴 프록시 라이브 실측**: 이 대화에서 `mnemosyne_stats` 호출 → core log에 `POST /v1/tools 200` 기록 (23:09:41) — mnemosyne_\* 툴이 실제로 core 단일 writer를 경유 ✓ (967행 실 DB 데이터 응답)
+
+### ⚠️ 이 세션의 한계
+- 세션 시작(23:05) 시 core 데몬이 **데스크톱 재시작과 함께 죽어 있었음** → 첫 prefetch가 8초 타임아웃, 이 세션은 prefetch 스킵 상태로 진행 중 (`skipping it until the stuck call returns`)
+- core를 23:07:37에 복구(`persist_on_release=true`로 재기동 — 이제 데스크톱 재시작에도 생존)했으므로, **다음 턴부터 sync_turn 저장 + prefetch가 core를 경유**해야 정상. 이 턴이 끝난 뒤 core log에서 `POST /v1/turns` 확인으로 최종 판정 가능
+
+### 🔧 발견 사항 (후속 과제)
+- `/v1/tools` 응답의 `session_id: hermes_core-tools` — 툴 실행용 임시 세션 고정값. 무해로 판단(read 중심)이지만, remember류 툴 호출 시 세션 키 스코프가 어떻게 되는지 확인 필요
+- 데스크톱 재시작 시 core 데몬이 같이 죽는 문제 → `persist_on_release`로 당분은 해결했으나, **Windows 시작 시 core 자동 실행**(작업 스케줄러 등)을 P2 autostart와 통합하는 것이 근본 해책
+
+**다음 턴 종료 후** core log에서 `POST /v1/turns` 유무를 확인하면 sync_turn 실측까지 완료됩니다. 계속 진행할까요?</pre>
+      <div class="opts">
+        <label><input type="radio" name="v196" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v196" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v196" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v196" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-197">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.50
+        <span class="id">id=5163dbde ts=2026-09-30T00:34</span>
+      </div>
+      <pre class="content">[ASSISTANT] 완료했습니다.
+
+## 만든 것
+
+**`C:\Users\mandu\hermes-made\hermes-webui\start-8787-detached.ps1`** — Tailscale IP(100.94.115.98) 8787 바인드로 WebUI를 띄우는 런처입니다:
+
+- 순수 uv Python으로 서버 직접 실행 (hermes venv shim 우회)
+- `HERMES_DISABLE_LAZY_INSTALLS=1` + `PYTHONPATH`로 부트스트랩 재실행 충돌 방지
+- 기동 후 `/health` 프로브로 60초 내 정상 응답 확인까지 자동
+- 이미 실행 중이면 중복 기동하지 않고 그대로 종료
+- 로그: `%LOCALAPPDATA%\hermes\webui\logs\server-live(-err).log`
+
+## 검증 (실측)
+
+- 실행 중 상태에서 실행 → "already LISTENING, nothing to do" ✅
+- 서버 강제 종료 후 재기동 → "UP - http://100.94.115.98:8787 (PID 16792)" ✅
+- `/health` ok, `/login` 200 ✅
+
+이제 재부팅 후에도 이 스크립트 하나로 8787 WebUI를 복구할 수 있습니다. 시작프로그램(Startup 폴더) 등록을 원하시면 바로 추가해 드릴게요 — 작업 스케줄러는 쓰지 않고 Startup 바로가기 방식으로.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v197" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v197" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v197" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v197" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+    <div class="item" id="item-198">
+      <div class="q">
+        <span class="badge">context</span> prob_stale=0.50
+        <span class="id">id=66d519d6 ts=2026-10-01T23:05</span>
+      </div>
+      <pre class="content">[ASSISTANT] 확인 완료했습니다 (Run M, 커밋 `159908d`, 푸시 완료 — JEV 비용 0원).
+
+## 탈락 9건 해부 결과 — **vec-rank 예외 확장은 레버가 아님이 확정**
+
+| 탈락 사유 | 건수 | vec_rank |
+|---|---|---|
+| **overlap=0** (예외 요건 `overlap≥1` 미달) | 3 | **1, 4, 15** |
+| **coverage 미달** | 5 | 4, 9, 13, 13, 21 |
+| 레인 풀 자체 부재 | 1 | — |
+
+### 예외 확장 시뮬 (overlap≥1 유지 시)
+
+- vec≤3: **0/9** 회복
+- vec≤5: 1/9
+- vec≤10: 2/9
+- vec≤20: 4/9 — 이 정도 확장은 토큰 급증 대비 미미
+
+## 핵심 발견
+
+1. **vec_rank 1위인데 탈락한 케이스가 존재**합니다 ("provider가 뭐지?") — 질의 토큰과 gold 내용이 **토큰 하나도 겹치지 않는 완전 의역**이라 예외의 `overlap≥1` 요건이 막습니다. 이 조건을 없애면 vec lane의 무관 후보가 대량 유입되어 Run G에서 실측했던 hit@5 붕괴(74→62%)가 재현될 리스크가 큽니다.
+
+2. 나머지 탈락은 vec_rank 4~21의 깊은 순위 — 어차피 예외로 살려도 JEV 토큰만 늘고 정답 선정은 어렵습니다.
+
+## 결론
+
+**Pool Recall 90%는 현재 구조의 사실상 상한입니다.** 남은 9건은:
+- 완전 의역 쿼리 3건 → **임베딩 모델 교체(의역 강화 모델)가 아니면 게이트로 못 살림** (다만 X1 실측에서 a8m이 운영 도메인에서는 여전히 유효했으므로 교체 근거는 아직 아님)
+- 깊은 vec 순위 5건 → 구조적 한계
+- 레인 부재 1건
+
+참고로 이 골든셋 쿼리는 스트레스 테스트용 완전 의역이 포함돼 실사용 질의보다 어렵습니다 — 실사용에서는 어휘 중첩이 있어 탈락률이 이보다 낮을 것입니다. **로컬 게이트 튜닝은 이것으로 포화 판정**이며, 이번 결과로 운영 파이프라인 최적화 사이클은 사실상 종결입니다.</pre>
+      <div class="opts">
+        <label><input type="radio" name="v198" value="REAL_STALE"> REAL_STALE (지금 참고 시 오답)</label>
+        <label><input type="radio" name="v198" value="PAST_REPORT"> PAST_REPORT (과거 기록, 무해)</label>
+        <label><input type="radio" name="v198" value="STILL_TRUE"> STILL_TRUE (여전히 참 — 오판)</label>
+        <label><input type="radio" name="v198" value="SKIP"> SKIP (판정 불가)</label>
+      </div>
+    </div>
+</details>
+<div style="margin-top: 16px;">
+  <button onclick="exportJson()">JSON export</button>
+  <span id="progress" style="margin-left: 12px; color: #555;"></span>
+</div>
+<script>
+function collect() {
+  var items = document.querySelectorAll('.item');
+  var out = {};
+  var done = 0;
+  items.forEach(function(it) {
+    var name = it.id.replace('item-', '');
+    var sel = it.querySelector('input:checked');
+    if (sel) { out[name] = sel.value; done++; }
+  });
+  document.getElementById('progress').textContent = done + '/' + items.length + ' 판정';
+  return out;
+}
+window.addEventListener('input', collect);
+function exportJson() {
+  var data = collect();
+  var blob = new Blob([JSON.stringify(data, null, 1)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'stale_verdicts.json';
+  a.click();
+}
+</script>
+</body></html>
