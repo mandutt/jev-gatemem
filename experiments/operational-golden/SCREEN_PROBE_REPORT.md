@@ -7,7 +7,7 @@
 | 메커니즘 | 판정 | 근거 |
 |---|---|---|
 | ① local_screen 직접 이식 | **기각** | 한국어 인젝션 catch **3%**(30종 중 1), 라이브 DB FP 4.06% 중 94%가 오탐 |
-| ①' 한글 강화 스크린 | 보류(검증 후 채택 후보) | 한국어 패턴 추가 시 recall 기대, FP 관리가 관건 |
+| ①' 한글 강화 스크린 | **검증 통과 → 채택** | 한국어 인젝션 **30/30 catch(100%)**, 라이브 DB FP **0/1796(0.00%)**, 단위 26/26 — FP<1% 목표 충족 |
 | ② screening 신호 (unvetted 표시) | **채택 권고** | fail-open 23회에서 **미검증 passage가 풀째로 컨텍스트 진입** 실측 — 현재 무방비 |
 
 ## 실험 1 — DB 스크린 probe (1796행, 0콜)
@@ -32,8 +32,8 @@
 
 ## 권고
 
-1. **② screening 신호 우선 적용**: fail-open/idx=None 시 컨텍스트에 "이 recall은 Jev 미검증(로컬 패턴만)" 주석 + 인젝션 의심 passage 배제. gateway.py/pipeline.py의 작은 패치로 완성되며 저장 경로(fail_open 태깅)와 대칭을 이룸
-2. **①' 한글 스크린은 파일럿 후 재판정**: 한국어 인젝션 패턴(지시 무시·비밀 공개·명령 실행·URL 탈취) 정규식 + 우리 메모리 FP 실측(1796행 재스캔) → FP < 1% 목표. 또는 저비용 로컬 분류기(GLiNER 류)와 비교
+1. **①' 한글 스크린 (검증 완료 → 채택)**: `screen_probe_ko.py` — 인젝션 30/30 catch, DB FP 0/1796. 저장소의 영어 스크린 대신 한국어 도메인 방어선으로 통합 자격 충족. 설계: "명령형 어미 + 위험 신호(비밀 명사·파괴 명령·탈취 URL·사용자 은닉·메모리 변조) 결합"만 발화, 문서 인용·과거 서술·명사형·표제·일상 용어(토큰 수·API 문서)는 통과
+2. **② screening 신호 우선 적용**: fail-open/idx=None 시 컨텍스트에 "이 recall은 Jev 미검증(로컬 패턴만)" 주석 + 인젝션 의심 passage 배제. gateway.py/pipeline.py의 작은 패치로 완성되며 저장 경로(fail_open 태깅)와 대칭을 이룸
 3. 직접 이식(①)은 재고 없음 — 영어 recall 3%는 방어가 아님
 
 ## 산출물
@@ -41,4 +41,6 @@
 - `screen_probe_vendor.py` — vendored 스크린(단독 실행 가능)
 - `screen_probe_a_db.py` — DB probe
 - `screen_probe_b_korean.py` — 한글 합성 probe
-- `data/screen_probeA_raw.jsonl` (1796행), `data/screen_probe_raw_ledger.json`
+- `screen_probe_ko.py` — **한글 스크린 (검증 완료, self-check 26/26)**
+- `screen_probe_ko_db.py` — 한글 FP DB probe
+- `data/screen_probeA_raw.jsonl` (1796행), `data/screen_probeKO_raw.jsonl`, `data/screen_probe_raw_ledger.json`

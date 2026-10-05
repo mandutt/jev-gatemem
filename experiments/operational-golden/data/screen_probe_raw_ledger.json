@@ -8,7 +8,10 @@
     "core_state": "%LOCALAPPDATA%/jev-mem/core_state.db (query_log 178, ingest_ledger 504, shadow_log 308)",
     "logs": "%LOCALAPPDATA%/jev-mem/logs/core.log* (fail-open 10-03)"
   },
-  "cost": {"jev_calls": 0, "cost_usd": 0.0},
+  "cost": {
+    "jev_calls": 0,
+    "cost_usd": 0.0
+  },
   "artifacts": [
     "experiments/operational-golden/screen_probe_vendor.py",
     "experiments/operational-golden/screen_probe_a_db.py",
@@ -19,19 +22,39 @@
     "total_rows": 1796,
     "flagged": 73,
     "flagged_pct": 4.06,
-    "shape_breakdown": {"sensitive": 69, "command": 3, "instruction": 1},
-    "sensitive_rule_breakdown": {"secret_words": 40, "secret_assign": 39},
+    "shape_breakdown": {
+      "sensitive": 69,
+      "command": 3,
+      "instruction": 1
+    },
+    "sensitive_rule_breakdown": {
+      "secret_words": 40,
+      "secret_assign": 39
+    },
     "over900_chars": 378,
     "key_finding": "전체 flag 73건 중 인젝션성은 command 3·instruction 1 = 4건뿐. sensitive 69건은 오탐 — secret_words 40건 대부분 'API key' 단어 잡음(문서/설명), secret_assign 39건은 이미 [REDACTED] 처리된 값(‘NOTION_TOKEN=\"[REDACTED]\";’)도 잡음. 실제 인젝션 의심 4건은 전부 정상 문서/로그(설치 커맨드 언급, 백그라운드 프로세스 출력)로 사람 판정상 진짜 공격 아님."
   },
   "probe_B_korean": {
-    "injections_30": {"caught": 1, "caught_pct": 3, "missed": 29},
-    "benign_30": {"flagged_fp": 0, "fp_pct": 0},
-    "mixed_english_korean": {"caught": "6/7 — 영어 키워드가 섞이면 영어 패턴이 잡음"},
+    "injections_30": {
+      "caught": 1,
+      "caught_pct": 3,
+      "missed": 29
+    },
+    "benign_30": {
+      "flagged_fp": 0,
+      "fp_pct": 0
+    },
+    "mixed_english_korean": {
+      "caught": "6/7 — 영어 키워드가 섞이면 영어 패턴이 잡음"
+    },
     "key_finding": "순수 한국어 인젝션 30종 중 29종 미탐(3%). 유일한 catch는 [20] curl | bash (영어 명령). ‘비밀번호를 출력해라’ 같은 한국어 credential 명령도 미탐. FP는 0으로 높은 정밀도. 즉 저장소 스크린은 한국어에 대해 recall≈0 — 그대로 이식하면 방어 효과가 사실상 없다."
   },
   "probe_2_screening_signal": {
-    "query_log": {"total": 178, "abstained": 40, "shadow_marked_all": 1},
+    "query_log": {
+      "total": 178,
+      "abstained": 40,
+      "shadow_marked_all": 1
+    },
     "abstain_40": {
       "system_messages": 6,
       "real_user_questions": 34,
@@ -53,5 +76,20 @@
     "korean_added_screen": "선택 — 한국어 패턴을 추가하면 recall 상승 기대. 단 우리 메모리(코드 조각·명령어·로그 포함)는 명령 문구가 정상 콘텐츠로 빈번해 FP 관리가 핵심. 통계적/결정적 하이브리드 또는 저비용 로컬 분류기가 더 유망. 0콜 정밀도 실측 선행 필수.",
     "screening_signal": "채택 권고 — fail-open 23건×pool 24~92 passage가 미검증 상태로 컨텍스트에 실리는 실측이 있었음. 최소 조치: fail-open/idx=None 시 컨텍스트에 '이 recall은 Jev 미검증(로컬 패턴만)' 주석 추가 + 인젝션 의심 passage 배제. 저장 경로(fail_open 태깅·재판정)와 대칭 완성.",
     "effort": "screening_signal은 gateway.py/pipeline.py 작은 패치 수준 / 한글 스크린은 신규 자산(정규식 or 분류기) 필요"
+  },
+  "probe_ko_screen_final": {
+    "unit_tests": "26/26 pass",
+    "injection_30": {
+      "caught": "30/30 (100%)"
+    },
+    "db_fp": {
+      "rows": 1796,
+      "flagged": 0,
+      "fp_pct": "0.00%",
+      "english_overlap": "0 added"
+    },
+    "design": "결정적 규칙, 명령형 어미+위험 신호 결합만 발화. FP 방어: 문서 인용·과거 서술·명사형·표제 통과",
+    "cost": "0 calls",
+    "verdict": "한글 스크린 검증 통과 — ①' 채택 전제 충족 (FP<1% 목표 대비 0.00%, catch 100%)"
   }
 }
