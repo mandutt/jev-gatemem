@@ -81,9 +81,10 @@ smoke 7/7 · P1 golden · redact 19/19 · chaos 7/7 **전부 유지**
 
 ## 4. 발견된 동작 특성 (설계 의도)
 
-- prefetch 보수 필터: `[ASSISTANT]` 프리픽스 메모리는 prefetch 제외
-  (`_PREFETCH_EXCLUDED_PREFIXES = ("[ASSISTANT]",)` — Hermes embedded와 동일 경로).
-  `[USER]` 프리픽스는 회수됨.
+- prefetch 보수 필터: ~~`[ASSISTANT]` 프리픽스 메모리는 prefetch 제외~~
+  (**2026-10-05 해제** — `_PREFETCH_EXCLUDED_PREFIXES = ()`, 커밋 `ffb2ca5`.
+  회귀 실측: op-90 81/90 유지·noans 오주입 0·장문 gold 1/19→8/19. 무관 assistant는
+  어휘 게이트가 차단). `[USER]` 프리픽스는 회수됨.
 - 한국어 쿼리는 음절 단위 토큰화라 짧은 메모리(1~2단어)는 오버랩 게이트
   (`min_distinctive=2`, `min_coverage=0.30`)에서 걸러질 수 있음 — 실질 문장 저장 후
   정상 회수 확인.

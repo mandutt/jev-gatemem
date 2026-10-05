@@ -15,6 +15,7 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 | 단계 | 상태 | 결과 |
 |---|---|---|
 | Step 0 (환경 복구) | ✅ | Hermes v0.21.5 업데이트 후 venv 미스매치로 플러그인 깨짐 → `uv pip install mnemosyne-memory[embeddings] mnemosyne-hermes`로 복구, smoke test 통과 |
+| **★ [ASSISTANT] prefetch 제외 해제 (2026-10-05)** | ✅ | **`_PREFETCH_EXCLUDED_PREFIXES = ("[ASSISTANT]",)` → `()` (커밋 `ffb2ca5`) + 데몬 재시작 반영 (커밋 `73cb1f5`).** 근거: 장문 청킹 7단계 실측 끝에 "gate 1/19 = 제외 정책 동작"임을 발견, 회귀 실측(stage9) op-90 81/90 유지·noans 오주입 0 후 채택. 장문 assistant 보고서 회수 gold 1/19→8/19. 라이브 실측: 재시작 후 passed 48→85. 관찰: shadow 배치로 추적 중 (롤백 시 `89282ee` revert). 상세: `STAGE1_LONGMEM_PROBE.md` 실측 8~9, `docs/ops/2026-10-05_assistant-exclusion-lift-restart.md` |
 | Phase 0 (baseline) | ✅ | Mnemosyne 선형 recall: recall@10=0.019 (대화 덤프가 factual memory를 압도) |
 | Pool 확장 | ✅ | FTS+vector lane 분리 (RRF): gold 포함 8% → 79% |
 | Phase 1 (Jev rerank) | ✅ | **J1 = Jev choice 1회 + winner lift: recall@1 0.500→0.712, mrr 0.599→0.747** |
