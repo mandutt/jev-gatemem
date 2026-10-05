@@ -1,0 +1,2063 @@
+[
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "방금 답변에서 [내가 앞서 설명을 빠뜨렸습니다. 선택 3번째 축을 하나 더 열면 \"프로세스 잠깐만\"이 가능합니다: MCP를 통째로 끄지 않고, SSE 서버도 평소엔 안 띄우고, Codex에서 Mnemosyne이 \"필요한 순간에만\" 잠깐 띄워졌다 꺼지는 방식 — 사실 net Codex가 \"해줘\"라고 시킬 때 0.5GB가 순간 상주할 뿐, 대화 안 하면 프로세스 0. 다만 그때는 3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데, 그럼 이 선택지는 1번도 2번도 아니지 않아?",
+  "q_ts": 1786965448.0659711,
+  "overlap": [
+   "Codex",
+   "MCP",
+   "Mnemosyne",
+   "SSE",
+   "net",
+   "가능합니다",
+   "그때는",
+   "그럼",
+   "기동",
+   "꺼지는",
+   "끄지",
+   "내가"
+  ],
+  "ov": 53,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "지금 failure event 판단 기준을 보니 pytest 통과나 연결 성공 등 명백한 성공기준이 있는 경우에만 작동이 가능해 보여. 그럼 이 단계에서 그냥 pytest 통과나 연결 성공했을 시 우리 작업은 작동을 아예 안 한다는 이야기네? 그러면 코드 품질 개선에는 영향을 주지 못하는 것 아닐까? pytest를 통과했더라도 코드 품질이 안 좋을수도 있잖아. best-of-n에 비해 너무 개선을 기대할 수 있는 가능성이 낮은 게 아닌가 싶은데",
+  "q_ts": 1787149171.5636888,
+  "overlap": [
+   "best-of-n",
+   "event",
+   "failure",
+   "pytest",
+   "가능성이",
+   "가능해",
+   "개선에는",
+   "개선을",
+   "경우에만",
+   "그냥",
+   "그러면",
+   "그럼"
+  ],
+  "ov": 48,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만, opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데, 일단 조사해서 내게 보고해줘. 실제 실행은 하지 말고 조사만 해줘",
+  "q_ts": 1786960727.9244277,
+  "overlap": [
+   "openchamber",
+   "opencode",
+   "관련",
+   "그리고",
+   "내게",
+   "많아서",
+   "말고",
+   "모르겠어",
+   "버전으로",
+   "보고해줘",
+   "설치되어",
+   "설치된"
+  ],
+  "ov": 37,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "아까 ' j-space에서 남긴 것과 버린 것'에 대한 답변 생성 중 끊긴 부분이 있는데, 잘 알아볼 수 없게 이어진 것 같아. j-space와의 관계를 다시 알려줘. 다만 보고서-지시문 형식은 내 작업 방식일 뿐이고 j-space 자체와는 상관 없으니 보고서-지시문 형식 이야기는 하지 않아도 좋아",
+  "q_ts": 1787145079.3196416,
+  "overlap": [
+   "j-space",
+   "같아",
+   "것과",
+   "관계를",
+   "끊긴",
+   "남긴",
+   "다만",
+   "다시",
+   "답변",
+   "대한",
+   "방식일",
+   "버린"
+  ],
+  "ov": 35,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "[System note: Your previous turn was interrupted mid-run — the app or its backend process stopped before the turn could finish. Some of the work may already be complete; check the current state before redoing anything, then finish the task. The interrupted request was:]\n\n이런 답변이 나왔어.",
+  "q_ts": 1787054400.9373991,
+  "overlap": [
+   "Some",
+   "System",
+   "The",
+   "Your",
+   "already",
+   "anything",
+   "app",
+   "backend",
+   "before",
+   "check",
+   "could",
+   "current"
+  ],
+  "ov": 34,
+  "verdict": null
+ },
+ {
+  "row_id": "d7e42dafa3143a95",
+  "row_len": 2209,
+  "table": "working_memory",
+  "session": "hermes_20261001_163444_30a2f0f3",
+  "user_query": "S4 임베딩 마이그레이션(bekko-a8m) 이후 다른 에이전트 경로 검증 작업이야.\n이 세션(텔레그램)을 라이브 테스트 대상으로 사용해줘.\n\n1. 메모리 데몬 상태 확인: jev-mem core daemon (127.0.0.1:47821) health/status 조회,\n   활성 임베딩 모델이 bench/bekko-a8m인지 확인.\n2. 쓰기 검증: 이 세션에서 나온 대화 내용이 jev-mem 파이프라인을 통해\n   mnemosyne.db에 저장되는지 확인 — 세션 접두사가 hermes_ 형식인지,\n   새로 저장된 행의 memory_embeddings.model 태그가 bench/bekko-a8m인지.\n3. 회수 검증: 이전 세션에서 저장한 내용(예: S4 컷오버, bekko 채택 이유)을\n   자연어 질문으로 recall해서 실제로 나오는지 확인 (검색 품질이 a8m 기준으로\n   유지되는지 체감 확인).\n4. 검증에 쓴 테스트용 행은 확인 후 삭제해 남기지 말 것.\n5. 결과를 표로 요약해줘. 문제 발견 시 원인과 함께 보고 (수정은 임의 진행 금지).",
+  "q_ts": 1790840083.0,
+  "overlap": [
+   "a8m",
+   "bekko",
+   "bekko-a8m",
+   "bench",
+   "health",
+   "hermes_",
+   "jev-mem",
+   "mnemosyne.db",
+   "status",
+   "검증",
+   "경로",
+   "기준으로"
+  ],
+  "ov": 33,
+  "verdict": null
+ },
+ {
+  "row_id": "4f8278a370048252",
+  "row_len": 3702,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "fit 피드백 루프: 우리 게이트에는 라벨 기반 자동 튜닝이 없는데, trace 로그에 keep=keep/skip이 쌓이므로 같은 메커니즘 도입 가능성은 있음\naudit stale 플래그: repo 스냅샷 기반 \"아직 사실인가\" 1콜/메모리 — 우리는 stale 감사 경로가 없음\n\n이걸 좀 더 자세히 설명해줘 .어떤 이득이 있는지",
+  "q_ts": 1791134722.3202493,
+  "overlap": [
+   "audit",
+   "fit",
+   "keep",
+   "repo",
+   "skip",
+   "stale",
+   "trace",
+   "가능성은",
+   "감사",
+   "같은",
+   "게이트에는",
+   "경로가"
+  ],
+  "ov": 32,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어.",
+  "q_ts": 1787133609.3869672,
+  "overlap": [
+   "J-Space",
+   "LLM-as-a-Verifier",
+   "a3a",
+   "개발과정을",
+   "결합해서",
+   "구하고",
+   "그리고",
+   "나는",
+   "내용을",
+   "다른",
+   "다시",
+   "당초의"
+  ],
+  "ov": 31,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "한 가지 궁금한 점이 있는데. 원본은 best-of-n 절차를 거쳐 최선을 선택해서 결과물 자체를 개선하고 벤치마크에서 더 높은 점수를 받았어. 우리의 recovery routing도 결과물 자체를 개선하고 벤치마크에서 더 높은 점수를 받을 수 있을까?",
+  "q_ts": 1787146655.0913775,
+  "overlap": [
+   "best-of-n",
+   "recovery",
+   "routing",
+   "가지",
+   "개선하고",
+   "거쳐",
+   "결과물",
+   "궁금한",
+   "높은",
+   "받았어",
+   "받을",
+   "벤치마크에서"
+  ],
+  "ov": 22,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "지금 일단 codex창을 닫았어. 그런데 codex를 열 때마다 저렇게 python이 크게 나온다면 그건 좀 문제가 있는 것 같아. 헤르메스도 mnemosyne를 사용 중인데 왜 codex 사용 시에만 문제가 생길까?",
+  "q_ts": 1786963590.655449,
+  "overlap": [
+   "codex",
+   "mnemosyne",
+   "python",
+   "같아",
+   "그건",
+   "그런데",
+   "나온다면",
+   "닫았어",
+   "때마다",
+   "문제가",
+   "사용",
+   "생길까"
+  ],
+  "ov": 21,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "그렇다면 현재까지 파악한 바에 맞춰 원본과 우리 작업의 작동구조를 보기 쉬운 형태로 비교해서 알려줘. 화살표 등으로 나온 절차그래프 같은 형태도 좋아.",
+  "q_ts": 1787148595.3806784,
+  "overlap": [
+   "같은",
+   "그렇다면",
+   "나온",
+   "등으로",
+   "맞춰",
+   "바에",
+   "보기",
+   "비교해서",
+   "쉬운",
+   "알려줘",
+   "우리",
+   "원본과"
+  ],
+  "ov": 21,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "75% 정확도라는 것은 구체적으로 어떤 정확도를 말하는 거지? 우리 작동 방식이 아직 미완성이라서? 아니면 알고리즘 자체의 한계로 무조건 25%의 부정확도를 가지는 거야?",
+  "q_ts": 1787146325.7537456,
+  "overlap": [
+   "가지는",
+   "거야",
+   "거지",
+   "것은",
+   "구체적으로",
+   "말하는",
+   "무조건",
+   "미완성이라서",
+   "방식이",
+   "부정확도를",
+   "아니면",
+   "아직"
+  ],
+  "ov": 20,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "일반적으로 llm에 작업을 맡기면, 사람이 모르는 사항에 대해  llm이 작업해야 할 가능성도 있는데 그 상황에서도 사람이 개입해야 한다면 그게 과연 '안전'이라고 볼 수 있을지 의문인데",
+  "q_ts": 1787148278.9651842,
+  "overlap": [
+   "llm",
+   "가능성도",
+   "개입해야",
+   "과연",
+   "그게",
+   "대해",
+   "맡기면",
+   "모르는",
+   "사람이",
+   "사항에",
+   "상황에서도",
+   "안전"
+  ],
+  "ov": 20,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "내가 걱정하는 건 검증이 길어지고 있는데, 혹시 목표를 잃어버리는 것이 아닐까 싶은 거야. 해당 세션을 살펴봤을 때 그런 기미는 없는 거지?",
+  "q_ts": 1787135295.2413876,
+  "overlap": [
+   "거야",
+   "거지",
+   "걱정하는",
+   "검증이",
+   "것이",
+   "그런",
+   "기미는",
+   "길어지고",
+   "내가",
+   "목표를",
+   "살펴봤을",
+   "세션을"
+  ],
+  "ov": 19,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "그러면 초기의 j-space는 현재 작업하고 있는 것과는 아무 상관이 없는 상태인가? 아니면 거기서 어느 정도 관련된 요소만 반영된 상태인가?",
+  "q_ts": 1787144421.8879871,
+  "overlap": [
+   "j-space",
+   "거기서",
+   "것과는",
+   "관련된",
+   "그러면",
+   "반영된",
+   "상관이",
+   "상태인가",
+   "아니면",
+   "아무",
+   "어느",
+   "없는"
+  ],
+  "ov": 18,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 않아?",
+  "q_ts": 1787148027.8751,
+  "overlap": [
+   "llm",
+   "개입이나",
+   "계속해서",
+   "그런데",
+   "기대하는",
+   "모델에",
+   "사람의",
+   "식으로는",
+   "아니야",
+   "아니지",
+   "않아",
+   "이런"
+  ],
+  "ov": 18,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "아니야, 그보다는 여러 세션이 mcp를 같이 쓸 수 있는 방법은 없나? 혹은 codex가 mnemosyne와 mcp가 아닌 다른 방법으로 소통하는 방법은 없을까?",
+  "q_ts": 1786964802.9427996,
+  "overlap": [
+   "codex",
+   "mcp",
+   "mnemosyne",
+   "같이",
+   "그보다는",
+   "다른",
+   "방법으로",
+   "방법은",
+   "세션이",
+   "소통하는",
+   "아니야",
+   "아닌"
+  ],
+  "ov": 17,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가?",
+  "q_ts": 1787147500.8287554,
+  "overlap": [
+   "best-of-n",
+   "recovery",
+   "routing",
+   "건가",
+   "그렇다면",
+   "기본적으로는",
+   "되는",
+   "방식을",
+   "선택적으로",
+   "수행하고",
+   "우리",
+   "우선하게"
+  ],
+  "ov": 16,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "원본과 내 작업 중 어느 쪽의 방향이 더 효과적일까? 각각 장점과 단점을 알려줘. 예상되는 토큰 소모량이나 소요시간의 차이도.",
+  "q_ts": 1787145663.538788,
+  "overlap": [
+   "각각",
+   "단점을",
+   "방향이",
+   "소모량이나",
+   "소요시간의",
+   "알려줘",
+   "어느",
+   "예상되는",
+   "원본과",
+   "작업",
+   "장점과",
+   "쪽의"
+  ],
+  "ov": 15,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "오픈코드와 오픈챔버 쪽 조치는 여기까지 해도 될 것 같아.  그런데 python.exe 프로세스가 너무 많이 떠 있는데 이건 뭐야?",
+  "q_ts": 1786963171.9925473,
+  "overlap": [
+   "python.exe",
+   "같아",
+   "그런데",
+   "너무",
+   "많이",
+   "뭐야",
+   "여기까지",
+   "오픈챔버",
+   "오픈코드와",
+   "이건",
+   "있는데",
+   "조치는"
+  ],
+  "ov": 14,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "원본이 best-of-n을 거쳐 최선의 결과를 얻어내는 방식이라면, 우리는 recovery routing을 하는데, 여기서 뭘 얻을 수 있지?",
+  "q_ts": 1787146065.6916208,
+  "overlap": [
+   "best-of-n",
+   "recovery",
+   "routing",
+   "거쳐",
+   "결과를",
+   "방식이라면",
+   "얻어내는",
+   "얻을",
+   "여기서",
+   "우리는",
+   "원본이",
+   "있지"
+  ],
+  "ov": 14,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "혹시 codex는 창을 세션마다 하나씩 띄워? 그게 아니라면 창을 하나만 띄우게 하는게 맞는 것 같은데",
+  "q_ts": 1786964495.786969,
+  "overlap": [
+   "codex",
+   "같은데",
+   "그게",
+   "띄우게",
+   "띄워",
+   "맞는",
+   "세션마다",
+   "아니라면",
+   "창을",
+   "하나만",
+   "하나씩",
+   "하는게"
+  ],
+  "ov": 13,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "지금 답변을 보면 방법1과 방법2, 그리고 제안 A와 제안 B가 있는데, 이게 서로 어떻게 연관이 있는거야? 좀 헷갈리는데.",
+  "q_ts": 1786965034.1037986,
+  "overlap": [
+   "그리고",
+   "답변을",
+   "방법",
+   "보면",
+   "서로",
+   "어떻게",
+   "연관이",
+   "이게",
+   "있는거야",
+   "있는데",
+   "제안",
+   "지금"
+  ],
+  "ov": 13,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "최종 3가지 중 1번, 2번선택지를 비교했을 때 안정성이나 기능상의 차이가 있을까? 없다면 프로세스 0개 쪽이 더 나은 것 아닐까?",
+  "q_ts": 1786965130.0499783,
+  "overlap": [
+   "가지",
+   "기능상의",
+   "나은",
+   "번선택지를",
+   "비교했을",
+   "아닐까",
+   "안정성이나",
+   "없다면",
+   "있을까",
+   "쪽이",
+   "차이가",
+   "최종"
+  ],
+  "ov": 13,
+  "verdict": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "일단 진행하기 전에, 로컬 프록시의 호환성 문제를 해결하고 진행하고 싶어. 이를 다른 세션에서 진행하려 하는데, 상황을 요약해서 별개의 세션에 프록시 호환성 문제를 해결하라고 지시할 수 있는 지시문을 만들어줘.",
+  "q_ts": 1787022194.320693,
+  "overlap": [
+   "다른",
+   "로컬",
+   "만들어줘",
+   "문제를",
+   "세션에서",
+   "싶어",
+   "일단",
+   "있는",
+   "전에",
+   "지시문을",
+   "진행하기",
+   "프록시"
+  ],
+  "ov": 13,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "그런데 최근 opencode v2 버전이 있다는 이야기를 들었어. 이건 어떤 버전을 뜻하는 거야?",
+  "q_ts": 1786962471.0980265,
+  "overlap": [
+   "opencode",
+   "거야",
+   "그런데",
+   "들었어",
+   "뜻하는",
+   "버전을",
+   "버전이",
+   "어떤",
+   "이건",
+   "이야기를",
+   "있다는",
+   "최근"
+  ],
+  "ov": 12,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "'safe abstention + human-gated + probe 안전성' 이게 어떤 식으로 작동하는지에 대해 설명해줘",
+  "q_ts": 1787147843.4718907,
+  "overlap": [
+   "abstention",
+   "human-gated",
+   "probe",
+   "safe",
+   "대해",
+   "설명해줘",
+   "식으로",
+   "안전성",
+   "어떤",
+   "이게",
+   "작동하는지에"
+  ],
+  "ov": 11,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "'failure event' 즉 실패의 판단기준이 뭔지, F/V/N 결정(regex)이 뭔지에 대한 설명이 필요해.",
+  "q_ts": 1787148844.7986271,
+  "overlap": [
+   "event",
+   "failure",
+   "regex",
+   "결정",
+   "대한",
+   "뭔지",
+   "뭔지에",
+   "설명이",
+   "실패의",
+   "판단기준이",
+   "필요해"
+  ],
+  "ov": 11,
+  "verdict": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘.",
+  "q_ts": 1787028526.4023592,
+  "overlap": [
+   "e44f76",
+   "proxy",
+   "대해",
+   "로컬",
+   "세션을",
+   "읽고",
+   "전의",
+   "제약에",
+   "판단해줘",
+   "판별력"
+  ],
+  "ov": 10,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "하지만 best-of-n과 recovery routing을 같이 수행하면 토큰 소모량과 소요시간이 폭증할텐데?",
+  "q_ts": 1787146912.4465168,
+  "overlap": [
+   "best-of-n",
+   "recovery",
+   "routing",
+   "같이",
+   "소모량과",
+   "소요시간이",
+   "수행하면",
+   "토큰",
+   "폭증할텐데",
+   "하지만"
+  ],
+  "ov": 10,
+  "verdict": null
+ },
+ {
+  "row_id": "0e2418bbc4d68f1a",
+  "row_len": 2532,
+  "table": "working_memory",
+  "session": "hermes_20261003_215445_066f3c",
+  "user_query": "② 3차 외부 검토 지시문(2×2 설계 확정 + 후회율 감사 프로토콜) 초안을 작성해줘",
+  "q_ts": 1791033772.9335349,
+  "overlap": [
+   "감사",
+   "검토",
+   "설계",
+   "외부",
+   "지시문",
+   "초안을",
+   "프로토콜",
+   "확정",
+   "후회율"
+  ],
+  "ov": 9,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "방금의 결과에 대해 다른 ai에게 문의해보려 해. 지시문을 만들어줄래?",
+  "q_ts": 1787055155.065298,
+  "overlap": [
+   "결과에",
+   "다른",
+   "대해",
+   "만들어줄래",
+   "문의해보려",
+   "방금의",
+   "에게",
+   "지시문을"
+  ],
+  "ov": 8,
+  "verdict": null
+ },
+ {
+  "row_id": "0e63e2c79a1bf4c0",
+  "row_len": 2636,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "q_ts": 1790994427.821125,
+  "overlap": [
+   "recall",
+   "메모리",
+   "메모리에",
+   "배제는",
+   "의미가",
+   "장애",
+   "회복"
+  ],
+  "ov": 7,
+  "verdict": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "'사용자 주입 라운드'를 계승했다는 게 어떤 뜻인지 알려줘",
+  "q_ts": 1787144926.2551544,
+  "overlap": [
+   "계승했다는",
+   "뜻인지",
+   "라운드",
+   "사용자",
+   "알려줘",
+   "어떤",
+   "주입"
+  ],
+  "ov": 7,
+  "verdict": null
+ },
+ {
+  "row_id": "56c6a7edf464d16d",
+  "row_len": 2193,
+  "table": "working_memory",
+  "session": "hermes_20261003_131553_84d80c",
+  "user_query": "합성 고정 입력 카나리 또한 필요에 의한 호출 시 판단할 수 있는 부분 아니야?",
+  "q_ts": 1791003657.0,
+  "overlap": [
+   "고정",
+   "입력",
+   "있는",
+   "카나리",
+   "합성",
+   "호출"
+  ],
+  "ov": 6,
+  "verdict": null
+ },
+ {
+  "row_id": "10555641320fe37a",
+  "row_len": 5728,
+  "table": "working_memory",
+  "session": "hermes_20261003_192208_a0bf3e46",
+  "user_query": "이 사안에 대해서 다른 ai에게 검토를 요청하고 싶어. 다른 ai들은 내 저장소에 대해서 접근 권한이 없으니 네가 검토를 요청하는 문서에 우리 jev-mem의 작동 구조에 대해 최대한 상세하게, 다른 정보가 필요 없을 정도로 적어놓고, 다른 두 비교대상 및 perfectrecall까지 포함해서 비교를 요청하도록 해줘",
+  "q_ts": 1791025578.5955946,
+  "overlap": [
+   "jev-mem",
+   "다른",
+   "대해",
+   "비교를",
+   "에게",
+   "필요"
+  ],
+  "ov": 6,
+  "verdict": null
+ },
+ {
+  "row_id": "97bca6e26edd3c63",
+  "row_len": 2028,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "시각 프리픽스 삽입을 할 경우, 메모리 호출에 문제가 생기거나 할 가능성은 없어?",
+  "q_ts": 1791127512.3538897,
+  "overlap": [
+   "경우",
+   "메모리",
+   "시각",
+   "없어",
+   "프리픽스",
+   "호출에"
+  ],
+  "ov": 6,
+  "verdict": null
+ },
+ {
+  "row_id": "4f8278a370048252",
+  "row_len": 3702,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "[Session was just handed off from CLI (\"Avinash-jetwani/jevmem과 jev-mem 비교\") to this channel. The full prior conversation history is loaded above. Briefly confirm you're working here and summarize what we were working on, so the user can continue from this device.]",
+  "q_ts": 1791158340.174471,
+  "overlap": [
+   "Avinash-jetwani",
+   "CLI",
+   "jev-mem",
+   "jevmem",
+   "user",
+   "비교"
+  ],
+  "ov": 6,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "이 결과를 기반으로 다른 ai에 문의해보려 해. 지시문을 하나 만들어줘",
+  "q_ts": 1787045839.6881225,
+  "overlap": [
+   "결과를",
+   "기반으로",
+   "다른",
+   "만들어줘",
+   "문의해보려",
+   "지시문을"
+  ],
+  "ov": 6,
+  "verdict": null
+ },
+ {
+  "row_id": "f091ddc7292de9e5",
+  "row_len": 2828,
+  "table": "working_memory",
+  "session": "hermes_20261002_083854_fabf0ac0",
+  "user_query": "score+threshold 필터링은 2배까지 토큰이 늘어날 수 있다고 했는데, 그러면 jev 호출이 무조건 한번 더 들어가는 거야? 아니면 무답 쿼리 오주입 때만 들어가는 거야?",
+  "q_ts": 1790899236.0,
+  "overlap": [
+   "score",
+   "threshold",
+   "무답",
+   "오주입",
+   "쿼리"
+  ],
+  "ov": 5,
+  "verdict": null
+ },
+ {
+  "row_id": "afd156a9c8e43598",
+  "row_len": 3273,
+  "table": "working_memory",
+  "session": "hermes_20261002_234159_3229b8",
+  "user_query": "방금 네가 지적한 메모리 문제 때문에 나는 모델 하나만으로 다 끝낼 수 있는 경우를 찾고 있어. 참고로 jevk5는 jev랑은 다른 모델인데, 그 모델도 vec lane은 안되나?",
+  "q_ts": 1790952867.0799084,
+  "overlap": [
+   "jevk5",
+   "lane",
+   "vec",
+   "모델",
+   "있는"
+  ],
+  "ov": 5,
+  "verdict": null
+ },
+ {
+  "row_id": "a9bd735104a4d822",
+  "row_len": 2238,
+  "table": "working_memory",
+  "session": "hermes_20261003_140140_efddba",
+  "user_query": "회복 감지 구현 시 jev에 주기적으로 호출을 하게 되는데, 그러면 큰 이득 없이 비용만 발생하는 거 아니야? 그냥 다음 번 jev 호출 필요가 생겼을 때 겸사겸사 판단하면 되는 거 아닐까? 어떻게 생각해?",
+  "q_ts": 1791003340.0,
+  "overlap": [
+   "감지",
+   "다음",
+   "이득",
+   "호출",
+   "회복"
+  ],
+  "ov": 5,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "v2 버전은 openchamber와 같이 사용할 수 있을까?",
+  "q_ts": 1786962633.606113,
+  "overlap": [
+   "openchamber",
+   "같이",
+   "버전은",
+   "사용할",
+   "있을까"
+  ],
+  "ov": 5,
+  "verdict": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "그렇다면 지금 설치되어 있는 j-space 스킬은 길게 작업하는 세션에서 한번 호출하면 쭉 이득을 볼 수 있을까?",
+  "q_ts": 1787017142.8157687,
+  "overlap": [
+   "그렇다면",
+   "세션에서",
+   "있는",
+   "지금",
+   "한번"
+  ],
+  "ov": 5,
+  "verdict": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "그렇다면 초반에 수동으로 스킬 호출을 했더라도, 세션 압축 후에는 다시 스킬을 호출해줘야 한다는 이야기야? 아니면 압축 후 자동으로 다시 호출되나?",
+  "q_ts": 1787017458.3202875,
+  "overlap": [
+   "그렇다면",
+   "다시",
+   "세션",
+   "아니면",
+   "한다는"
+  ],
+  "ov": 5,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "중간에 중단되었어. 계속 이어서 해줘",
+  "q_ts": 1787061214.2565503,
+  "overlap": [
+   "계속",
+   "이어서",
+   "중간에",
+   "중단되었어",
+   "해줘"
+  ],
+  "ov": 5,
+  "verdict": null
+ },
+ {
+  "row_id": "23c93d929e1ab33d",
+  "row_len": 2640,
+  "table": "working_memory",
+  "session": "hermes_20261001_074928_d2a934",
+  "user_query": "[Workspace::v1: C:\\\\Users\\\\mandu\\\\hermes-made]\nbekko부터 돌리고 granite 는 fp16 동적양자화 변형 모델로 재시도해봐. 또 hang되면 재시도는 할 필요 없어",
+  "q_ts": 1790808526.9590135,
+  "overlap": [
+   "bekko",
+   "granite",
+   "부터",
+   "필요"
+  ],
+  "ov": 4,
+  "verdict": null
+ },
+ {
+  "row_id": "bb081a27c57193a5",
+  "row_len": 2274,
+  "table": "working_memory",
+  "session": "hermes_20261002_104328_de139b",
+  "user_query": "[OUT-OF-BAND USER MESSAGE — a direct message from the user, delivered once at this position; not tool output and not a new delivery when replayed from conversation history]\n참고로 어제 jev 호출 수는 21892번이었어\n[/OUT-OF-BAND USER MESSAGE]",
+  "q_ts": 1790906022.6994147,
+  "overlap": [
+   "output",
+   "수는",
+   "어제",
+   "호출"
+  ],
+  "ov": 4,
+  "verdict": null
+ },
+ {
+  "row_id": "cb011c72739b1777",
+  "row_len": 2089,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "이걸 승인하기 전에, 기존 다른 ai의 의견을 종합해서 나온 v2 설계안을 만들어야 하는 것 아니야?\n그래야 기존에 jev 장애 중 저장한 메모리를 제대로 재분류하는지 알수 있지 않나?",
+  "q_ts": 1790999191.9905498,
+  "overlap": [
+   "기존",
+   "메모리를",
+   "설계안을",
+   "장애"
+  ],
+  "ov": 4,
+  "verdict": null
+ },
+ {
+  "row_id": "97bca6e26edd3c63",
+  "row_len": 2028,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "그런데 아까 내가 '아까 할 일이 shadow 비교만 남았었나?' 라고 입력했는데, 이 때 메모리 recall 시도가 없었던 것 같아. 이건 정상적일까?",
+  "q_ts": 1791130032.985947,
+  "overlap": [
+   "recall",
+   "메모리",
+   "이건",
+   "일이"
+  ],
+  "ov": 4,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "좋아 삭제하고 최종 검증해줘",
+  "q_ts": 1786961977.4281478,
+  "overlap": [
+   "검증해줘",
+   "삭제하고",
+   "좋아",
+   "최종"
+  ],
+  "ov": 4,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "현 실험결과에 기반해서 다른 ai에 문의할 내용을 지시문으로 만들어 줘",
+  "q_ts": 1787046090.2990942,
+  "overlap": [
+   "내용을",
+   "다른",
+   "만들어",
+   "문의할"
+  ],
+  "ov": 4,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "일단 다른 ai의 의견을 받고 싶어. 현재까지의 실험내용을 정리해서 지시문을 만들어줘",
+  "q_ts": 1787050324.8187115,
+  "overlap": [
+   "다른",
+   "만들어줘",
+   "지시문을",
+   "현재까지의"
+  ],
+  "ov": 4,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "중간에 끊긴 것 같아. 계속 이어서 진행해줘",
+  "q_ts": 1787059524.002039,
+  "overlap": [
+   "같아",
+   "계속",
+   "이어서",
+   "중간에"
+  ],
+  "ov": 4,
+  "verdict": null
+ },
+ {
+  "row_id": "23c93d929e1ab33d",
+  "row_len": 2640,
+  "table": "working_memory",
+  "session": "hermes_20261001_074928_d2a934",
+  "user_query": "모델 선정과 그 과정 중 생긴 문제에 대해 다른 ai에 문의하려 하니 현재 진행된 결과를 보고서로 정리해줘. 다른 정보 없이 보고서만으로 상황을 파악할 수 있도록.",
+  "q_ts": 1790812331.0011082,
+  "overlap": [
+   "모델",
+   "없이",
+   "현재"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "d7e42dafa3143a95",
+  "row_len": 2209,
+  "table": "working_memory",
+  "session": "hermes_20261001_163444_30a2f0f3",
+  "user_query": "/v1/status 에 모델 필드가 아직 없다고 하는데 이건 구현해야 하는거 아니야? 왜 빠져 있지?",
+  "q_ts": 1790840428.0,
+  "overlap": [
+   "status",
+   "아직",
+   "필드가"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "77fff37228bff51b",
+  "row_len": 2411,
+  "table": "working_memory",
+  "session": "hermes_20261001_184823_0b421a",
+  "user_query": "r3를 다시 하기 전에, r2에서 제시된 실험이나 수정내역은 모두 적용되었어? 나는 ai에 물어보는 라운드 회수를 줄이고 싶으니 되도록 제시된 건 모두 수행하고 정리해 줘",
+  "q_ts": 1790850568.6017504,
+  "overlap": [
+   "라운드",
+   "모두",
+   "에서"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "05ab2f73f273e809",
+  "row_len": 2868,
+  "table": "working_memory",
+  "session": "hermes_20261001_201107_11ff99",
+  "user_query": "메커니즘 검증 먼저 진행해 줘",
+  "q_ts": 1790855312.1329606,
+  "overlap": [
+   "검증",
+   "먼저",
+   "메커니즘"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "bb081a27c57193a5",
+  "row_len": 2274,
+  "table": "working_memory",
+  "session": "hermes_20261002_104328_de139b",
+  "user_query": "어제 이상하게 과도한 jev 토큰 소모량이 나타났어. 그래서 총 사용량이 10달러를 넘어갔는데, 뭐가 원인이었을까? jev는 싼 게 장점인데 이상해\njev 웹페이지에서 사용량을 보니 인풋이 256,192,283토큰, 아웃풋이 12,043,448로 나타나.\n그래서 충전해 둔 토큰이 바닥나서 지금 jev 사용이 막힌 상태야. 원인이 뭘까?",
+  "q_ts": 1790905492.7452703,
+  "overlap": [
+   "어제",
+   "토큰",
+   "토큰이"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "0e63e2c79a1bf4c0",
+  "row_len": 2636,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "장애 기간 기록을 식별하고 이후에 정리할 수 있는  방법이 있었으면 좋겠어. 메모리에 쓸데없는 자료가 계속 보관되지 않도록.",
+  "q_ts": 1790994222.549885,
+  "overlap": [
+   "메모리에",
+   "있는",
+   "장애"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "0e63e2c79a1bf4c0",
+  "row_len": 2636,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "현재 이 텔레그램 세션을 pc에서 작업해서 텔레그램 토픽에선 기존 작업내용이 보이지 않아. 마지막 답변내용을 다시 한번 보여줄래?",
+  "q_ts": 1790999595.0,
+  "overlap": [
+   "기존",
+   "에서",
+   "현재"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "61ec2684bf12c331",
+  "row_len": 5351,
+  "table": "working_memory",
+  "session": "hermes_20261004_114224_16828d",
+  "user_query": "그러면 이 gold44는 의도적으로 자동 생성 기반으로 뽑은 거야? 내가 이걸 보고 어떤 판정을 해야 할까?",
+  "q_ts": 1791105762.1574407,
+  "overlap": [
+   "보고",
+   "어떤",
+   "해야"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "c029529e72326627",
+  "row_len": 4711,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "실측 시 내가 수동으로 라벨을 붙여야 하나?",
+  "q_ts": 1791135066.3103771,
+  "overlap": [
+   "라벨을",
+   "수동으로",
+   "실측"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "c029529e72326627",
+  "row_len": 4711,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "그런데 audit Tier 2에서 다룬 샘플 중에 상당수는 꽤 과거의 기록이라 지금에 와서 뭔가 달라질 수는 없어. 그래도 내 판정에 의미가 있었을까?",
+  "q_ts": 1791168910.3869317,
+  "overlap": [
+   "Tier",
+   "audit",
+   "판정에"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "c029529e72326627",
+  "row_len": 4711,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "1번은 바로 처리해줘. 그리고 2번은 현재 shadow 비교 실행 중에는 하면 안되지 않을까?",
+  "q_ts": 1791169238.0,
+  "overlap": [
+   "비교",
+   "실행",
+   "현재"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "f76a006d20729049",
+  "row_len": 2197,
+  "table": "working_memory",
+  "session": "hermes_20261005_134808_e6708be1",
+  "user_query": "이건 현재까지의 우리 데이터에 기반한 거지 만약 내가 장문의 보고서를 입력한다던가 하면 걸릴 수 있는 문제 아닐까?",
+  "q_ts": 1791179635.6074169,
+  "overlap": [
+   "우리",
+   "있는",
+   "하면"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "좋아 그대로 진행해줘",
+  "q_ts": 1786961455.3548849,
+  "overlap": [
+   "그대로",
+   "좋아",
+   "진행해줘"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "지금 우리는 두 가지 리포지토리를 살펴보았는데, 네가 방금 준 보고는 두번째 리포지토리 기반이지? 그럼 첫번째 리포지토리의 내용은 지금 네가 한 보고와 관련이 있을까?",
+  "q_ts": 1787016503.2922049,
+  "overlap": [
+   "가지",
+   "내용은",
+   "지금"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "그렇다면 두 번째 리포지토리에서 제안된 실제 구조는 아예 쓸모가 없는 수준인가?",
+  "q_ts": 1787016984.034563,
+  "overlap": [
+   "그렇다면",
+   "실제",
+   "아예"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "이런 답변이 나왔어.",
+  "q_ts": 1787054353.0528991,
+  "overlap": [
+   "나왔어",
+   "답변이",
+   "이런"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "방금 답변을 기반으로 다른 ai에게 문의할 지시문을 만들어줘",
+  "q_ts": 1787057613.5226624,
+  "overlap": [
+   "다른",
+   "답변을",
+   "지시문을"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "이 답변을 기반으로 다른 ai에게 문의할 지시문을 만들어줘",
+  "q_ts": 1787058920.6092446,
+  "overlap": [
+   "다른",
+   "답변을",
+   "지시문을"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "이 답변을 기반해서 다른 ai에게 문의할 지시문을 만들어줘",
+  "q_ts": 1787060022.720796,
+  "overlap": [
+   "다른",
+   "답변을",
+   "지시문을"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "19차 지시문을 먼저 작성해줘",
+  "q_ts": 1787060946.948175,
+  "overlap": [
+   "먼저",
+   "작성해줘",
+   "지시문을"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "b7f460aaade6d8f4",
+  "row_len": 6386,
+  "table": "episodic_memory",
+  "session": "hermes_20260820_032149_909bf4",
+  "user_query": "중간에 중단되었어. 이어서 진행해줘",
+  "q_ts": 1787158539.2981238,
+  "overlap": [
+   "이어서",
+   "중단되었어",
+   "진행해줘"
+  ],
+  "ov": 3,
+  "verdict": null
+ },
+ {
+  "row_id": "23c93d929e1ab33d",
+  "row_len": 2640,
+  "table": "working_memory",
+  "session": "hermes_20261001_074928_d2a934",
+  "user_query": "지금 작업 진행 중이야?",
+  "q_ts": 1790810133.2753932,
+  "overlap": [
+   "지금",
+   "진행"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "23c93d929e1ab33d",
+  "row_len": 2640,
+  "table": "working_memory",
+  "session": "hermes_20261001_074928_d2a934",
+  "user_query": "그런데 granite는 배치4로 해도 램 점유율이 폭증했던 거야?",
+  "q_ts": 1790816978.707976,
+  "overlap": [
+   "granite",
+   "배치"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "23c93d929e1ab33d",
+  "row_len": 2640,
+  "table": "working_memory",
+  "session": "hermes_20261001_074928_d2a934",
+  "user_query": "정적 quint 8 원본을 배치 4로 실행해보자. 10분 타임아웃으로.",
+  "q_ts": 1790817163.1506422,
+  "overlap": [
+   "배치",
+   "타임아웃으로"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "77f9a2b2a68ae2f7",
+  "row_len": 2704,
+  "table": "working_memory",
+  "session": "hermes_20261001_175333_8b742e",
+  "user_query": "다른 ai의 조언을 구할 수 있도록, 판단에 다른 정보는 필요하지 않은 형태로 현재 비교 결과에 대해 보고서를 작성해줘. 또한 perfectrecall처럼 jev에 모든 것을 맡기지 않아도, 임베디드 모델을 활용하면서 성능을 올리는 방법을 찾고 싶어. 현재보다 어느 정도 jev 호출숫자가 올라가는 건 괜찮아.",
+  "q_ts": 1790847009.0931609,
+  "overlap": [
+   "perfectrecall",
+   "비교"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "77fff37228bff51b",
+  "row_len": 2411,
+  "table": "working_memory",
+  "session": "hermes_20261001_184823_0b421a",
+  "user_query": "구현 전에, 현재 이 검토 결과를 다시 한번 보고서로 만들어 줘. 다시 한번 ai들의 조언을 얻어 보려 해",
+  "q_ts": 1790849308.67238,
+  "overlap": [
+   "검토",
+   "결과를"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "05ab2f73f273e809",
+  "row_len": 2868,
+  "table": "working_memory",
+  "session": "hermes_20261001_201107_11ff99",
+  "user_query": "doc2query는 왜 수행하지 않았어? 그리고 lane budget을 올리면 토큰은 얼마나 증가해?",
+  "q_ts": 1790852673.7482927,
+  "overlap": [
+   "budget",
+   "lane"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "05ab2f73f273e809",
+  "row_len": 2868,
+  "table": "working_memory",
+  "session": "hermes_20261001_201107_11ff99",
+  "user_query": "lane budget은 그대로 유지할게. 토큰증가량 대비 그렇게 큰 상승같지 않아",
+  "q_ts": 1790854304.4474273,
+  "overlap": [
+   "budget",
+   "lane"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "f982991bd0baa99a",
+  "row_len": 3702,
+  "table": "working_memory",
+  "session": "hermes_20261001_205102_bfa047",
+  "user_query": "토큰 상승이 없는 쪽으로 가자.",
+  "q_ts": 1790856543.2752535,
+  "overlap": [
+   "없는",
+   "토큰"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "f091ddc7292de9e5",
+  "row_len": 2828,
+  "table": "working_memory",
+  "session": "hermes_20261002_083854_fabf0ac0",
+  "user_query": "내 jev-mem 구현과 https://github.com/hotchpotch/jev-reranker/ 이 프로젝트를 비교하면 어떤지 알려줘",
+  "q_ts": 1790897933.0,
+  "overlap": [
+   "jev-mem",
+   "jev-reranker"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "bb081a27c57193a5",
+  "row_len": 2274,
+  "table": "working_memory",
+  "session": "hermes_20261002_104328_de139b",
+  "user_query": "좋아 토큰 예산 산정단계를 추가해줘. jev는 저렴하다고 생각해서 이 정도로 많이 소모될 거라 예상하지는 않았어.",
+  "q_ts": 1790907046.4360178,
+  "overlap": [
+   "예산",
+   "토큰"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "f66a777d230b35df",
+  "row_len": 3834,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "실측 시 jev 호출이 발생하나? 예상 소요 비용은?",
+  "q_ts": 1790998587.0170724,
+  "overlap": [
+   "jev",
+   "실측"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "a9bd735104a4d822",
+  "row_len": 2238,
+  "table": "working_memory",
+  "session": "hermes_20261003_140140_efddba",
+  "user_query": "그런데 이 플러그인을 만약 내가 아닌 다른 사람이 사용한다고 가정할 경우, 그 사람은 골든셋이 없잖아. 사람마다 달라질 수밖에 없는데 카나리 절차가 의미 있나?",
+  "q_ts": 1791005593.0,
+  "overlap": [
+   "경우",
+   "다른"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "a9bd735104a4d822",
+  "row_len": 2238,
+  "table": "working_memory",
+  "session": "hermes_20261003_140140_efddba",
+  "user_query": "이 부분의 결정을 다른 ai에게 문의한 뒤 결정하고 싶어. 검토 요청서를 만들어줘.",
+  "q_ts": 1791009283.0,
+  "overlap": [
+   "검토",
+   "다른"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "a9bd735104a4d822",
+  "row_len": 2238,
+  "table": "working_memory",
+  "session": "hermes_20261003_140140_efddba",
+  "user_query": "일단 설계서를 갱신하고 다시 보고해줘",
+  "q_ts": 1791010784.5279088,
+  "overlap": [
+   "갱신하고",
+   "설계서를"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "10555641320fe37a",
+  "row_len": 5728,
+  "table": "working_memory",
+  "session": "hermes_20261003_192208_a0bf3e46",
+  "user_query": "내 jev-mem과 https://github.com/Grivn/mnemon-memory-agent 이 프로젝트의 구현을 비교하면 어떤지 검토해줘",
+  "q_ts": 1791022927.0,
+  "overlap": [
+   "jev-mem",
+   "구현을"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "10555641320fe37a",
+  "row_len": 5728,
+  "table": "working_memory",
+  "session": "hermes_20261003_192208_a0bf3e46",
+  "user_query": "좋아 비교해줘. 내 jev-mem과 jev-Mem은 다른 프로젝트라는 것에 주의하고.",
+  "q_ts": 1791023303.0,
+  "overlap": [
+   "jev-mem",
+   "다른"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "c98385ddee4abf32",
+  "row_len": 2545,
+  "table": "working_memory",
+  "session": "hermes_20261003_231124_48727e",
+  "user_query": "좋아 계속 진행해줘",
+  "q_ts": 1791037393.8145244,
+  "overlap": [
+   "좋아",
+   "진행해줘"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "97bca6e26edd3c63",
+  "row_len": 2028,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "429오류가 나며 소진  시 만약 키를 제외시키면 시간 제한이나 하루 제한이 풀린 다음에도 계속 제외된 상태로 남는 거 아니야?",
+  "q_ts": 1791121959.5392084,
+  "overlap": [
+   "상태로",
+   "시간"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "97bca6e26edd3c63",
+  "row_len": 2028,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "그런데 원래 헤르메스 메모리 프로바이더에 jev-mem이 설정되어 있었고, jev-mem이 사용되는 시점에 데몬이 없으면 자동으로 뜨는 거 아니었어? startup이 필요했을까?",
+  "q_ts": 1791124122.0695186,
+  "overlap": [
+   "메모리",
+   "시점에"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "97bca6e26edd3c63",
+  "row_len": 2028,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "그렇다면 experlab key로 전환한 뒤로 정상적으로 jev 호출해서 메모리 기록 중일까?",
+  "q_ts": 1791124429.0789022,
+  "overlap": [
+   "기록",
+   "메모리"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "97bca6e26edd3c63",
+  "row_len": 2028,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "source_timestamp는 재주입때뿐만 아니라 평소 메모리 저장 때에도 작성되고 있어?",
+  "q_ts": 1791129129.648344,
+  "overlap": [
+   "메모리",
+   "저장"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "97bca6e26edd3c63",
+  "row_len": 2028,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "shaodw 데이터 쌓인 뒤 함께 판정해보자. 다만 현재 아쉬움을 느꼈던 상황을 나중에 확인할 사항으로 문서에 기록은 필요할 것 같아.",
+  "q_ts": 1791130380.6626065,
+  "overlap": [
+   "나중에",
+   "함께"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "0580b8ce4d19ee20",
+  "row_len": 2071,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "매일 텔레그램 요약 cron을 추가해줘. 그런데 요약 보고 시점은 어떻게 할 거야?",
+  "q_ts": 1791120445.297697,
+  "overlap": [
+   "cron",
+   "어떻게"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "0580b8ce4d19ee20",
+  "row_len": 2071,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "중단된 시점부터 지금까지 진행된 대화를  메모리에 기록할 수 있어? 물론 평소처럼 판정을 거쳐야겠지만. 일단 가능한지, 가능하다면 어떤 식으로 진행될지 검토만 해줘. 실행은 하지 말고",
+  "q_ts": 1791127013.2429924,
+  "overlap": [
+   "어떤",
+   "있어"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "4f8278a370048252",
+  "row_len": 3702,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "잠깐, 내 jev-mem은 원래 1콜이 기본이었는데 언제 2콜이 되었지?",
+  "q_ts": 1791134505.5928795,
+  "overlap": [
+   "jev-mem",
+   "콜이"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "4f8278a370048252",
+  "row_len": 3702,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "4way 종합은 shadow enforcement 판정 이전에 해도 되나?",
+  "q_ts": 1791172192.0,
+  "overlap": [
+   "way",
+   "판정"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "4f8278a370048252",
+  "row_len": 3702,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "abstain 개선과 audit t1 재검토는 왜 필요하지?",
+  "q_ts": 1791174207.0,
+  "overlap": [
+   "abstain",
+   "audit"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "c029529e72326627",
+  "row_len": 4711,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "그러면 두 제안 모두 실측해보자",
+  "q_ts": 1791135375.762901,
+  "overlap": [
+   "모두",
+   "제안"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "f76a006d20729049",
+  "row_len": 2197,
+  "table": "working_memory",
+  "session": "hermes_20261005_134808_e6708be1",
+  "user_query": "prefetch skip 게이트는 결과적으로는 jev 호출을 한번 더 하게 되는 꼴 아니야?",
+  "q_ts": 1791176425.0,
+  "overlap": [
+   "prefetch",
+   "skip"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "f76a006d20729049",
+  "row_len": 2197,
+  "table": "working_memory",
+  "session": "hermes_20261005_134808_e6708be1",
+  "user_query": "그런데 생각해보면, jev는 콜 수에 따라 과금되는게 아니라 오직 토큰 수에만 금액 영향이 있지 않나? 그렇다면 토큰만 적다면 딜레이 문제 외에 콜 숫자를 절약해야 할 이유는 없지 않나?",
+  "q_ts": 1791178257.4322445,
+  "overlap": [
+   "아니라",
+   "토큰"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "[System: Your previous tool call (terminal) was too large and the stream timed out before it could be delivered. Do NOT retry the same tool call with the same large content. Instead, break the content into multiple smaller tool calls (e.g. use multiple patch calls or write smaller files). Each tool call's arguments must be under ~8K tokens to avoid stream timeouts.]",
+  "q_ts": 1787018890.53708,
+  "overlap": [
+   "call",
+   "tool"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "[System: Your previous tool call (write_file) was too large and the stream timed out before it could be delivered. Do NOT retry the same tool call with the same large content. Instead, break the content into multiple smaller tool calls (e.g. use multiple patch calls or write smaller files). Each tool call's arguments must be under ~8K tokens to avoid stream timeouts.]",
+  "q_ts": 1787019606.1856954,
+  "overlap": [
+   "call",
+   "tool"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "[System: The active model for this chat has changed to kimchi/deepseek-v4-flash via provider custom:9router-gi. From this point forward, use this runtime metadata when answering questions about what model/provider is active.]",
+  "q_ts": 1787047420.8598862,
+  "overlap": [
+   "System",
+   "The"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "현재 세션의 oc/deepseek-v4-flash-free 프로바이더는 정상적으로 작동 중이야. 현재 세션의 프로바이더에서 모델을 변경하지 말고, 프로바이더 문제로 진행되지 않은 작업을 다시 계속해줘.",
+  "q_ts": 1787047425.881471,
+  "overlap": [
+   "다시",
+   "현재"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "[System: The active model for this chat has changed to pz/deepseek-v4-flash via provider custom:9router-gi. From this point forward, use this runtime metadata when answering questions about what model/provider is active.]",
+  "q_ts": 1787047506.54438,
+  "overlap": [
+   "System",
+   "The"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "모델 api 문제로 잠시 정지되었는데, 계속 진행해줘",
+  "q_ts": 1787047514.808018,
+  "overlap": [
+   "계속",
+   "모델"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "이제 프로바이더는 정상적으로 작동 중이야. 현재 세션의 프로바이더에서 모델을 변경하지 말고, 프로바이더 문제로 진행되지 않은 작업을 다시 계속해줘.",
+  "q_ts": 1787047913.1919436,
+  "overlap": [
+   "다시",
+   "현재"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "[System: The active model for this chat has changed to deepcombo via provider custom:9router-gi. From this point forward, use this runtime metadata when answering questions about what model/provider is active.]",
+  "q_ts": 1787048042.079301,
+  "overlap": [
+   "System",
+   "The"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "[System: The active model for this chat has changed to deepseek-v4-flash-free via provider custom:opencodefree. From this point forward, use this runtime metadata when answering questions about what model/provider is active.]",
+  "q_ts": 1787048835.4942276,
+  "overlap": [
+   "System",
+   "The"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "[System: The active model for this chat has changed to deepseek-v4-flash-free via provider opencode. From this point forward, use this runtime metadata when answering questions about what model/provider is active.]",
+  "q_ts": 1787048988.7430327,
+  "overlap": [
+   "System",
+   "The"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "[System: The active model for this chat has changed to deepcombo via provider custom:local-(127.0.0.1:20128). From this point forward, use this runtime metadata when answering questions about what model/provider is active.]",
+  "q_ts": 1787049089.1672406,
+  "overlap": [
+   "System",
+   "The"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "18차 지시문을 작성해줘",
+  "q_ts": 1787060443.1941497,
+  "overlap": [
+   "작성해줘",
+   "지시문을"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "20차 지시문을 작성해줘",
+  "q_ts": 1787064509.876356,
+  "overlap": [
+   "작성해줘",
+   "지시문을"
+  ],
+  "ov": 2,
+  "verdict": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "21차 지시문을 작성해줘",
+  "q_ts": 1787101603.5516264,
+  "overlap": [
+   "작성해줘",
+   "지시문을"
+  ],
+  "ov": 2,
+  "verdict": null
+ }
+]

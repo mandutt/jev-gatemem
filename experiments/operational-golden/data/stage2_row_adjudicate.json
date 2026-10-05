@@ -1,0 +1,732 @@
+[
+ {
+  "row_id": "9cfd5af4c41b71a2",
+  "row_len": 2379,
+  "table": "episodic_memory",
+  "session": "hermes_20260817_185846_d20d75",
+  "user_query": "방금 답변에서 [내가 앞서 설명을 빠뜨렸습니다. 선택 3번째 축을 하나 더 열면 \"프로세스 잠깐만\"이 가능합니다: MCP를 통째로 끄지 않고, SSE 서버도 평소엔 안 띄우고, Codex에서 Mnemosyne이 \"필요한 순간에만\" 잠깐 띄워졌다 꺼지는 방식 — 사실 net Codex가 \"해줘\"라고 시킬 때 0.5GB가 순간 상주할 뿐, 대화 안 하면 프로세스 0. 다만 그때는 3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데, 그럼 이 선택지는 1번도 2번도 아니지 않아?",
+  "overlap": [
+   "Codex",
+   "MCP",
+   "Mnemosyne",
+   "SSE",
+   "net",
+   "가능합니다",
+   "그때는",
+   "그럼",
+   "기동",
+   "꺼지는",
+   "끄지",
+   "내가"
+  ],
+  "ov": 53,
+  "n": 2364,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "389c1aa319b0b9bc",
+  "row_len": 2770,
+  "table": "episodic_memory",
+  "session": "hermes_20260819_190006_3e51c0",
+  "user_query": "지금 failure event 판단 기준을 보니 pytest 통과나 연결 성공 등 명백한 성공기준이 있는 경우에만 작동이 가능해 보여. 그럼 이 단계에서 그냥 pytest 통과나 연결 성공했을 시 우리 작업은 작동을 아예 안 한다는 이야기네? 그러면 코드 품질 개선에는 영향을 주지 못하는 것 아닐까? pytest를 통과했더라도 코드 품질이 안 좋을수도 있잖아. best-of-n에 비해 너무 개선을 기대할 수 있는 가능성이 낮은 게 아닌가 싶은데",
+  "overlap": [
+   "best-of-n",
+   "event",
+   "failure",
+   "pytest",
+   "가능성이",
+   "가능해",
+   "개선에는",
+   "개선을",
+   "경우에만",
+   "그냥",
+   "그러면",
+   "그럼"
+  ],
+  "ov": 48,
+  "n": 2755,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "7d60686a4ef249ae",
+  "row_len": 3289,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_193222_a154b9",
+  "user_query": "[System note: Your previous turn was interrupted mid-run — the app or its backend process stopped before the turn could finish. Some of the work may already be complete; check the current state before redoing anything, then finish the task. The interrupted request was:]\n\n이런 답변이 나왔어.",
+  "overlap": [
+   "Some",
+   "System",
+   "The",
+   "Your",
+   "already",
+   "anything",
+   "app",
+   "backend",
+   "before",
+   "check",
+   "could",
+   "current"
+  ],
+  "ov": 34,
+  "n": 3274,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "d7e42dafa3143a95",
+  "row_len": 2209,
+  "table": "working_memory",
+  "session": "hermes_20261001_163444_30a2f0f3",
+  "user_query": "S4 임베딩 마이그레이션(bekko-a8m) 이후 다른 에이전트 경로 검증 작업이야.\n이 세션(텔레그램)을 라이브 테스트 대상으로 사용해줘.\n\n1. 메모리 데몬 상태 확인: jev-mem core daemon (127.0.0.1:47821) health/status 조회,\n   활성 임베딩 모델이 bench/bekko-a8m인지 확인.\n2. 쓰기 검증: 이 세션에서 나온 대화 내용이 jev-mem 파이프라인을 통해\n   mnemosyne.db에 저장되는지 확인 — 세션 접두사가 hermes_ 형식인지,\n   새로 저장된 행의 memory_embeddings.model 태그가 bench/bekko-a8m인지.\n3. 회수 검증: 이전 세션에서 저장한 내용(예: S4 컷오버, bekko 채택 이유)을\n   자연어 질문으로 recall해서 실제로 나오는지 확인 (검색 품질이 a8m 기준으로\n   유지되는지 체감 확인).\n4. 검증에 쓴 테스트용 행은 확인 후 삭제해 남기지 말 것.\n5. 결과를 표로 요약해줘. 문제 발견 시 원인과 함께 보고 (수정은 임의 진행 금지).",
+  "overlap": [
+   "a8m",
+   "bekko",
+   "bekko-a8m",
+   "bench",
+   "health",
+   "hermes_",
+   "jev-mem",
+   "mnemosyne.db",
+   "status",
+   "검증",
+   "경로",
+   "기준으로"
+  ],
+  "ov": 33,
+  "n": 2197,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "4f8278a370048252",
+  "row_len": 3702,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "fit 피드백 루프: 우리 게이트에는 라벨 기반 자동 튜닝이 없는데, trace 로그에 keep=keep/skip이 쌓이므로 같은 메커니즘 도입 가능성은 있음\naudit stale 플래그: repo 스냅샷 기반 \"아직 사실인가\" 1콜/메모리 — 우리는 stale 감사 경로가 없음\n\n이걸 좀 더 자세히 설명해줘 .어떤 이득이 있는지",
+  "overlap": [
+   "audit",
+   "fit",
+   "keep",
+   "repo",
+   "skip",
+   "stale",
+   "trace",
+   "가능성은",
+   "감사",
+   "같은",
+   "게이트에는",
+   "경로가"
+  ],
+  "ov": 32,
+  "n": 3690,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "c029529e72326627",
+  "row_len": 4711,
+  "table": "working_memory",
+  "session": "hermes_20261005_021634_8793fd",
+  "user_query": "fit 피드백 루프: 우리 게이트에는 라벨 기반 자동 튜닝이 없는데, trace 로그에 keep=keep/skip이 쌓이므로 같은 메커니즘 도입 가능성은 있음\naudit stale 플래그: repo 스냅샷 기반 \"아직 사실인가\" 1콜/메모리 — 우리는 stale 감사 경로가 없음\n\n이걸 좀 더 자세히 설명해줘 .어떤 이득이 있는지",
+  "overlap": [
+   "audit",
+   "fit",
+   "keep",
+   "repo",
+   "skip",
+   "stale",
+   "trace",
+   "감사",
+   "같은",
+   "기반",
+   "도입",
+   "라벨"
+  ],
+  "ov": 25,
+  "n": 4699,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "63d57a8367423dcf",
+  "row_len": 2267,
+  "table": "working_memory",
+  "session": "hermes_20261001_163444_30a2f0f3",
+  "user_query": "S4 임베딩 마이그레이션(bekko-a8m) 이후 다른 에이전트 경로 검증 작업이야.\n이 세션(텔레그램)을 라이브 테스트 대상으로 사용해줘.\n\n1. 메모리 데몬 상태 확인: jev-mem core daemon (127.0.0.1:47821) health/status 조회,\n   활성 임베딩 모델이 bench/bekko-a8m인지 확인.\n2. 쓰기 검증: 이 세션에서 나온 대화 내용이 jev-mem 파이프라인을 통해\n   mnemosyne.db에 저장되는지 확인 — 세션 접두사가 hermes_ 형식인지,\n   새로 저장된 행의 memory_embeddings.model 태그가 bench/bekko-a8m인지.\n3. 회수 검증: 이전 세션에서 저장한 내용(예: S4 컷오버, bekko 채택 이유)을\n   자연어 질문으로 recall해서 실제로 나오는지 확인 (검색 품질이 a8m 기준으로\n   유지되는지 체감 확인).\n4. 검증에 쓴 테스트용 행은 확인 후 삭제해 남기지 말 것.\n5. 결과를 표로 요약해줘. 문제 발견 시 원인과 함께 보고 (수정은 임의 진행 금지).",
+  "overlap": [
+   "a8m",
+   "bekko-a8m",
+   "bench",
+   "status",
+   "검증",
+   "검증에",
+   "결과를",
+   "내용",
+   "데몬",
+   "라이브",
+   "문제",
+   "발견"
+  ],
+  "ov": 23,
+  "n": 2255,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "14b9d987882a19de",
+  "row_len": 2976,
+  "table": "working_memory",
+  "session": "hermes_20261001_170139_b7dfbc",
+  "user_query": "S4 임베딩 마이그레이션(bekko-a8m) 이후 다른 에이전트 경로 검증 작업이야.\n이 세션(텔레그램)을 라이브 테스트 대상으로 사용해줘.\n\n1. 메모리 데몬 상태 확인: jev-mem core daemon (127.0.0.1:47821) health/status 조회,\n   활성 임베딩 모델이 bench/bekko-a8m인지 확인.\n2. 쓰기 검증: 이 세션에서 나온 대화 내용이 jev-mem 파이프라인을 통해\n   mnemosyne.db에 저장되는지 확인 — 세션 접두사가 hermes_ 형식인지,\n   새로 저장된 행의 memory_embeddings.model 태그가 bench/bekko-a8m인지.\n3. 회수 검증: 이전 세션에서 저장한 내용(예: S4 컷오버, bekko 채택 이유)을\n   자연어 질문으로 recall해서 실제로 나오는지 확인 (검색 품질이 a8m 기준으로\n   유지되는지 체감 확인).\n4. 검증에 쓴 테스트용 행은 확인 후 삭제해 남기지 말 것.\n5. 결과를 표로 요약해줘. 문제 발견 시 원인과 함께 보고 (수정은 임의 진행 금지).",
+  "overlap": [
+   "a8m",
+   "bekko-a8m",
+   "bench",
+   "recall",
+   "status",
+   "검색",
+   "검증",
+   "데몬",
+   "마이그레이션",
+   "세션",
+   "쓰기",
+   "임베딩"
+  ],
+  "ov": 14,
+  "n": 2964,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "f982991bd0baa99a",
+  "row_len": 3702,
+  "table": "working_memory",
+  "session": "hermes_20261001_205102_bfa047",
+  "user_query": "S4 임베딩 마이그레이션(bekko-a8m) 이후 다른 에이전트 경로 검증 작업이야.\n이 세션(텔레그램)을 라이브 테스트 대상으로 사용해줘.\n\n1. 메모리 데몬 상태 확인: jev-mem core daemon (127.0.0.1:47821) health/status 조회,\n   활성 임베딩 모델이 bench/bekko-a8m인지 확인.\n2. 쓰기 검증: 이 세션에서 나온 대화 내용이 jev-mem 파이프라인을 통해\n   mnemosyne.db에 저장되는지 확인 — 세션 접두사가 hermes_ 형식인지,\n   새로 저장된 행의 memory_embeddings.model 태그가 bench/bekko-a8m인지.\n3. 회수 검증: 이전 세션에서 저장한 내용(예: S4 컷오버, bekko 채택 이유)을\n   자연어 질문으로 recall해서 실제로 나오는지 확인 (검색 품질이 a8m 기준으로\n   유지되는지 체감 확인).\n4. 검증에 쓴 테스트용 행은 확인 후 삭제해 남기지 말 것.\n5. 결과를 표로 요약해줘. 문제 발견 시 원인과 함께 보고 (수정은 임의 진행 금지).",
+  "overlap": [
+   "a8m",
+   "recall",
+   "검증에",
+   "경로",
+   "내용",
+   "대화",
+   "라이브",
+   "메모리",
+   "보고",
+   "새로",
+   "임베딩",
+   "채택"
+  ],
+  "ov": 14,
+  "n": 3690,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "3d8778abd1f8c280",
+  "row_len": 6578,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_094604_bbc9c1",
+  "user_query": "일단 진행하기 전에, 로컬 프록시의 호환성 문제를 해결하고 진행하고 싶어. 이를 다른 세션에서 진행하려 하는데, 상황을 요약해서 별개의 세션에 프록시 호환성 문제를 해결하라고 지시할 수 있는 지시문을 만들어줘.",
+  "overlap": [
+   "다른",
+   "로컬",
+   "만들어줘",
+   "문제를",
+   "세션에서",
+   "싶어",
+   "일단",
+   "있는",
+   "전에",
+   "지시문을",
+   "진행하기",
+   "프록시"
+  ],
+  "ov": 13,
+  "n": 6563,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "0e2418bbc4d68f1a",
+  "row_len": 2532,
+  "table": "working_memory",
+  "session": "hermes_20261003_215445_066f3c",
+  "user_query": "② 3차 외부 검토 지시문(2×2 설계 확정 + 후회율 감사 프로토콜) 초안을 작성해줘",
+  "overlap": [
+   "감사",
+   "검토",
+   "설계",
+   "외부",
+   "지시문",
+   "초안을",
+   "프로토콜",
+   "확정",
+   "후회율"
+  ],
+  "ov": 9,
+  "n": 2520,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "0e63e2c79a1bf4c0",
+  "row_len": 2636,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "overlap": [
+   "recall",
+   "메모리",
+   "메모리에",
+   "배제는",
+   "의미가",
+   "장애",
+   "회복"
+  ],
+  "ov": 7,
+  "n": 2624,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "56c6a7edf464d16d",
+  "row_len": 2193,
+  "table": "working_memory",
+  "session": "hermes_20261003_131553_84d80c",
+  "user_query": "합성 고정 입력 카나리 또한 필요에 의한 호출 시 판단할 수 있는 부분 아니야?",
+  "overlap": [
+   "고정",
+   "입력",
+   "있는",
+   "카나리",
+   "합성",
+   "호출"
+  ],
+  "ov": 6,
+  "n": 2181,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "10555641320fe37a",
+  "row_len": 5728,
+  "table": "working_memory",
+  "session": "hermes_20261003_192208_a0bf3e46",
+  "user_query": "이 사안에 대해서 다른 ai에게 검토를 요청하고 싶어. 다른 ai들은 내 저장소에 대해서 접근 권한이 없으니 네가 검토를 요청하는 문서에 우리 jev-mem의 작동 구조에 대해 최대한 상세하게, 다른 정보가 필요 없을 정도로 적어놓고, 다른 두 비교대상 및 perfectrecall까지 포함해서 비교를 요청하도록 해줘",
+  "overlap": [
+   "jev-mem",
+   "다른",
+   "대해",
+   "비교를",
+   "에게",
+   "필요"
+  ],
+  "ov": 6,
+  "n": 5716,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "97bca6e26edd3c63",
+  "row_len": 2028,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "시각 프리픽스 삽입을 할 경우, 메모리 호출에 문제가 생기거나 할 가능성은 없어?",
+  "overlap": [
+   "경우",
+   "메모리",
+   "시각",
+   "없어",
+   "프리픽스",
+   "호출에"
+  ],
+  "ov": 6,
+  "n": 2016,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "f091ddc7292de9e5",
+  "row_len": 2828,
+  "table": "working_memory",
+  "session": "hermes_20261002_083854_fabf0ac0",
+  "user_query": "score+threshold 필터링은 2배까지 토큰이 늘어날 수 있다고 했는데, 그러면 jev 호출이 무조건 한번 더 들어가는 거야? 아니면 무답 쿼리 오주입 때만 들어가는 거야?",
+  "overlap": [
+   "score",
+   "threshold",
+   "무답",
+   "오주입",
+   "쿼리"
+  ],
+  "ov": 5,
+  "n": 2816,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "afd156a9c8e43598",
+  "row_len": 3273,
+  "table": "working_memory",
+  "session": "hermes_20261002_234159_3229b8",
+  "user_query": "방금 네가 지적한 메모리 문제 때문에 나는 모델 하나만으로 다 끝낼 수 있는 경우를 찾고 있어. 참고로 jevk5는 jev랑은 다른 모델인데, 그 모델도 vec lane은 안되나?",
+  "overlap": [
+   "jevk5",
+   "lane",
+   "vec",
+   "모델",
+   "있는"
+  ],
+  "ov": 5,
+  "n": 3261,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "cb011c72739b1777",
+  "row_len": 2089,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "overlap": [
+   "recall",
+   "나중에",
+   "메모리",
+   "별도",
+   "장애"
+  ],
+  "ov": 5,
+  "n": 2077,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "a9bd735104a4d822",
+  "row_len": 2238,
+  "table": "working_memory",
+  "session": "hermes_20261003_140140_efddba",
+  "user_query": "회복 감지 구현 시 jev에 주기적으로 호출을 하게 되는데, 그러면 큰 이득 없이 비용만 발생하는 거 아니야? 그냥 다음 번 jev 호출 필요가 생겼을 때 겸사겸사 판단하면 되는 거 아닐까? 어떻게 생각해?",
+  "overlap": [
+   "감지",
+   "다음",
+   "이득",
+   "호출",
+   "회복"
+  ],
+  "ov": 5,
+  "n": 2226,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "64c6c1f4ece0cb2c",
+  "row_len": 5786,
+  "table": "episodic_memory",
+  "session": "hermes_20260818_224326_6c987b",
+  "user_query": "중간에 중단되었어. 계속 이어서 해줘",
+  "overlap": [
+   "계속",
+   "이어서",
+   "중간에",
+   "중단되었어",
+   "해줘"
+  ],
+  "ov": 5,
+  "n": 5771,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "23c93d929e1ab33d",
+  "row_len": 2640,
+  "table": "working_memory",
+  "session": "hermes_20261001_074928_d2a934",
+  "user_query": "[Workspace::v1: C:\\\\Users\\\\mandu\\\\hermes-made]\nbekko부터 돌리고 granite 는 fp16 동적양자화 변형 모델로 재시도해봐. 또 hang되면 재시도는 할 필요 없어",
+  "overlap": [
+   "bekko",
+   "granite",
+   "부터",
+   "필요"
+  ],
+  "ov": 4,
+  "n": 2628,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "bb081a27c57193a5",
+  "row_len": 2274,
+  "table": "working_memory",
+  "session": "hermes_20261002_104328_de139b",
+  "user_query": "[OUT-OF-BAND USER MESSAGE — a direct message from the user, delivered once at this position; not tool output and not a new delivery when replayed from conversation history]\n참고로 어제 jev 호출 수는 21892번이었어\n[/OUT-OF-BAND USER MESSAGE]",
+  "overlap": [
+   "output",
+   "수는",
+   "어제",
+   "호출"
+  ],
+  "ov": 4,
+  "n": 2262,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "f76f6dedd889ae1e",
+  "row_len": 2088,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "overlap": [
+   "recall",
+   "별도",
+   "재분류가",
+   "회복"
+  ],
+  "ov": 4,
+  "n": 2076,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "329fb3154553b711",
+  "row_len": 4696,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "overlap": [
+   "jev",
+   "recall",
+   "메모리",
+   "장애"
+  ],
+  "ov": 4,
+  "n": 4684,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "f66a777d230b35df",
+  "row_len": 3834,
+  "table": "working_memory",
+  "session": "hermes_20261003_112034_65dc24",
+  "user_query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "overlap": [
+   "jev",
+   "recall",
+   "메모리",
+   "장애"
+  ],
+  "ov": 4,
+  "n": 3822,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "87483f163c9123d9",
+  "row_len": 6566,
+  "table": "working_memory",
+  "session": "hermes_20261003_192208_a0bf3e46",
+  "user_query": "이 사안에 대해서 다른 ai에게 검토를 요청하고 싶어. 다른 ai들은 내 저장소에 대해서 접근 권한이 없으니 네가 검토를 요청하는 문서에 우리 jev-mem의 작동 구조에 대해 최대한 상세하게, 다른 정보가 필요 없을 정도로 적어놓고, 다른 두 비교대상 및 perfectrecall까지 포함해서 비교를 요청하도록 해줘",
+  "overlap": [
+   "jev-mem",
+   "까지",
+   "다른",
+   "에게"
+  ],
+  "ov": 4,
+  "n": 6554,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "2cd670ad5f83fa08",
+  "row_len": 2104,
+  "table": "working_memory",
+  "session": "hermes_20261003_215445_066f3c",
+  "user_query": "② 3차 외부 검토 지시문(2×2 설계 확정 + 후회율 감사 프로토콜) 초안을 작성해줘",
+  "overlap": [
+   "검토",
+   "설계",
+   "외부",
+   "확정"
+  ],
+  "ov": 4,
+  "n": 2092,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "77fff37228bff51b",
+  "row_len": 2411,
+  "table": "working_memory",
+  "session": "hermes_20261001_184823_0b421a",
+  "user_query": "r3를 다시 하기 전에, r2에서 제시된 실험이나 수정내역은 모두 적용되었어? 나는 ai에 물어보는 라운드 회수를 줄이고 싶으니 되도록 제시된 건 모두 수행하고 정리해 줘",
+  "overlap": [
+   "라운드",
+   "모두",
+   "에서"
+  ],
+  "ov": 3,
+  "n": 2399,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "05ab2f73f273e809",
+  "row_len": 2868,
+  "table": "working_memory",
+  "session": "hermes_20261001_201107_11ff99",
+  "user_query": "메커니즘 검증 먼저 진행해 줘",
+  "overlap": [
+   "검증",
+   "먼저",
+   "메커니즘"
+  ],
+  "ov": 3,
+  "n": 2856,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "01dfeb21681e2ace",
+  "row_len": 2046,
+  "table": "working_memory",
+  "session": "hermes_20261002_234159_3229b8",
+  "user_query": "방금 네가 지적한 메모리 문제 때문에 나는 모델 하나만으로 다 끝낼 수 있는 경우를 찾고 있어. 참고로 jevk5는 jev랑은 다른 모델인데, 그 모델도 vec lane은 안되나?",
+  "overlap": [
+   "lane",
+   "vec",
+   "모델"
+  ],
+  "ov": 3,
+  "n": 2034,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "8c43c4f6bd49a0cd",
+  "row_len": 2050,
+  "table": "working_memory",
+  "session": "hermes_20261003_215445_066f3c",
+  "user_query": "② 3차 외부 검토 지시문(2×2 설계 확정 + 후회율 감사 프로토콜) 초안을 작성해줘",
+  "overlap": [
+   "설계",
+   "확정",
+   "후회율"
+  ],
+  "ov": 3,
+  "n": 2038,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "61ec2684bf12c331",
+  "row_len": 5351,
+  "table": "working_memory",
+  "session": "hermes_20261004_114224_16828d",
+  "user_query": "그러면 이 gold44는 의도적으로 자동 생성 기반으로 뽑은 거야? 내가 이걸 보고 어떤 판정을 해야 할까?",
+  "overlap": [
+   "보고",
+   "어떤",
+   "해야"
+  ],
+  "ov": 3,
+  "n": 5344,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "f76a006d20729049",
+  "row_len": 2197,
+  "table": "working_memory",
+  "session": "hermes_20261005_134808_e6708be1",
+  "user_query": "이건 현재까지의 우리 데이터에 기반한 거지 만약 내가 장문의 보고서를 입력한다던가 하면 걸릴 수 있는 문제 아닐까?",
+  "overlap": [
+   "우리",
+   "있는",
+   "하면"
+  ],
+  "ov": 3,
+  "n": 2185,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "b7f460aaade6d8f4",
+  "row_len": 6386,
+  "table": "episodic_memory",
+  "session": "hermes_20260820_032149_909bf4",
+  "user_query": "중간에 중단되었어. 이어서 진행해줘",
+  "overlap": [
+   "이어서",
+   "중단되었어",
+   "진행해줘"
+  ],
+  "ov": 3,
+  "n": 6371,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "77f9a2b2a68ae2f7",
+  "row_len": 2704,
+  "table": "working_memory",
+  "session": "hermes_20261001_175333_8b742e",
+  "user_query": "다른 ai의 조언을 구할 수 있도록, 판단에 다른 정보는 필요하지 않은 형태로 현재 비교 결과에 대해 보고서를 작성해줘. 또한 perfectrecall처럼 jev에 모든 것을 맡기지 않아도, 임베디드 모델을 활용하면서 성능을 올리는 방법을 찾고 싶어. 현재보다 어느 정도 jev 호출숫자가 올라가는 건 괜찮아.",
+  "overlap": [
+   "perfectrecall",
+   "비교"
+  ],
+  "ov": 2,
+  "n": 2692,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "0a32589ec4ad3dec",
+  "row_len": 3884,
+  "table": "working_memory",
+  "session": "hermes_20261001_184823_0b421a",
+  "user_query": "구현 전에, 현재 이 검토 결과를 다시 한번 보고서로 만들어 줘. 다시 한번 ai들의 조언을 얻어 보려 해",
+  "overlap": [
+   "검토",
+   "구현"
+  ],
+  "ov": 2,
+  "n": 3872,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "c98385ddee4abf32",
+  "row_len": 2545,
+  "table": "working_memory",
+  "session": "hermes_20261003_231124_48727e",
+  "user_query": "좋아 계속 진행해줘",
+  "overlap": [
+   "좋아",
+   "진행해줘"
+  ],
+  "ov": 2,
+  "n": 2533,
+  "v_row": null,
+  "v_mid": null
+ },
+ {
+  "row_id": "0580b8ce4d19ee20",
+  "row_len": 2071,
+  "table": "working_memory",
+  "session": "hermes_20261004_225351_7c8fa4",
+  "user_query": "매일 텔레그램 요약 cron을 추가해줘. 그런데 요약 보고 시점은 어떻게 할 거야?",
+  "overlap": [
+   "cron",
+   "어떻게"
+  ],
+  "ov": 2,
+  "n": 2064,
+  "v_row": null,
+  "v_mid": null
+ }
+]

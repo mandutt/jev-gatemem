@@ -1,0 +1,135 @@
+[
+ {
+  "idx": 3,
+  "query": "S4 임베딩 마이그레이션(bekko-a8m) 이후 다른 에이전트 경로 검증 작업이야.\n이 세션(텔레그램)을 라이브 테스트 대상으로 사용해줘.\n\n1. 메모리 데몬 상태 확인: jev-mem core daemon (127.0.0.1:47821) health/status 조회,\n   활성 임베딩 모델이 bench/bekko-a8m인지 확인.\n2. 쓰기 검증: 이 세션에서 나온 대화 내용이 jev-mem 파이프라인을 통해\n   mnemosyne.db에 저장되는지 확인 — 세션 접두사가 hermes_ 형식인지,\n   새로 저장된 행의 memory_embeddings.model 태그가 bench/bekko-a8m인지.\n3. 회수 검증: 이전 세션에서 저장한 내용(예: S4 컷오버, bekko 채택 이유)을\n   자연어 질문으로 recall해서 실제로 나오는지 확인 (검색 품질이 a8m 기준으로\n   유지되는지 체감 확인).\n4. 검증에 쓴 테스트용 행은 확인 후 삭제해 남기지 말 것.\n5. 결과를 표로 요약해줘. 문제 발견 시 원인과 함께 보고 (수정은 임의 진행 금지).",
+  "row_id": "d7e42dafa3143a95",
+  "table": "working_memory",
+  "row_len": 2209
+ },
+ {
+  "idx": 4,
+  "query": "fit 피드백 루프: 우리 게이트에는 라벨 기반 자동 튜닝이 없는데, trace 로그에 keep=keep/skip이 쌓이므로 같은 메커니즘 도입 가능성은 있음\naudit stale 플래그: repo 스냅샷 기반 \"아직 사실인가\" 1콜/메모리 — 우리는 stale 감사 경로가 없음\n\n이걸 좀 더 자세히 설명해줘 .어떤 이득이 있는지",
+  "row_id": "4f8278a370048252",
+  "table": "working_memory",
+  "row_len": 3702
+ },
+ {
+  "idx": 5,
+  "query": "fit 피드백 루프: 우리 게이트에는 라벨 기반 자동 튜닝이 없는데, trace 로그에 keep=keep/skip이 쌓이므로 같은 메커니즘 도입 가능성은 있음\naudit stale 플래그: repo 스냅샷 기반 \"아직 사실인가\" 1콜/메모리 — 우리는 stale 감사 경로가 없음\n\n이걸 좀 더 자세히 설명해줘 .어떤 이득이 있는지",
+  "row_id": "c029529e72326627",
+  "table": "working_memory",
+  "row_len": 4711
+ },
+ {
+  "idx": 10,
+  "query": "② 3차 외부 검토 지시문(2×2 설계 확정 + 후회율 감사 프로토콜) 초안을 작성해줘",
+  "row_id": "0e2418bbc4d68f1a",
+  "table": "working_memory",
+  "row_len": 2532
+ },
+ {
+  "idx": 11,
+  "query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "row_id": "0e63e2c79a1bf4c0",
+  "table": "working_memory",
+  "row_len": 2636
+ },
+ {
+  "idx": 14,
+  "query": "시각 프리픽스 삽입을 할 경우, 메모리 호출에 문제가 생기거나 할 가능성은 없어?",
+  "row_id": "97bca6e26edd3c63",
+  "table": "working_memory",
+  "row_len": 2028
+ },
+ {
+  "idx": 16,
+  "query": "방금 네가 지적한 메모리 문제 때문에 나는 모델 하나만으로 다 끝낼 수 있는 경우를 찾고 있어. 참고로 jevk5는 jev랑은 다른 모델인데, 그 모델도 vec lane은 안되나?",
+  "row_id": "afd156a9c8e43598",
+  "table": "working_memory",
+  "row_len": 3273
+ },
+ {
+  "idx": 21,
+  "query": "[OUT-OF-BAND USER MESSAGE — a direct message from the user, delivered once at this position; not tool output and not a new delivery when replayed from conversation history]\n참고로 어제 jev 호출 수는 21892번이었어\n[/OUT-OF-BAND USER MESSAGE]",
+  "row_id": "bb081a27c57193a5",
+  "table": "working_memory",
+  "row_len": 2274
+ },
+ {
+  "idx": 23,
+  "query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "row_id": "329fb3154553b711",
+  "table": "working_memory",
+  "row_len": 4696
+ },
+ {
+  "idx": 24,
+  "query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+  "row_id": "f66a777d230b35df",
+  "table": "working_memory",
+  "row_len": 3834
+ },
+ {
+  "idx": 25,
+  "query": "이 사안에 대해서 다른 ai에게 검토를 요청하고 싶어. 다른 ai들은 내 저장소에 대해서 접근 권한이 없으니 네가 검토를 요청하는 문서에 우리 jev-mem의 작동 구조에 대해 최대한 상세하게, 다른 정보가 필요 없을 정도로 적어놓고, 다른 두 비교대상 및 perfectrecall까지 포함해서 비교를 요청하도록 해줘",
+  "row_id": "87483f163c9123d9",
+  "table": "working_memory",
+  "row_len": 6566
+ },
+ {
+  "idx": 27,
+  "query": "r3를 다시 하기 전에, r2에서 제시된 실험이나 수정내역은 모두 적용되었어? 나는 ai에 물어보는 라운드 회수를 줄이고 싶으니 되도록 제시된 건 모두 수행하고 정리해 줘",
+  "row_id": "77fff37228bff51b",
+  "table": "working_memory",
+  "row_len": 2411
+ },
+ {
+  "idx": 28,
+  "query": "메커니즘 검증 먼저 진행해 줘",
+  "row_id": "05ab2f73f273e809",
+  "table": "working_memory",
+  "row_len": 2868
+ },
+ {
+  "idx": 29,
+  "query": "방금 네가 지적한 메모리 문제 때문에 나는 모델 하나만으로 다 끝낼 수 있는 경우를 찾고 있어. 참고로 jevk5는 jev랑은 다른 모델인데, 그 모델도 vec lane은 안되나?",
+  "row_id": "01dfeb21681e2ace",
+  "table": "working_memory",
+  "row_len": 2046
+ },
+ {
+  "idx": 30,
+  "query": "② 3차 외부 검토 지시문(2×2 설계 확정 + 후회율 감사 프로토콜) 초안을 작성해줘",
+  "row_id": "8c43c4f6bd49a0cd",
+  "table": "working_memory",
+  "row_len": 2050
+ },
+ {
+  "idx": 31,
+  "query": "그러면 이 gold44는 의도적으로 자동 생성 기반으로 뽑은 거야? 내가 이걸 보고 어떤 판정을 해야 할까?",
+  "row_id": "61ec2684bf12c331",
+  "table": "working_memory",
+  "row_len": 5351
+ },
+ {
+  "idx": 32,
+  "query": "이건 현재까지의 우리 데이터에 기반한 거지 만약 내가 장문의 보고서를 입력한다던가 하면 걸릴 수 있는 문제 아닐까?",
+  "row_id": "f76a006d20729049",
+  "table": "working_memory",
+  "row_len": 2197
+ },
+ {
+  "idx": 34,
+  "query": "다른 ai의 조언을 구할 수 있도록, 판단에 다른 정보는 필요하지 않은 형태로 현재 비교 결과에 대해 보고서를 작성해줘. 또한 perfectrecall처럼 jev에 모든 것을 맡기지 않아도, 임베디드 모델을 활용하면서 성능을 올리는 방법을 찾고 싶어. 현재보다 어느 정도 jev 호출숫자가 올라가는 건 괜찮아.",
+  "row_id": "77f9a2b2a68ae2f7",
+  "table": "working_memory",
+  "row_len": 2704
+ },
+ {
+  "idx": 35,
+  "query": "구현 전에, 현재 이 검토 결과를 다시 한번 보고서로 만들어 줘. 다시 한번 ai들의 조언을 얻어 보려 해",
+  "row_id": "0a32589ec4ad3dec",
+  "table": "working_memory",
+  "row_len": 3884
+ }
+]

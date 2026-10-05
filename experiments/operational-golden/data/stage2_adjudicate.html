@@ -1,0 +1,1805 @@
+<!DOCTYPE html><html lang='ko'><head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><title>stage2 판정</title><style>
+body{font-family:-apple-system,'Malgun Gothic',sans-serif;max-width:920px;margin:16px auto;padding:0 12px;color:#111}
+.banner{background:#fff8e1;border:1px solid #f0c36d;padding:10px 12px;border-radius:8px;margin-bottom:14px;font-size:14px}
+.q{background:#eef4ff;padding:8px 12px;border-radius:8px;font-weight:600;margin-top:20px}
+.rowbox{border:1px solid #ccc;border-radius:8px;padding:8px 12px;margin:6px 0}
+.head,.mid{font-size:13px;white-space:pre-wrap;word-break:break-all}
+.head{color:#666;border-left:3px solid #9cf;padding-left:6px}
+.mid{color:#222;background:#f7f7f7;padding:5px 8px;border-radius:4px;border-left:3px solid #fc9}
+.tag{font-size:11px;color:#888}
+label{display:inline-block;margin:4px 8px 0 0;padding:4px 12px;border:1px solid #888;border-radius:16px;cursor:pointer;font-size:14px}
+input[type=radio]{margin-right:3px}
+.ct{background:#e8f5e9;padding:4px 8px;border-radius:4px;font-size:12px;color:#1b5e20}
+</style></head><body>
+<div class='banner'><b>판정 기준</b><br>
+<b>VALID</b>: 이 장문 메모리가 쿼리가 묻는 답/사실/결과를 <b>실제로 포함</b>함 (의역·본문 중간도 OK — '답이 어딘가 있다')<br>
+<b>PLAUS</b>: 주제·키워드는 겹치지만 그 특정 답은 없음 (배경·관련 얘기만)<br>
+<b>IRREL</b>: 주제조차 무관<br>
+하고 export JSON 버튼으로 저장하세요. 모든 항목 판정 후 저장해 주세요.</div>
+<div class='q'>Q1. 방금 답변에서 [내가 앞서 설명을 빠뜨렸습니다. 선택 3번째 축을 하나 더 열면 &quot;프로세스 잠깐만&quot;이 가능합니다: MCP를 통째로 끄지 않고, SSE 서버도 평소엔 안 띄우고, Codex에서 Mnemosyne이 &quot;필요한 순간에만&quot; 잠깐 띄워졌다 꺼지는 방식 — 사실 net Codex가 &quot;해줘&quot;라고 시킬 때 0.5GB가 순간 상주할 뿐, 대화 안 하면 프로세스 0. 다만 그때는 3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데, 그럼 이 선택지는 1번도 2번도 아니지 않아? <span class='tag'>(08-17 20:17)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=53 tokens: Codex MCP Mnemosyne SSE net 가능합니다 그때는 그럼 기동 꺼지는</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v0' value='VALID'> VALID</label><label><input type='radio' name='v0' value='PLAUS'> PLAUS</label><label><input type='radio' name='v0' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q2. 지금 failure event 판단 기준을 보니 pytest 통과나 연결 성공 등 명백한 성공기준이 있는 경우에만 작동이 가능해 보여. 그럼 이 단계에서 그냥 pytest 통과나 연결 성공했을 시 우리 작업은 작동을 아예 안 한다는 이야기네? 그러면 코드 품질 개선에는 영향을 주지 못하는 것 아닐까? pytest를 통과했더라도 코드 품질이 안 좋을수도 있잖아. best-of-n에 비해 너무 개선을 기대할 수 있는 가능성이 낮은 게 아닌가 싶은데 <span class='tag'>(08-19 23:19)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=48 tokens: best-of-n event failure pytest 가능성이 가능해 개선에는 개선을 경우에만 그냥</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v1' value='VALID'> VALID</label><label><input type='radio' name='v1' value='PLAUS'> PLAUS</label><label><input type='radio' name='v1' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q3. 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만, opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데, 일단 조사해서 내게 보고해줘. 실제 실행은 하지 말고 조사만 해줘 <span class='tag'>(08-17 18:58)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=37 tokens: openchamber opencode 관련 그리고 내게 많아서 말고 모르겠어 버전으로 보고해줘</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v2' value='VALID'> VALID</label><label><input type='radio' name='v2' value='PLAUS'> PLAUS</label><label><input type='radio' name='v2' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q4. 아까 &#x27; j-space에서 남긴 것과 버린 것&#x27;에 대한 답변 생성 중 끊긴 부분이 있는데, 잘 알아볼 수 없게 이어진 것 같아. j-space와의 관계를 다시 알려줘. 다만 보고서-지시문 형식은 내 작업 방식일 뿐이고 j-space 자체와는 상관 없으니 보고서-지시문 형식 이야기는 하지 않아도 좋아 <span class='tag'>(08-19 22:11)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=35 tokens: j-space 같아 것과 관계를 끊긴 남긴 다만 다시 답변 대한</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v3' value='VALID'> VALID</label><label><input type='radio' name='v3' value='PLAUS'> PLAUS</label><label><input type='radio' name='v3' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q5. [System note: Your previous turn was interrupted mid-run — the app or its backend process stopped before the turn could finish. Some of the work may already be complete; check the current state before redoing anything, then finish the task. The interrupted request was:]
+
+이런 답변이 나왔어. <span class='tag'>(08-18 21:00)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=34 tokens: Some System The Your already anything app backend before check</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v4' value='VALID'> VALID</label><label><input type='radio' name='v4' value='PLAUS'> PLAUS</label><label><input type='radio' name='v4' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q6. S4 임베딩 마이그레이션(bekko-a8m) 이후 다른 에이전트 경로 검증 작업이야.
+이 세션(텔레그램)을 라이브 테스트 대상으로 사용해줘.
+
+1. 메모리 데몬 상태 확인: jev-mem core daemon (127.0.0.1:47821) health/status 조회,
+   활성 임베딩 모델이 bench/bekko-a8m인지 확인.
+2. 쓰기 검증: 이 세션에서 나온 대화 내용이 jev-mem 파이프라인을 통해
+   mnemosyne.db에 저장되는지 확인 — 세션 접두사가 hermes_ 형식인지,
+   새로 저장된 행의 memory_embeddings.model 태그가 bench/bekko-a8m인지.
+3. 회수 검증: 이전 세션에서 저장한 내용(예: S4 컷오버, bekko 채택 이유)을
+   자연어 질문으로 recall해서 실제로 나오는지 확인 (검색 품질이 a8m 기준으로
+   유지되는지 체감 확인).
+4. 검증에 쓴 테스트용 행은 확인 후 삭제해 남기지 말 것.
+5. 결과를 표로 요약해줘. 문제 발견 시 원인과 함께 보고 (수정은 임의 진행 금지). <span class='tag'>(10-01 16:34)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=d7e42dafa3143a95 len=2209 ov=33 tokens: a8m bekko bekko-a8m bench health hermes_ jev-mem mnemosyne.db status 검증</div>
+<div class='head'><b>head</b>: 검증 완료했습니다. 테스트용 행을 별도로 생성하지 않고 기존 라이브 대화 데이터로만 검증했으므로(이 세션 자체가 라이브 쓰기 대상) 삭제할 테스트 행은 없습니다.
+
+## S4 임베딩 마이그레이션 검증 결과 (2026-10-01)
+
+### 1. 데몬 상태 — ✅ PASS
+
+| 항목 | 결과 |
+|---|---|
+| `GET /v1/health` | `{&quot;status&quot;: &quot;ready&quot;, &quot;pro</div>
+<div class='mid'><b>mid(1098자 지점)</b>: 8행 100% `bench/bekko-a8m`** (컷오버 보고 1,153 + 이후 5) |
+
+### 3. 회수 검증 — ✅ PASS (a8m 기준 유지)
+
+| 쿼리 | 결과 |
+|---|---|
+| 한국어: &quot;S4 컷오버 절차와 백업 위치, bekko 채택 이유&quot; | 상위 6건 모두 관련 — S4 컷오버 완료 보고, v2/v3 검토서, S3 벤치(채택 근거), X1 외부 검증 ✓ |
+| 영어: &quot;why bekko-a8m chosen&quot; | 컷오버 최종 상태, **별칭 등록 이유**(fastembed 미등록 → `add_custom_</div>
+<div><label><input type='radio' name='v5' value='VALID'> VALID</label><label><input type='radio' name='v5' value='PLAUS'> PLAUS</label><label><input type='radio' name='v5' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q7. fit 피드백 루프: 우리 게이트에는 라벨 기반 자동 튜닝이 없는데, trace 로그에 keep=keep/skip이 쌓이므로 같은 메커니즘 도입 가능성은 있음
+audit stale 플래그: repo 스냅샷 기반 &quot;아직 사실인가&quot; 1콜/메모리 — 우리는 stale 감사 경로가 없음
+
+이걸 좀 더 자세히 설명해줘 .어떤 이득이 있는지 <span class='tag'>(10-05 02:25)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=4f8278a370048252 len=3702 ov=32 tokens: audit fit keep repo skip stale trace 가능성은 감사 같은</div>
+<div class='head'><b>head</b>: 비교를 위해 Avinash-jetwani/jevmem의 README·how-it-works·cost 문서와 우리 jev-mem 스킬(references/external-fork-ab-comparison.md 포함)을 대조했습니다. 먼저 이름 혼동부터 정리합니다.
+
+## 이름 정리 — 서로 다른 3개 프로젝트
+
+| 프로젝트 | 정체 |
+|---|---|
+| **내 jev-mem** | `jev</div>
+<div class='mid'><b>mid(1845자 지점)</b>:  abstain·θ 캘리브레이션 (라벨 기반 자동 fit 없음) |
+| 감사 | `jevmem audit` — repo 스냅샷 대비 &quot;still true?&quot; → `[stale?]` 플래그 | (없음 — 유사 기능은 없음) |
+| 운영 구조 | 훅 프로세스(콜드 13-15ms 런처 + warm daemon, Unix socket 0600) — **경량** | 상주 데몬(pythonw, RPC, spool, circuit breaker, idle shutdown) — **무겁고 내구성 지향** |
+| 비용/지연 | p50 269-310</div>
+<div><label><input type='radio' name='v6' value='VALID'> VALID</label><label><input type='radio' name='v6' value='PLAUS'> PLAUS</label><label><input type='radio' name='v6' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q8. 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. <span class='tag'>(08-19 19:00)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=31 tokens: J-Space LLM-as-a-Verifier a3a 개발과정을 결합해서 구하고 그리고 나는 내용을 다른</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v7' value='VALID'> VALID</label><label><input type='radio' name='v7' value='PLAUS'> PLAUS</label><label><input type='radio' name='v7' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q9. 한 가지 궁금한 점이 있는데. 원본은 best-of-n 절차를 거쳐 최선을 선택해서 결과물 자체를 개선하고 벤치마크에서 더 높은 점수를 받았어. 우리의 recovery routing도 결과물 자체를 개선하고 벤치마크에서 더 높은 점수를 받을 수 있을까? <span class='tag'>(08-19 22:37)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=22 tokens: best-of-n recovery routing 가지 개선하고 거쳐 결과물 궁금한 높은 받았어</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v8' value='VALID'> VALID</label><label><input type='radio' name='v8' value='PLAUS'> PLAUS</label><label><input type='radio' name='v8' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q10. 지금 일단 codex창을 닫았어. 그런데 codex를 열 때마다 저렇게 python이 크게 나온다면 그건 좀 문제가 있는 것 같아. 헤르메스도 mnemosyne를 사용 중인데 왜 codex 사용 시에만 문제가 생길까? <span class='tag'>(08-17 19:46)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=21 tokens: codex mnemosyne python 같아 그건 그런데 나온다면 닫았어 때마다 문제가</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v9' value='VALID'> VALID</label><label><input type='radio' name='v9' value='PLAUS'> PLAUS</label><label><input type='radio' name='v9' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q11. 그렇다면 현재까지 파악한 바에 맞춰 원본과 우리 작업의 작동구조를 보기 쉬운 형태로 비교해서 알려줘. 화살표 등으로 나온 절차그래프 같은 형태도 좋아. <span class='tag'>(08-19 23:09)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=21 tokens: 같은 그렇다면 나온 등으로 맞춰 바에 보기 비교해서 쉬운 알려줘</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v10' value='VALID'> VALID</label><label><input type='radio' name='v10' value='PLAUS'> PLAUS</label><label><input type='radio' name='v10' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q12. 75% 정확도라는 것은 구체적으로 어떤 정확도를 말하는 거지? 우리 작동 방식이 아직 미완성이라서? 아니면 알고리즘 자체의 한계로 무조건 25%의 부정확도를 가지는 거야? <span class='tag'>(08-19 22:32)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=20 tokens: 가지는 거야 거지 것은 구체적으로 말하는 무조건 미완성이라서 방식이 부정확도를</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v11' value='VALID'> VALID</label><label><input type='radio' name='v11' value='PLAUS'> PLAUS</label><label><input type='radio' name='v11' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q13. 일반적으로 llm에 작업을 맡기면, 사람이 모르는 사항에 대해  llm이 작업해야 할 가능성도 있는데 그 상황에서도 사람이 개입해야 한다면 그게 과연 &#x27;안전&#x27;이라고 볼 수 있을지 의문인데 <span class='tag'>(08-19 23:04)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=20 tokens: llm 가능성도 개입해야 과연 그게 대해 맡기면 모르는 사람이 사항에</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v12' value='VALID'> VALID</label><label><input type='radio' name='v12' value='PLAUS'> PLAUS</label><label><input type='radio' name='v12' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q14. 내가 걱정하는 건 검증이 길어지고 있는데, 혹시 목표를 잃어버리는 것이 아닐까 싶은 거야. 해당 세션을 살펴봤을 때 그런 기미는 없는 거지? <span class='tag'>(08-19 19:28)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=19 tokens: 거야 거지 걱정하는 검증이 것이 그런 기미는 길어지고 내가 목표를</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v13' value='VALID'> VALID</label><label><input type='radio' name='v13' value='PLAUS'> PLAUS</label><label><input type='radio' name='v13' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q15. 그러면 초기의 j-space는 현재 작업하고 있는 것과는 아무 상관이 없는 상태인가? 아니면 거기서 어느 정도 관련된 요소만 반영된 상태인가? <span class='tag'>(08-19 22:00)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=18 tokens: j-space 거기서 것과는 관련된 그러면 반영된 상관이 상태인가 아니면 아무</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v14' value='VALID'> VALID</label><label><input type='radio' name='v14' value='PLAUS'> PLAUS</label><label><input type='radio' name='v14' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q16. 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 않아? <span class='tag'>(08-19 23:00)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=18 tokens: llm 개입이나 계속해서 그런데 기대하는 모델에 사람의 식으로는 아니야 아니지</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v15' value='VALID'> VALID</label><label><input type='radio' name='v15' value='PLAUS'> PLAUS</label><label><input type='radio' name='v15' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q17. 아니야, 그보다는 여러 세션이 mcp를 같이 쓸 수 있는 방법은 없나? 혹은 codex가 mnemosyne와 mcp가 아닌 다른 방법으로 소통하는 방법은 없을까? <span class='tag'>(08-17 20:06)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=17 tokens: codex mcp mnemosyne 같이 그보다는 다른 방법으로 방법은 세션이 소통하는</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v16' value='VALID'> VALID</label><label><input type='radio' name='v16' value='PLAUS'> PLAUS</label><label><input type='radio' name='v16' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q18. 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? <span class='tag'>(08-19 22:51)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=16 tokens: best-of-n recovery routing 건가 그렇다면 기본적으로는 되는 방식을 선택적으로 수행하고</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v17' value='VALID'> VALID</label><label><input type='radio' name='v17' value='PLAUS'> PLAUS</label><label><input type='radio' name='v17' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q19. 원본과 내 작업 중 어느 쪽의 방향이 더 효과적일까? 각각 장점과 단점을 알려줘. 예상되는 토큰 소모량이나 소요시간의 차이도. <span class='tag'>(08-19 22:21)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=15 tokens: 각각 단점을 방향이 소모량이나 소요시간의 알려줘 어느 예상되는 원본과 작업</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v18' value='VALID'> VALID</label><label><input type='radio' name='v18' value='PLAUS'> PLAUS</label><label><input type='radio' name='v18' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q20. 오픈코드와 오픈챔버 쪽 조치는 여기까지 해도 될 것 같아.  그런데 python.exe 프로세스가 너무 많이 떠 있는데 이건 뭐야? <span class='tag'>(08-17 19:39)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=14 tokens: python.exe 같아 그런데 너무 많이 뭐야 여기까지 오픈챔버 오픈코드와 이건</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v19' value='VALID'> VALID</label><label><input type='radio' name='v19' value='PLAUS'> PLAUS</label><label><input type='radio' name='v19' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q21. 원본이 best-of-n을 거쳐 최선의 결과를 얻어내는 방식이라면, 우리는 recovery routing을 하는데, 여기서 뭘 얻을 수 있지? <span class='tag'>(08-19 22:27)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=14 tokens: best-of-n recovery routing 거쳐 결과를 방식이라면 얻어내는 얻을 여기서 우리는</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v20' value='VALID'> VALID</label><label><input type='radio' name='v20' value='PLAUS'> PLAUS</label><label><input type='radio' name='v20' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q22. 혹시 codex는 창을 세션마다 하나씩 띄워? 그게 아니라면 창을 하나만 띄우게 하는게 맞는 것 같은데 <span class='tag'>(08-17 20:01)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=13 tokens: codex 같은데 그게 띄우게 띄워 맞는 세션마다 아니라면 창을 하나만</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v21' value='VALID'> VALID</label><label><input type='radio' name='v21' value='PLAUS'> PLAUS</label><label><input type='radio' name='v21' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q23. 지금 답변을 보면 방법1과 방법2, 그리고 제안 A와 제안 B가 있는데, 이게 서로 어떻게 연관이 있는거야? 좀 헷갈리는데. <span class='tag'>(08-17 20:10)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=13 tokens: 그리고 답변을 방법 보면 서로 어떻게 연관이 이게 있는거야 있는데</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v22' value='VALID'> VALID</label><label><input type='radio' name='v22' value='PLAUS'> PLAUS</label><label><input type='radio' name='v22' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q24. 최종 3가지 중 1번, 2번선택지를 비교했을 때 안정성이나 기능상의 차이가 있을까? 없다면 프로세스 0개 쪽이 더 나은 것 아닐까? <span class='tag'>(08-17 20:12)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=13 tokens: 가지 기능상의 나은 번선택지를 비교했을 아닐까 안정성이나 없다면 있을까 쪽이</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v23' value='VALID'> VALID</label><label><input type='radio' name='v23' value='PLAUS'> PLAUS</label><label><input type='radio' name='v23' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q25. 일단 진행하기 전에, 로컬 프록시의 호환성 문제를 해결하고 진행하고 싶어. 이를 다른 세션에서 진행하려 하는데, 상황을 요약해서 별개의 세션에 프록시 호환성 문제를 해결하라고 지시할 수 있는 지시문을 만들어줘. <span class='tag'>(08-18 12:03)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=3d8778abd1f8c280 len=6578 ov=13 tokens: 다른 로컬 만들어줘 문제를 세션에서 싶어 일단 있는 전에 지시문을</div>
+<div class='head'><b>head</b>: [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. | [USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데 | 실제 효과가 있는 구조인지 실험이 필요해
+
+---
+
+이 리포지토리는 꽤 중요합니다. 오히려 지금</div>
+<div class='mid'><b>mid(3281자 지점)</b>: tic이 6개 trajectory를 분류하는가”를 보여줬을 뿐이고 | 아직 “실제 Hermes에서 이 신호가 유용한가”를 보여주지는 않습니다. 따라서 이제는 threshold를 더 만지는 것보다 **관측 데이터를 제대로 수집하는 것이 우선**입니다.
+
+또 하나 | Hermes가 공식 README를 다시 확인한 것은 매우 좋습니다. 현재 공식 저장소는 `track()`을 명시적으로 “Fine-grained Progress Tracking”에 사용하고 | `ProgressTracker`를 online progress tracking</div>
+<div><label><input type='radio' name='v24' value='VALID'> VALID</label><label><input type='radio' name='v24' value='PLAUS'> PLAUS</label><label><input type='radio' name='v24' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q26. 그런데 최근 opencode v2 버전이 있다는 이야기를 들었어. 이건 어떤 버전을 뜻하는 거야? <span class='tag'>(08-17 19:27)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=12 tokens: opencode 거야 그런데 들었어 뜻하는 버전을 버전이 어떤 이건 이야기를</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v25' value='VALID'> VALID</label><label><input type='radio' name='v25' value='PLAUS'> PLAUS</label><label><input type='radio' name='v25' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q27. &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 <span class='tag'>(08-19 22:57)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=11 tokens: abstention human-gated probe safe 대해 설명해줘 식으로 안전성 어떤 이게</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v26' value='VALID'> VALID</label><label><input type='radio' name='v26' value='PLAUS'> PLAUS</label><label><input type='radio' name='v26' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q28. &#x27;failure event&#x27; 즉 실패의 판단기준이 뭔지, F/V/N 결정(regex)이 뭔지에 대한 설명이 필요해. <span class='tag'>(08-19 23:14)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=11 tokens: event failure regex 결정 대한 뭔지 뭔지에 설명이 실패의 판단기준이</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v27' value='VALID'> VALID</label><label><input type='radio' name='v27' value='PLAUS'> PLAUS</label><label><input type='radio' name='v27' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q29. 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. <span class='tag'>(08-18 13:48)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=3d8778abd1f8c280 len=6578 ov=10 tokens: e44f76 proxy 대해 로컬 세션을 읽고 전의 제약에 판단해줘 판별력</div>
+<div class='head'><b>head</b>: [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. | [USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데 | 실제 효과가 있는 구조인지 실험이 필요해
+
+---
+
+이 리포지토리는 꽤 중요합니다. 오히려 지금</div>
+<div class='mid'><b>mid(3281자 지점)</b>: tic이 6개 trajectory를 분류하는가”를 보여줬을 뿐이고 | 아직 “실제 Hermes에서 이 신호가 유용한가”를 보여주지는 않습니다. 따라서 이제는 threshold를 더 만지는 것보다 **관측 데이터를 제대로 수집하는 것이 우선**입니다.
+
+또 하나 | Hermes가 공식 README를 다시 확인한 것은 매우 좋습니다. 현재 공식 저장소는 `track()`을 명시적으로 “Fine-grained Progress Tracking”에 사용하고 | `ProgressTracker`를 online progress tracking</div>
+<div><label><input type='radio' name='v28' value='VALID'> VALID</label><label><input type='radio' name='v28' value='PLAUS'> PLAUS</label><label><input type='radio' name='v28' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q30. 하지만 best-of-n과 recovery routing을 같이 수행하면 토큰 소모량과 소요시간이 폭증할텐데? <span class='tag'>(08-19 22:41)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=10 tokens: best-of-n recovery routing 같이 소모량과 소요시간이 수행하면 토큰 폭증할텐데 하지만</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v29' value='VALID'> VALID</label><label><input type='radio' name='v29' value='PLAUS'> PLAUS</label><label><input type='radio' name='v29' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q31. ② 3차 외부 검토 지시문(2×2 설계 확정 + 후회율 감사 프로토콜) 초안을 작성해줘 <span class='tag'>(10-03 22:22)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=0e2418bbc4d68f1a len=2532 ov=9 tokens: 감사 검토 설계 외부 지시문 초안을 프로토콜 확정 후회율</div>
+<div class='head'><b>head</b>: 2차 검토 종합 완료했습니다. 보고서는 `docs/review/2026-10-03_external-ai-3way_2차종합보고서.md`에 저장했고, 핵심을 요약합니다.
+
+## 총평
+
+1차 보고서의 방향(구조 유지)은 세 AI 모두 유지하지만, **이번 라운드의 진짜 가치는 &quot;1차 보고서 자체의 오류 교정&quot;** 입니다. 세 AI의 수정 제안 14건은 **전부 수용**했고, 특히 B의 지적으로 *</div>
+<div class='mid'><b>mid(1260자 지점)</b>: lane ablation 1회 | C·B |
+| **cold fallback은 abstain의 자동 후속이 아닌 조건부 2차 retrieval** (query가 memory-seeking + Jev evidence check 통과 시만) — 정밀도 회귀시험 없이 활성화 금지 | C |
+| **평가 체계를 ablation보다 선행** (병행) + &quot;비용 없음&quot; 오기 정정 | B |
+| **SKIP 후회율 감사 복원** — cold tier 도입 전에 ledger로 후회율 실측이 정보가치 최대 | B |
+| **2×2 검정력 문제** </div>
+<div><label><input type='radio' name='v30' value='VALID'> VALID</label><label><input type='radio' name='v30' value='PLAUS'> PLAUS</label><label><input type='radio' name='v30' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q32. 방금의 결과에 대해 다른 ai에게 문의해보려 해. 지시문을 만들어줄래? <span class='tag'>(08-18 21:12)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=8 tokens: 결과에 다른 대해 만들어줄래 문의해보려 방금의 에게 지시문을</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v31' value='VALID'> VALID</label><label><input type='radio' name='v31' value='PLAUS'> PLAUS</label><label><input type='radio' name='v31' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q33. recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까? <span class='tag'>(10-03 11:27)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=0e63e2c79a1bf4c0 len=2636 ov=7 tokens: recall 메모리 메모리에 배제는 의미가 장애 회복</div>
+<div class='head'><b>head</b>: 중요한 사실이 확정됐습니다. 지금의 아키텍처 의도(F11)와 실제 동작의 **불일치**가 보입니다:
+
+## 실측 확정 사항
+
+| 항목 | 코드 근거 |
+|---|---|
+| **fail_open 마커는 이미 구현됨** | `store.py` F11: `meta[&quot;gate&quot;] = f&quot;fail_open:{reason}&quot;` |
+| **마커 대상 분류** | `pipeline.py`의 `fail_o</div>
+<div class='mid'><b>mid(1312자 지점)</b>: 상태로) |
+| 재분류 | 스풀(pending_gate)은 **즉시** 재시도용 | **지연 재분류**: 장애 해소 후 `ledger`에서 `fail_open`이면서 `stored`인 행의 payload로 **batch 재판정** |
+| recall | 배제하지 않음 (태그만, 임시) | 기본 **유지** — 재분류 후 최종 판정. 단, 태그된 것의 recall 가중치 낮춤(옵션) |
+
+### 제안 흐름 (승인 후 구현)
+
+1. **식별**: `tools/jed_failopen_identify.py` — `decisions_json</div>
+<div><label><input type='radio' name='v32' value='VALID'> VALID</label><label><input type='radio' name='v32' value='PLAUS'> PLAUS</label><label><input type='radio' name='v32' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q34. &#x27;사용자 주입 라운드&#x27;를 계승했다는 게 어떤 뜻인지 알려줘 <span class='tag'>(08-19 22:08)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=389c1aa319b0b9bc len=2770 ov=7 tokens: 계승했다는 뜻인지 라운드 사용자 알려줘 어떤 주입</div>
+<div class='head'><b>head</b>: [USER] 나는 20260819_173113_147a3a 세션에서 LLM-as-a-Verifier와 J-Space를 결합해서 사용하기 위한 개발과정을 진행하고 있었어. 그리고 다른 ai에게 문의해가며 의견도 구하고 있었어. 해당 세션의 내용을 처음부터 다시 한번 전체적으로 파악해서 당초의 목적을 잘 지켜서 진행하고 있는지 돌이켜보고 싶어. | [USER] 내가 걱정하는 건 검증이 길어지고 </div>
+<div class='mid'><b>mid(1377자 지점)</b>: 수행하면 토큰 소모량과 소요시간이 폭증할텐데? | [USER] 그렇다면 우리 작업은 이미 원본의 best-of-n 방식을 포함하되 선택적으로 수행하고 기본적으로는 recovery routing을 우선하게 되는 건가? | [USER] 그래 확인해줘 | [USER] &#x27;safe abstention + human-gated + probe 안전성&#x27; 이게 어떤 식으로 작동하는지에 대해 설명해줘 | [USER] 그런데 이런 식으로는 계속해서 사람의 개입이나 허가를 필요로 하는 것 아니야? 일반적으로 llm 모델에 기대하는 형식의 작동이 아니지 </div>
+<div><label><input type='radio' name='v33' value='VALID'> VALID</label><label><input type='radio' name='v33' value='PLAUS'> PLAUS</label><label><input type='radio' name='v33' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q35. 합성 고정 입력 카나리 또한 필요에 의한 호출 시 판단할 수 있는 부분 아니야? <span class='tag'>(10-03 14:00)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=56c6a7edf464d16d len=2193 ov=6 tokens: 고정 입력 있는 카나리 합성 호출</div>
+<div class='head'><b>head</b>: P3(자동화)의 구체적인 형태를 설명합니다. 지금까지 만든 것(P2a/P2b)을 바탕으로, **&quot;사람이 도구를 실행&quot;하던 재판정 체인을 &quot;데몬이 스스로 감지→판정→정리&quot;하도록 바꾸는 것**입니다.
+
+---
+
+## P3 구성 (3가지 컴포넌트)
+
+### 1️⃣ 회복 감지 — `jev_mem_core/recover.py` (신규)
+
+현재 서킷 브레이커는 **JevUnavailable(일시 오류)</div>
+<div class='mid'><b>mid(1090자 지점)</b>:  **고아 incident/누적 quarantine** 주기 보고
+- `/v1/status`에 재판정 진행 상태 노출 (`rejudge: {pending, running, last_run, ...}`)
+
+---
+
+## 상태 흐름 (전체)
+
+```
+장애 발생 → fail_open_quarantine 저장 (P2b 완료✅)
+   ↓ 프로브
+회복 감지 (3회 성공+30분) → closed
+   ↓ 자동 트리거
+재판정 batch → KEEP 자동 승격 / SKIP staged + 알림
+   ↓ 사용자 승인 (선택)
+SKIP archived</div>
+<div><label><input type='radio' name='v34' value='VALID'> VALID</label><label><input type='radio' name='v34' value='PLAUS'> PLAUS</label><label><input type='radio' name='v34' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q36. 이 사안에 대해서 다른 ai에게 검토를 요청하고 싶어. 다른 ai들은 내 저장소에 대해서 접근 권한이 없으니 네가 검토를 요청하는 문서에 우리 jev-mem의 작동 구조에 대해 최대한 상세하게, 다른 정보가 필요 없을 정도로 적어놓고, 다른 두 비교대상 및 perfectrecall까지 포함해서 비교를 요청하도록 해줘 <span class='tag'>(10-03 20:06)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=10555641320fe37a len=5728 ov=6 tokens: jev-mem 다른 대해 비교를 에게 필요</div>
+<div class='head'><b>head</b>: 양쪽 구현을 실제 코드·문서 수준까지 대조했습니다. 결론부터 말씀드리면 **&quot;Jev를 읽기 시간에 판정자로 쓰는가, 쓰기 시간에 분류자로 쓰는가&quot;가 전부인 설계 대척점**이고, 이 프로젝트(Mnemon)의 논문이 정확히 그 분기를 벤치마크로 판정한 연구라서, jev-mem 입장에서 매우 직접적인 교훈을 주는 비교입니다.
+
+---
+
+## 한 줄 요약
+
+**Mnemon = &quot;raw records</div>
+<div class='mid'><b>mid(2858자 지점)</b>:  테이블이 커지면 이 래인만 O(N). Mnemon은 &quot;history에 따라 커지는 건 검색 인덱스뿐&quot;이라고 명시적으로 설계
+
+### 5. 검증 방식 — 서로 다른 무기
+
+- **Mnemon**: LoCoMo **91.7% (1/15)**, LongMemEval-S 83.8% (2/13), ECI 0.259 (15개 중 최저), HaluMem/BEAM 포함 5개 벤치 + run records 재현 + arXiv 논문. **단 전부 영어 벤치, gpt-4.1-mini/DeepSeek API 의존**
+- **jev-mem**: 운영 골</div>
+<div><label><input type='radio' name='v35' value='VALID'> VALID</label><label><input type='radio' name='v35' value='PLAUS'> PLAUS</label><label><input type='radio' name='v35' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q37. 시각 프리픽스 삽입을 할 경우, 메모리 호출에 문제가 생기거나 할 가능성은 없어? <span class='tag'>(10-05 00:25)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=97bca6e26edd3c63 len=2028 ov=6 tokens: 경우 메모리 시각 없어 프리픽스 호출에</div>
+<div class='head'><b>head</b>: 핵심 확인 완료 — **프리픽스 삽입이 메모리 호출에 미치는 영향을 정리합니다**:
+
+## 검토: 시각 프리픽스 삽입의 리스크
+
+### 1. 검색(recall) 영향 — **문제 가능성 있음 (주의 필요)**
+
+| 경로 | 영향 |
+|---|---|
+| **어휘 게이트**(`_filter_and_rank`) | content 전체를 토큰화해 쿼리와 overlap 계산 → **프리픽스(`[20</div>
+<div class='mid'><b>mid(1008자 지점)</b>: tore_conf에 소폭 영향** 가능
+
+→ **권장: 게이트는 원문(프리픽스 없이)으로 판정하고, KEEP 확정 후 저장 직전에 프리픽스를 붙이는 순서**가 정석입니다.
+
+### 3. 분류(beam classify) 영향 — **거의 없음**
+
+분류기는 content에서 키워드/패턴을 보고 유형 판정 — 프리픽스는 한국어 숫자/대괄호 조각이라 **분류 키워드와 겹칠 일이 거의 없어** 영향 없음.
+
+### 4. 위험한 경우 (실제 문제 시나리오)
+
+```
+쿼리: &quot;2026년 10월에 뭐 했지?&quot;  ← 사용자가 시간을 물어보는 경우</div>
+<div><label><input type='radio' name='v36' value='VALID'> VALID</label><label><input type='radio' name='v36' value='PLAUS'> PLAUS</label><label><input type='radio' name='v36' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q38. [Session was just handed off from CLI (&quot;Avinash-jetwani/jevmem과 jev-mem 비교&quot;) to this channel. The full prior conversation history is loaded above. Briefly confirm you&#x27;re working here and summarize what we were working on, so the user can continue from this device.] <span class='tag'>(10-05 08:59)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=4f8278a370048252 len=3702 ov=6 tokens: Avinash-jetwani CLI jev-mem jevmem user 비교</div>
+<div class='head'><b>head</b>: 비교를 위해 Avinash-jetwani/jevmem의 README·how-it-works·cost 문서와 우리 jev-mem 스킬(references/external-fork-ab-comparison.md 포함)을 대조했습니다. 먼저 이름 혼동부터 정리합니다.
+
+## 이름 정리 — 서로 다른 3개 프로젝트
+
+| 프로젝트 | 정체 |
+|---|---|
+| **내 jev-mem** | `jev</div>
+<div class='mid'><b>mid(1845자 지점)</b>:  abstain·θ 캘리브레이션 (라벨 기반 자동 fit 없음) |
+| 감사 | `jevmem audit` — repo 스냅샷 대비 &quot;still true?&quot; → `[stale?]` 플래그 | (없음 — 유사 기능은 없음) |
+| 운영 구조 | 훅 프로세스(콜드 13-15ms 런처 + warm daemon, Unix socket 0600) — **경량** | 상주 데몬(pythonw, RPC, spool, circuit breaker, idle shutdown) — **무겁고 내구성 지향** |
+| 비용/지연 | p50 269-310</div>
+<div><label><input type='radio' name='v37' value='VALID'> VALID</label><label><input type='radio' name='v37' value='PLAUS'> PLAUS</label><label><input type='radio' name='v37' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q39. 이 결과를 기반으로 다른 ai에 문의해보려 해. 지시문을 하나 만들어줘 <span class='tag'>(08-18 18:37)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=6 tokens: 결과를 기반으로 다른 만들어줘 문의해보려 지시문을</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v38' value='VALID'> VALID</label><label><input type='radio' name='v38' value='PLAUS'> PLAUS</label><label><input type='radio' name='v38' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q40. score+threshold 필터링은 2배까지 토큰이 늘어날 수 있다고 했는데, 그러면 jev 호출이 무조건 한번 더 들어가는 거야? 아니면 무답 쿼리 오주입 때만 들어가는 거야? <span class='tag'>(10-02 09:00)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=f091ddc7292de9e5 len=2828 ov=5 tokens: score threshold 무답 오주입 쿼리</div>
+<div class='head'><b>head</b>: 두 프로젝트의 실제 코드와 문서를 대조했습니다. 결론부터: **레이어가 다른 물건**입니다. jev-reranker는 &quot;Jev를 RAG rerank 라이브러리로 포장한 것&quot;(36 stars, MIT, PyPI 배포, Yuichi Tateno), jev-mem은 &quot;Jev를 에이전트 메모리 전체 생애주기에 내장한 운영 시스템&quot;입니다. 겹치는 건 Jev 호출 지점 하나뿐이고, 그 지점에서도 설계가</div>
+<div class='mid'><b>mid(1408자 지점)</b>: 프트 설계**
+- jev-reranker: `instructions.py`에 0.0/0.1/0.3/0.5/0.8/1.0 앵커, 참조자(의미적 유사어) 함정, 부분 답변/연결 사실 인정, 프롬프트 인젝션 방어까지 정교하게 설계된 교본급 프롬프트.
+- jev-mem: 실용주의적 choice 프롬프트 + 게이트용 store/classify 질문. 한국어 처리(음절 토큰화, 어미 흡수)는 우리 쪽이 훨씬 깊음.
+
+**5. 평가 체계**
+- jev-reranker: Nano-set 벤치(HAKARI-Bench) + CrossEncoder 비</div>
+<div><label><input type='radio' name='v39' value='VALID'> VALID</label><label><input type='radio' name='v39' value='PLAUS'> PLAUS</label><label><input type='radio' name='v39' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q41. 방금 네가 지적한 메모리 문제 때문에 나는 모델 하나만으로 다 끝낼 수 있는 경우를 찾고 있어. 참고로 jevk5는 jev랑은 다른 모델인데, 그 모델도 vec lane은 안되나? <span class='tag'>(10-02 23:54)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=afd156a9c8e43598 len=3273 ov=5 tokens: jevk5 lane vec 모델 있는</div>
+<div class='head'><b>head</b>: 세 답변 종합 전에 인용 모델의 실존·스펙을 검증했습니다. 결과를 먼저 — **세 AI 모두 메인 질문(&quot;단일 모델 수렴&quot;)에는 &#x27;불가&#x27;로 합의**하는데, 이건 제 사전 판정과도 일치합니다. 그러므로 종합의 가치는 분기점에 있습니다: 각 AI가 제안한 **신규 후보 중 무엇이 실재하고 어떤 것이 조작/착각인지**입니다.
+
+## 1. AI 주장 검증 결과
+
+| AI 주장 | 검증 | 판정 |
+</div>
+<div class='mid'><b>mid(1630자 지점)</b>: **b-ai의 &#x27;잔여 10% 미스 원인 진단 먼저&#x27; 제안이 세 답변 중 실용 가치가 가장 높습니다.**
+
+## 2. 종합 판정
+
+**메인 질문 — 3개 AI + 사전 분석 전부 동일 결론: 단일 모델 수렴 불가.** 근거 구조도 동일합니다(① GLiNER류는 contrastive 학습 부재로 retrieval 벡터 품질 미보장 ② JevK5/4B 계열은 RAM·CPU 지연·영어 ③ 판정과 임베딩은 objective가 달라 한 벡터로 양쪽을 쓰는 설계 자체가 위험). 4중 합의라 이 방향은 재검토 종결로 봐도 됩니다.
+
+**그런데 c</div>
+<div><label><input type='radio' name='v40' value='VALID'> VALID</label><label><input type='radio' name='v40' value='PLAUS'> PLAUS</label><label><input type='radio' name='v40' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q42. 회복 감지 구현 시 jev에 주기적으로 호출을 하게 되는데, 그러면 큰 이득 없이 비용만 발생하는 거 아니야? 그냥 다음 번 jev 호출 필요가 생겼을 때 겸사겸사 판단하면 되는 거 아닐까? 어떻게 생각해? <span class='tag'>(10-03 13:55)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=a9bd735104a4d822 len=2238 ov=5 tokens: 감지 다음 이득 호출 회복</div>
+<div class='head'><b>head</b>: # P3 실행 주체 — 3 AI 검토 종합 보고
+
+## 판정: 전원 **A (core 내부 worker)** — 만장일치
+
+| 옵션 | a | b | c |
+|---|---|---|---|
+| A (core 루프) | ✅ 권장 | ✅ 권장 | ✅ 권장 |
+| B (Hermes cron) | ✗ 원칙 위배 | ✗ 원칙 위배 | ✗ 탈락 |
+| C (가드 데몬) | ✗ 침묵 장애 위험 | ✗ 비</div>
+<div class='mid'><b>mid(1113자 지점)</b>: 판정 로직 분기 없음
+6. **실패 격리 + 킬 스위치** (b) — exception boundary(재판정 버그가 core를 죽이지 않게), 연속 실패 시 자동 비활성화, `JEV_AUTO_REJUDGE=0`
+
+## 신규 발견 — 우리가 놓쳤던 것 4건
+
+⚠️ **① 브레이커-회복 감지 충돌** (b): 서킷 브레이커가 open이면 호출 자체가 차단 → &quot;실사용 3회 성공&quot;이 **관측 불가**. 402/403은 fail-open 유지라 문제없지만, `JevUnavailable`(일시 오류)로 브레이커가 열린 경우 회복을 영영 못</div>
+<div><label><input type='radio' name='v41' value='VALID'> VALID</label><label><input type='radio' name='v41' value='PLAUS'> PLAUS</label><label><input type='radio' name='v41' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q43. v2 버전은 openchamber와 같이 사용할 수 있을까? <span class='tag'>(08-17 19:30)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=5 tokens: openchamber 같이 버전은 사용할 있을까</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v42' value='VALID'> VALID</label><label><input type='radio' name='v42' value='PLAUS'> PLAUS</label><label><input type='radio' name='v42' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q44. 그렇다면 지금 설치되어 있는 j-space 스킬은 길게 작업하는 세션에서 한번 호출하면 쭉 이득을 볼 수 있을까? <span class='tag'>(08-18 10:39)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=3d8778abd1f8c280 len=6578 ov=5 tokens: 그렇다면 세션에서 있는 지금 한번</div>
+<div class='head'><b>head</b>: [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. | [USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데 | 실제 효과가 있는 구조인지 실험이 필요해
+
+---
+
+이 리포지토리는 꽤 중요합니다. 오히려 지금</div>
+<div class='mid'><b>mid(3281자 지점)</b>: tic이 6개 trajectory를 분류하는가”를 보여줬을 뿐이고 | 아직 “실제 Hermes에서 이 신호가 유용한가”를 보여주지는 않습니다. 따라서 이제는 threshold를 더 만지는 것보다 **관측 데이터를 제대로 수집하는 것이 우선**입니다.
+
+또 하나 | Hermes가 공식 README를 다시 확인한 것은 매우 좋습니다. 현재 공식 저장소는 `track()`을 명시적으로 “Fine-grained Progress Tracking”에 사용하고 | `ProgressTracker`를 online progress tracking</div>
+<div><label><input type='radio' name='v43' value='VALID'> VALID</label><label><input type='radio' name='v43' value='PLAUS'> PLAUS</label><label><input type='radio' name='v43' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q45. 그렇다면 초반에 수동으로 스킬 호출을 했더라도, 세션 압축 후에는 다시 스킬을 호출해줘야 한다는 이야기야? 아니면 압축 후 자동으로 다시 호출되나? <span class='tag'>(08-18 10:44)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=3d8778abd1f8c280 len=6578 ov=5 tokens: 그렇다면 다시 세션 아니면 한다는</div>
+<div class='head'><b>head</b>: [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. | [USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데 | 실제 효과가 있는 구조인지 실험이 필요해
+
+---
+
+이 리포지토리는 꽤 중요합니다. 오히려 지금</div>
+<div class='mid'><b>mid(3281자 지점)</b>: tic이 6개 trajectory를 분류하는가”를 보여줬을 뿐이고 | 아직 “실제 Hermes에서 이 신호가 유용한가”를 보여주지는 않습니다. 따라서 이제는 threshold를 더 만지는 것보다 **관측 데이터를 제대로 수집하는 것이 우선**입니다.
+
+또 하나 | Hermes가 공식 README를 다시 확인한 것은 매우 좋습니다. 현재 공식 저장소는 `track()`을 명시적으로 “Fine-grained Progress Tracking”에 사용하고 | `ProgressTracker`를 online progress tracking</div>
+<div><label><input type='radio' name='v44' value='VALID'> VALID</label><label><input type='radio' name='v44' value='PLAUS'> PLAUS</label><label><input type='radio' name='v44' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q46. 중간에 중단되었어. 계속 이어서 해줘 <span class='tag'>(08-18 22:53)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=5 tokens: 계속 이어서 중간에 중단되었어 해줘</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v45' value='VALID'> VALID</label><label><input type='radio' name='v45' value='PLAUS'> PLAUS</label><label><input type='radio' name='v45' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q47. [Workspace::v1: C:\\Users\\mandu\\hermes-made]
+bekko부터 돌리고 granite 는 fp16 동적양자화 변형 모델로 재시도해봐. 또 hang되면 재시도는 할 필요 없어 <span class='tag'>(10-01 07:48)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=23c93d929e1ab33d len=2640 ov=4 tokens: bekko granite 부터 필요</div>
+<div class='head'><b>head</b>: 3개 판정서를 종합했습니다. 세 AI 모두 S3 진행에는 승인했고, 실질 이견은 한 곳(클램프 타이밍)뿐입니다. 정리하면:
+
+## 1. 즉시 확정 — 3-AI 만장일치
+
+| 항목 | 결정 |
+|---|---|
+| S3 진행 | **승인** — baseline + koen + bekko 3종으로 충분 (granite 없이 성립) |
+| granite | **탈락 최종 확정, 재시도 없음** (</div>
+<div class='mid'><b>mid(1314자 지점)</b>: -|
+| **P0 정합성 점검** | ① 코퍼스 토큰 길이 분포 + 후보별 truncation 설정 introspect ② **bekko 배치 불변성 테스트**(동일 문서 20개 @ batch 1/4/16, cosine ≥ 0.999 — 실패 시 bekko DB 무효) ③ koen query 경로 `query: ` 접두사 실측(격리 recall 입력 문자열 로그 — 누락 시 품질 조용히 하락) ④ 클램프 결정 + 필요시 재인덱스 | ~30분 |
+| **P1 오프라인 fail-fast** | G4 트랩 3계층(부정역전·의미-vs-어휘</div>
+<div><label><input type='radio' name='v46' value='VALID'> VALID</label><label><input type='radio' name='v46' value='PLAUS'> PLAUS</label><label><input type='radio' name='v46' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q48. [OUT-OF-BAND USER MESSAGE — a direct message from the user, delivered once at this position; not tool output and not a new delivery when replayed from conversation history]
+참고로 어제 jev 호출 수는 21892번이었어
+[/OUT-OF-BAND USER MESSAGE] <span class='tag'>(10-02 10:53)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=bb081a27c57193a5 len=2274 ov=4 tokens: output 수는 어제 호출</div>
+<div class='head'><b>head</b>: 원인 규명을 위해 어제(10-01) JEV 호출 전력을 조사했습니다. 결론부터 말씀드리면, **정상 운영(데스크톱/gateway)이 아니라 9-30~10-01에 돌린 실험 배치 스크립트들이 JEV를 직접 API로 대량 호출**한 것이 원인입니다.
+
+## 실측 근거
+
+**1. 어제 21,892콜은 &quot;개별 판정(question) 단위&quot; 카운트입니다**
+
+로컬 데몬 로그(`core.out.log`</div>
+<div class='mid'><b>mid(1131자 지점)</b>: `는 후보 텍스트를 **8,000바이트 청크마다 질문 1개**로 쪼개고, 질문을 48KB 배치로 **최대 128 워커 병렬 발사**합니다. 전체 코퍼스(37MB+)를 스캔하는 Run L은 쿼리당 수십~수백 개 질문 × 199쿼리 = **수만 question** — 이게 21,892콜의 대부분입니다.
+
+**3. 비용 방정식이 정확히 맞습니다**
+
+- 256,192,283 input tokens × $0.042/1M ≈ **$10.76** — &quot;총 사용량 $10 초과&quot;와 정확히 일치 (output은 무료라 12M output은 비용 0</div>
+<div><label><input type='radio' name='v47' value='VALID'> VALID</label><label><input type='radio' name='v47' value='PLAUS'> PLAUS</label><label><input type='radio' name='v47' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q49. 이걸 승인하기 전에, 기존 다른 ai의 의견을 종합해서 나온 v2 설계안을 만들어야 하는 것 아니야?
+그래야 기존에 jev 장애 중 저장한 메모리를 제대로 재분류하는지 알수 있지 않나? <span class='tag'>(10-03 12:46)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=cb011c72739b1777 len=2089 ov=4 tokens: 기존 메모리를 설계안을 장애</div>
+<div class='head'><b>head</b>: **결정적 발견입니다.**
+
+- 10-02 stored 24건 전부 `user:http-402 / asst:http-402` (403 4건) — **write_gate가 실패 사유를 decisions에 이미 기록합니다!**
+- 즉 **식별은 이미 가능**합니다. `decisions_json`에 `http-402`, `http-403`, `no-key`, `error` reason이 있으면 저</div>
+<div class='mid'><b>mid(1038자 지점)</b>: `decisions_json.reason ∈ {http-402, http-403, error, no-key}` (이미 기록됨)
+- 대상: `ingest_ledger.status=&#x27;stored&#x27;` + 위 reason → `memory_ids_json`
+- Mnemosyne DB: `working_memory` / `episodic_memory`에서 해당 ID 조회
+- 대상 기간: 10-02 00:00 ~ 10-03 11:04 (실측: 402 61회, 403 33회) — **32건 stored로 확인됨**
+
+### DoD (완료 조건)</div>
+<div><label><input type='radio' name='v48' value='VALID'> VALID</label><label><input type='radio' name='v48' value='PLAUS'> PLAUS</label><label><input type='radio' name='v48' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q50. 그런데 아까 내가 &#x27;아까 할 일이 shadow 비교만 남았었나?&#x27; 라고 입력했는데, 이 때 메모리 recall 시도가 없었던 것 같아. 이건 정상적일까? <span class='tag'>(10-05 01:07)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=97bca6e26edd3c63 len=2028 ov=4 tokens: recall 메모리 이건 일이</div>
+<div class='head'><b>head</b>: 핵심 확인 완료 — **프리픽스 삽입이 메모리 호출에 미치는 영향을 정리합니다**:
+
+## 검토: 시각 프리픽스 삽입의 리스크
+
+### 1. 검색(recall) 영향 — **문제 가능성 있음 (주의 필요)**
+
+| 경로 | 영향 |
+|---|---|
+| **어휘 게이트**(`_filter_and_rank`) | content 전체를 토큰화해 쿼리와 overlap 계산 → **프리픽스(`[20</div>
+<div class='mid'><b>mid(1008자 지점)</b>: tore_conf에 소폭 영향** 가능
+
+→ **권장: 게이트는 원문(프리픽스 없이)으로 판정하고, KEEP 확정 후 저장 직전에 프리픽스를 붙이는 순서**가 정석입니다.
+
+### 3. 분류(beam classify) 영향 — **거의 없음**
+
+분류기는 content에서 키워드/패턴을 보고 유형 판정 — 프리픽스는 한국어 숫자/대괄호 조각이라 **분류 키워드와 겹칠 일이 거의 없어** 영향 없음.
+
+### 4. 위험한 경우 (실제 문제 시나리오)
+
+```
+쿼리: &quot;2026년 10월에 뭐 했지?&quot;  ← 사용자가 시간을 물어보는 경우</div>
+<div><label><input type='radio' name='v49' value='VALID'> VALID</label><label><input type='radio' name='v49' value='PLAUS'> PLAUS</label><label><input type='radio' name='v49' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q51. 좋아 삭제하고 최종 검증해줘 <span class='tag'>(08-17 19:19)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=4 tokens: 검증해줘 삭제하고 좋아 최종</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v50' value='VALID'> VALID</label><label><input type='radio' name='v50' value='PLAUS'> PLAUS</label><label><input type='radio' name='v50' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q52. 현 실험결과에 기반해서 다른 ai에 문의할 내용을 지시문으로 만들어 줘 <span class='tag'>(08-18 18:41)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=4 tokens: 내용을 다른 만들어 문의할</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v51' value='VALID'> VALID</label><label><input type='radio' name='v51' value='PLAUS'> PLAUS</label><label><input type='radio' name='v51' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q53. 일단 다른 ai의 의견을 받고 싶어. 현재까지의 실험내용을 정리해서 지시문을 만들어줘 <span class='tag'>(08-18 19:52)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=4 tokens: 다른 만들어줘 지시문을 현재까지의</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v52' value='VALID'> VALID</label><label><input type='radio' name='v52' value='PLAUS'> PLAUS</label><label><input type='radio' name='v52' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q54. 중간에 끊긴 것 같아. 계속 이어서 진행해줘 <span class='tag'>(08-18 22:25)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=4 tokens: 같아 계속 이어서 중간에</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v53' value='VALID'> VALID</label><label><input type='radio' name='v53' value='PLAUS'> PLAUS</label><label><input type='radio' name='v53' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q55. 모델 선정과 그 과정 중 생긴 문제에 대해 다른 ai에 문의하려 하니 현재 진행된 결과를 보고서로 정리해줘. 다른 정보 없이 보고서만으로 상황을 파악할 수 있도록. <span class='tag'>(10-01 08:52)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=23c93d929e1ab33d len=2640 ov=3 tokens: 모델 없이 현재</div>
+<div class='head'><b>head</b>: 3개 판정서를 종합했습니다. 세 AI 모두 S3 진행에는 승인했고, 실질 이견은 한 곳(클램프 타이밍)뿐입니다. 정리하면:
+
+## 1. 즉시 확정 — 3-AI 만장일치
+
+| 항목 | 결정 |
+|---|---|
+| S3 진행 | **승인** — baseline + koen + bekko 3종으로 충분 (granite 없이 성립) |
+| granite | **탈락 최종 확정, 재시도 없음** (</div>
+<div class='mid'><b>mid(1314자 지점)</b>: -|
+| **P0 정합성 점검** | ① 코퍼스 토큰 길이 분포 + 후보별 truncation 설정 introspect ② **bekko 배치 불변성 테스트**(동일 문서 20개 @ batch 1/4/16, cosine ≥ 0.999 — 실패 시 bekko DB 무효) ③ koen query 경로 `query: ` 접두사 실측(격리 recall 입력 문자열 로그 — 누락 시 품질 조용히 하락) ④ 클램프 결정 + 필요시 재인덱스 | ~30분 |
+| **P1 오프라인 fail-fast** | G4 트랩 3계층(부정역전·의미-vs-어휘</div>
+<div><label><input type='radio' name='v54' value='VALID'> VALID</label><label><input type='radio' name='v54' value='PLAUS'> PLAUS</label><label><input type='radio' name='v54' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q56. /v1/status 에 모델 필드가 아직 없다고 하는데 이건 구현해야 하는거 아니야? 왜 빠져 있지? <span class='tag'>(10-01 16:40)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=d7e42dafa3143a95 len=2209 ov=3 tokens: status 아직 필드가</div>
+<div class='head'><b>head</b>: 검증 완료했습니다. 테스트용 행을 별도로 생성하지 않고 기존 라이브 대화 데이터로만 검증했으므로(이 세션 자체가 라이브 쓰기 대상) 삭제할 테스트 행은 없습니다.
+
+## S4 임베딩 마이그레이션 검증 결과 (2026-10-01)
+
+### 1. 데몬 상태 — ✅ PASS
+
+| 항목 | 결과 |
+|---|---|
+| `GET /v1/health` | `{&quot;status&quot;: &quot;ready&quot;, &quot;pro</div>
+<div class='mid'><b>mid(1098자 지점)</b>: 8행 100% `bench/bekko-a8m`** (컷오버 보고 1,153 + 이후 5) |
+
+### 3. 회수 검증 — ✅ PASS (a8m 기준 유지)
+
+| 쿼리 | 결과 |
+|---|---|
+| 한국어: &quot;S4 컷오버 절차와 백업 위치, bekko 채택 이유&quot; | 상위 6건 모두 관련 — S4 컷오버 완료 보고, v2/v3 검토서, S3 벤치(채택 근거), X1 외부 검증 ✓ |
+| 영어: &quot;why bekko-a8m chosen&quot; | 컷오버 최종 상태, **별칭 등록 이유**(fastembed 미등록 → `add_custom_</div>
+<div><label><input type='radio' name='v55' value='VALID'> VALID</label><label><input type='radio' name='v55' value='PLAUS'> PLAUS</label><label><input type='radio' name='v55' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q57. r3를 다시 하기 전에, r2에서 제시된 실험이나 수정내역은 모두 적용되었어? 나는 ai에 물어보는 라운드 회수를 줄이고 싶으니 되도록 제시된 건 모두 수행하고 정리해 줘 <span class='tag'>(10-01 19:29)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=77fff37228bff51b len=2411 ov=3 tokens: 라운드 모두 에서</div>
+<div class='head'><b>head</b>: 세 리뷰를 종합하고, **각 리뷰의 핵심 주장을 실측으로 검증**한 결과를 보고합니다. 커밋 `cb24f32`.
+
+---
+
+# 2라운드 AI 리뷰 — 종합 검토 보고
+
+## ⭐ 핵심 발견 (세 AI 모두가 놓친 것)
+
+R2에서 우리가 &quot;relevance가 커버 내 69%만 1위&quot;라고 보고한 것에 대해, 세 AI는 모두 **&quot;커버 내 rerank 정밀도를 올려라&quot;** 고 답했습니다. 하지만 오</div>
+<div class='mid'><b>mid(1199자 지점)</b>: p-6 choice) | **기각** — 좁힐수록 나빠짐 (0.806→0.556→cascade는 더 좁음). 부분만 타당: 게이트 완화 P0, relevance 전면 교체 보류 |
+| **A-AI** | Doc2Query, rerank 1순위 | rerank 1순위는 **기각** (위 반전), Doc2Query는 유효한 다음 후보 |
+| **B-AI** | 통계: +5건 유의 X (p=0.0625), 180문항으로 ±0.03 판정 불가 | **정확** — 다만 풀→전체 +0.250은 구조 차이라 통계 불필요 |
+| **B-AI** </div>
+<div><label><input type='radio' name='v56' value='VALID'> VALID</label><label><input type='radio' name='v56' value='PLAUS'> PLAUS</label><label><input type='radio' name='v56' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q58. 메커니즘 검증 먼저 진행해 줘 <span class='tag'>(10-01 20:48)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=05ab2f73f273e809 len=2868 ov=3 tokens: 검증 먼저 메커니즘</div>
+<div class='head'><b>head</b>: 세 AI 답변 종합 전에, B-AI의 반박이 기존 R3 보고서의 핵심 해석(&quot;풀 크기 임계 효과&quot;)에 어떤 영향을 주는지 확인했습니다. **R3 §4의 해석(&quot;전체 코퍼스에는 명백한 무관 스팬이 대부분이라 정답이 두드러짐&quot;)은 B-AI의 H2 가설(앵커링)과 정확히 같은 방향**입니다. 즉 R3가 &quot;스캔 범위 효과&quot;라고 표현한 것을 B-AI는 &quot;메커니즘이 다를 수 있다&quot;고 지적한 것입니다.
+</div>
+<div class='mid'><b>mid(1428자 지점)</b>: ## 📌 항목별 판정 종합
+
+| 항목 | A-AI | B-AI | C-AI | 종합 판정 |
+|---|---|---|---|---|
+| **합성 벤치 졸업** | ✅ 즉시 | ✅ (메커니즘 시험 후) | ✅ | **공통 합의 — 채택** |
+| **운영 평가셋 최우선** | ✅ 60문항 | ✅ 100~150 (회귀 게이트) | ✅ 100문항 | **공통 합의 — 다음 단계** |
+| **&quot;스캔 범위 효과 확정&quot;** | 인정 | **반박 (미해명)** | &quot;주로 설명, 확정 금지&quot; | **표현 완화 필요** — &quot;스캔 범위/배치 구성</div>
+<div><label><input type='radio' name='v57' value='VALID'> VALID</label><label><input type='radio' name='v57' value='PLAUS'> PLAUS</label><label><input type='radio' name='v57' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q59. 어제 이상하게 과도한 jev 토큰 소모량이 나타났어. 그래서 총 사용량이 10달러를 넘어갔는데, 뭐가 원인이었을까? jev는 싼 게 장점인데 이상해
+jev 웹페이지에서 사용량을 보니 인풋이 256,192,283토큰, 아웃풋이 12,043,448로 나타나.
+그래서 충전해 둔 토큰이 바닥나서 지금 jev 사용이 막힌 상태야. 원인이 뭘까? <span class='tag'>(10-02 10:44)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=bb081a27c57193a5 len=2274 ov=3 tokens: 어제 토큰 토큰이</div>
+<div class='head'><b>head</b>: 원인 규명을 위해 어제(10-01) JEV 호출 전력을 조사했습니다. 결론부터 말씀드리면, **정상 운영(데스크톱/gateway)이 아니라 9-30~10-01에 돌린 실험 배치 스크립트들이 JEV를 직접 API로 대량 호출**한 것이 원인입니다.
+
+## 실측 근거
+
+**1. 어제 21,892콜은 &quot;개별 판정(question) 단위&quot; 카운트입니다**
+
+로컬 데몬 로그(`core.out.log`</div>
+<div class='mid'><b>mid(1131자 지점)</b>: `는 후보 텍스트를 **8,000바이트 청크마다 질문 1개**로 쪼개고, 질문을 48KB 배치로 **최대 128 워커 병렬 발사**합니다. 전체 코퍼스(37MB+)를 스캔하는 Run L은 쿼리당 수십~수백 개 질문 × 199쿼리 = **수만 question** — 이게 21,892콜의 대부분입니다.
+
+**3. 비용 방정식이 정확히 맞습니다**
+
+- 256,192,283 input tokens × $0.042/1M ≈ **$10.76** — &quot;총 사용량 $10 초과&quot;와 정확히 일치 (output은 무료라 12M output은 비용 0</div>
+<div><label><input type='radio' name='v58' value='VALID'> VALID</label><label><input type='radio' name='v58' value='PLAUS'> PLAUS</label><label><input type='radio' name='v58' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q60. 장애 기간 기록을 식별하고 이후에 정리할 수 있는  방법이 있었으면 좋겠어. 메모리에 쓸데없는 자료가 계속 보관되지 않도록. <span class='tag'>(10-03 11:23)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=0e63e2c79a1bf4c0 len=2636 ov=3 tokens: 메모리에 있는 장애</div>
+<div class='head'><b>head</b>: 중요한 사실이 확정됐습니다. 지금의 아키텍처 의도(F11)와 실제 동작의 **불일치**가 보입니다:
+
+## 실측 확정 사항
+
+| 항목 | 코드 근거 |
+|---|---|
+| **fail_open 마커는 이미 구현됨** | `store.py` F11: `meta[&quot;gate&quot;] = f&quot;fail_open:{reason}&quot;` |
+| **마커 대상 분류** | `pipeline.py`의 `fail_o</div>
+<div class='mid'><b>mid(1312자 지점)</b>: 상태로) |
+| 재분류 | 스풀(pending_gate)은 **즉시** 재시도용 | **지연 재분류**: 장애 해소 후 `ledger`에서 `fail_open`이면서 `stored`인 행의 payload로 **batch 재판정** |
+| recall | 배제하지 않음 (태그만, 임시) | 기본 **유지** — 재분류 후 최종 판정. 단, 태그된 것의 recall 가중치 낮춤(옵션) |
+
+### 제안 흐름 (승인 후 구현)
+
+1. **식별**: `tools/jed_failopen_identify.py` — `decisions_json</div>
+<div><label><input type='radio' name='v59' value='VALID'> VALID</label><label><input type='radio' name='v59' value='PLAUS'> PLAUS</label><label><input type='radio' name='v59' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q61. 현재 이 텔레그램 세션을 pc에서 작업해서 텔레그램 토픽에선 기존 작업내용이 보이지 않아. 마지막 답변내용을 다시 한번 보여줄래? <span class='tag'>(10-03 12:53)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=0e63e2c79a1bf4c0 len=2636 ov=3 tokens: 기존 에서 현재</div>
+<div class='head'><b>head</b>: 중요한 사실이 확정됐습니다. 지금의 아키텍처 의도(F11)와 실제 동작의 **불일치**가 보입니다:
+
+## 실측 확정 사항
+
+| 항목 | 코드 근거 |
+|---|---|
+| **fail_open 마커는 이미 구현됨** | `store.py` F11: `meta[&quot;gate&quot;] = f&quot;fail_open:{reason}&quot;` |
+| **마커 대상 분류** | `pipeline.py`의 `fail_o</div>
+<div class='mid'><b>mid(1312자 지점)</b>: 상태로) |
+| 재분류 | 스풀(pending_gate)은 **즉시** 재시도용 | **지연 재분류**: 장애 해소 후 `ledger`에서 `fail_open`이면서 `stored`인 행의 payload로 **batch 재판정** |
+| recall | 배제하지 않음 (태그만, 임시) | 기본 **유지** — 재분류 후 최종 판정. 단, 태그된 것의 recall 가중치 낮춤(옵션) |
+
+### 제안 흐름 (승인 후 구현)
+
+1. **식별**: `tools/jed_failopen_identify.py` — `decisions_json</div>
+<div><label><input type='radio' name='v60' value='VALID'> VALID</label><label><input type='radio' name='v60' value='PLAUS'> PLAUS</label><label><input type='radio' name='v60' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q62. 그러면 이 gold44는 의도적으로 자동 생성 기반으로 뽑은 거야? 내가 이걸 보고 어떤 판정을 해야 할까? <span class='tag'>(10-04 18:22)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=61ec2684bf12c331 len=5351 ov=3 tokens: 보고 어떤 해야</div>
+<div class='head'><b>head</b>: [The user sent a text document: &#x27;c-ai-6th_τ0.65-검증검토.md&#x27;. Its content has been included below. The file is also saved at: C:\Users\mandu\AppData\Local\hermes\cache\documents\doc_ffe573921aa1_c-ai-6th_τ0.65-검증검토.md]
+
+[Con</div>
+<div class='mid'><b>mid(2672자 지점)</b>: oice와 완전히 동등하다”고 볼 필요는 없습니다. pointwise는 max score가 연속값으로 나오기 때문에 0.54~0.60처럼 실제 answer와 no-answer가 가까워지는 회색지대를 관찰할 수 있고, 이 정보는 calibration과 진단에 분명 유용합니다. 반대로 choice의 abstain은 모델에게 직접 usable evidence가 없다라는 별도 결정을 요구하기 때문에 threshold를 사람이 관리해야 하는 부담이 작습니다. 특히 이번 데이터에서 no-answer의 최대 점수가 0.600이고 실제 answe</div>
+<div><label><input type='radio' name='v61' value='VALID'> VALID</label><label><input type='radio' name='v61' value='PLAUS'> PLAUS</label><label><input type='radio' name='v61' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q63. 실측 시 내가 수동으로 라벨을 붙여야 하나? <span class='tag'>(10-05 02:31)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=c029529e72326627 len=4711 ov=3 tokens: 라벨을 수동으로 실측</div>
+<div class='head'><b>head</b>: 두 제안 각각을 &quot;거기서 어떻게 동작하는가 → 우리 시스템에 어떻게 옮겨오는가 → 정확히 무엇이 이득인가 → 비용·리스크&quot; 순서로 풀어드립니다. 결론부터: 둘 다 매력적이지만, **fit은 우리 구조상 &quot;라벨 수집&quot;이 누락된 핵심이고, audit는 개념을 바꿔야 합니다** (그쪽은 repo 메모리라 스냅샷 비교가 자연스럽지만, 우리 메모리는 세션/작업 사실이라 &quot;진실의 기준&quot;을 재정의해야 함</div>
+<div class='mid'><b>mid(2349자 지점)</b>: until)만 있고, **저장 후 재검증 경로는 0**입니다. fail-open 재판정도 장애 구간 한정입니다.
+- stale 메모리의 실해: (a) prefetch 풀 슬롯을 차지하고 주입돼 에이전트가 옛 사실(구 포트, 구 URL, 구 설정)을 답으로 삼음, (b) 골든셋의 &quot;갱신 쿼리 최신성&quot; 축에서 이미 측정 중인 문제(설정 변경 후 &quot;지금은 뭐지?&quot; 쿼리가 옛 값 메모리를 top에 올림).
+- **실제 stale 사례가 현재 DB에 존재**: typesafe URL 시대의 메모리, S1/S2 상태 기록, 옛 경로/포트 지식</div>
+<div><label><input type='radio' name='v62' value='VALID'> VALID</label><label><input type='radio' name='v62' value='PLAUS'> PLAUS</label><label><input type='radio' name='v62' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q64. 그런데 audit Tier 2에서 다룬 샘플 중에 상당수는 꽤 과거의 기록이라 지금에 와서 뭔가 달라질 수는 없어. 그래도 내 판정에 의미가 있었을까? <span class='tag'>(10-05 11:55)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=c029529e72326627 len=4711 ov=3 tokens: Tier audit 판정에</div>
+<div class='head'><b>head</b>: 두 제안 각각을 &quot;거기서 어떻게 동작하는가 → 우리 시스템에 어떻게 옮겨오는가 → 정확히 무엇이 이득인가 → 비용·리스크&quot; 순서로 풀어드립니다. 결론부터: 둘 다 매력적이지만, **fit은 우리 구조상 &quot;라벨 수집&quot;이 누락된 핵심이고, audit는 개념을 바꿔야 합니다** (그쪽은 repo 메모리라 스냅샷 비교가 자연스럽지만, 우리 메모리는 세션/작업 사실이라 &quot;진실의 기준&quot;을 재정의해야 함</div>
+<div class='mid'><b>mid(2349자 지점)</b>: until)만 있고, **저장 후 재검증 경로는 0**입니다. fail-open 재판정도 장애 구간 한정입니다.
+- stale 메모리의 실해: (a) prefetch 풀 슬롯을 차지하고 주입돼 에이전트가 옛 사실(구 포트, 구 URL, 구 설정)을 답으로 삼음, (b) 골든셋의 &quot;갱신 쿼리 최신성&quot; 축에서 이미 측정 중인 문제(설정 변경 후 &quot;지금은 뭐지?&quot; 쿼리가 옛 값 메모리를 top에 올림).
+- **실제 stale 사례가 현재 DB에 존재**: typesafe URL 시대의 메모리, S1/S2 상태 기록, 옛 경로/포트 지식</div>
+<div><label><input type='radio' name='v63' value='VALID'> VALID</label><label><input type='radio' name='v63' value='PLAUS'> PLAUS</label><label><input type='radio' name='v63' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q65. 1번은 바로 처리해줘. 그리고 2번은 현재 shadow 비교 실행 중에는 하면 안되지 않을까? <span class='tag'>(10-05 12:00)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=c029529e72326627 len=4711 ov=3 tokens: 비교 실행 현재</div>
+<div class='head'><b>head</b>: 두 제안 각각을 &quot;거기서 어떻게 동작하는가 → 우리 시스템에 어떻게 옮겨오는가 → 정확히 무엇이 이득인가 → 비용·리스크&quot; 순서로 풀어드립니다. 결론부터: 둘 다 매력적이지만, **fit은 우리 구조상 &quot;라벨 수집&quot;이 누락된 핵심이고, audit는 개념을 바꿔야 합니다** (그쪽은 repo 메모리라 스냅샷 비교가 자연스럽지만, 우리 메모리는 세션/작업 사실이라 &quot;진실의 기준&quot;을 재정의해야 함</div>
+<div class='mid'><b>mid(2349자 지점)</b>: until)만 있고, **저장 후 재검증 경로는 0**입니다. fail-open 재판정도 장애 구간 한정입니다.
+- stale 메모리의 실해: (a) prefetch 풀 슬롯을 차지하고 주입돼 에이전트가 옛 사실(구 포트, 구 URL, 구 설정)을 답으로 삼음, (b) 골든셋의 &quot;갱신 쿼리 최신성&quot; 축에서 이미 측정 중인 문제(설정 변경 후 &quot;지금은 뭐지?&quot; 쿼리가 옛 값 메모리를 top에 올림).
+- **실제 stale 사례가 현재 DB에 존재**: typesafe URL 시대의 메모리, S1/S2 상태 기록, 옛 경로/포트 지식</div>
+<div><label><input type='radio' name='v64' value='VALID'> VALID</label><label><input type='radio' name='v64' value='PLAUS'> PLAUS</label><label><input type='radio' name='v64' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q66. 이건 현재까지의 우리 데이터에 기반한 거지 만약 내가 장문의 보고서를 입력한다던가 하면 걸릴 수 있는 문제 아닐까? <span class='tag'>(10-05 14:53)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=f76a006d20729049 len=2197 ov=3 tokens: 우리 있는 하면</div>
+<div class='head'><b>head</b>: 트윗 전체를 읽고 jev-mem 구조와 대조했습니다. (참고: 이 글은 &quot;Jev&quot;가 메모리 파이프라인 4개 지점에 어떻게 적용되는지를 supermemory 관점에서 정리한 탐구글이며, 저자는 우리와 같은 이유로 일부 지점은 기각했습니다.)
+
+## 적용 검토 결과
+
+**① Jev reranking — 이미 초과 달성, 적용 불필요**
+저자 결론이 &quot;Jev는 reranker로 좋지만 전용 rer</div>
+<div class='mid'><b>mid(1092자 지점)</b>: 에 continuation 기반 경계 선택을 적용하면 의미 보존 절단이 가능합니다. 다만 1k docs당 $0.08로 다른 방식 대비 ~10배라, 1,589행 전체에 돌릴 만큼의 가치는 아직 없어 보입니다.
+
+**④ Harness에서 Jev가 &quot;메모리 검색 필요 여부&quot; 결정 — 가장 유망한 신규 아이디어**
+저자가 제일 강조하는 지점입니다: 모델이 아니라 Jev가 UserPromptSubmit 훅에서 &quot;이 질문에 메모리가 필요한가&quot;를 판정하고, 불필요하면 검색 자체를 스킵(툴 콜 없이). 사용자가 &quot;without using memo</div>
+<div><label><input type='radio' name='v65' value='VALID'> VALID</label><label><input type='radio' name='v65' value='PLAUS'> PLAUS</label><label><input type='radio' name='v65' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q67. 좋아 그대로 진행해줘 <span class='tag'>(08-17 19:10)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=9cfd5af4c41b71a2 len=2379 ov=3 tokens: 그대로 좋아 진행해줘</div>
+<div class='head'><b>head</b>: [USER] 현재 내 pc에는 opencode와 openchamber가 설치되어 있어. openchamber는 최신 버전으로 업데이트 했지만 | opencode는 최신버전으로 어떻게 업데이트하는지 모르겠어. 그리고 pc에 opencode 관련 파일이 많아서 어떤 게 제대로 설치된 opencode인지도 모르겠어. opencode 관련 지저분한 파일을 정리하고 최신 버전으로 업데이트하려 하는데 </div>
+<div class='mid'><b>mid(1182자 지점)</b>:  3~5초 기동 지연이 붙습니다.] 이런 이야기가 있었는데 | 그럼 이 선택지는 1번도 2번도 아니지 않아? | [USER] @url:`https://github.com/mnemosyne-oss/mnemosyne` 깃허브에서 보면 | readme에 이런 내용이 있어.
+
+---
+
+Python SDK (any agent):
+
+from mnemosyne import remember | recall
+
+remember(&quot;PREF dark mode interfaces&quot;)
+results = recall(&quot;user preferences&quot;</div>
+<div><label><input type='radio' name='v66' value='VALID'> VALID</label><label><input type='radio' name='v66' value='PLAUS'> PLAUS</label><label><input type='radio' name='v66' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q68. 지금 우리는 두 가지 리포지토리를 살펴보았는데, 네가 방금 준 보고는 두번째 리포지토리 기반이지? 그럼 첫번째 리포지토리의 내용은 지금 네가 한 보고와 관련이 있을까? <span class='tag'>(08-18 10:28)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=3d8778abd1f8c280 len=6578 ov=3 tokens: 가지 내용은 지금</div>
+<div class='head'><b>head</b>: [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. | [USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데 | 실제 효과가 있는 구조인지 실험이 필요해
+
+---
+
+이 리포지토리는 꽤 중요합니다. 오히려 지금</div>
+<div class='mid'><b>mid(3281자 지점)</b>: tic이 6개 trajectory를 분류하는가”를 보여줬을 뿐이고 | 아직 “실제 Hermes에서 이 신호가 유용한가”를 보여주지는 않습니다. 따라서 이제는 threshold를 더 만지는 것보다 **관측 데이터를 제대로 수집하는 것이 우선**입니다.
+
+또 하나 | Hermes가 공식 README를 다시 확인한 것은 매우 좋습니다. 현재 공식 저장소는 `track()`을 명시적으로 “Fine-grained Progress Tracking”에 사용하고 | `ProgressTracker`를 online progress tracking</div>
+<div><label><input type='radio' name='v67' value='VALID'> VALID</label><label><input type='radio' name='v67' value='PLAUS'> PLAUS</label><label><input type='radio' name='v67' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q69. 그렇다면 두 번째 리포지토리에서 제안된 실제 구조는 아예 쓸모가 없는 수준인가? <span class='tag'>(08-18 10:36)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=3d8778abd1f8c280 len=6578 ov=3 tokens: 그렇다면 실제 아예</div>
+<div class='head'><b>head</b>: [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. | [USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데 | 실제 효과가 있는 구조인지 실험이 필요해
+
+---
+
+이 리포지토리는 꽤 중요합니다. 오히려 지금</div>
+<div class='mid'><b>mid(3281자 지점)</b>: tic이 6개 trajectory를 분류하는가”를 보여줬을 뿐이고 | 아직 “실제 Hermes에서 이 신호가 유용한가”를 보여주지는 않습니다. 따라서 이제는 threshold를 더 만지는 것보다 **관측 데이터를 제대로 수집하는 것이 우선**입니다.
+
+또 하나 | Hermes가 공식 README를 다시 확인한 것은 매우 좋습니다. 현재 공식 저장소는 `track()`을 명시적으로 “Fine-grained Progress Tracking”에 사용하고 | `ProgressTracker`를 online progress tracking</div>
+<div><label><input type='radio' name='v68' value='VALID'> VALID</label><label><input type='radio' name='v68' value='PLAUS'> PLAUS</label><label><input type='radio' name='v68' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q70. 이런 답변이 나왔어. <span class='tag'>(08-18 20:59)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=3 tokens: 나왔어 답변이 이런</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v69' value='VALID'> VALID</label><label><input type='radio' name='v69' value='PLAUS'> PLAUS</label><label><input type='radio' name='v69' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q71. 방금 답변을 기반으로 다른 ai에게 문의할 지시문을 만들어줘 <span class='tag'>(08-18 21:53)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=3 tokens: 다른 답변을 지시문을</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v70' value='VALID'> VALID</label><label><input type='radio' name='v70' value='PLAUS'> PLAUS</label><label><input type='radio' name='v70' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q72. 이 답변을 기반으로 다른 ai에게 문의할 지시문을 만들어줘 <span class='tag'>(08-18 22:15)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=3 tokens: 다른 답변을 지시문을</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v71' value='VALID'> VALID</label><label><input type='radio' name='v71' value='PLAUS'> PLAUS</label><label><input type='radio' name='v71' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q73. 이 답변을 기반해서 다른 ai에게 문의할 지시문을 만들어줘 <span class='tag'>(08-18 22:33)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=3 tokens: 다른 답변을 지시문을</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v72' value='VALID'> VALID</label><label><input type='radio' name='v72' value='PLAUS'> PLAUS</label><label><input type='radio' name='v72' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q74. 19차 지시문을 먼저 작성해줘 <span class='tag'>(08-18 22:49)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=3 tokens: 먼저 작성해줘 지시문을</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v73' value='VALID'> VALID</label><label><input type='radio' name='v73' value='PLAUS'> PLAUS</label><label><input type='radio' name='v73' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q75. 중간에 중단되었어. 이어서 진행해줘 <span class='tag'>(08-20 01:55)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=b7f460aaade6d8f4 len=6386 ov=3 tokens: 이어서 중단되었어 진행해줘</div>
+<div class='head'><b>head</b>: [USER] 다른 ai에서 이런 답변을 받았어
+
+---
+
+전체적으로 보면 60차 지시문은 지금까지의 방향 중 상당히 잘 정리된 편입니다. 특히 59차에서 발견한 “17개 recovery decision ≠ 17개 recovered candidate”를 Phase 0 audit으로 분리한 것은 정확합니다.
+
+다만 저는 60차를 그대로 “최종 결정 실험”으로 실행하는 것에는 몇 가지 중요한 </div>
+<div class='mid'><b>mid(3185자 지점)</b>: 정리됐습니다. 이제 실제 실행으로 넘어가도 됩니다. 다만 저는 “그대로 517+ calls를 실행”이라고 승인하기보다는 | 실행 직전에 딱 4가지만 고정하고 시작하는 것을 권합니다. 이 4개는 새로운 연구 설계가 아니라 기존 설계를 정확하게 실행하기 위한 operational clarification입니다.
+
+가장 중요한 것은 **D의 recovered candidate 수가 실제 실행에서 11개라고 보장되지 않는다는 점**입니다. 11개는 REPLAY에서 확인된 숫자이지 LIVE 실행의 고정값이 아닙니다. 따라서 266 eva</div>
+<div><label><input type='radio' name='v74' value='VALID'> VALID</label><label><input type='radio' name='v74' value='PLAUS'> PLAUS</label><label><input type='radio' name='v74' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q76. 지금 작업 진행 중이야? <span class='tag'>(10-01 08:15)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=23c93d929e1ab33d len=2640 ov=2 tokens: 지금 진행</div>
+<div class='head'><b>head</b>: 3개 판정서를 종합했습니다. 세 AI 모두 S3 진행에는 승인했고, 실질 이견은 한 곳(클램프 타이밍)뿐입니다. 정리하면:
+
+## 1. 즉시 확정 — 3-AI 만장일치
+
+| 항목 | 결정 |
+|---|---|
+| S3 진행 | **승인** — baseline + koen + bekko 3종으로 충분 (granite 없이 성립) |
+| granite | **탈락 최종 확정, 재시도 없음** (</div>
+<div class='mid'><b>mid(1314자 지점)</b>: -|
+| **P0 정합성 점검** | ① 코퍼스 토큰 길이 분포 + 후보별 truncation 설정 introspect ② **bekko 배치 불변성 테스트**(동일 문서 20개 @ batch 1/4/16, cosine ≥ 0.999 — 실패 시 bekko DB 무효) ③ koen query 경로 `query: ` 접두사 실측(격리 recall 입력 문자열 로그 — 누락 시 품질 조용히 하락) ④ 클램프 결정 + 필요시 재인덱스 | ~30분 |
+| **P1 오프라인 fail-fast** | G4 트랩 3계층(부정역전·의미-vs-어휘</div>
+<div><label><input type='radio' name='v75' value='VALID'> VALID</label><label><input type='radio' name='v75' value='PLAUS'> PLAUS</label><label><input type='radio' name='v75' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q77. 그런데 granite는 배치4로 해도 램 점유율이 폭증했던 거야? <span class='tag'>(10-01 10:09)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=23c93d929e1ab33d len=2640 ov=2 tokens: granite 배치</div>
+<div class='head'><b>head</b>: 3개 판정서를 종합했습니다. 세 AI 모두 S3 진행에는 승인했고, 실질 이견은 한 곳(클램프 타이밍)뿐입니다. 정리하면:
+
+## 1. 즉시 확정 — 3-AI 만장일치
+
+| 항목 | 결정 |
+|---|---|
+| S3 진행 | **승인** — baseline + koen + bekko 3종으로 충분 (granite 없이 성립) |
+| granite | **탈락 최종 확정, 재시도 없음** (</div>
+<div class='mid'><b>mid(1314자 지점)</b>: -|
+| **P0 정합성 점검** | ① 코퍼스 토큰 길이 분포 + 후보별 truncation 설정 introspect ② **bekko 배치 불변성 테스트**(동일 문서 20개 @ batch 1/4/16, cosine ≥ 0.999 — 실패 시 bekko DB 무효) ③ koen query 경로 `query: ` 접두사 실측(격리 recall 입력 문자열 로그 — 누락 시 품질 조용히 하락) ④ 클램프 결정 + 필요시 재인덱스 | ~30분 |
+| **P1 오프라인 fail-fast** | G4 트랩 3계층(부정역전·의미-vs-어휘</div>
+<div><label><input type='radio' name='v76' value='VALID'> VALID</label><label><input type='radio' name='v76' value='PLAUS'> PLAUS</label><label><input type='radio' name='v76' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q78. 정적 quint 8 원본을 배치 4로 실행해보자. 10분 타임아웃으로. <span class='tag'>(10-01 10:12)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=23c93d929e1ab33d len=2640 ov=2 tokens: 배치 타임아웃으로</div>
+<div class='head'><b>head</b>: 3개 판정서를 종합했습니다. 세 AI 모두 S3 진행에는 승인했고, 실질 이견은 한 곳(클램프 타이밍)뿐입니다. 정리하면:
+
+## 1. 즉시 확정 — 3-AI 만장일치
+
+| 항목 | 결정 |
+|---|---|
+| S3 진행 | **승인** — baseline + koen + bekko 3종으로 충분 (granite 없이 성립) |
+| granite | **탈락 최종 확정, 재시도 없음** (</div>
+<div class='mid'><b>mid(1314자 지점)</b>: -|
+| **P0 정합성 점검** | ① 코퍼스 토큰 길이 분포 + 후보별 truncation 설정 introspect ② **bekko 배치 불변성 테스트**(동일 문서 20개 @ batch 1/4/16, cosine ≥ 0.999 — 실패 시 bekko DB 무효) ③ koen query 경로 `query: ` 접두사 실측(격리 recall 입력 문자열 로그 — 누락 시 품질 조용히 하락) ④ 클램프 결정 + 필요시 재인덱스 | ~30분 |
+| **P1 오프라인 fail-fast** | G4 트랩 3계층(부정역전·의미-vs-어휘</div>
+<div><label><input type='radio' name='v77' value='VALID'> VALID</label><label><input type='radio' name='v77' value='PLAUS'> PLAUS</label><label><input type='radio' name='v77' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q79. 다른 ai의 조언을 구할 수 있도록, 판단에 다른 정보는 필요하지 않은 형태로 현재 비교 결과에 대해 보고서를 작성해줘. 또한 perfectrecall처럼 jev에 모든 것을 맡기지 않아도, 임베디드 모델을 활용하면서 성능을 올리는 방법을 찾고 싶어. 현재보다 어느 정도 jev 호출숫자가 올라가는 건 괜찮아. <span class='tag'>(10-01 18:30)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=77f9a2b2a68ae2f7 len=2704 ov=2 tokens: perfectrecall 비교</div>
+<div class='head'><b>head</b>: 커밋·푸시 완료 (`fa138f6`). 이제 종합 결과를 보고합니다.
+
+---
+
+## PerfectRecall vs 내 구현 — 격리 A/B 비교 결과
+
+**프로토콜**: 스크래치 전용 DB(코퍼스 419 스팬, 쿼리 180, 동일 seed), 실 Hermes/데몬/DB 무접촉, 동일 Jev 엔드포인트·키. 내 쪽은 라이브 파이프라인 로직(`build_lane_pool + _filter_an</div>
+<div class='mid'><b>mid(1346자 지점)</b>: 다)는 내 운영 도메인인 장기기억 회수와 다름. §8b 실측에서 지시문(0.980)·문서 QA(1.000)는 내 파이프라인이 강함.
+- **자원/비용은 내 구현 압도적** — 요청 1/10, 지연 -40%. PR은 recall 품질을 Jev API 비용으로 사는 설계.
+- **트레이드오프 실측 확정**: PR = &quot;전부 Jev에 던진다&quot; (정확도↑, 비용∝코퍼스), 내 구현 = &quot;lane pool로 좁힌다&quot; (비용 고정, 누락 리스크). 15.6GB RAM 환경에선 내 설계가 적합하나 **lane pool 커버리지 80%대 한계는 </div>
+<div><label><input type='radio' name='v78' value='VALID'> VALID</label><label><input type='radio' name='v78' value='PLAUS'> PLAUS</label><label><input type='radio' name='v78' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q80. 구현 전에, 현재 이 검토 결과를 다시 한번 보고서로 만들어 줘. 다시 한번 ai들의 조언을 얻어 보려 해 <span class='tag'>(10-01 19:08)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=77fff37228bff51b len=2411 ov=2 tokens: 검토 결과를</div>
+<div class='head'><b>head</b>: 세 리뷰를 종합하고, **각 리뷰의 핵심 주장을 실측으로 검증**한 결과를 보고합니다. 커밋 `cb24f32`.
+
+---
+
+# 2라운드 AI 리뷰 — 종합 검토 보고
+
+## ⭐ 핵심 발견 (세 AI 모두가 놓친 것)
+
+R2에서 우리가 &quot;relevance가 커버 내 69%만 1위&quot;라고 보고한 것에 대해, 세 AI는 모두 **&quot;커버 내 rerank 정밀도를 올려라&quot;** 고 답했습니다. 하지만 오</div>
+<div class='mid'><b>mid(1199자 지점)</b>: p-6 choice) | **기각** — 좁힐수록 나빠짐 (0.806→0.556→cascade는 더 좁음). 부분만 타당: 게이트 완화 P0, relevance 전면 교체 보류 |
+| **A-AI** | Doc2Query, rerank 1순위 | rerank 1순위는 **기각** (위 반전), Doc2Query는 유효한 다음 후보 |
+| **B-AI** | 통계: +5건 유의 X (p=0.0625), 180문항으로 ±0.03 판정 불가 | **정확** — 다만 풀→전체 +0.250은 구조 차이라 통계 불필요 |
+| **B-AI** </div>
+<div><label><input type='radio' name='v79' value='VALID'> VALID</label><label><input type='radio' name='v79' value='PLAUS'> PLAUS</label><label><input type='radio' name='v79' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q81. doc2query는 왜 수행하지 않았어? 그리고 lane budget을 올리면 토큰은 얼마나 증가해? <span class='tag'>(10-01 20:04)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=05ab2f73f273e809 len=2868 ov=2 tokens: budget lane</div>
+<div class='head'><b>head</b>: 세 AI 답변 종합 전에, B-AI의 반박이 기존 R3 보고서의 핵심 해석(&quot;풀 크기 임계 효과&quot;)에 어떤 영향을 주는지 확인했습니다. **R3 §4의 해석(&quot;전체 코퍼스에는 명백한 무관 스팬이 대부분이라 정답이 두드러짐&quot;)은 B-AI의 H2 가설(앵커링)과 정확히 같은 방향**입니다. 즉 R3가 &quot;스캔 범위 효과&quot;라고 표현한 것을 B-AI는 &quot;메커니즘이 다를 수 있다&quot;고 지적한 것입니다.
+</div>
+<div class='mid'><b>mid(1428자 지점)</b>: ## 📌 항목별 판정 종합
+
+| 항목 | A-AI | B-AI | C-AI | 종합 판정 |
+|---|---|---|---|---|
+| **합성 벤치 졸업** | ✅ 즉시 | ✅ (메커니즘 시험 후) | ✅ | **공통 합의 — 채택** |
+| **운영 평가셋 최우선** | ✅ 60문항 | ✅ 100~150 (회귀 게이트) | ✅ 100문항 | **공통 합의 — 다음 단계** |
+| **&quot;스캔 범위 효과 확정&quot;** | 인정 | **반박 (미해명)** | &quot;주로 설명, 확정 금지&quot; | **표현 완화 필요** — &quot;스캔 범위/배치 구성</div>
+<div><label><input type='radio' name='v80' value='VALID'> VALID</label><label><input type='radio' name='v80' value='PLAUS'> PLAUS</label><label><input type='radio' name='v80' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q82. lane budget은 그대로 유지할게. 토큰증가량 대비 그렇게 큰 상승같지 않아 <span class='tag'>(10-01 20:31)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=05ab2f73f273e809 len=2868 ov=2 tokens: budget lane</div>
+<div class='head'><b>head</b>: 세 AI 답변 종합 전에, B-AI의 반박이 기존 R3 보고서의 핵심 해석(&quot;풀 크기 임계 효과&quot;)에 어떤 영향을 주는지 확인했습니다. **R3 §4의 해석(&quot;전체 코퍼스에는 명백한 무관 스팬이 대부분이라 정답이 두드러짐&quot;)은 B-AI의 H2 가설(앵커링)과 정확히 같은 방향**입니다. 즉 R3가 &quot;스캔 범위 효과&quot;라고 표현한 것을 B-AI는 &quot;메커니즘이 다를 수 있다&quot;고 지적한 것입니다.
+</div>
+<div class='mid'><b>mid(1428자 지점)</b>: ## 📌 항목별 판정 종합
+
+| 항목 | A-AI | B-AI | C-AI | 종합 판정 |
+|---|---|---|---|---|
+| **합성 벤치 졸업** | ✅ 즉시 | ✅ (메커니즘 시험 후) | ✅ | **공통 합의 — 채택** |
+| **운영 평가셋 최우선** | ✅ 60문항 | ✅ 100~150 (회귀 게이트) | ✅ 100문항 | **공통 합의 — 다음 단계** |
+| **&quot;스캔 범위 효과 확정&quot;** | 인정 | **반박 (미해명)** | &quot;주로 설명, 확정 금지&quot; | **표현 완화 필요** — &quot;스캔 범위/배치 구성</div>
+<div><label><input type='radio' name='v81' value='VALID'> VALID</label><label><input type='radio' name='v81' value='PLAUS'> PLAUS</label><label><input type='radio' name='v81' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q83. 토큰 상승이 없는 쪽으로 가자. <span class='tag'>(10-01 21:09)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=f982991bd0baa99a len=3702 ov=2 tokens: 없는 토큰</div>
+<div class='head'><b>head</b>: 세 AI 답변을 검토했습니다. 이번 라운드는 **세 AI가 모두 내 R4 보고서의 같은 오류를 지적**했고, 그 지적이 수학적으로 타당하므로 먼저 인정부터 하겠습니다.
+
+## R4 리뷰 3개 AI 답변 — 종합 보고
+
+### 1️⃣ 세 AI 공통 지적: &quot;격차의 60%는 recall&quot;은 오류 (수용)
+
+**맞습니다. 제 분해가 틀렸습니다.** 올바른 계산:
+
+| 항목 | 건수 | 비고 |
+|</div>
+<div class='mid'><b>mid(1845자 지점)</b>:  α·S_vec (α≈0.15~0.20)` — JEV 혼동 시 임베딩 거리로 타이브레이크 |
+| **후보 텍스트 절단** | B-AI | **0** | 후보를 150~200자로 자르면 **풀 100개가 지금 40개보다 쌀 수 있음** |
+| **적응형 확장** | B-AI | 낮음 | 1차 40개 호출에서 신뢰도 낮을 때만 41~100 2차 호출 |
+| CPU 2차 재선별 | C-AI | 0 | vec top-100 → 로컬 재선별 → top-40 → JEV (기존 lane 조합 재정렬이라 8종 스윕과 달리 신규 신호 필요) |
+
+</div>
+<div><label><input type='radio' name='v82' value='VALID'> VALID</label><label><input type='radio' name='v82' value='PLAUS'> PLAUS</label><label><input type='radio' name='v82' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q84. 내 jev-mem 구현과 https://github.com/hotchpotch/jev-reranker/ 이 프로젝트를 비교하면 어떤지 알려줘 <span class='tag'>(10-02 08:38)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=f091ddc7292de9e5 len=2828 ov=2 tokens: jev-mem jev-reranker</div>
+<div class='head'><b>head</b>: 두 프로젝트의 실제 코드와 문서를 대조했습니다. 결론부터: **레이어가 다른 물건**입니다. jev-reranker는 &quot;Jev를 RAG rerank 라이브러리로 포장한 것&quot;(36 stars, MIT, PyPI 배포, Yuichi Tateno), jev-mem은 &quot;Jev를 에이전트 메모리 전체 생애주기에 내장한 운영 시스템&quot;입니다. 겹치는 건 Jev 호출 지점 하나뿐이고, 그 지점에서도 설계가</div>
+<div class='mid'><b>mid(1408자 지점)</b>: 프트 설계**
+- jev-reranker: `instructions.py`에 0.0/0.1/0.3/0.5/0.8/1.0 앵커, 참조자(의미적 유사어) 함정, 부분 답변/연결 사실 인정, 프롬프트 인젝션 방어까지 정교하게 설계된 교본급 프롬프트.
+- jev-mem: 실용주의적 choice 프롬프트 + 게이트용 store/classify 질문. 한국어 처리(음절 토큰화, 어미 흡수)는 우리 쪽이 훨씬 깊음.
+
+**5. 평가 체계**
+- jev-reranker: Nano-set 벤치(HAKARI-Bench) + CrossEncoder 비</div>
+<div><label><input type='radio' name='v83' value='VALID'> VALID</label><label><input type='radio' name='v83' value='PLAUS'> PLAUS</label><label><input type='radio' name='v83' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q85. 좋아 토큰 예산 산정단계를 추가해줘. jev는 저렴하다고 생각해서 이 정도로 많이 소모될 거라 예상하지는 않았어. <span class='tag'>(10-02 11:10)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=bb081a27c57193a5 len=2274 ov=2 tokens: 예산 토큰</div>
+<div class='head'><b>head</b>: 원인 규명을 위해 어제(10-01) JEV 호출 전력을 조사했습니다. 결론부터 말씀드리면, **정상 운영(데스크톱/gateway)이 아니라 9-30~10-01에 돌린 실험 배치 스크립트들이 JEV를 직접 API로 대량 호출**한 것이 원인입니다.
+
+## 실측 근거
+
+**1. 어제 21,892콜은 &quot;개별 판정(question) 단위&quot; 카운트입니다**
+
+로컬 데몬 로그(`core.out.log`</div>
+<div class='mid'><b>mid(1131자 지점)</b>: `는 후보 텍스트를 **8,000바이트 청크마다 질문 1개**로 쪼개고, 질문을 48KB 배치로 **최대 128 워커 병렬 발사**합니다. 전체 코퍼스(37MB+)를 스캔하는 Run L은 쿼리당 수십~수백 개 질문 × 199쿼리 = **수만 question** — 이게 21,892콜의 대부분입니다.
+
+**3. 비용 방정식이 정확히 맞습니다**
+
+- 256,192,283 input tokens × $0.042/1M ≈ **$10.76** — &quot;총 사용량 $10 초과&quot;와 정확히 일치 (output은 무료라 12M output은 비용 0</div>
+<div><label><input type='radio' name='v84' value='VALID'> VALID</label><label><input type='radio' name='v84' value='PLAUS'> PLAUS</label><label><input type='radio' name='v84' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q86. 실측 시 jev 호출이 발생하나? 예상 소요 비용은? <span class='tag'>(10-03 12:36)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=f66a777d230b35df len=3834 ov=2 tokens: jev 실측</div>
+<div class='head'><b>head</b>: 마지막 답변(3개 AI의 v2 2차 검토 종합 보고)을 다시 보여드립니다.
+
+---
+
+# 📋 v2 설계안 — 2차 검토 3개 AI 종합 (재전송)
+
+## 1. 총평: 조건부 승인 — &quot;v2 방향 유지, v2.1 소폭 개정 후 구현&quot;
+
+- **A**: 조건부 승인 — 설계 훌륭, P2 구현 시 3가지 명세 추가 (skip_staged·G-AS 맥락·402 프로브 백오프)
+- **B**: 수정 </div>
+<div class='mid'><b>mid(1911자 지점)</b>: *
+
+**C 특유 (설계 강건성)**
+- **D8 강화(최우선)**: &quot;저장 본문 == canonical gate input&quot;을 설계 계약으로 고정 + **`input_hash` 기록** (불일치 시 자동 rejudge_failed)
+- **불변식 3개**: ① AVAILABLE→NORMAL ② UNAVAILABLE+KEEP→QUARANTINE ③ **QUARANTINE→rejudge_status≠NONE** (마커만 남고 재분류 누락 방지) + `decision_source=jev|fallback`
+- **403 ≠ 항상 AUTH</div>
+<div><label><input type='radio' name='v85' value='VALID'> VALID</label><label><input type='radio' name='v85' value='PLAUS'> PLAUS</label><label><input type='radio' name='v85' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q87. 그런데 이 플러그인을 만약 내가 아닌 다른 사람이 사용한다고 가정할 경우, 그 사람은 골든셋이 없잖아. 사람마다 달라질 수밖에 없는데 카나리 절차가 의미 있나? <span class='tag'>(10-03 14:33)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=a9bd735104a4d822 len=2238 ov=2 tokens: 경우 다른</div>
+<div class='head'><b>head</b>: # P3 실행 주체 — 3 AI 검토 종합 보고
+
+## 판정: 전원 **A (core 내부 worker)** — 만장일치
+
+| 옵션 | a | b | c |
+|---|---|---|---|
+| A (core 루프) | ✅ 권장 | ✅ 권장 | ✅ 권장 |
+| B (Hermes cron) | ✗ 원칙 위배 | ✗ 원칙 위배 | ✗ 탈락 |
+| C (가드 데몬) | ✗ 침묵 장애 위험 | ✗ 비</div>
+<div class='mid'><b>mid(1113자 지점)</b>: 판정 로직 분기 없음
+6. **실패 격리 + 킬 스위치** (b) — exception boundary(재판정 버그가 core를 죽이지 않게), 연속 실패 시 자동 비활성화, `JEV_AUTO_REJUDGE=0`
+
+## 신규 발견 — 우리가 놓쳤던 것 4건
+
+⚠️ **① 브레이커-회복 감지 충돌** (b): 서킷 브레이커가 open이면 호출 자체가 차단 → &quot;실사용 3회 성공&quot;이 **관측 불가**. 402/403은 fail-open 유지라 문제없지만, `JevUnavailable`(일시 오류)로 브레이커가 열린 경우 회복을 영영 못</div>
+<div><label><input type='radio' name='v86' value='VALID'> VALID</label><label><input type='radio' name='v86' value='PLAUS'> PLAUS</label><label><input type='radio' name='v86' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q88. 이 부분의 결정을 다른 ai에게 문의한 뒤 결정하고 싶어. 검토 요청서를 만들어줘. <span class='tag'>(10-03 15:34)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=a9bd735104a4d822 len=2238 ov=2 tokens: 검토 다른</div>
+<div class='head'><b>head</b>: # P3 실행 주체 — 3 AI 검토 종합 보고
+
+## 판정: 전원 **A (core 내부 worker)** — 만장일치
+
+| 옵션 | a | b | c |
+|---|---|---|---|
+| A (core 루프) | ✅ 권장 | ✅ 권장 | ✅ 권장 |
+| B (Hermes cron) | ✗ 원칙 위배 | ✗ 원칙 위배 | ✗ 탈락 |
+| C (가드 데몬) | ✗ 침묵 장애 위험 | ✗ 비</div>
+<div class='mid'><b>mid(1113자 지점)</b>: 판정 로직 분기 없음
+6. **실패 격리 + 킬 스위치** (b) — exception boundary(재판정 버그가 core를 죽이지 않게), 연속 실패 시 자동 비활성화, `JEV_AUTO_REJUDGE=0`
+
+## 신규 발견 — 우리가 놓쳤던 것 4건
+
+⚠️ **① 브레이커-회복 감지 충돌** (b): 서킷 브레이커가 open이면 호출 자체가 차단 → &quot;실사용 3회 성공&quot;이 **관측 불가**. 402/403은 fail-open 유지라 문제없지만, `JevUnavailable`(일시 오류)로 브레이커가 열린 경우 회복을 영영 못</div>
+<div><label><input type='radio' name='v87' value='VALID'> VALID</label><label><input type='radio' name='v87' value='PLAUS'> PLAUS</label><label><input type='radio' name='v87' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q89. 일단 설계서를 갱신하고 다시 보고해줘 <span class='tag'>(10-03 15:59)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=a9bd735104a4d822 len=2238 ov=2 tokens: 갱신하고 설계서를</div>
+<div class='head'><b>head</b>: # P3 실행 주체 — 3 AI 검토 종합 보고
+
+## 판정: 전원 **A (core 내부 worker)** — 만장일치
+
+| 옵션 | a | b | c |
+|---|---|---|---|
+| A (core 루프) | ✅ 권장 | ✅ 권장 | ✅ 권장 |
+| B (Hermes cron) | ✗ 원칙 위배 | ✗ 원칙 위배 | ✗ 탈락 |
+| C (가드 데몬) | ✗ 침묵 장애 위험 | ✗ 비</div>
+<div class='mid'><b>mid(1113자 지점)</b>: 판정 로직 분기 없음
+6. **실패 격리 + 킬 스위치** (b) — exception boundary(재판정 버그가 core를 죽이지 않게), 연속 실패 시 자동 비활성화, `JEV_AUTO_REJUDGE=0`
+
+## 신규 발견 — 우리가 놓쳤던 것 4건
+
+⚠️ **① 브레이커-회복 감지 충돌** (b): 서킷 브레이커가 open이면 호출 자체가 차단 → &quot;실사용 3회 성공&quot;이 **관측 불가**. 402/403은 fail-open 유지라 문제없지만, `JevUnavailable`(일시 오류)로 브레이커가 열린 경우 회복을 영영 못</div>
+<div><label><input type='radio' name='v88' value='VALID'> VALID</label><label><input type='radio' name='v88' value='PLAUS'> PLAUS</label><label><input type='radio' name='v88' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q90. 내 jev-mem과 https://github.com/Grivn/mnemon-memory-agent 이 프로젝트의 구현을 비교하면 어떤지 검토해줘 <span class='tag'>(10-03 19:22)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=10555641320fe37a len=5728 ov=2 tokens: jev-mem 구현을</div>
+<div class='head'><b>head</b>: 양쪽 구현을 실제 코드·문서 수준까지 대조했습니다. 결론부터 말씀드리면 **&quot;Jev를 읽기 시간에 판정자로 쓰는가, 쓰기 시간에 분류자로 쓰는가&quot;가 전부인 설계 대척점**이고, 이 프로젝트(Mnemon)의 논문이 정확히 그 분기를 벤치마크로 판정한 연구라서, jev-mem 입장에서 매우 직접적인 교훈을 주는 비교입니다.
+
+---
+
+## 한 줄 요약
+
+**Mnemon = &quot;raw records</div>
+<div class='mid'><b>mid(2858자 지점)</b>:  테이블이 커지면 이 래인만 O(N). Mnemon은 &quot;history에 따라 커지는 건 검색 인덱스뿐&quot;이라고 명시적으로 설계
+
+### 5. 검증 방식 — 서로 다른 무기
+
+- **Mnemon**: LoCoMo **91.7% (1/15)**, LongMemEval-S 83.8% (2/13), ECI 0.259 (15개 중 최저), HaluMem/BEAM 포함 5개 벤치 + run records 재현 + arXiv 논문. **단 전부 영어 벤치, gpt-4.1-mini/DeepSeek API 의존**
+- **jev-mem**: 운영 골</div>
+<div><label><input type='radio' name='v89' value='VALID'> VALID</label><label><input type='radio' name='v89' value='PLAUS'> PLAUS</label><label><input type='radio' name='v89' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q91. 좋아 비교해줘. 내 jev-mem과 jev-Mem은 다른 프로젝트라는 것에 주의하고. <span class='tag'>(10-03 19:28)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=10555641320fe37a len=5728 ov=2 tokens: jev-mem 다른</div>
+<div class='head'><b>head</b>: 양쪽 구현을 실제 코드·문서 수준까지 대조했습니다. 결론부터 말씀드리면 **&quot;Jev를 읽기 시간에 판정자로 쓰는가, 쓰기 시간에 분류자로 쓰는가&quot;가 전부인 설계 대척점**이고, 이 프로젝트(Mnemon)의 논문이 정확히 그 분기를 벤치마크로 판정한 연구라서, jev-mem 입장에서 매우 직접적인 교훈을 주는 비교입니다.
+
+---
+
+## 한 줄 요약
+
+**Mnemon = &quot;raw records</div>
+<div class='mid'><b>mid(2858자 지점)</b>:  테이블이 커지면 이 래인만 O(N). Mnemon은 &quot;history에 따라 커지는 건 검색 인덱스뿐&quot;이라고 명시적으로 설계
+
+### 5. 검증 방식 — 서로 다른 무기
+
+- **Mnemon**: LoCoMo **91.7% (1/15)**, LongMemEval-S 83.8% (2/13), ECI 0.259 (15개 중 최저), HaluMem/BEAM 포함 5개 벤치 + run records 재현 + arXiv 논문. **단 전부 영어 벤치, gpt-4.1-mini/DeepSeek API 의존**
+- **jev-mem**: 운영 골</div>
+<div><label><input type='radio' name='v90' value='VALID'> VALID</label><label><input type='radio' name='v90' value='PLAUS'> PLAUS</label><label><input type='radio' name='v90' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q92. 좋아 계속 진행해줘 <span class='tag'>(10-03 23:23)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=c98385ddee4abf32 len=2545 ov=2 tokens: 좋아 진행해줘</div>
+<div class='head'><b>head</b>: ## 진행 요약 (1~3단계 착수 결과)
+
+### ✅ 1단계 완료 — skip_shadow + query_log (실측 검증 포함)
+
+**코드 수정** (`jev_mem_core/pipeline.py`, `ledger.py`):
+- `skip_shadow` 테이블: UNIQUE `idem_key`, **1,500자(문자 수) cap** (B 4차 지적 반영 — 1KB 바이트 cap은 한글 3</div>
+<div class='mid'><b>mid(1266자 지점)</b>: 
+- 세션별 KEEP 대조: &quot;일부 유실&quot; 7개 세션도 검토 결과 **후속 확인 질문뿐, 결정·의도는 전부 KEEP 행에 보존** — 실질 정보 유실 0건
+- **실질 후회율 0/103 (0%)** — B의 &quot;단답 유실&quot; 가설은 실사용(hermes) 데이터에서 **성립하지 않음**
+- 부수 발견: hermes 300행 전부 `session_key` 빈칸(빈 발화 38건 어댑터 이슈와 별개), fail_open_quarantine 15행 전부 http-403 확인
+
+### 🔄 3단계 진행 중 — probe ①에서 400 차단 (미해결</div>
+<div><label><input type='radio' name='v91' value='VALID'> VALID</label><label><input type='radio' name='v91' value='PLAUS'> PLAUS</label><label><input type='radio' name='v91' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q93. 429오류가 나며 소진  시 만약 키를 제외시키면 시간 제한이나 하루 제한이 풀린 다음에도 계속 제외된 상태로 남는 거 아니야? <span class='tag'>(10-04 22:52)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=97bca6e26edd3c63 len=2028 ov=2 tokens: 상태로 시간</div>
+<div class='head'><b>head</b>: 핵심 확인 완료 — **프리픽스 삽입이 메모리 호출에 미치는 영향을 정리합니다**:
+
+## 검토: 시각 프리픽스 삽입의 리스크
+
+### 1. 검색(recall) 영향 — **문제 가능성 있음 (주의 필요)**
+
+| 경로 | 영향 |
+|---|---|
+| **어휘 게이트**(`_filter_and_rank`) | content 전체를 토큰화해 쿼리와 overlap 계산 → **프리픽스(`[20</div>
+<div class='mid'><b>mid(1008자 지점)</b>: tore_conf에 소폭 영향** 가능
+
+→ **권장: 게이트는 원문(프리픽스 없이)으로 판정하고, KEEP 확정 후 저장 직전에 프리픽스를 붙이는 순서**가 정석입니다.
+
+### 3. 분류(beam classify) 영향 — **거의 없음**
+
+분류기는 content에서 키워드/패턴을 보고 유형 판정 — 프리픽스는 한국어 숫자/대괄호 조각이라 **분류 키워드와 겹칠 일이 거의 없어** 영향 없음.
+
+### 4. 위험한 경우 (실제 문제 시나리오)
+
+```
+쿼리: &quot;2026년 10월에 뭐 했지?&quot;  ← 사용자가 시간을 물어보는 경우</div>
+<div><label><input type='radio' name='v92' value='VALID'> VALID</label><label><input type='radio' name='v92' value='PLAUS'> PLAUS</label><label><input type='radio' name='v92' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q94. 그런데 원래 헤르메스 메모리 프로바이더에 jev-mem이 설정되어 있었고, jev-mem이 사용되는 시점에 데몬이 없으면 자동으로 뜨는 거 아니었어? startup이 필요했을까? <span class='tag'>(10-04 23:28)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=97bca6e26edd3c63 len=2028 ov=2 tokens: 메모리 시점에</div>
+<div class='head'><b>head</b>: 핵심 확인 완료 — **프리픽스 삽입이 메모리 호출에 미치는 영향을 정리합니다**:
+
+## 검토: 시각 프리픽스 삽입의 리스크
+
+### 1. 검색(recall) 영향 — **문제 가능성 있음 (주의 필요)**
+
+| 경로 | 영향 |
+|---|---|
+| **어휘 게이트**(`_filter_and_rank`) | content 전체를 토큰화해 쿼리와 overlap 계산 → **프리픽스(`[20</div>
+<div class='mid'><b>mid(1008자 지점)</b>: tore_conf에 소폭 영향** 가능
+
+→ **권장: 게이트는 원문(프리픽스 없이)으로 판정하고, KEEP 확정 후 저장 직전에 프리픽스를 붙이는 순서**가 정석입니다.
+
+### 3. 분류(beam classify) 영향 — **거의 없음**
+
+분류기는 content에서 키워드/패턴을 보고 유형 판정 — 프리픽스는 한국어 숫자/대괄호 조각이라 **분류 키워드와 겹칠 일이 거의 없어** 영향 없음.
+
+### 4. 위험한 경우 (실제 문제 시나리오)
+
+```
+쿼리: &quot;2026년 10월에 뭐 했지?&quot;  ← 사용자가 시간을 물어보는 경우</div>
+<div><label><input type='radio' name='v93' value='VALID'> VALID</label><label><input type='radio' name='v93' value='PLAUS'> PLAUS</label><label><input type='radio' name='v93' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q95. 그렇다면 experlab key로 전환한 뒤로 정상적으로 jev 호출해서 메모리 기록 중일까? <span class='tag'>(10-04 23:33)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=97bca6e26edd3c63 len=2028 ov=2 tokens: 기록 메모리</div>
+<div class='head'><b>head</b>: 핵심 확인 완료 — **프리픽스 삽입이 메모리 호출에 미치는 영향을 정리합니다**:
+
+## 검토: 시각 프리픽스 삽입의 리스크
+
+### 1. 검색(recall) 영향 — **문제 가능성 있음 (주의 필요)**
+
+| 경로 | 영향 |
+|---|---|
+| **어휘 게이트**(`_filter_and_rank`) | content 전체를 토큰화해 쿼리와 overlap 계산 → **프리픽스(`[20</div>
+<div class='mid'><b>mid(1008자 지점)</b>: tore_conf에 소폭 영향** 가능
+
+→ **권장: 게이트는 원문(프리픽스 없이)으로 판정하고, KEEP 확정 후 저장 직전에 프리픽스를 붙이는 순서**가 정석입니다.
+
+### 3. 분류(beam classify) 영향 — **거의 없음**
+
+분류기는 content에서 키워드/패턴을 보고 유형 판정 — 프리픽스는 한국어 숫자/대괄호 조각이라 **분류 키워드와 겹칠 일이 거의 없어** 영향 없음.
+
+### 4. 위험한 경우 (실제 문제 시나리오)
+
+```
+쿼리: &quot;2026년 10월에 뭐 했지?&quot;  ← 사용자가 시간을 물어보는 경우</div>
+<div><label><input type='radio' name='v94' value='VALID'> VALID</label><label><input type='radio' name='v94' value='PLAUS'> PLAUS</label><label><input type='radio' name='v94' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q96. source_timestamp는 재주입때뿐만 아니라 평소 메모리 저장 때에도 작성되고 있어? <span class='tag'>(10-05 00:52)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=97bca6e26edd3c63 len=2028 ov=2 tokens: 메모리 저장</div>
+<div class='head'><b>head</b>: 핵심 확인 완료 — **프리픽스 삽입이 메모리 호출에 미치는 영향을 정리합니다**:
+
+## 검토: 시각 프리픽스 삽입의 리스크
+
+### 1. 검색(recall) 영향 — **문제 가능성 있음 (주의 필요)**
+
+| 경로 | 영향 |
+|---|---|
+| **어휘 게이트**(`_filter_and_rank`) | content 전체를 토큰화해 쿼리와 overlap 계산 → **프리픽스(`[20</div>
+<div class='mid'><b>mid(1008자 지점)</b>: tore_conf에 소폭 영향** 가능
+
+→ **권장: 게이트는 원문(프리픽스 없이)으로 판정하고, KEEP 확정 후 저장 직전에 프리픽스를 붙이는 순서**가 정석입니다.
+
+### 3. 분류(beam classify) 영향 — **거의 없음**
+
+분류기는 content에서 키워드/패턴을 보고 유형 판정 — 프리픽스는 한국어 숫자/대괄호 조각이라 **분류 키워드와 겹칠 일이 거의 없어** 영향 없음.
+
+### 4. 위험한 경우 (실제 문제 시나리오)
+
+```
+쿼리: &quot;2026년 10월에 뭐 했지?&quot;  ← 사용자가 시간을 물어보는 경우</div>
+<div><label><input type='radio' name='v95' value='VALID'> VALID</label><label><input type='radio' name='v95' value='PLAUS'> PLAUS</label><label><input type='radio' name='v95' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q97. shaodw 데이터 쌓인 뒤 함께 판정해보자. 다만 현재 아쉬움을 느꼈던 상황을 나중에 확인할 사항으로 문서에 기록은 필요할 것 같아. <span class='tag'>(10-05 01:13)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=97bca6e26edd3c63 len=2028 ov=2 tokens: 나중에 함께</div>
+<div class='head'><b>head</b>: 핵심 확인 완료 — **프리픽스 삽입이 메모리 호출에 미치는 영향을 정리합니다**:
+
+## 검토: 시각 프리픽스 삽입의 리스크
+
+### 1. 검색(recall) 영향 — **문제 가능성 있음 (주의 필요)**
+
+| 경로 | 영향 |
+|---|---|
+| **어휘 게이트**(`_filter_and_rank`) | content 전체를 토큰화해 쿼리와 overlap 계산 → **프리픽스(`[20</div>
+<div class='mid'><b>mid(1008자 지점)</b>: tore_conf에 소폭 영향** 가능
+
+→ **권장: 게이트는 원문(프리픽스 없이)으로 판정하고, KEEP 확정 후 저장 직전에 프리픽스를 붙이는 순서**가 정석입니다.
+
+### 3. 분류(beam classify) 영향 — **거의 없음**
+
+분류기는 content에서 키워드/패턴을 보고 유형 판정 — 프리픽스는 한국어 숫자/대괄호 조각이라 **분류 키워드와 겹칠 일이 거의 없어** 영향 없음.
+
+### 4. 위험한 경우 (실제 문제 시나리오)
+
+```
+쿼리: &quot;2026년 10월에 뭐 했지?&quot;  ← 사용자가 시간을 물어보는 경우</div>
+<div><label><input type='radio' name='v96' value='VALID'> VALID</label><label><input type='radio' name='v96' value='PLAUS'> PLAUS</label><label><input type='radio' name='v96' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q98. 매일 텔레그램 요약 cron을 추가해줘. 그런데 요약 보고 시점은 어떻게 할 거야? <span class='tag'>(10-04 22:27)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=0580b8ce4d19ee20 len=2071 ov=2 tokens: cron 어떻게</div>
+<div class='head'><b>head</b>: [ASYNC DELEGATION COMPLETE — deleg_97f4ca46]
+A background subagent you dispatched earlier has finished. You may have moved on since dispatching it; the full task source is below so you can act on the result or re-dispatc</div>
+<div class='mid'><b>mid(1032자 지점)</b>:  shadow 실행
+  best-of-5에 recovery 얹으면 개선돼?... → gate=YES R2=inject
+  67차 실험 최종 결론 뭐였지?... → gate=YES R2=inject
+  codex CLI에서 메모리 기록되나?... → gate=YES R2=inject
+  codex config.toml 훅 어떻게 설정했지?... → gate=YES R2=inject
+  bekko랑 koen 벤치 비교 결과?... → gate=YES R2=inject
+  P3b 확장 gold MRR 수치?... → gate=YES R2</div>
+<div><label><input type='radio' name='v97' value='VALID'> VALID</label><label><input type='radio' name='v97' value='PLAUS'> PLAUS</label><label><input type='radio' name='v97' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q99. 중단된 시점부터 지금까지 진행된 대화를  메모리에 기록할 수 있어? 물론 평소처럼 판정을 거쳐야겠지만. 일단 가능한지, 가능하다면 어떤 식으로 진행될지 검토만 해줘. 실행은 하지 말고 <span class='tag'>(10-05 00:16)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=0580b8ce4d19ee20 len=2071 ov=2 tokens: 어떤 있어</div>
+<div class='head'><b>head</b>: [ASYNC DELEGATION COMPLETE — deleg_97f4ca46]
+A background subagent you dispatched earlier has finished. You may have moved on since dispatching it; the full task source is below so you can act on the result or re-dispatc</div>
+<div class='mid'><b>mid(1032자 지점)</b>:  shadow 실행
+  best-of-5에 recovery 얹으면 개선돼?... → gate=YES R2=inject
+  67차 실험 최종 결론 뭐였지?... → gate=YES R2=inject
+  codex CLI에서 메모리 기록되나?... → gate=YES R2=inject
+  codex config.toml 훅 어떻게 설정했지?... → gate=YES R2=inject
+  bekko랑 koen 벤치 비교 결과?... → gate=YES R2=inject
+  P3b 확장 gold MRR 수치?... → gate=YES R2</div>
+<div><label><input type='radio' name='v98' value='VALID'> VALID</label><label><input type='radio' name='v98' value='PLAUS'> PLAUS</label><label><input type='radio' name='v98' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q100. 잠깐, 내 jev-mem은 원래 1콜이 기본이었는데 언제 2콜이 되었지? <span class='tag'>(10-05 02:21)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=4f8278a370048252 len=3702 ov=2 tokens: jev-mem 콜이</div>
+<div class='head'><b>head</b>: 비교를 위해 Avinash-jetwani/jevmem의 README·how-it-works·cost 문서와 우리 jev-mem 스킬(references/external-fork-ab-comparison.md 포함)을 대조했습니다. 먼저 이름 혼동부터 정리합니다.
+
+## 이름 정리 — 서로 다른 3개 프로젝트
+
+| 프로젝트 | 정체 |
+|---|---|
+| **내 jev-mem** | `jev</div>
+<div class='mid'><b>mid(1845자 지점)</b>:  abstain·θ 캘리브레이션 (라벨 기반 자동 fit 없음) |
+| 감사 | `jevmem audit` — repo 스냅샷 대비 &quot;still true?&quot; → `[stale?]` 플래그 | (없음 — 유사 기능은 없음) |
+| 운영 구조 | 훅 프로세스(콜드 13-15ms 런처 + warm daemon, Unix socket 0600) — **경량** | 상주 데몬(pythonw, RPC, spool, circuit breaker, idle shutdown) — **무겁고 내구성 지향** |
+| 비용/지연 | p50 269-310</div>
+<div><label><input type='radio' name='v99' value='VALID'> VALID</label><label><input type='radio' name='v99' value='PLAUS'> PLAUS</label><label><input type='radio' name='v99' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q101. 4way 종합은 shadow enforcement 판정 이전에 해도 되나? <span class='tag'>(10-05 12:49)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=4f8278a370048252 len=3702 ov=2 tokens: way 판정</div>
+<div class='head'><b>head</b>: 비교를 위해 Avinash-jetwani/jevmem의 README·how-it-works·cost 문서와 우리 jev-mem 스킬(references/external-fork-ab-comparison.md 포함)을 대조했습니다. 먼저 이름 혼동부터 정리합니다.
+
+## 이름 정리 — 서로 다른 3개 프로젝트
+
+| 프로젝트 | 정체 |
+|---|---|
+| **내 jev-mem** | `jev</div>
+<div class='mid'><b>mid(1845자 지점)</b>:  abstain·θ 캘리브레이션 (라벨 기반 자동 fit 없음) |
+| 감사 | `jevmem audit` — repo 스냅샷 대비 &quot;still true?&quot; → `[stale?]` 플래그 | (없음 — 유사 기능은 없음) |
+| 운영 구조 | 훅 프로세스(콜드 13-15ms 런처 + warm daemon, Unix socket 0600) — **경량** | 상주 데몬(pythonw, RPC, spool, circuit breaker, idle shutdown) — **무겁고 내구성 지향** |
+| 비용/지연 | p50 269-310</div>
+<div><label><input type='radio' name='v100' value='VALID'> VALID</label><label><input type='radio' name='v100' value='PLAUS'> PLAUS</label><label><input type='radio' name='v100' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q102. abstain 개선과 audit t1 재검토는 왜 필요하지? <span class='tag'>(10-05 13:23)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=4f8278a370048252 len=3702 ov=2 tokens: abstain audit</div>
+<div class='head'><b>head</b>: 비교를 위해 Avinash-jetwani/jevmem의 README·how-it-works·cost 문서와 우리 jev-mem 스킬(references/external-fork-ab-comparison.md 포함)을 대조했습니다. 먼저 이름 혼동부터 정리합니다.
+
+## 이름 정리 — 서로 다른 3개 프로젝트
+
+| 프로젝트 | 정체 |
+|---|---|
+| **내 jev-mem** | `jev</div>
+<div class='mid'><b>mid(1845자 지점)</b>:  abstain·θ 캘리브레이션 (라벨 기반 자동 fit 없음) |
+| 감사 | `jevmem audit` — repo 스냅샷 대비 &quot;still true?&quot; → `[stale?]` 플래그 | (없음 — 유사 기능은 없음) |
+| 운영 구조 | 훅 프로세스(콜드 13-15ms 런처 + warm daemon, Unix socket 0600) — **경량** | 상주 데몬(pythonw, RPC, spool, circuit breaker, idle shutdown) — **무겁고 내구성 지향** |
+| 비용/지연 | p50 269-310</div>
+<div><label><input type='radio' name='v101' value='VALID'> VALID</label><label><input type='radio' name='v101' value='PLAUS'> PLAUS</label><label><input type='radio' name='v101' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q103. 그러면 두 제안 모두 실측해보자 <span class='tag'>(10-05 02:36)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=c029529e72326627 len=4711 ov=2 tokens: 모두 제안</div>
+<div class='head'><b>head</b>: 두 제안 각각을 &quot;거기서 어떻게 동작하는가 → 우리 시스템에 어떻게 옮겨오는가 → 정확히 무엇이 이득인가 → 비용·리스크&quot; 순서로 풀어드립니다. 결론부터: 둘 다 매력적이지만, **fit은 우리 구조상 &quot;라벨 수집&quot;이 누락된 핵심이고, audit는 개념을 바꿔야 합니다** (그쪽은 repo 메모리라 스냅샷 비교가 자연스럽지만, 우리 메모리는 세션/작업 사실이라 &quot;진실의 기준&quot;을 재정의해야 함</div>
+<div class='mid'><b>mid(2349자 지점)</b>: until)만 있고, **저장 후 재검증 경로는 0**입니다. fail-open 재판정도 장애 구간 한정입니다.
+- stale 메모리의 실해: (a) prefetch 풀 슬롯을 차지하고 주입돼 에이전트가 옛 사실(구 포트, 구 URL, 구 설정)을 답으로 삼음, (b) 골든셋의 &quot;갱신 쿼리 최신성&quot; 축에서 이미 측정 중인 문제(설정 변경 후 &quot;지금은 뭐지?&quot; 쿼리가 옛 값 메모리를 top에 올림).
+- **실제 stale 사례가 현재 DB에 존재**: typesafe URL 시대의 메모리, S1/S2 상태 기록, 옛 경로/포트 지식</div>
+<div><label><input type='radio' name='v102' value='VALID'> VALID</label><label><input type='radio' name='v102' value='PLAUS'> PLAUS</label><label><input type='radio' name='v102' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q104. prefetch skip 게이트는 결과적으로는 jev 호출을 한번 더 하게 되는 꼴 아니야? <span class='tag'>(10-05 14:00)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=f76a006d20729049 len=2197 ov=2 tokens: prefetch skip</div>
+<div class='head'><b>head</b>: 트윗 전체를 읽고 jev-mem 구조와 대조했습니다. (참고: 이 글은 &quot;Jev&quot;가 메모리 파이프라인 4개 지점에 어떻게 적용되는지를 supermemory 관점에서 정리한 탐구글이며, 저자는 우리와 같은 이유로 일부 지점은 기각했습니다.)
+
+## 적용 검토 결과
+
+**① Jev reranking — 이미 초과 달성, 적용 불필요**
+저자 결론이 &quot;Jev는 reranker로 좋지만 전용 rer</div>
+<div class='mid'><b>mid(1092자 지점)</b>: 에 continuation 기반 경계 선택을 적용하면 의미 보존 절단이 가능합니다. 다만 1k docs당 $0.08로 다른 방식 대비 ~10배라, 1,589행 전체에 돌릴 만큼의 가치는 아직 없어 보입니다.
+
+**④ Harness에서 Jev가 &quot;메모리 검색 필요 여부&quot; 결정 — 가장 유망한 신규 아이디어**
+저자가 제일 강조하는 지점입니다: 모델이 아니라 Jev가 UserPromptSubmit 훅에서 &quot;이 질문에 메모리가 필요한가&quot;를 판정하고, 불필요하면 검색 자체를 스킵(툴 콜 없이). 사용자가 &quot;without using memo</div>
+<div><label><input type='radio' name='v103' value='VALID'> VALID</label><label><input type='radio' name='v103' value='PLAUS'> PLAUS</label><label><input type='radio' name='v103' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q105. 그런데 생각해보면, jev는 콜 수에 따라 과금되는게 아니라 오직 토큰 수에만 금액 영향이 있지 않나? 그렇다면 토큰만 적다면 딜레이 문제 외에 콜 숫자를 절약해야 할 이유는 없지 않나? <span class='tag'>(10-05 14:30)</span></div>
+<div class='rowbox'>
+<div class='tag'>[working_memory] id=f76a006d20729049 len=2197 ov=2 tokens: 아니라 토큰</div>
+<div class='head'><b>head</b>: 트윗 전체를 읽고 jev-mem 구조와 대조했습니다. (참고: 이 글은 &quot;Jev&quot;가 메모리 파이프라인 4개 지점에 어떻게 적용되는지를 supermemory 관점에서 정리한 탐구글이며, 저자는 우리와 같은 이유로 일부 지점은 기각했습니다.)
+
+## 적용 검토 결과
+
+**① Jev reranking — 이미 초과 달성, 적용 불필요**
+저자 결론이 &quot;Jev는 reranker로 좋지만 전용 rer</div>
+<div class='mid'><b>mid(1092자 지점)</b>: 에 continuation 기반 경계 선택을 적용하면 의미 보존 절단이 가능합니다. 다만 1k docs당 $0.08로 다른 방식 대비 ~10배라, 1,589행 전체에 돌릴 만큼의 가치는 아직 없어 보입니다.
+
+**④ Harness에서 Jev가 &quot;메모리 검색 필요 여부&quot; 결정 — 가장 유망한 신규 아이디어**
+저자가 제일 강조하는 지점입니다: 모델이 아니라 Jev가 UserPromptSubmit 훅에서 &quot;이 질문에 메모리가 필요한가&quot;를 판정하고, 불필요하면 검색 자체를 스킵(툴 콜 없이). 사용자가 &quot;without using memo</div>
+<div><label><input type='radio' name='v104' value='VALID'> VALID</label><label><input type='radio' name='v104' value='PLAUS'> PLAUS</label><label><input type='radio' name='v104' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q106. [System: Your previous tool call (terminal) was too large and the stream timed out before it could be delivered. Do NOT retry the same tool call with the same large content. Instead, break the content into multiple smaller tool calls (e.g. use multiple patch calls or write smaller files). Each tool call&#x27;s arguments must be under ~8K tokens to avoid stream timeouts.] <span class='tag'>(08-18 11:08)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=3d8778abd1f8c280 len=6578 ov=2 tokens: call tool</div>
+<div class='head'><b>head</b>: [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. | [USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데 | 실제 효과가 있는 구조인지 실험이 필요해
+
+---
+
+이 리포지토리는 꽤 중요합니다. 오히려 지금</div>
+<div class='mid'><b>mid(3281자 지점)</b>: tic이 6개 trajectory를 분류하는가”를 보여줬을 뿐이고 | 아직 “실제 Hermes에서 이 신호가 유용한가”를 보여주지는 않습니다. 따라서 이제는 threshold를 더 만지는 것보다 **관측 데이터를 제대로 수집하는 것이 우선**입니다.
+
+또 하나 | Hermes가 공식 README를 다시 확인한 것은 매우 좋습니다. 현재 공식 저장소는 `track()`을 명시적으로 “Fine-grained Progress Tracking”에 사용하고 | `ProgressTracker`를 online progress tracking</div>
+<div><label><input type='radio' name='v105' value='VALID'> VALID</label><label><input type='radio' name='v105' value='PLAUS'> PLAUS</label><label><input type='radio' name='v105' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q107. [System: Your previous tool call (write_file) was too large and the stream timed out before it could be delivered. Do NOT retry the same tool call with the same large content. Instead, break the content into multiple smaller tool calls (e.g. use multiple patch calls or write smaller files). Each tool call&#x27;s arguments must be under ~8K tokens to avoid stream timeouts.] <span class='tag'>(08-18 11:20)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=3d8778abd1f8c280 len=6578 ov=2 tokens: call tool</div>
+<div class='head'><b>head</b>: [USER] 20260818_120923_e44f76 이 세션을 읽고 좀 전의 로컬 proxy 판별력 제약에 대해 판단해줘. | [USER] 좋아 반영해둬. 그리고 아래 내용은 내가 J-space와 LLM-as-a-Verifier깃허브 리포지토리에 대해 질문해서 다른 ai에서 답변받은 내용인데 | 실제 효과가 있는 구조인지 실험이 필요해
+
+---
+
+이 리포지토리는 꽤 중요합니다. 오히려 지금</div>
+<div class='mid'><b>mid(3281자 지점)</b>: tic이 6개 trajectory를 분류하는가”를 보여줬을 뿐이고 | 아직 “실제 Hermes에서 이 신호가 유용한가”를 보여주지는 않습니다. 따라서 이제는 threshold를 더 만지는 것보다 **관측 데이터를 제대로 수집하는 것이 우선**입니다.
+
+또 하나 | Hermes가 공식 README를 다시 확인한 것은 매우 좋습니다. 현재 공식 저장소는 `track()`을 명시적으로 “Fine-grained Progress Tracking”에 사용하고 | `ProgressTracker`를 online progress tracking</div>
+<div><label><input type='radio' name='v106' value='VALID'> VALID</label><label><input type='radio' name='v106' value='PLAUS'> PLAUS</label><label><input type='radio' name='v106' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q108. [System: The active model for this chat has changed to kimchi/deepseek-v4-flash via provider custom:9router-gi. From this point forward, use this runtime metadata when answering questions about what model/provider is active.] <span class='tag'>(08-18 19:03)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: System The</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v107' value='VALID'> VALID</label><label><input type='radio' name='v107' value='PLAUS'> PLAUS</label><label><input type='radio' name='v107' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q109. 현재 세션의 oc/deepseek-v4-flash-free 프로바이더는 정상적으로 작동 중이야. 현재 세션의 프로바이더에서 모델을 변경하지 말고, 프로바이더 문제로 진행되지 않은 작업을 다시 계속해줘. <span class='tag'>(08-18 19:03)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: 다시 현재</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v108' value='VALID'> VALID</label><label><input type='radio' name='v108' value='PLAUS'> PLAUS</label><label><input type='radio' name='v108' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q110. [System: The active model for this chat has changed to pz/deepseek-v4-flash via provider custom:9router-gi. From this point forward, use this runtime metadata when answering questions about what model/provider is active.] <span class='tag'>(08-18 19:05)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: System The</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v109' value='VALID'> VALID</label><label><input type='radio' name='v109' value='PLAUS'> PLAUS</label><label><input type='radio' name='v109' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q111. 모델 api 문제로 잠시 정지되었는데, 계속 진행해줘 <span class='tag'>(08-18 19:05)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: 계속 모델</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v110' value='VALID'> VALID</label><label><input type='radio' name='v110' value='PLAUS'> PLAUS</label><label><input type='radio' name='v110' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q112. 이제 프로바이더는 정상적으로 작동 중이야. 현재 세션의 프로바이더에서 모델을 변경하지 말고, 프로바이더 문제로 진행되지 않은 작업을 다시 계속해줘. <span class='tag'>(08-18 19:11)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: 다시 현재</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v111' value='VALID'> VALID</label><label><input type='radio' name='v111' value='PLAUS'> PLAUS</label><label><input type='radio' name='v111' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q113. [System: The active model for this chat has changed to deepcombo via provider custom:9router-gi. From this point forward, use this runtime metadata when answering questions about what model/provider is active.] <span class='tag'>(08-18 19:14)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: System The</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v112' value='VALID'> VALID</label><label><input type='radio' name='v112' value='PLAUS'> PLAUS</label><label><input type='radio' name='v112' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q114. [System: The active model for this chat has changed to deepseek-v4-flash-free via provider custom:opencodefree. From this point forward, use this runtime metadata when answering questions about what model/provider is active.] <span class='tag'>(08-18 19:27)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: System The</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v113' value='VALID'> VALID</label><label><input type='radio' name='v113' value='PLAUS'> PLAUS</label><label><input type='radio' name='v113' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q115. [System: The active model for this chat has changed to deepseek-v4-flash-free via provider opencode. From this point forward, use this runtime metadata when answering questions about what model/provider is active.] <span class='tag'>(08-18 19:29)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: System The</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v114' value='VALID'> VALID</label><label><input type='radio' name='v114' value='PLAUS'> PLAUS</label><label><input type='radio' name='v114' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q116. [System: The active model for this chat has changed to deepcombo via provider custom:local-(127.0.0.1:20128). From this point forward, use this runtime metadata when answering questions about what model/provider is active.] <span class='tag'>(08-18 19:31)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=7d60686a4ef249ae len=3289 ov=2 tokens: System The</div>
+<div class='head'><b>head</b>: [USER] [System note: Your previous turn was interrupted mid-run — the app/its backend process stopped before the turn could finish. Some of the work may already be DONE; check the current state before redoing anything | </div>
+<div class='mid'><b>mid(1637자 지점)</b>:  질문할 지시문을 만들어줘 | [USER] 이번엔 다른 ai가 이런 답변을 줬어
+
+---
+
+이번 14차 결과는 오히려 실험 설계를 상당히 명확하게 만들어 줍니다. 지금까지의 결과를 보면 더 이상 “R1이냐 R2냐 R4냐”를 단일 checkpoint의 n=5 결과로 고르는 것은 의미가 없습니다. **현재 측정 시스템에는 적어도 두 종류의 variance가 존재합니다. 하나는 같은 실행 안의 반복 평가 variance이고 | 다른 하나는 동일한 checkpoint를 다시 평가했을 때의 run-to-run variance입니다.** 12</div>
+<div><label><input type='radio' name='v115' value='VALID'> VALID</label><label><input type='radio' name='v115' value='PLAUS'> PLAUS</label><label><input type='radio' name='v115' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q117. 18차 지시문을 작성해줘 <span class='tag'>(08-18 22:40)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=2 tokens: 작성해줘 지시문을</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v116' value='VALID'> VALID</label><label><input type='radio' name='v116' value='PLAUS'> PLAUS</label><label><input type='radio' name='v116' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q118. 20차 지시문을 작성해줘 <span class='tag'>(08-18 23:48)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=2 tokens: 작성해줘 지시문을</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v117' value='VALID'> VALID</label><label><input type='radio' name='v117' value='PLAUS'> PLAUS</label><label><input type='radio' name='v117' value='IRREL'> IRREL</label></div>
+</div>
+<div class='q'>Q119. 21차 지시문을 작성해줘 <span class='tag'>(08-19 10:06)</span></div>
+<div class='rowbox'>
+<div class='tag'>[episodic_memory] id=64c6c1f4ece0cb2c len=5786 ov=2 tokens: 작성해줘 지시문을</div>
+<div class='head'><b>head</b>: [USER] 20차 지시문을 작성해줘 | [USER] 다른 ai에서 이런 답변을 받았어.
+
+---
+
+20차 결과에서 가장 중요한 발견은 `S3=0.55`와 `F3=0.55`가 단순한 threshold 문제를 넘어선다는 점입니다. **R1의 S만으로는 “검증되지 않은 수정”과 “검증에 성공했지만 이후 cleanup 때문에 evidence가 희석된 상태”를 구분할 수 없습니다.** 따라서 v3는</div>
+<div class='mid'><b>mid(2885자 지점)</b>: EVANT`와 “부정 evidence가 존재한다”는 서로 다른 개념이므로 하나의 E-state에 합치면 안 됩니다.
+
+그리고 한 가지 표현은 수정해야 합니다. 현재 실측으로 “1.0 미만 하락의 유일한 원인이 부정 서술”이라고 확정할 수는 없습니다. 현재 fixture에서는 관찰 실패가 PASS로 회복되고 | 명시적인 negative evidence가 남은 경우 점수가 낮아졌다는 것이 확인된 것입니다. 다른 형태의 negative evidence가 아직 충분 | [USER] 다른 ai에서 이런 답변이 나왔어
+
+---
+
+네. 26</div>
+<div><label><input type='radio' name='v118' value='VALID'> VALID</label><label><input type='radio' name='v118' value='PLAUS'> PLAUS</label><label><input type='radio' name='v118' value='IRREL'> IRREL</label></div>
+</div>
+
+<div style="margin:26px 0"><button onclick="exportJSON()" style="padding:10px 22px;font-size:16px">export JSON</button></div>
+<script>
+function exportJSON(){
+  const n=document.querySelectorAll('.q').length; const out=[];
+  for(let i=0;i<n;i++){
+    const sel=document.querySelector('input[name="v'+i+'"]:checked');
+    out.push({idx:i, verdict: sel?sel.value:null});
+  }
+  const blob=new Blob([JSON.stringify(out,null,1)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='stage2_verdicts.json'; a.click();
+}
+</script></body></html>

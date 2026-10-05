@@ -263,10 +263,21 @@ def run(cx, q, target_cid):
     return hit_pool, hit_gate
 
 res = []
-for t, cid, q, c in queries:
-    hp_b, hg_b = run(conn_base, q, cid)
-    hp_c, hg_c = run(conn, q, cid)
-    res.append((cid, hp_b, hg_b, hp_c, hg_c, len(c)))
+if os.environ.get("STAGE2_GOLD") == "1":
+    # ---- real-usage gold mode ----
+    gold = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                        "data", "stage2_final_gold.json"), encoding="utf-8"))
+    print(f"\nreal-usage gold mode: {len(gold)} queries")
+    for g in gold:
+        q, target = g["query"], g["row_id"]
+        hp_b, hg_b = run(conn_base, q, target)
+        hp_c, hg_c = run(conn, q, target)
+        res.append((target, hp_b, hg_b, hp_c, hg_c, g["row_len"]))
+else:
+    for t, cid, q, c in queries:
+        hp_b, hg_b = run(conn_base, q, cid)
+        hp_c, hg_c = run(conn, q, cid)
+        res.append((cid, hp_b, hg_b, hp_c, hg_c, len(c)))
 print("\n" + "=" * 70)
 print(f"pipeline comparison on {len(res)} mid-queries (baseline vs chunked)")
 print("=" * 70)

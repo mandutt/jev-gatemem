@@ -1,4 +1,4 @@
-# Stage-1 Probe: 장문 메모리 문제 실측 (jev chunking 파일럿 0단계) — 최종
+# Stage-1/2 Probe: 장문 메모리 문제 실측 (jev chunking 파일럿) — 최종
 
 - 날짜: 2026-10-05
 - 방법: 0콜 결정적 probe — JEV 호출 0회, DB read-only, 로컬 bekko-a8m 임베딩
@@ -7,7 +7,8 @@
   - `stage1b_plain_long_census.py` — plain 장문 전수 규격 + mid-query 벡터 회수
   - `stage1c_chunk_recall.py` — 800자 규칙 청킹의 벡터 순위 효과 (numpy)
   - `stage1d_scratch_pipeline.py` — **실제 파이프라인 스크래치 검증** (청크 행 저장 시 pool/gate)
-- 판정: **"저장 시 규칙 청킹 (800자) = 게이트 통과율 개선 레버"로 확정. JEV chunking은 불필요.**
+  - `stage2_*` — 실사용 gold 구축 (query_log + 세션 transcripts, 사용자 판정 38건)
+- 판정: **① JEV chunking 불필요 ② "저장 시 청킹"도 부작용(벡터 회수 손실) ③ 정답은 "행 유지 + 게이트 입력만 청크 기준 계산" — 게이트 입력 변환 설계 채택 후보**
 - (v1 보고서는 `STAGE1_LONGMEM_PROBE.v1.md`로 보존 — 실측 5 전까지의 중간판)
 
 ## 배경
@@ -78,17 +79,39 @@ FTS 존재 130/130, 벡터 존재 122/130.
 - vec0 재구축·int8 양자화 필요 (`vec_quantize_int8(?, 'unit')`)
 - 스크래치 DB는 실행 시작 시 삭제 (stale 산출물 무효화)
 
-## 종합 판정
+## 실측 6 — 실사용 gold 검증 (stage2, ★최종 판정 근거)
 
-1. **JEV chunking (continuation/boundary choice): 기각** — 실측 4에서 규칙 청킹도 벡터 회수를 못 살림.
-   JEV가 추가로 줄 이득 없음. (2단계 JEV 비교 불필요)
-2. **규칙 800자 청킹 저장: 게이트 통과율 실질 개선 확인 (20.8% → 83.3%)** — 채택 후보.
-   단, 이득은 자기발췌 mid-query 기준. **실사용 쿼리로 재확인 필요**.
-3. **잔여 한계**: 벡터 lane의 절대 유사도 문제(pool 0인 7건)는 청킹으로 해결 불가.
+**gold 구축**: query_log 83건 + 장문 행 출처 세션 transcripts(user 발화)에서 후보 (쿼리, 행) 155건 추출
+→ 행별 최적 쿼리 38건을 사용자가 판정(VALID/PLAUS/IRREL + 답이 mid인지) → **VALID+mid=YES 19건 확정**
+(idx 21은 에이전트 재검토로 PLAUS→VALID 교정, 사용자 승인). gold: `data/stage2_final_gold.json`.
+
+동일 stage1d 스크래치(baseline vs chunked)를 이 **실사용 쿼리 19건**으로 실행:
+
+| 지표 | baseline (현행) | chunked (800자 저장) |
+|---|---|---|
+| **pool hit** | **15/19 (78.9%)** | **10/19 (52.6%)** |
+| **gate hit** | **1/19 (5.3%)** | **8/19 (42.1%)** |
+
+- **baseline gate 1/19 (5.3%)**: 현행 시스템은 mid-답 장문을 실사용 쿼리로 **사실상 회수 불가**.
+  pool 15/19로 답이 이미 풀에 있는데도 게이트가 14건을 탈락시킴 → 병목은 회수가 아니라 **어휘 게이트**.
+- **chunked gate 8/19 (42.1%)**: 저장 청킹은 게이트를 8배 통과시키지만,
+  **pool 15→10 (5건 손실)** — 청크별 벡터가 전체 행 벡터보다 유사도가 낮아져 vec lane에서 이탈.
+  (자기발췌 실측 5의 pool 동일 유지와 달리, 실사용 쿼리는 어휘·벡터 신호가 약해 손실이 드러남)
+
+## 종합 판정 (최종)
+
+1. **JEV chunking (continuation/boundary choice): 기각** — 규칙 청킹과 품질 차이 이득 없음, 추가 콜 불필요.
+2. **저장 시 청킹 스키마: 기각** — 게이트 개선(+7건)보다 pool 손실(5건)이 구조적으로 나쁨.
+   스키마 변경(쓰기 1곳 + 읽기 2곳 + 마이그레이션)에 비해 순손실.
+3. **★ 채택 후보: "행 유지 + 게이트 입력만 청크 기준"** — 저장은 현행 그대로 두고,
+   `_filter_and_rank`의 어휘 겹침(min_distinctive=2/min_coverage=0.30) 계산만
+   "행 전체 content" → "800자 청크별 계산 후 max"로 교체.
+   - pool 보존(78.9%) + 게이트 개선만 취득, 쓰기 경로·DB·임베딩 무변경
+   - 코드 변경 1곳(_filter_and_rank 내 토큰 비교), 회귀 리스크 최소
+   - 단, 게이트 판정 규칙 변경이므로 **shadow/enforcement 관찰 + op 90 회귀 실측 선행** 필요
 
 ## 다음 단계 (미실행)
 
-- 실사용 검증: 장문 행에 실제로 답을 찾는 자연 쿼리 10~20건을 큐레이션해 stage1d 프레임워크로 재검증
-- 채택 시 설계: 쓰기 경로 KEEP 장문 → 800자 청크 행 저장(부모 참조 meta `chunk_of`/`chunk_idx`),
-  읽기 경로: prefetch가 청크 반환 시 부모 묶음 노출. 코드 변경 3곳 + 회귀.
-  (게이트 입력·prefetch 주입·pool hydration 조정)
+- 게이트 입력 변환 파일럿: `_filter_and_rank` 청크 기준 계산을 스크래치(0콜)에서 구현해
+  실사용 gold 19건 + op 90 회귀 동시 측정 → 손실 0 + 개선 확인 시 설계 확정
+- 운영 반영은 승인 후: 코드 1곳 + 데몬 재시작 + shadow 관찰
