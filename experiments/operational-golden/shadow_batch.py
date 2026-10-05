@@ -223,10 +223,7 @@ def main():
             })
     else:
         print(f"[shadow] query_log 미처리 {len(rows)}건", flush=True)
-        for r in rows:
-            r = dict(r)
-            r["source"] = "query_log"
-        rows = [dict(r) for r in rows]
+        rows = [dict(r) | {"source": "query_log"} for r in rows]
 
     # 2) 각 쿼리 shadow 실행
     for x in rows:
