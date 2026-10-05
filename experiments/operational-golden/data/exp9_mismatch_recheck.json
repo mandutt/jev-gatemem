@@ -1,0 +1,116 @@
+{
+ "records": [
+  {
+   "grp": "op",
+   "qid": "f9d466b9cdc3cd88",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 402.4
+  },
+  {
+   "grp": "op",
+   "qid": "f9d466b9cdc3cd88",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 398.2
+  },
+  {
+   "grp": "op",
+   "qid": "5e8516d6f91b46dd",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 21447.8
+  },
+  {
+   "grp": "lgo",
+   "qid": "098d90e014006142",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 414.9
+  },
+  {
+   "grp": "lgo",
+   "qid": "e481f1a2bb8f7969",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 1078.9
+  },
+  {
+   "grp": "lgo",
+   "qid": "90b4edf612db6b2c",
+   "base": "YES",
+   "recheck": "YES",
+   "err": null,
+   "lat": 365.7
+  },
+  {
+   "grp": "lgo",
+   "qid": "f9d466b9cdc3cd88",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 380.6
+  },
+  {
+   "grp": "lgo",
+   "qid": "09547ea49fc36991",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 507.2
+  },
+  {
+   "grp": "lgo",
+   "qid": "5e8516d6f91b46dd",
+   "base": "YES",
+   "recheck": "YES",
+   "err": null,
+   "lat": 492.7
+  },
+  {
+   "grp": "noans",
+   "qid": "nans2_005",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 418.8
+  },
+  {
+   "grp": "noans",
+   "qid": "nans2_022",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 464.8
+  },
+  {
+   "grp": "noans",
+   "qid": "nans2_033",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 562.4
+  },
+  {
+   "grp": "noans",
+   "qid": "nans2_037",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 385.8
+  },
+  {
+   "grp": "noans",
+   "qid": "nans2_046",
+   "base": "YES",
+   "recheck": "NO",
+   "err": null,
+   "lat": 343.2
+  }
+ ]
+}
