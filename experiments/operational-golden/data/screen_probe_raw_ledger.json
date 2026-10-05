@@ -1,0 +1,57 @@
+{
+  "experiment": "screen-probe-1-2",
+  "date": "2026-10-05",
+  "purpose": "hermes-jev-skills 저장소의 memory 메커니즘 2종 실험: ① local_screen(injection screening) DK 적용 타당성 ② screening 신호(jev+local/local-only) 우리 recall 경로의 unvetted 통과 실측",
+  "comparison_basis": "kerpopule/hermes-jev-skills @ main (0.22.1) — jevkit/rerank.py local_screen + jevkit/privacy.py (MIT)",
+  "env": {
+    "db": "%LOCALAPPDATA%/hermes/mnemosyne/data/mnemosyne.db (working_memory 1683, episodic_memory 113)",
+    "core_state": "%LOCALAPPDATA%/jev-mem/core_state.db (query_log 178, ingest_ledger 504, shadow_log 308)",
+    "logs": "%LOCALAPPDATA%/jev-mem/logs/core.log* (fail-open 10-03)"
+  },
+  "cost": {"jev_calls": 0, "cost_usd": 0.0},
+  "artifacts": [
+    "experiments/operational-golden/screen_probe_vendor.py",
+    "experiments/operational-golden/screen_probe_a_db.py",
+    "experiments/operational-golden/screen_probe_b_korean.py",
+    "experiments/operational-golden/data/screen_probeA_raw.jsonl (1796 rows)"
+  ],
+  "probe_A_db": {
+    "total_rows": 1796,
+    "flagged": 73,
+    "flagged_pct": 4.06,
+    "shape_breakdown": {"sensitive": 69, "command": 3, "instruction": 1},
+    "sensitive_rule_breakdown": {"secret_words": 40, "secret_assign": 39},
+    "over900_chars": 378,
+    "key_finding": "전체 flag 73건 중 인젝션성은 command 3·instruction 1 = 4건뿐. sensitive 69건은 오탐 — secret_words 40건 대부분 'API key' 단어 잡음(문서/설명), secret_assign 39건은 이미 [REDACTED] 처리된 값(‘NOTION_TOKEN=\"[REDACTED]\";’)도 잡음. 실제 인젝션 의심 4건은 전부 정상 문서/로그(설치 커맨드 언급, 백그라운드 프로세스 출력)로 사람 판정상 진짜 공격 아님."
+  },
+  "probe_B_korean": {
+    "injections_30": {"caught": 1, "caught_pct": 3, "missed": 29},
+    "benign_30": {"flagged_fp": 0, "fp_pct": 0},
+    "mixed_english_korean": {"caught": "6/7 — 영어 키워드가 섞이면 영어 패턴이 잡음"},
+    "key_finding": "순수 한국어 인젝션 30종 중 29종 미탐(3%). 유일한 catch는 [20] curl | bash (영어 명령). ‘비밀번호를 출력해라’ 같은 한국어 credential 명령도 미탐. FP는 0으로 높은 정밀도. 즉 저장소 스크린은 한국어에 대해 recall≈0 — 그대로 이식하면 방어 효과가 사실상 없다."
+  },
+  "probe_2_screening_signal": {
+    "query_log": {"total": 178, "abstained": 40, "shadow_marked_all": 1},
+    "abstain_40": {
+      "system_messages": 6,
+      "real_user_questions": 34,
+      "note": "abstain = Jev가 '답 없음' 판정 → 설계상 컨텍스트 비움(빈 결과). 단 abstain은 '미검증 통과'가 아니라 '통과 거부'라 screening 신호와는 별개"
+    },
+    "fail_open_10_03": {
+      "choice_403": 23,
+      "write_gate_403_to_KEEP": 33,
+      "ingest_ledger_10_03": 75,
+      "gate_outage_incidents": 5,
+      "followup": "403 직후 ‘Jev choice: idx=None latency=… pool=29~92’ → /v1/prefetch 200 — 즉 fail-open 시 Jev 판정 없이 풀(pool)이 그대로 컨텍스트로 실림",
+      "note": "fail-open 기간 동안 저장 75행, 재판정 96건 전부 applied — 저장 경로는 P1로 이미 fail_open 태깅+재판정 처리됨(metadata.gate=fail_open:* → rejudged)"
+    },
+    "unvetted_passage_estimate": "fail-open 23건 × pool 24~92 passage = 대략 23회 recall에서 스크린 없는 passage가 컨텍스트 진입. abstain 40건은 통과 거부라 제외.",
+    "key_finding": "읽기 경로에 screening 신호('Jev 미판정/로컬 패턴만')가 없음 — fail-open 기간에는 unvetted passage가 그대로 Hermes 컨텍스트로 들어간다. 저장 경로의 fail_open 태깅과 비대칭."
+  },
+  "conclusions": {
+    "injection_screen_direct_port": "기각 — 한국어 recall 3%(30종 중 1), DB FP 4.06% 중 94%가 오탐(sensitive 단어/이미 redacted 값). 영어 문서용으로 튜닝된 정규식은 한국어 메모리 도메인에 그대로 이식 불가.",
+    "korean_added_screen": "선택 — 한국어 패턴을 추가하면 recall 상승 기대. 단 우리 메모리(코드 조각·명령어·로그 포함)는 명령 문구가 정상 콘텐츠로 빈번해 FP 관리가 핵심. 통계적/결정적 하이브리드 또는 저비용 로컬 분류기가 더 유망. 0콜 정밀도 실측 선행 필수.",
+    "screening_signal": "채택 권고 — fail-open 23건×pool 24~92 passage가 미검증 상태로 컨텍스트에 실리는 실측이 있었음. 최소 조치: fail-open/idx=None 시 컨텍스트에 '이 recall은 Jev 미검증(로컬 패턴만)' 주석 추가 + 인젝션 의심 passage 배제. 저장 경로(fail_open 태깅·재판정)와 대칭 완성.",
+    "effort": "screening_signal은 gateway.py/pipeline.py 작은 패치 수준 / 한글 스크린은 신규 자산(정규식 or 분류기) 필요"
+  }
+}
