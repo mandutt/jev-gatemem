@@ -211,10 +211,19 @@ fastembed 직접 생성은 기본 모델로 폴백했다. (실측: 같은 문장
 
 227청크 sidecar를 쿼리-vs-청크 max로 collapse: **top-5 11/19, top-19 18/19** (whole 5/19 대비 +13).
 
-### 실측 12 — ★chunk lane 통합 → 이득 0
+### 실측 12 — ★chunk lane 통합 → 하네스 오류로 "이득 0" 판정 무효 (2026-10-05 재검토로 번복)
 
-실제 파이프라인(5번째 레인으로 통합, 부모 collapse) → **gold pool 15/19 그대로, gate 8/19 그대로, op-90 회귀 0, noans 0**.
-이유: [ASSISTANT] 해제 후 gold 부모는 이미 FTS/vec로 풀에 존재 → chunk lane은 중복. **parent multi-vector 기각.**
+**원래 결론**: 실제 파이프라인(5번째 레인으로 통합, 부모 collapse) → gold pool 15/19 그대로, gate 8/19 그대로,
+op-90 회귀 0, noans 0 → "이득 0, parent multi-vector 기각" (로 기록됐으나)
+**c-ai 재검토(2026-10-05)에서 무효 확인**: `build_lane_pool()`은 실제로 `fts/vec/imp/graph` 4개 lane만
+호출하고 `"chunk"` kind는 union에 **포함시키지 않았다** (recall_raw에만 구현, 호출 경로 없음).
+→ "통합 실측"이 실제로는 통합이 아니었음.
+
+**정정**: stage12의 "이득 0"은 **하네스 오류로 미검증**. stage11(청크 단독 top-19 18/19)은 유효.
+**진짜 통합은 stage23에서 재실측 → gold pool 13/19 → 16/19 (+3), gate도 +3.**
+  - 새로 잡힌 3건: `afd156a9`(rank 42 — 단, POOL_BUDGET 60 컷 밖이라 gate 실해당 2건), `77fff372`, `0a32589e`
+  - POOL-MISS 4건 중 1건만 구제(`afd156a9`), 나머지 3건은 chunk lane으로도 불가
+→ "parent multi-vector 기각"은 보류, 운영 반영 여부는 추가 판단 필요 (아래 실측 23).
 
 ### 실측 13 — 잔여 탈락 11건 분석
 
@@ -251,7 +260,11 @@ Jev가 기권. → **POOL_BUDGET 60이 실질 상한, 80/100은 역효과로 기
 `gateway/j1_pipeline.py` `POOL_BUDGET=60` + `POOL_DEFAULT_TOP=60`. 토큰 +50%(≈+1,360/쿼리,
 연간 ~$11~22, 무시 가능), 콜 수 불변(쿼리당 1콜). 데몬 재시작 반영 필요.
 
-### 실측 16 — 기저율 (b-ai #12, ★높음)
+### 실측 16 — 장문 노출율 (b-ai #12, ★높음)
+
+(2026-10-05 b-ai 재검토로 "기저율"→"노출율" 표현 정정: 아래 수치는 "장문 행이 풀/gate에
+하나라도 있는 쿼리 비율"로, 장문 행이 코퍼스의 ~8%(136/1,738)이고 풀이 60개라
+구성에서 나오는 값 — "정답 근거가 장문인 쿼리 비율"(진짜 기저율)은 아님.)
 
 query_log 115건 중 비기계 87건 대상, 장문(plain >1,350자 136행) 노출 실측:
 
@@ -313,22 +326,65 @@ baseline gate 1건 통과는 동일.)
 | lift 10/24 (snippet) | [24.5%, 61.2%] |
 
 Exact McNemar (lost=0 개선, p = 2·(0.5)^gained):
-- 제외 해제 (gained 7): **p=0.0156 (유의)**
+- 제외 해제 (gained 7): **p=0.0156 — 유일하게 <0.05**
 - POOL_BUDGET 60 (gained 4): p=0.125
-- snippet (gained 4): p=0.125
+- snippet (gained 2, **독립 반복 기준**): p=0.5
 
-**해석**: 제외 해제만 <0.05. POOL_BUDGET/snippet은 n=4라 "유의미"라고 단정 불가 —
+(2026-10-05 b-ai 재검토 정정: "gold 12건 × 2회 = 24"는 **가짜 반복** — 같은 입력이면
+같은 출력이므로 24는 사실상 12. snippet 순이득은 2건(gained 2, lost 0)이고 p=0.5.
+stage18의 "6/24→10/24"는 "3/12→5/12"로 읽어야 하며, Wilson CI도 n=24가 아닌 n=12 기준.
+또한 snippet은 이후 stage23 all-candidate 검증(5/16, +2)에서 재확인됨.)
+
+**해석**: 제외 해제만 <0.05. POOL_BUDGET/snippet은 소표본이라 "유의미"라고 단정 불가 —
 그러나 **lost=0으로 회귀 위험 0, 방향 일관**. 소표본 한계를 정직하게 표기한다.
 
-### 실측 22 — ★사이드카 FTS 레인도 이득 0 (b-ai #7, 기각 확정)
+### 실측 22 — ★사이드카 FTS 레인 → 하네스 오류로 "이득 0" 판정 무효 (2026-10-05 재검토로 번복)
 
-청크 전용 FTS5 인덱스(227청크)를 5번째 RRF 레인으로 (부모 collapse, 1슬롯):
-| 지표 | baseline | +chunkFTS |
+**원래 결론**: "청크 전용 FTS5(227청크) 5번째 레인 → gold 12/19 그대로, op-90 회귀 0, noans 0 → 이득 0, 기각 확정"
+**c-ai 재검토(2026-10-05)에서 무효 확인**:
+  - `chunk_lane_fts()`는 실제로 `return []`만 함 (FTS5 검색 미구현 — 죽은 코드)
+  - 실제 경로는 `chunk_lane_cjk()` = **한글 문자 set 교집합 수작업 스코어** (FTS5 아님)
+  - 이것도 `build_lane_pool()`이 `"chunk"` kind를 호출하지 않아 RRF 통합 안 됨 (stage12와 동일 하네스 오류)
+
+**정정**: stage22의 "이득 0"은 **하네스 오류로 미검증** — 실제 FTS5/RRF 통합은 측정된 적 없음.
+사이드카 FTS 레인 자체는 stage23의 청크-vec 레인(진짜 통합) 결과와 함께 판단:
+stage23에서 chunk-vec는 pool +3 — FTS5가 vec보다 나을 이유는 없으나, "이득 0 확정" 표현은 폐기.
+### 실측 23 — ★진짜 통합 (chunk-vec lane, RRF 5레인) + all-candidate snippet (c-ai/b-ai 반영, 2026-10-05)
+
+stage12/22의 하네스 오류를 고쳐 `build_lane_pool`을 모방한 커스텀 pool로
+fts+vec+imp+graph+chunk(vec) **5레인 RRF를 진짜 합산**:
+
+| 지표 | base (4레인) | +chunk-vec레인 |
 |---|---|---|
-| gold 19 gate | 12/19 | **12/19 (변화 0)** |
-| op-90 회귀 | — | 0 |
-| noans 오주입 | — | 변화 0 |
+| gold 19 pool | 13/19 | **16/19 (+3)** |
+| gold 19 gate | 13/19 | **16/19 (+3)** |
+| 새로 잡힌 | — | `afd156a9`(rank 42, 60컷 밖 — gate 실해당 2건), `77fff372`, `0a32589e` |
+| POOL-MISS 4건 | — | 1건만 구제(`afd156a9`), 3건(`329fb315`/`f66a777d`/`77f9a2b2`) 불가 |
 
-- stage12(chunk-vec lane)와 동일: **현재 상태([ASSISTANT] 해제 + POOL_BUDGET 60)에선
-  gold 부모가 이미 FTS/vec로 풀에 존재 → 청크 레인이 추가로 넣을 gold 0건.**
-- b-ai 제안의 사이드카 FTS 레인도 **불필요로 최종 기각** (실측 2회 모두 이득 0).
+→ **parent multi-vector는 stage11(단독 강함) + stage23(+3)로 재평가 필요.** 기각 보류.
+
+**all-candidate snippet (production 형태, gold gate-pass 16건, Jev 무료 레인):**
+- head: 3/16, all-snippet: **5/16 (+2), 손실 0** — stage18(target-only)과 동일 방향, production 재현 확인.
+- b-ai 지적대로 stage17/18은 gold target에만 snippet 적용이라 "production 전체 후보" 검증이 아니었음 → 이번에 해소.
+
+**POOL_MISS 4건 잔여 판정**: 3건은 chunk lane으로도 불가(구조적) — 허용 손실로 정리 가능.
+
+### 실측 24 — 하네스 패리티 (b-ai #5, 2026-10-05)
+
+실험 하네스 vs 운영 RPC(`pool_ids`로 게이트 통과 id 비교): **gold 8건 8/8 완전 일치.**
+- stage24b가 처음에 "불일치 8/19"를 보였으나, 이는 RPC context가 **Jev rerank 후
+  final 상위만 렌더**하기 때문 (렌더 범위 차이). `pool_ids`(게이트 통과 60건)로 비교하면 완전 일치.
+- b-ai가 우려한 "실험 ≠ 운영" (임베딩 폴백·RPC 컷·게이트 파라미터)은 **현재 모두 해소** 확인.
+- 재발 방지: 패리티 스크립트(stage24b) 유지.
+
+### 실측 25 — 하네스 오염 전수 점검 (b-ai #5, 2026-10-05)
+
+`experiments/` 전체에서 직접 임베딩 호출 검색:
+- **오염(무효)**: `stage1b`, `stage1c`, `stage1_vector_dilution` (fastembed 폴백 bge-small),
+  `stage1d_scratch_pipeline` (청크=bge / 쿼리=bekko **모델 불일치**)
+  → stage1b/c/d/vector_dilution의 벡터 결론은 전부 무효 (이미 stage10b가 정정한 영역의 동일 원인 확장)
+  - 단, **저장 청킹 기각(FTS 기반)** 과 chunkmax(어휘 기반)는 벡터 무관이라 유효.
+- **정상**: `stage10`(의도적 bge 진단), `stage10b`(beam), `embed_dataset_eval2`(MODEL 지정 시),
+  `harnesses/hermes_j1`/`app.py`(검증 코드).
+- 교훈: **모든 실험 스크립트는 `mnemosyne.core.embeddings`(beam) 경유로 통일**하거나
+  시작 시 모델명·차원 assertion.
