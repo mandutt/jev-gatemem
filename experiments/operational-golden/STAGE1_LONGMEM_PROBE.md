@@ -284,3 +284,20 @@ query_log 115건 중 비기계 87건 대상, 장문(plain >1,350자 136행) 노�
 - **적용 (사용자 승인 2026-10-05)**: `jev_rerank` 라벨 생성에 `_query_window` 반영
   (gateway/j1_pipeline.py, 커밋 예정). 토큰 증가: 장문 후보 수×50자, 연간 ~$30 무시 가능.
   로컬 윈도우 스캔 비용: 쿼리당 수십 ms (무시 가능).
+
+### 실측 19 — ★episodic 벡터 "누락"은 오해 (b-ai #15 해소)
+
+"벡터 없는 장문 8행" 조사 → **episodic_memory 113행 전부 memory_embeddings에 없음**이 확인됐으나,
+실제로는 **`vec_episodes`(vec0 가상테이블)에 113행 전부 존재** (S4 설계: "episodic은 vec_episodes에만
+존재, 재임베딩 제외" — `s4-embedding-migration-plan.md` 57행). **정상 상태, 누락 아님.**
+
+- 교훈: **임베딩 유무 진단은 `memory_embeddings` + `vec_working`/`vec_episodes` 모두를 읽어라.**
+  JSON만 보면 episodic이 전부 "벡터 없음"으로 오판한다.
+- stage12(통합 파일럿)은 `_wm_vec_search`(beam, vec0 경유)를 사용해 영향 없음 — 결론 유효.
+
+### 실측 표기 보정 — gold 19의 독립 쿼리 수 (c-ai #11)
+
+stage2 gold 19건은 **독립 쿼리 14개 + 행 중복 매칭 5건** ("recall 배제..."가 3개 행,
+"fit 피드백..."·"3차 외부 검토..." 등이 복수 행). "19건" 수치는 관측/시도 수로,
+독립 질문 정확도로 읽지 말 것. (방향성 결론엔 영향 없음 — 전체 14개 쿼리에서도
+baseline gate 1건 통과는 동일.)
