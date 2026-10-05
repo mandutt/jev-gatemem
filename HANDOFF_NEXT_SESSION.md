@@ -284,6 +284,22 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
   기본 → `_filters(cross_session=True)` 필수. `build_lane_pool`의 recall_raw는 `(kind, arg, k)`
   3인자이며 **"get" hydration 핸들러 누락 시 pool이 조용히 0이 됨**.
 
+**★ Avinash-jetwani/jevmem(npm CLI) 검토 — fit/audit 실측 종결 (2026-10-05, 커밋 3e1c7ee·42e3c32·5a09a44)**
+
+> 이름만 유사한 별개 프로젝트(학술 Jev-Mem arXiv 2609.23986과도 별개). 7차 "배울 점 → 실측 → 사람 판정 → 채택/기각" 프레임으로 검토 종결.
+
+| 제안 | 실측 | 판정 |
+|---|---|---|
+| fit (라벨 기반 threshold 튜닝) | gold50 5-fold 헬드아웃: COMMITMENT conf τ=0.65는 full-data FP 10→7이지만 **유실 0 유지 0/10** (gold50에 conf<0.65인 KEEP 2건 — goal 0.62/commitment 0.69 — 이 어떤 폴드에서도 유실 유발) | ❌ **기각** — '유실 0 + FP 절감' 구조적 동시 불가. 자동 약한 라벨도 부재(α supersede 111/113이 외부 에이전트 자동주입, β 교정발화 1건) |
+| 자동 약한 라벨 (fit용) | α supersede 113건 중 111건 `[opencode/codex session]` 자동주입, β 교정발화 trace 1건 | ❌ 부재 — fit은 사람 라벨 시트 의존 구조만 가능 |
+| audit T1 (0콜 결정적 검증) | env/url/model/port/db 키워드 155/1,584행 검증, **결정적 stale 1건**(port 48000) | ✅ 유효 — 오판 불가, 밀도 낮아 주기 점검 용도로만. **shadow enforcement 판정 후 채택 재검토(보류)** |
+| audit T2 (의미적 모순 스윕 1콜/행) | 전체 1,589행 스캔(=약 $0.06) STALE 119건(7.5%), 사람 판정(prob 상위 20) **precision 5%** (REAL 1 / PAST 16 / STILL_TRUE 3) | ❌ **기각** — noul이 '과거 행위 보고'를 stale로 오판(에피소드 기록과 질문 설계 부정합), STILL_TRUE 15%는 유실 사고 위험 |
+
+- **fit/audit T2는 재실험 금지**(do not re-run). 도구: `experiments/operational-golden/run_fit_gold50_{sweep,holdout}.py`·`probe_weak_labels.py`·`run_audit_tier{1,2}_probe.py`·`run_audit_tier2_full.py`·`build_stale_review_html.py`
+- 상세: `docs/review/2026-10-05_fit-audit-실측-결과.md` + `2026-10-05_audit-stale-사람판정-기각.md`
+- **부수 수확(운영)**: ① 대량 배치(free 레인) 안전값 = **병렬 2 + 60s 드레인 + 429 연속 20회 자동 종료(체크포인트 재개)** — 병렬 3은 429 폭주로 3회 hang 실측. ThreadPoolExecutor `shutdown(wait=False)` + 체크포인트 저장 후 `os._exit(0)`(non-daemon 워커 종료 방지) ② systemone candidates는 `{"id":"t<i>","label":...}` + `criteria` 필수(`choices` → 400) ③ JEV 직접 호출은 jev-mem venv python(httpx) 필수
+- **추후 검토(보류)**: audit T1 주기 점검(0콜)은 shadow enforcement(3~5일 축적) 판정 **완료 후** 재검토. 에피소드 기록은 stale 감사 대상 제외, 사실/설정/선호만 대상으로 하는 설계 원칙도 그때 함께 검토.
+
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
 > 2026-09-28 구현 완료 — **Hermes 재시작(새 세션) 시 G-AS가 활성화됨**. 아래 순서로 확인:
