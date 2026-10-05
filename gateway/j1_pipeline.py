@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 import time
 from datetime import datetime
 from typing import Callable, List, Optional
@@ -517,6 +518,28 @@ def _excerpt(content: str, limit: int = 120) -> str:
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "..."
 
 
+def _query_window(content: str, query: str, win: int = 300) -> str:
+    """쿼리 인지 윈도우: 본문에서 쿼리와 어휘 겹침이 최대인 win자 구간을 반환.
+
+    stage17/18 (2026-10-05): 장문 라벨용. 50자 스텝 슬라이딩 + 토큰 겹침 스코어.
+    메타 프리픽스([ASSISTANT] 등)는 스킵. 로컬 계산(쿼리당 수십 ms)이라 무시 가능.
+    """
+    m = re.match(r"^(\[[^\]]*\]\s*)?", content or "")
+    c = (content or "")[m.end():] if m else (content or "")
+    qt = _tokenize(query) - _STOPWORDS
+    if not qt or len(c) <= win:
+        return c[:win]
+    best_start, best_score = 0, -1
+    step = 50
+    for start in range(0, len(c) - win + 1, step):
+        seg = c[start:start + win]
+        seg_toks = _tokenize(seg)
+        score = len(qt & seg_toks)
+        if score > best_score:
+            best_score, best_start = score, start
+    return c[best_start:best_start + win]
+
+
 def jev_rerank(
     *,
     query: str,
@@ -540,7 +563,17 @@ def jev_rerank(
         return pool, False
     state = build_state(query, pool)
     if labels is None:
-        labels = [_excerpt((c.get("content") or ""), 100) or "n/a" for c in pool]
+        # 2026-10-05 (stage17/18): 장문(>800자) 행은 쿼리 인지 300자 윈도우(150자 excerpt)로
+        # 라벨 생성 — head-100 절단이 mid-답 장문의 lift를 막던 문제 해소.
+        # 실측: gold 12건 lift 6/24→10/24 (+2, 손실 0), op-90 회귀 0, noans 변화 0.
+        # 단문은 head-100 유지 (윈도우 이득 없음 + 토큰 절약).
+        labels = [
+            (_excerpt(_query_window((c.get("content") or ""), query, 300), 150)
+             if len(c.get("content") or "") > 800
+             else _excerpt((c.get("content") or ""), 100))
+            or "n/a"
+            for c in pool
+        ]
     t0 = time.perf_counter()
     idx = _jev_choice(client, state, labels, timeout=timeout)
     lat = (time.perf_counter() - t0) * 1000
