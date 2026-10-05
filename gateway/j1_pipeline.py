@@ -107,7 +107,10 @@ ABSTAIN_INSTRUCTION = (
 # adapter; re-declared here so this module also works from the middleware
 # venv where mnemosyne_hermes is absent).
 _SOURCE_QUALITY = {"conversation": 0.72, "task": 1.0}
-_PREFETCH_EXCLUDED_PREFIXES = ("[ASSISTANT]",)
+# 2026-10-05: [ASSISTANT] 제외 해제 (실측 9) — 게이트가 이미 어휘·커버리지로 무관
+# assistant 행을 걸러내므로 제외는 이중 안전장치일 뿐이었고, op-90 회귀 0·noans 오주입 0
+# 으로 확인됨. 해제로 장문 assistant 보고서(사용자가 나중에 찾는 답) 회수 gold 1/19→8/19.
+_PREFETCH_EXCLUDED_PREFIXES = ()
 _RAW_SOURCES = {"conversation"}
 
 

@@ -151,3 +151,29 @@ FTS 존재 130/130, 벡터 존재 122/130.
    - 즉 "assistant 노이즈" vs "assistant 보고서 회수 가치"의 정책 트레이드오프가 남은 핵심 질문
 4. **다음 단계 (미실행)**: [ASSISTANT] 제외 해제가 기존 recall 품질(op 90, shadow)에 미치는 회귀 측정
    → 회귀 0이면 **정책 변경 1줄**로 gold 1/19→8/19 달성 가능 (청킹 불필요)
+
+## 실측 9 — [ASSISTANT] 제외 해제 회귀 측정 (★채택, 코드 반영 완료)
+
+`_PREFETCH_EXCLUDED_PREFIXES`에서 `[ASSISTANT]`를 제거하는 정책 변경의 회귀를
+op-90 골드(90) + 무답(10)으로 0콜 실측 (`stage9_assistant_exclusion_regression.py`):
+
+| 지표 | with-excl (현행) | without-excl (해제) |
+|---|---|---|
+| op-90 gold gate pass | 81/90 | **81/90 (손실 0, 변화 케이스 0)** |
+| noans 오주입 (게이트 통과 유무) | 10/10 | 10/10 (변화 없음) |
+| noans 통과 셋 중 [ASSISTANT] 행 | 0 | **0** |
+| pool 내 [ASSISTANT] 비중 (op90) | 29% | 29% |
+
+**해석**:
+- op-90 정답 회수 손실 0 — 기존 recall 품질 불변.
+- noans 오주입 증가 0 — 무관 [ASSISTANT]는 `_filter_and_rank`의 어휘 겹침·커버리지로
+  이미 차단됨. 제외는 **이중 안전장치**였을 뿐, 실질 필터는 게이트가 담당.
+- pool 내 [ASSISTANT] 29%는 그대로지만 게이트 통과까지 가는 건 관련성 있는 것뿐 (noans 0).
+
+**채택 확정 (사용자 승인 2026-10-05)**: `gateway/j1_pipeline.py`의
+`_PREFETCH_EXCLUDED_PREFIXES = ("[ASSISTANT]",)` → `()` 변경. 커밋 포함.
+효과: 장문 assistant 보고서(사용자가 나중에 찾는 답) 회수 gold 1/19 → 8/19.
+청킹·스키마 변경·콜 증가 전부 불필요.
+
+**잔여 관찰**: 데몬 재시작 후 shadow/enforcement로 실사용 변화 관찰 권장.
+(코드 변경은 라이브 데몬 재시작 시 반영 — RPC 경로 `pipeline.py`는 동일 모듈 import)
