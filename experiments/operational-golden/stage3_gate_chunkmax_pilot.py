@@ -171,8 +171,10 @@ def run(cx, q, target_cid, gate_fn):
             return {"id": r[0], "content": r[1], "source": r[2], "importance": r[3], "metadata_json": r[4]}
         return []
     pool = build_lane_pool(recall_raw, q)
-    f_real = _real_filter_and_rank(pool, q)[:40]
-    f_new = gate_fn(pool, q)[:40]
+    # 운영 게이트 파라미터: 라이브 데몬은 (1, 0.0) 완화값 (10-01 커밋 c3aee3a, RPC 파이프라인 경로)
+    gate_kw = {"min_distinctive": 1, "min_coverage": 0.0} if os.environ.get("GATE_OP") == "1" else {}
+    f_real = _real_filter_and_rank(pool, q, **gate_kw)[:40]
+    f_new = gate_fn(pool, q, **gate_kw)[:40]
     def ids_hit(fids, target):
         return target in fids or any(isinstance(f, str) and f.startswith(target + ":") for f in fids)
     return (ids_hit([r.get("id") for r in f_real], target_cid),
