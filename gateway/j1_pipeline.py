@@ -101,6 +101,22 @@ ABSTAIN_ENV_KEY = "JEV_ABSTAIN"
 # 2026-10-06 (stage26/27): soft abstain gate τ — choice가 abstain이 아니어도
 # abstain 라벨 확률이 이 값보다 높으면 빈 컨텍스트로 (noans 오주입 방어).
 _SOFT_ABSTAIN_TAU = float(os.environ.get("JEV_SOFT_ABSTAIN_TAU", "0.3"))
+# 2026-10-06 (stage32): hybrid 모드(choice+noul 1요청)에서 noul 최대 후보 수.
+# API 실측: noul 30(질문 31)까지 200, 40(41)부터 400 — MAX_QS 한도.
+HYBRID_MAX_CANDIDATES = int(os.environ.get("JEV_HYBRID_MAX_CANDIDATES", "30"))
+# 2026-10-06 (stage33): 2콜 구조 — noul top-N만 추려 재choice.
+# 실측: op hit@3 79(+2), noans 12(-4) vs 1콜. 토큰: 2콜째 criteria 6개뿐이라 +20%.
+NEXT_CALL_TOP_N = int(os.environ.get("JEV_NEXT_CALL_TOP_N", "5"))
+# 2026-10-06 (stage33): 2콜째 noul top-N 게이트 — abstain if noul_top < τ.
+# 실측: τ=0.3~0.5에서 op 79/78 유지, noans 12/9. τ=0.3 기본 (noans 방어 + op 유지).
+_NOUL_TAU = float(os.environ.get("JEV_NOUL_TAU", "0.3"))
+# 2026-10-06 (stage33): 2콜째 abstain_p 게이트 — abstain if 2nd choice abstain_p > τ.
+# 실측: τ2=0.3에서 noans 14→12 (op 79 유지).
+_NEXT_ABSTAIN_TAU = float(os.environ.get("JEV_NEXT_ABSTAIN_TAU", "0.3"))
+# 2콜 모드 기본값 (2026-10-06): stage36 3회 반복에서 기각 (hit@3 75 vs 현행 77,
+# noans FP 18 vs 16). 1콜 hybrid도 stage37에서 기각 (noans FP 20).
+# 현행 pool60 choice-only + win-300 + soft gate 유지. env JEV_TWO_CALL=1로 실험 재현 가능.
+TWO_CALL = os.environ.get("JEV_TWO_CALL", "0") != "0"
 # set JEV_ABSTAIN=0 to disable (pre-Run-O behavior). Measured: NO_ANSWER
 # misinjection 10/10 -> 0/10, gold pick 59/59 preserved, wrong->none 17/17
 # were true abstentions (gold absent from pool), tokens +1.0%, latency flat.
@@ -515,6 +531,89 @@ def _jev_choice(client, state: dict, labels: list, timeout: float):
         return None, 0.0, {}
 
 
+def _jev_hybrid(client, state: dict, labels: list, timeout: float):
+    """Jev hybrid call: choice(1) + noul(N) in one request — stage32.
+
+    Returns (idx, abstain_p, noul_scores, err):
+      idx: int label index of choice winner, or len(labels) abstain, or None
+      abstain_p: probability of the abstain label
+      noul_scores: list of N floats, one per candidate (absolute answerability)
+      err: None or short error string ('http-400', 'no-choice', ...)
+    """
+    abstain = _abstain_enabled()
+    j_labels = list(labels)
+    if abstain:
+        j_labels.append(ABSTAIN_LABEL)
+    instructions = (
+        "Which candidate memory is the single best evidence for answering "
+        "the question? Pick exactly one. Consider directness and specificity."
+    )
+    if abstain:
+        instructions += ABSTAIN_INSTRUCTION
+    questions: dict = {
+        "best": {
+            "type": "choice",
+            "instructions": instructions,
+            "criteria": {f"c{i}": j_labels[i] for i in range(len(j_labels))},
+        }
+    }
+    # noul 평가 질문 (absolute answerability) — 후보별 1개
+    for i, lab in enumerate(labels):
+        questions[f"n{i}"] = {
+            "type": "noul",
+            "instructions": {
+                "question": (
+                    "Does this candidate memory directly state or entail the "
+                    "answer to the question? Output a 0-1 score."
+                ),
+                "candidate": lab,
+            },
+        }
+    try:
+        import os as _os
+        _api = getattr(client, "_jev_api", None) or (
+            _os.environ.get("JEV_API_URL") or "https://api.typesafe.ai/v1/systemone"
+        )
+        resp = client.post(
+            _api,
+            json={"state": state, "questions": questions, "model": "jev-latest"},
+            timeout=timeout,
+        )
+        if resp.status_code == 429:
+            rot = getattr(client, "_jev_rotator", None)
+            keys = getattr(client, "_jev_keys", None)
+            if rot is not None and keys is not None and len(keys) > 1:
+                nk = rot.on_429()
+                if nk:
+                    client.headers["Authorization"] = f"Bearer {nk}"
+                    resp = client.post(
+                        _api,
+                        json={"state": state, "questions": questions, "model": "jev-latest"},
+                        timeout=timeout,
+                    )
+        if resp.status_code != 200:
+            return None, 0.0, [], f"http-{resp.status_code}"
+        ans = (resp.json().get("answers") or {})
+        best = ans.get("best") or {}
+        choice = best.get("choice")
+        probs = best.get("probabilities") or {}
+        abstain_p = 0.0
+        if probs:
+            abstain_p = float(probs.get(f"c{len(j_labels) - 1}", 0.0) or 0.0)
+        elif best.get("confidence") is not None and abstain:
+            abstain_p = float(best["confidence"])
+        noul = []
+        for i in range(len(labels)):
+            v = (ans.get(f"n{i}") or {}).get("noul", 0.0)
+            noul.append(float(v) if v is not None else 0.0)
+        if choice is None:
+            return None, abstain_p, noul, "no-choice"
+        return int(str(choice).lstrip("c")), abstain_p, noul, None
+    except Exception as exc:
+        log.info("Jev hybrid failed: %s", type(exc).__name__)
+        return None, 0.0, [], type(exc).__name__
+
+
 def build_state(query: str, candidates: List[dict]) -> dict:
     headers = []
     for c in candidates:
@@ -589,6 +688,128 @@ def jev_rerank(
             for c in pool
         ]
     t0 = time.perf_counter()
+    if TWO_CALL and len(pool) > HYBRID_MAX_CANDIDATES:
+        # 2콜 구조 (2026-10-06, stage32/33):
+        #  1콜: choice + noul 30 (절대 answerability) — API 한도(31질문) 최대치
+        #  2콜: noul top-5만 추려 재choice (소량 토큰 — 정밀 재판)
+        # 실측: op hit@3 79(+2 over 1콜), noans 12(-4), abstain 8.
+        top_n = HYBRID_MAX_CANDIDATES
+        pool_1 = pool[:top_n]
+        state_1 = build_state(query, pool_1)
+        labels_1 = [
+            _excerpt(_query_window((c.get("content") or ""), query, 300), 150)
+            or "n/a"
+            for c in pool_1
+        ]
+        idx1, abstain_p1, noul, err1 = _jev_hybrid(client, state_1, labels_1, timeout=timeout)
+        _jtrace("jev-hybrid", {
+            "query": (query or "")[:120],
+            "idx": idx1 if idx1 is not None else "none",
+            "abstain_p": f"{abstain_p1:.2f}",
+            "err": err1 or "",
+        })
+        if err1:
+            # hybrid 실패 → 1콜 choice 폴백 (기존 구조)
+            log.info("hybrid failed (%s) → choice fallback", err1)
+            idx, abstain_p, probs = _jev_choice(client, state, labels, timeout=timeout)
+            lat = (time.perf_counter() - t0) * 1000
+            log.info("Jev choice(fallback): idx=%s abstain_p=%.2f latency=%.0fms pool=%d",
+                     idx, abstain_p, lat, len(pool))
+            if idx is None:
+                return pool, False
+            idx = int(idx)
+            if _abstain_enabled() and idx == len(labels):
+                _jtrace("abstain", {"query": (query or "")[:120], "pool": len(pool)})
+                return pool, True
+            if _abstain_enabled() and abstain_p > _SOFT_ABSTAIN_TAU:
+                _jtrace("soft-abstain", {"query": (query or "")[:120], "pool": len(pool),
+                                         "abstain_p": f"{abstain_p:.2f}"})
+                return pool, True
+            if not (0 <= idx < len(pool)):
+                return pool, False
+            return [pool[idx]] + [c for i, c in enumerate(pool) if i != idx], False
+        if idx1 == len(labels_1) or abstain_p1 > _SOFT_ABSTAIN_TAU:
+            # 1콜째 abstain (명시 또는 soft) → abstain (빈 컨텍스트)
+            _jtrace("abstain", {"query": (query or "")[:120], "pool": len(pool)})
+            return pool, True
+        if idx1 is not None and 0 <= idx1 < len(pool_1):
+            _jtrace("lift", {
+                "query": (query or "")[:120], "lifted": True, "from_idx": idx1,
+                "picked_id": str(pool_1[idx1].get("id", ""))[:12],
+                "prev_top": str(pool[0].get("id", ""))[:12],
+            })
+        # 2콜째: noul top-N 재choice (소량 토큰)
+        noul_order = sorted(range(len(noul)), key=lambda i: noul[i], reverse=True)
+        top_idx = noul_order[:NEXT_CALL_TOP_N]
+        top_labels = [labels_1[i] for i in top_idx]
+        top_cands = [pool_1[i] for i in top_idx]
+        state_2 = build_state(query, top_cands)
+        idx2, abstain_p2, _probs2 = _jev_choice(client, state_2, top_labels, timeout=timeout)
+        err2 = None
+        _jtrace("jev-2nd", {
+            "query": (query or "")[:120],
+            "idx": idx2 if idx2 is not None else "none",
+            "abstain_p": f"{abstain_p2:.2f}",
+            "err": err2 or "",
+        })
+        if err2 or idx2 is None:
+            # 2콜째 실패 → 1콜째 결과 사용
+            if idx1 is not None and 0 <= idx1 < len(pool_1):
+                return [pool_1[idx1]] + [c for i, c in enumerate(pool_1) if i != idx1], False
+            return pool, False
+        idx2 = int(idx2)
+        # 2콜째 게이트: 명시 abstain 또는 noul/abstain_p 게이트
+        if idx2 == len(top_labels):
+            _jtrace("abstain", {"query": (query or "")[:120], "pool": len(pool)})
+            return pool, True
+        noul_top = max(noul) if noul else 0.0
+        if noul_top < _NOUL_TAU or abstain_p2 > _NEXT_ABSTAIN_TAU:
+            _jtrace("soft-abstain-2nd", {
+                "query": (query or "")[:120], "pool": len(pool),
+                "noul_top": f"{noul_top:.2f}", "abstain_p": f"{abstain_p2:.2f}"})
+            return pool, True
+        if 0 <= idx2 < len(top_cands):
+            picked = top_cands[idx2]
+            # 2콜째 선택을 전체 pool에 반영 (rank 1로 lift)
+            return [picked] + [c for c in pool if c.get("id") != picked.get("id")], False
+        return pool, False
+    if len(pool) <= HYBRID_MAX_CANDIDATES:
+        # 1콜 hybrid (2026-10-06, stage32): choice + noul N 병렬 (N ≤ 30).
+        # 실측: op hit@3 76, noans FP 12 (soft gate), noul τ=0.5 시 75/8 —
+        #   현행 pool60 choice-only(77/16) 대비 noans 방어 우위, hit@3 동등.
+        idx, abstain_p, noul, err = _jev_hybrid(client, state, labels, timeout=timeout)
+        lat = (time.perf_counter() - t0) * 1000
+        log.info("Jev hybrid: idx=%s abstain_p=%.2f latency=%.0fms pool=%d",
+                 idx, abstain_p, lat, len(pool))
+        _jtrace("jev-hybrid", {
+            "query": (query or "")[:120],
+            "idx": idx if idx is not None else "none",
+            "abstain_p": f"{abstain_p:.2f}",
+            "lat_ms": f"{lat:.0f}",
+            "pool": len(pool),
+            "err": err or "",
+        })
+        if err or idx is None:
+            return pool, False
+        idx = int(idx)
+        if _abstain_enabled() and idx == len(labels):
+            _jtrace("abstain", {"query": (query or "")[:120], "pool": len(pool)})
+            return pool, True
+        if _abstain_enabled() and abstain_p > _SOFT_ABSTAIN_TAU:
+            _jtrace("soft-abstain", {"query": (query or "")[:120], "pool": len(pool),
+                                     "abstain_p": f"{abstain_p:.2f}"})
+            return pool, True
+        # noul 게이트 (2026-10-06, stage32 τ 스윕): 관련 후보가 없으면 abstain.
+        if noul:
+            noul_top = max(noul)
+            if noul_top < _NOUL_TAU:
+                _jtrace("soft-abstain-noul", {"query": (query or "")[:120],
+                                              "pool": len(pool),
+                                              "noul_top": f"{noul_top:.2f}"})
+                return pool, True
+        if not (0 <= idx < len(pool)):
+            return pool, False
+        return [pool[idx]] + [c for i, c in enumerate(pool) if i != idx], False
     idx, abstain_p, probs = _jev_choice(client, state, labels, timeout=timeout)
     lat = (time.perf_counter() - t0) * 1000
     log.info("Jev choice: idx=%s abstain_p=%.2f latency=%.0fms pool=%d",
