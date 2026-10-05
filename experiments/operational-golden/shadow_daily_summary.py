@@ -1,10 +1,11 @@
-"""shadow_log 일일 요약 — 텔레그램 전송용 (2026-10-04)
+"""shadow_log 일일 요약 — 텔레그램 전송용 (2026-10-04, 2026-10-05 보강)
 
 매일 09:00 cron이 실행 → shadow_log 최근 24시간 집계 출력
 - gate YES/NO/ABSTAIN 분포 (전체 + 24h)
 - R2 결정 분포 (inject / abstain / err)
 - A vs R2 갈림: gate NO & R2 abstain 건수 (기존 A는 주입이므로 갈림)
 - 이상 징후: 과다 NO율, err 증가
+- (2026-10-05) assistant 오염 지표: winner가 [ASSISTANT]인 비율 + pooling 지표
 """
 import json
 import os
@@ -45,6 +46,36 @@ flip_24h = conn.execute(f"SELECT COUNT(*) FROM shadow_log WHERE r2_decision LIKE
 # err
 errs = conn.execute("SELECT COUNT(*) FROM shadow_log WHERE err IS NOT NULL AND err != ''").fetchone()[0]
 
+# ---- 2026-10-05: assistant 오염 지표 (b-ai #5) ----
+MNEM_DB = os.path.join(os.environ.get("LOCALAPPDATA", ""), "hermes", "mnemosyne", "data", "mnemosyne.db")
+pn = ""
+try:
+    mconn = sqlite3.connect(f"file:{MNEM_DB}?mode=ro", uri=True)
+    mconn.row_factory = sqlite3.Row
+    # winner_id -> content 프리픽스 [ASSISTANT] 여부
+    winners = conn.execute("SELECT DISTINCT winner_id FROM shadow_log WHERE winner_id IS NOT NULL AND winner_id != ''").fetchall()
+    assist_ids = set()
+    for w in winners:
+        wid = w[0]
+        r = mconn.execute("SELECT content FROM working_memory WHERE id=?", (wid,)).fetchone()
+        if not r:
+            r = mconn.execute("SELECT content FROM episodic_memory WHERE id=?", (wid,)).fetchone()
+        if r and r["content"].lstrip().startswith("[ASSISTANT]"):
+            assist_ids.add(wid)
+    total_win = conn.execute("SELECT COUNT(*) FROM shadow_log WHERE winner_id IS NOT NULL AND winner_id != ''").fetchone()[0]
+    if assist_ids:
+        ph = ",".join("?" * len(assist_ids))
+        n_assist_win = conn.execute(
+            f"SELECT COUNT(*) FROM shadow_log WHERE winner_id IN ({ph})", list(assist_ids)
+        ).fetchone()[0]
+    else:
+        n_assist_win = 0
+    assist_rate = n_assist_win / total_win if total_win else 0
+    pn = f"\n[assistant 오염] 최종 선택(winner) 중 [ASSISTANT] 비율: {assist_rate*100:.1f}% ({n_assist_win}/{total_win})"
+    mconn.close()
+except Exception as e:
+    pn = f"\n[assistant 오염] 계산 실패: {e}"
+
 print("=== jev-mem shadow 일일 요약 ===")
 print(f"누적 총 {total}건 | 최근 24h {n_24h}건")
 print()
@@ -54,6 +85,7 @@ if n_24h:
 print()
 print(f"[R2 abstain 결정(잠재 갈림)] 전체 {flip}건 | 24h {flip_24h}건")
 print(f"[오류] {errs}건")
+print(pn)
 
 # 이상 징후 감지
 no_rate = g_all.get("NO", 0) / total if total else 0

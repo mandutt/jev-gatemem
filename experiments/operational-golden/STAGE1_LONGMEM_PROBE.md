@@ -205,7 +205,11 @@ fastembed 직접 생성은 기본 모델로 폴백했다. (실측: 같은 문장
 | whole rank ≤2 | 1건 | 2건 |
 | **chunk rank ≤2** | **0건** | **10건!** |
 
-맞는 모델에선 청크가 벡터 상위로 확실히 올라간다 — stage1c의 "청킹 무효"는 모델 버그의 인공물.
+(2026-10-05 c-ai 재검토 정정: stage10b의 "chunk rank"는 **"쿼리와 가장 유사한 청크를 쿼리로 써서 저장된 행 코퍼스에서 부모를 찾은 랭크"** — 즉 chunk-as-query × row-corpus 랭크다.
+**진짜 query→chunk 인덱스 랭크가 아니다.** 실제 query→chunk retrieval 성능은 stage11이 측정(top-5 11/19, top-19 18/19).
+10b의 "10건"은 "청크 벡터가 부모 행을 잘 대표한다"는 간접 증거로만 해석하고, query→chunk 성능 수치로 인용하지 말 것. **정정 반영(2026-10-05)**)
+
+맞는 모델에선 청크가 벡터 상위로 확실히 올라간다 — stage1c의 "청킹 무효"는 모델 버그의 인공물. (단, 위 c-ai 정정: 정확한 수치는 stage11 기준으로 읽을 것)
 
 ### 실측 11 — parent multi-vector (chunk-lane) 단독 회수
 
@@ -401,3 +405,25 @@ stage23에서 진짜 통합은 +3 pool (+2 gate 실효) 확인했으나:
   `harnesses/hermes_j1`/`app.py`(검증 코드).
 - 교훈: **모든 실험 스크립트는 `mnemosyne.core.embeddings`(beam) 경유로 통일**하거나
   시작 시 모델명·차원 assertion.
+
+### 실측 26 — gold 미선택 9건 VALID/PLAUS/IRREL 판정 (b-ai #4, 2026-10-05)
+
+"게이트 통과 ≠ Jev lift" 갭(9건)을 성격 분해 (stage26, 사람 판정 대역):
+
+| 판정 | 건수 | 의미 |
+|---|---|---|
+| **A (VALID)** | **6건** | 다른 후보가 사실상 같은 답을 담음 (gold exact-ID 지표의 인공물) |
+| B (PLAUS) | 2건 | 다른 후보가 관련 있으나 gold보다 답 약함 |
+| C (IRREL) | **1건** | abstain/오선택 (01dfeb216 — gold가 직접 답인데 기권) |
+
+**결론**: 9건 갭의 대부분(6/9)은 "gold가 아닌 후보도 정당한 답" — **choice 프롬프트 문제가 아니라 gold exact-ID 지표의 인공물**.
+실질 오선택은 1건(abstain)뿐. → b-ai의 "대부분 VALID면 갭은 라벨 인공물" 가설 **확인**.
+(세부: `data/stage26_verdicts.json`)
+
+### 실측 27 — shadow 지표 보강 (b-ai #5, 2026-10-05)
+
+`shadow_daily_summary.py`에 **assistant 오염 지표** 추가:
+- 최종 선택(winner) 중 [ASSISTANT] 비율 — 누적 308건 기준 **16.7% (40/240)**
+- b-ai 제안 7지표 중 구현: gate NO율·R2 abstain·오류율(기존) + **assistant winner rate**(신규)
+- 미구현: prefetch 토큰 p50/p95 — shadow_log에 렌더 크기 컬럼이 없어 불가 (다음 shadow 스키마 확장 시)
+- 경고 기준: assistant winner rate > 25% 시 경고 (신규 — 운영 주입 오염 조기 감지용)
