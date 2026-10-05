@@ -309,6 +309,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - **부수 수확(운영)**: ① 대량 배치(free 레인) 안전값 = **병렬 2 + 60s 드레인 + 429 연속 20회 자동 종료(체크포인트 재개)** — 병렬 3은 429 폭주로 3회 hang 실측. ThreadPoolExecutor `shutdown(wait=False)` + 체크포인트 저장 후 `os._exit(0)`(non-daemon 워커 종료 방지) ② systemone candidates는 `{"id":"t<i>","label":...}` + `criteria` 필수(`choices` → 400) ③ JEV 직접 호출은 jev-mem venv python(httpx) 필수
 - **추후 검토(보류)**: audit T1 주기 점검(0콜)은 shadow enforcement(3~5일 축적) 판정 **완료 후** 재검토. 에피소드 기록은 stale 감사 대상 제외, 사실/설정/선호만 대상으로 하는 설계 원칙도 그때 함께 검토.
 - **★ abstain 라벨 문구 개선 — 보류 (2026-10-06, 추후 채택 결정)**: 세 AI(A·B·C) 공통 제안 "same topic is not evidence" + 시점·버전 불일치 배제. 실측: stage38(live DB) current FP 25 vs improved 28 (DB 변질로 판정 불가) / **stage39(pool 고정) current 22 vs improved 20 (-2 FP)** — 개별 사례 2건(과거 시점 질문)이 정확히 차단됨. 비결정성 범위 안이라 확정 불가 → **보류**. 채택 시 `j1_pipeline.ABSTAIN_LABEL` 교체 (0콜, 무비용). noans 셋 재구성(시점 고정/신선) 후 재검증 권장. 상세: `STAGE29_35_HYBRID_2CALL_20261006.md` stage38/39
+- **★ evidence-span scratch index — 기각 (2026-10-06)**: C AI Q4-3 제안(800자 초과 memory를 문단/문장 span으로 분할해 검색 단위 변경). 0콜 실측: gold span이 기존 pool max sim보다 유리한 11/58(19%)이나, **그중 실제 pool 밖 miss는 1건뿐** — pool 밖 miss 11건에서 gold-span 유리 9%. 회수 개선 상한 1건 vs 구현 비용 과다 → **기각**. op-90 retrieval 병목은 write-path 태그/lane 확장 영역. 상세: `STAGE29_35_HYBRID_2CALL_20261006.md` stage40
 
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 

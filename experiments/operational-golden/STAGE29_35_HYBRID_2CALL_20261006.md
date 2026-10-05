@@ -123,3 +123,31 @@
 - 개별 사례는 세 AI가 지적한 실패 모드(과거 시점 질문)를 정확히 차단하는 방향
 - 후속 조치: 채택 시 `gateway/j1_pipeline.py`의 `ABSTAIN_LABEL` 교체 (0콜 추가, 무비용).
   noans 셋 재구성(시점 고정/신선 셋) 후 재검증 권장.
+
+---
+
+## stage40: evidence-span scratch index 0콜 검증 — **기각 확정**
+
+### 배경
+C AI Q4-3 제안: 800자 초과 memory를 문단/문장 단위 span으로 분할해,
+검색 단위를 "원문 row"가 아닌 "span"으로 바꾸면 long-memory truncation을
+retrieval 문제로 해결할 수 있다는 가설.
+
+### 실측 (0콜, bekko-a8m 로컬 임베딩)
+- 데이터: working_memory 1708행 (median 380자, >800자 494건 28.9%, 최대 44,779자),
+  episodic 113행 — **그러나 op-90 gold 중 >800자는 0건** (최장 687자)
+- gold>300자 58건에 대해: gold 내부 top-span sim vs 기존 pool(10개 샘플) max sim 비교
+  → **gold-span 유리 11/58 (19%)**
+- 그 11건 중 **실제 pool 밖 miss는 1건뿐** ("shutdown API 어떻게 만들었지?") —
+  나머지 10건은 이미 pool 안 rank=1 (회수 성공, span으로 개선할 문제 없음)
+- pool 밖 miss 11건 전체에서 gold-span 유리 = **1건 (9%)**
+- pool 밖 miss의 실제 원인: 어휘/의미 단절 ("전환 전 어떤 문제", "Exa 왜 안 써",
+  "provider가 뭐지") — **span 분할로 해결 불가**
+
+### 판정 (2026-10-06)
+- **기각** — 회수 개선 상한 1건 (hit@3 +1.1%p 최대) 대비 구현 비용(span 인덱스,
+  문단 분할, 재검색 인프라) 과다
+- op-90 retrieval 병목(pool 밖 11건)은 **write-path 태그 보강(A AI Q5)** 또는
+  **lane 확장** 영역 — span 분할이 아닌 문제
+- C AI의 "long memory를 evidence 단위로" 직관은 gold>300자 58건에서 대부분
+  이미 pool 안에서 해결됨 (win-300 excerpt가 동일 효과) — 실측으로 반증
