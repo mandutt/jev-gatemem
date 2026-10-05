@@ -14,7 +14,7 @@ SoT: `C:/Users/mandu/hermes-made/jev-memory-middleware/experiments/operational-g
   - **hit@3 61.1% → 77.8%** (op 90)
   - **abstain 27건 → 8건** (gold가 vec 40위 안에 이미 있다는 stage19 실측과 일치)
 - stage18 Doc2Query(9router 일반 LLM)는 **원칙 위반(일반 LLM 간섭) + 오염 데이터 기반** → 폐기.
-- **진짜 병목**: abstain 8건 중 3건은 gold가 pool에 있는데 JEV가 abstain을 고른 'abstain 오판' (upstream 404, gold50, S8). stage20~24에서 excerpt 확장으로 시도했으나 **noans 오주입과 trade-off로 최종 기각** → **현행 head-100 유지 확정**.
+- **진짜 병목**: abstain 8건 중 3건은 gold가 pool에 있는데 JEV가 abstain을 고른 'abstain 오판' (upstream 404, gold50, S8). stage20~27에서 excerpt 확장 + abstain_p soft gate로 해결 → **win-300 + τ=0.3 채택** (2026-10-06 운영 반영).
 
 ---
 
@@ -92,12 +92,14 @@ abstain 8건 중 gold가 pool에 있는 3건(upstream 404, gold50, S8)은 gold_l
 | stage23 | 오주입 10건 원인 분해 | **전부 "과거 이력/시점" 질문이 주제 근접 미끼** (PLAUS/IRREL) |
 | stage24 | 조건부 2콜 (1차 head-100 → abstain만 win-300 + pair 게이트) | noans 18 (게이트가 3건만 차단), gold 회복 2건 유지, gold50은 게이트가 정답 차단 → **순효과 -3, 기각** |
 
-### 판정: excerpt 확장 접근 전부 기각, 현행 head-100 유지
+### 판정: excerpt 확장 단독 접근은 기각 (2026-10-05) — soft gate 결합으로 재채택 (2026-10-06)
 
-- **골드 회복(+6~7)과 noans 오주입(+7~10)이 동일 메커니즘(excerpt 정보량)으로 충돌** — 순효과 0 이하.
-- win-300이 "답이 뒤에 잘린 골드"는 살리지만, "주제 근접 미끼(과거 이력 질문)"도 300자 텍스트에서 답처럼 보이게 만들어 오주입.
-- pair 게이트(exp7f)는 미끼 차단에 부분 효과(3건)지만 **정답도 차단**(gold50 gate=NO) — 과다거부 문제 재현 → 단독/2콜 구조 모두 채택 불가.
-- **abstain fallback(A)도 불필요**: abstain 3건 중 2건(upstream, S8)은 excerpt로 회복 가능했으나 noans 비용이 더 큼 → 현행(abstain 시 빈 컨텍스트) 유지가 noans 방어상 최적.
+- **1차 기각 (stage22~24)**: 골드 회복(+6~7)과 noans 오주입(+7~10)이 동일 메커니즘(excerpt 정보량)으로 충돌 — "순효과 0 이하"로 판정.
+- **재판정 (stage25~27, B AI 지적)**: "op +6/90 vs noans +7/50"은 **분모가 다른 두 세트를 건수로 단순 합한 오류**. 실 운영 무답 비율 u=22.5% (query_log 실측)를 반영한 harm-가중 계산에서 **모든 h에서 기대 순이득 양수** 확인.
+- **해결**: choice 응답의 abstain_p (probabilities) 활용 — abstain_p>0.3이면 빈 컨텍스트로 되돌리는 **soft gate**로 noans 비용 상쇄:
+  - win-300 단독: noans 22 FP → **τ=0.3 적용 시 16 FP** (hard), 독립 easy 셋 0 FP
+  - op 손실 0 (hit@3 77 유지)
+- **1차 기각 원인**: abstain 라벨 확률(confidence)을 파기하던 `_jev_choice` — C AI가 지적한 "이미 받은 정보를 버림"이 noans 방어를 막고 있었음.
 
 ### 최종 상태 (2026-10-06 — win-300 + soft abstain gate 채택)
 

@@ -1,7 +1,7 @@
 # 운영 데몬 재시작 기록 — win-300 + soft abstain gate 반영
 
 - **날짜/시각**: 2026-10-06 00:30~00:32 (KST)
-- **커밋**: (커밋 후 기입 — `gateway/j1_pipeline.py` win-300 전면 + abstain_p soft gate)
+- **커밋**: `c433195` (`gateway/j1_pipeline.py` win-300 전면 + abstain_p soft gate)
 - **실측 근거**: STAGE25_PROBABILITY_20261006.md + stage26/27
   - op hit@3 72→77(+5), hit@5 74→80, abstain 9→3
   - noans: hard 22→16 FP (τ=0.3), **독립 easy 셋 0 FP**

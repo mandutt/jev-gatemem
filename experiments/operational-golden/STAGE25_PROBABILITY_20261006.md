@@ -74,6 +74,10 @@ raw: `data/stage25_choice_probability.json`, 로그 `data/stage25_run3.log`
 | abstain | 8~10 |
 | noans hard FPR | 13/50 (26.0%) |
 
+> **2026-10-06 갱신**: 위 수치는 head-100 기준. **win-300 + abstain_p>0.3 soft gate 채택·운영 반영** 후:
+> op hit@3 77/90 (85.6%), hit@5 80/90 (88.9%), abstain 3, noans hard 16 FP, 독립 easy 셋 0 FP.
+> 커밋 `c433195`, 데몬 재시작 완료 (`docs/ops/2026-10-06_win300-soft-abstain-restart.md`).
+
 ## 7. 다음 단계 후보
 
 1. **abstain 라벨 문구 강화** (확신 없는 abstain 7건 타깃): "주제 유사하나 시점/버전/수치 불일치 시 abstain" — 50콜(noans) + op 회귀 확인
