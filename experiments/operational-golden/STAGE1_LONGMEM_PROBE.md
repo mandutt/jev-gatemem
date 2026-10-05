@@ -301,3 +301,34 @@ stage2 gold 19건은 **독립 쿼리 14개 + 행 중복 매칭 5건** ("recall �
 "fit 피드백..."·"3차 외부 검토..." 등이 복수 행). "19건" 수치는 관측/시도 수로,
 독립 질문 정확도로 읽지 말 것. (방향성 결론엔 영향 없음 — 전체 14개 쿼리에서도
 baseline gate 1건 통과는 동일.)
+
+### 실측 21 — 구체 CI + exact McNemar (a/b-ai #14)
+
+| 수치 | Wilson 95% CI |
+|---|---|
+| gold 1/19 (제외 전) | [0.9%, 24.6%] |
+| gold 8/19 (제외 해제) | [23.1%, 63.7%] |
+| gold 12/19 (POOL_BUDGET 60) | [41.0%, 80.9%] |
+| lift 6/24 (baseline) | [12.0%, 44.9%] |
+| lift 10/24 (snippet) | [24.5%, 61.2%] |
+
+Exact McNemar (lost=0 개선, p = 2·(0.5)^gained):
+- 제외 해제 (gained 7): **p=0.0156 (유의)**
+- POOL_BUDGET 60 (gained 4): p=0.125
+- snippet (gained 4): p=0.125
+
+**해석**: 제외 해제만 <0.05. POOL_BUDGET/snippet은 n=4라 "유의미"라고 단정 불가 —
+그러나 **lost=0으로 회귀 위험 0, 방향 일관**. 소표본 한계를 정직하게 표기한다.
+
+### 실측 22 — ★사이드카 FTS 레인도 이득 0 (b-ai #7, 기각 확정)
+
+청크 전용 FTS5 인덱스(227청크)를 5번째 RRF 레인으로 (부모 collapse, 1슬롯):
+| 지표 | baseline | +chunkFTS |
+|---|---|---|
+| gold 19 gate | 12/19 | **12/19 (변화 0)** |
+| op-90 회귀 | — | 0 |
+| noans 오주입 | — | 변화 0 |
+
+- stage12(chunk-vec lane)와 동일: **현재 상태([ASSISTANT] 해제 + POOL_BUDGET 60)에선
+  gold 부모가 이미 FTS/vec로 풀에 존재 → 청크 레인이 추가로 넣을 gold 0건.**
+- b-ai 제안의 사이드카 FTS 레인도 **불필요로 최종 기각** (실측 2회 모두 이득 0).
