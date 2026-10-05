@@ -22,7 +22,7 @@ _J1_TIMEOUT_S = 5.0  # hard cap; matches harness JEV_CHOICE_TIMEOUT_S
 
 
 class MemoryGateway:
-    def __init__(self, backend: MnemosyneBackend, *, candidate_budget: int = 40,
+    def __init__(self, backend: MnemosyneBackend, *, candidate_budget: int = 60,
                  use_j1: bool = True, timeout: float = _J1_TIMEOUT_S):
         self.backend = backend
         self.candidate_budget = candidate_budget

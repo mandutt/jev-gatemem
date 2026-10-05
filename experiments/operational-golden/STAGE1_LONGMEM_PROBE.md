@@ -8,7 +8,7 @@
   - `stage1c_chunk_recall.py` — 800자 규칙 청킹의 벡터 순위 효과 (numpy)
   - `stage1d_scratch_pipeline.py` — **실제 파이프라인 스크래치 검증** (청크 행 저장 시 pool/gate)
   - `stage2_*` — 실사용 gold 구축 (query_log + 세션 transcripts, 사용자 판정 38건)
-- 판정: **① JEV chunking·저장 청킹·chunkmax 전부 기각 ② 그러나 "gate 1/19"의 진짜 원인은 `[ASSISTANT] prefetch 제외 정책` — 제외 해제 시 8/19. 청킹은 잘못된 문제에 대한 해법이었음.**
+- 판정: **① 저장 청킹·chunkmax 기각 (JEV semantic chunking은 미검증 — 규칙 청킹만 실측) ② 그러나 "gate 1/19"의 진짜 원인은 `[ASSISTANT] prefetch 제외 정책` — 제외 해제 시 8/19. 청킹은 잘못된 문제에 대한 해법이었음.**
 - (v1 보고서는 `STAGE1_LONGMEM_PROBE.v1.md`로 보존 — 실측 5 전까지의 중간판)
 
 ## 배경
@@ -142,8 +142,12 @@ FTS 존재 130/130, 벡터 존재 122/130.
 
 1. **"장문 mid-답 회수 불가"의 실체 = `[ASSISTANT] prefetch 제외 정책`**.
    실제 병목은 청킹·게이트·벡터가 아니라 **정책 1줄** (`_PREFETCH_EXCLUDED_PREFIXES`)이었다.
-2. **JEV chunking / 저장 청킹 / chunkmax: 전부 기각 유지** — 실측 4/6/7의 결론은 유효하나,
+2. **저장 청킹 / chunkmax: 전부 기각 유지** — 실측 4/6/7의 결론은 유효하나,
    문제 정의 자체가 달라졌으므로 이들은 "잘못된 문제에 대한 해법"이었다.
+   **단, "JEV semantic chunking(문장별 continuation) 자체는 직접 검증하지 않았다** —
+   실측한 것은 규칙 기반 800자 paragraph-aware 청킹뿐. JEV chunking 기각은
+   "JEV를 쓸 이유가 없음"(규칙 청킹도 벡터를 못 살림, 실측 4)의 의미로 한정해
+   해석해야 하며, JEV continuation 품질 자체의 실측은 아직이다 (c-ai 지적 반영).
 3. **새로운 쟁점**: "[ASSISTANT] 메모리를 prefetch에서 제외하는 정책이 맞는가?"
    - 스킬 기록: "[ASSISTANT] 프리픽스는 _PREFETCH_EXCLUDED_PREFIXES로 전부 제외(설계 의도)" — 어시스턴트 발화는
      노이즈로 보고 제외하는 정책
@@ -177,3 +181,72 @@ op-90 골드(90) + 무답(10)으로 0콜 실측 (`stage9_assistant_exclusion_reg
 
 **잔여 관찰**: 데몬 재시작 후 shadow/enforcement로 실사용 변화 관찰 권장.
 (코드 변경은 라이브 데몬 재시작 시 반영 — RPC 경로 `pipeline.py`는 동일 모듈 import)
+
+---
+
+## 후속 실측 (2026-10-05 오후, 3종 AI 검토 후속)
+
+### 실측 10 — ★임베딩 하네스 버그 발견 (b-ai "sanity 검사" 지적이 맞았음)
+
+**직접 `TextEmbedding()` 호출이 `BAAI/bge-small-en-v1.5`를 로드** — sitecustomize가
+`MNEMOSYNE_EMBEDDING_MODEL=bench/bekko-a8m`을 강제하는 건 **beam 경로에만** 적용되고,
+fastembed 직접 생성은 기본 모델로 폴백했다. (실측: 같은 문장 fastembed vs beam cosine ≈ 0.02)
+
+→ **stage1b/1c/3의 벡터 순위 실측 전부가 bge-small로 돈 것** → "chunk rank≤2=0건"(실측 7)은 무효.
+단 stage1d(파이프라인 경유)·stage9(운영)은 beam 경유라 유효.
+
+**교훈**: 실험 스크립트에서 임베딩은 항상 `mnemosyne.core.embeddings`(beam 경유)를 쓸 것.
+
+### 실측 10b — 정확한 모델(bekko-a8m)로 재실측 → 결과 역전
+
+| 지표 | bge-small (잘못됨) | bekko-a8m (정확) |
+|---|---|---|
+| gold 19 whole rank median | 400~1,600 | **107** |
+| whole rank ≤2 | 1건 | 2건 |
+| **chunk rank ≤2** | **0건** | **10건!** |
+
+맞는 모델에선 청크가 벡터 상위로 확실히 올라간다 — stage1c의 "청킹 무효"는 모델 버그의 인공물.
+
+### 실측 11 — parent multi-vector (chunk-lane) 단독 회수
+
+227청크 sidecar를 쿼리-vs-청크 max로 collapse: **top-5 11/19, top-19 18/19** (whole 5/19 대비 +13).
+
+### 실측 12 — ★chunk lane 통합 → 이득 0
+
+실제 파이프라인(5번째 레인으로 통합, 부모 collapse) → **gold pool 15/19 그대로, gate 8/19 그대로, op-90 회귀 0, noans 0**.
+이유: [ASSISTANT] 해제 후 gold 부모는 이미 FTS/vec로 풀에 존재 → chunk lane은 중복. **parent multi-vector 기각.**
+
+### 실측 13 — 잔여 탈락 11건 분석
+
+pool 15 → gate 8의 7건: 대부분 **게이트 통과는 하지만 top-40 랭크 컷**(gate_rank 44~104) — 게이트 로직 문제가 아니라 POOL_BUDGET 컷오프. POOL-MISS 4건은 구조적 한계.
+
+### 실측 14 — POOL_BUDGET 스윕 (40→100)
+
+| 컷 | gold gate | op-90 | noans |
+|---|---|---|---|
+| 40 | 8/19 | 81/90 | 10/10 |
+| 50 | 11/19 | 81/90 | 10/10 |
+| 60 | 12/19 | 81/90 | 10/10 |
+| 80 | 13/19 | 81/90 | 10/10 |
+| 100 | 14/19 | 81/90 | 10/10 |
+
+### 실측 15 — ★Jev 실제 lift 확인 (무료 레인, 6건 × 컷)
+
+게이트 통과 ≠ Jev가 1위로 lift. 실측:
+
+| gold (gate rank) | cut 60 | cut 80 | cut 100 |
+|---|---|---|---|
+| 97bca6e2 (44) | **GOLD#1 ×2** | NO-PICK | NO-PICK |
+| 0e2418bb (44) | other ❌ | NO-PICK | NO-PICK |
+| 8c43c4f6 (46) | other ❌ | NO-PICK | NO-PICK |
+| 01dfeb21 (51) | other ❌ | NO-PICK | NO-PICK |
+| f76a006d (66) | (컷 밖) | NO-PICK | NO-PICK |
+| 77fff372 (87) | (컷 밖) | NO-PICK | NO-PICK |
+
+**핵심**: ①실질 lift는 1/6건(97bca6e2)뿐 ②**cut 80/100은 abstain 폭증으로 전멸** — 풀을 키울수록
+Jev가 기권. → **POOL_BUDGET 60이 실질 상한, 80/100은 역효과로 기각.**
+
+### ★적용 (사용자 승인 2026-10-05): POOL_BUDGET 40 → 60
+
+`gateway/j1_pipeline.py` `POOL_BUDGET=60` + `POOL_DEFAULT_TOP=60`. 토큰 +50%(≈+1,360/쿼리,
+연간 ~$11~22, 무시 가능), 콜 수 불변(쿼리당 1콜). 데몬 재시작 반영 필요.

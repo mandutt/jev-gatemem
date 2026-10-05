@@ -639,7 +639,10 @@ class Pipeline:
             return []
 
         pool = j1p.build_lane_pool(recall_raw, query)
-        return j1p._filter_and_rank(pool, query) if pool else []
+        filtered = j1p._filter_and_rank(pool, query) if pool else []
+        # 2026-10-05: POOL_BUDGET 컷 명시 (stage15: 100개 전송 시 abstain 폭증 —
+        # pipeline.py는 이전에 컷 없이 전부 전송하고 있었다)
+        return filtered[:j1p.POOL_BUDGET]
 
     def _rerank(self, query: str, rows: List[Dict]) -> List[Dict]:
         from gateway import j1_pipeline as j1p
