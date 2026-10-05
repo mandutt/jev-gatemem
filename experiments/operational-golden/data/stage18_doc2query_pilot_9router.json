@@ -1,0 +1,259 @@
+{
+ "created_at": "2026-10-05T22:51:38+0900",
+ "n": 23,
+ "records": [
+  {
+   "query": "입력 토큰 늘어나면 응답 지연도 늘어?",
+   "gold_id": "a112c8b5932fbc1f",
+   "cat": "A_env_config",
+   "orig_cos": 0.4136,
+   "rewrite": "입력 토큰이 늘어나면 TTFT도 증가한다.",
+   "rewrite_err": null,
+   "rw_cos": 0.3365,
+   "rw_rank": 33,
+   "rw_in40": true
+  },
+  {
+   "query": "TTFT가 입력 길이에 영향 받아?",
+   "gold_id": "a112c8b5932fbc1f",
+   "cat": "A_env_config",
+   "orig_cos": 0.3376,
+   "rewrite": "TTFT는 입력 길이에 영향을 받는다.",
+   "rewrite_err": null,
+   "rw_cos": 0.3047,
+   "rw_rank": 13,
+   "rw_in40": true
+  },
+  {
+   "query": "프록시에서 특정 모델 강제 지정 기능 있어?",
+   "gold_id": "e5bbd0063f1356f6",
+   "cat": "A_env_config",
+   "orig_cos": 0.4788,
+   "rewrite": "프록시에서 특정 모델 강제 지정 기능이 있는지 여부.",
+   "rewrite_err": null,
+   "rw_cos": 0.4883,
+   "rw_rank": 6,
+   "rw_in40": true
+  },
+  {
+   "query": "코덱스 앱이 PC 느려지게 한 원인 뭐였어?",
+   "gold_id": "ef3d9670463aea79",
+   "cat": "B_debug_causal",
+   "orig_cos": 0.6088,
+   "rewrite": "코덱스 앱이 PC를 느려지게 한 원인은 config.toml의 TimeoutExpired 설정이 18080 포트에서 과도한 재시도를 유발한 것이었음.",
+   "rewrite_err": null,
+   "rw_cos": 0.523,
+   "rw_rank": 1,
+   "rw_in40": true
+  },
+  {
+   "query": "리뷰 전용 턴에서 커밋해도 돼?",
+   "gold_id": "9150f1246613b092",
+   "cat": "C_preference_short",
+   "orig_cos": 0.3552,
+   "rewrite": "리뷰 전용 턴에서 커밋해도 됨.",
+   "rewrite_err": null,
+   "rw_cos": 0.3596,
+   "rw_rank": 48,
+   "rw_in40": false
+  },
+  {
+   "query": "commit governance 규칙이 뭐지?",
+   "gold_id": "9150f1246613b092",
+   "cat": "C_preference_short",
+   "orig_cos": 0.6248,
+   "rewrite": "commit governance 규칙은 camelAI 저장소에서 커밋 메시지 형식과 브랜치 전략을 정의한 규칙이다.",
+   "rewrite_err": null,
+   "rw_cos": 0.5528,
+   "rw_rank": 1,
+   "rw_in40": true
+  },
+  {
+   "query": "구현됐다는 말 믿기 전에 뭘 확인해?",
+   "gold_id": "c9e4828c93bdb0a0",
+   "cat": "C_preference_short",
+   "orig_cos": 0.4832,
+   "rewrite": "구현됐다는 말 믿기 전에 확인할 것: 코드, 테스트, 실행 결과, 문서.",
+   "rewrite_err": null,
+   "rw_cos": 0.5401,
+   "rw_rank": 3,
+   "rw_in40": true
+  },
+  {
+   "query": "evidence 규칙 어땠지?",
+   "gold_id": "c9e4828c93bdb0a0",
+   "cat": "C_preference_short",
+   "orig_cos": 0.3681,
+   "rewrite": "evidence 규칙은 이랬다.",
+   "rewrite_err": null,
+   "rw_cos": 0.3358,
+   "rw_rank": 21,
+   "rw_in40": true
+  },
+  {
+   "query": "DTO 분리 어디까지 하면 돼?",
+   "gold_id": "1cef4743165b7707",
+   "cat": "C_preference_short",
+   "orig_cos": 0.4829,
+   "rewrite": "DTO 분리 기준: 레이어 간 전달 시점에 분리하고, 단순 필드 복사는 MapStruct 같은 도구로 처리.",
+   "rewrite_err": null,
+   "rw_cos": 0.4569,
+   "rw_rank": 1,
+   "rw_in40": true
+  },
+  {
+   "query": "그 프로젝트 진짜 목표가 뭐지?",
+   "gold_id": "f2421b7b489858bb",
+   "cat": "C_preference_short",
+   "orig_cos": 0.4344,
+   "rewrite": "프로젝트의 진짜 목표는 무엇이었는지.",
+   "rewrite_err": null,
+   "rw_cos": 0.418,
+   "rw_rank": 2,
+   "rw_in40": true
+  },
+  {
+   "query": "660초 타임아웃 원인 뭐였지?",
+   "gold_id": "c69c459c7c67c2d1",
+   "cat": "C_preference_short",
+   "orig_cos": 0.3792,
+   "rewrite": "660초 타임아웃 원인은 TimeoutExpired 예외였음.",
+   "rewrite_err": null,
+   "rw_cos": 0.3836,
+   "rw_rank": 11,
+   "rw_in40": true
+  },
+  {
+   "query": "shutdown API 어떻게 만들었지?",
+   "gold_id": "efb4e9a38f6ee270",
+   "cat": "C_preference_short",
+   "orig_cos": 0.3978,
+   "rewrite": "shutdown API 구현 방법 기록.",
+   "rewrite_err": null,
+   "rw_cos": 0.4338,
+   "rw_rank": 21,
+   "rw_in40": true
+  },
+  {
+   "query": "codex config.toml 훅 어떻게 설정했지?",
+   "gold_id": "90b4edf612db6b2c",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.6079,
+   "rewrite": "codex config.toml 훅 설정 방법 기록.",
+   "rewrite_err": null,
+   "rw_cos": 0.6482,
+   "rw_rank": 1,
+   "rw_in40": true
+  },
+  {
+   "query": "코드 설명과 구조 라벨 언어 규칙?",
+   "gold_id": "2ff550d144b5ae03",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.4408,
+   "rewrite": "코드 구조와 라벨 언어 규칙에 대한 설명.",
+   "rewrite_err": null,
+   "rw_cos": 0.4565,
+   "rw_rank": 2,
+   "rw_in40": true
+  },
+  {
+   "query": "완전 번역 금지 규칙 뭐지?",
+   "gold_id": "2ff550d144b5ae03",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.4141,
+   "rewrite": "완전 번역 금지 규칙: 전체 문장을 번역하지 말고, 기술 용어(camelAI, TTFT, config.toml, TimeoutExpired, 18080, Exa 등)는 원문 그대로 유지한다.",
+   "rewrite_err": null,
+   "rw_cos": 0.4745,
+   "rw_rank": 1,
+   "rw_in40": true
+  },
+  {
+   "query": "provider가 뭐지?",
+   "gold_id": "ed3a3442d3bcbb33",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.372,
+   "rewrite": "provider는 LLM API 제공자(예: OpenAI, Anthropic, Exa)를 의미한다.",
+   "rewrite_err": null,
+   "rw_cos": 0.2834,
+   "rw_rank": 54,
+   "rw_in40": false
+  },
+  {
+   "query": "S8 시나리오 실패 원인?",
+   "gold_id": "edf486fa0d3cd079",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.361,
+   "rewrite": "S8 시나리오 실패 원인: TimeoutExpired 발생, config.toml에서 18080 포트 타임아웃 설정 문제로 추정.",
+   "rewrite_err": null,
+   "rw_cos": 0.4977,
+   "rw_rank": 1,
+   "rw_in40": true
+  },
+  {
+   "query": "TimeoutExpired 처리 어떻게 바뀌지?",
+   "gold_id": "3581b9a33901eba4",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.403,
+   "rewrite": "TimeoutExpired 처리 방식 변경됨.",
+   "rewrite_err": null,
+   "rw_cos": 0.4052,
+   "rw_rank": 5,
+   "rw_in40": true
+  },
+  {
+   "query": "웹 추출 백엔드 뭘로 설정했지?",
+   "gold_id": "0ea67a3b101917e5",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.4511,
+   "rewrite": "웹 추출 백엔드 설정 확인 필요.",
+   "rewrite_err": null,
+   "rw_cos": 0.441,
+   "rw_rank": 4,
+   "rw_in40": true
+  },
+  {
+   "query": "Exa 왜 안 써?",
+   "gold_id": "0ea67a3b101917e5",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.3237,
+   "rewrite": "Exa 안 쓰는 이유가 뭐야?",
+   "rewrite_err": null,
+   "rw_cos": 0.3346,
+   "rw_rank": 19,
+   "rw_in40": true
+  },
+  {
+   "query": "18080 프록시가 뭐 하는 거야?",
+   "gold_id": "5e8516d6f91b46dd",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.4131,
+   "rewrite": "18080 프록시는 요청을 중계하는 역할을 한다.",
+   "rewrite_err": null,
+   "rw_cos": 0.3876,
+   "rw_rank": 19,
+   "rw_in40": true
+  },
+  {
+   "query": "supermemory 왜 안 쓰는 거야?",
+   "gold_id": "132fb95d922f9bc5",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.5491,
+   "rewrite": "supermemory 안 쓰는 이유가 뭐야?",
+   "rewrite_err": null,
+   "rw_cos": 0.5398,
+   "rw_rank": 1,
+   "rw_in40": true
+  },
+  {
+   "query": "전환 전 어떤 문제 있었지?",
+   "gold_id": "132fb95d922f9bc5",
+   "cat": "E_factual_misc",
+   "orig_cos": 0.2725,
+   "rewrite": "전환 전에 발생한 문제는 TimeoutExpired 에러였고, config.toml에서 18080 포트 설정과 관련된 타임아웃 문제였음.",
+   "rewrite_err": null,
+   "rw_cos": 0.3405,
+   "rw_rank": 114,
+   "rw_in40": false
+  }
+ ]
+}

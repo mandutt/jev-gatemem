@@ -97,6 +97,10 @@ POOL_DEFAULT_TOP = 60     # pool-alone fallback returns this many
 JEV_CHOICE_TIMEOUT_S = 5.0   # hard cap; MemoryManager also bounds external prefetch
 JEV_ENV_KEY = "JEV_RERANK"
 # Run O (2026-10-03): abstain label on the Jev choice question. Default ON;
+ABSTAIN_ENV_KEY = "JEV_ABSTAIN"
+# 2026-10-06 (stage26/27): soft abstain gate τ — choice가 abstain이 아니어도
+# abstain 라벨 확률이 이 값보다 높으면 빈 컨텍스트로 (noans 오주입 방어).
+_SOFT_ABSTAIN_TAU = float(os.environ.get("JEV_SOFT_ABSTAIN_TAU", "0.3"))
 # set JEV_ABSTAIN=0 to disable (pre-Run-O behavior). Measured: NO_ANSWER
 # misinjection 10/10 -> 0/10, gold pick 59/59 preserved, wrong->none 17/17
 # were true abstentions (gold absent from pool), tokens +1.0%, latency flat.
@@ -437,12 +441,17 @@ def _abstain_enabled() -> bool:
     return raw not in ("0", "false", "off", "no", "disabled")
 
 
-def _jev_choice(client, state: dict, labels: list, timeout: float) -> Optional[int]:
-    """Single Jev choice call -> index into labels; None on any failure.
+def _jev_choice(client, state: dict, labels: list, timeout: float):
+    """Single Jev choice call -> (idx, abstain_p, probs); None idx on failure.
 
     With abstain enabled (JEV_ABSTAIN != '0'), an extra label ``c<N>`` is
     offered; a return value of ``len(labels)`` means Jev abstained (no
     candidate is usable evidence). None still means call failure -> pool.
+
+    Returns (idx, abstain_p, probabilities):
+      idx: int label index, or len(labels) for abstain, or None on failure
+      abstain_p: float probability of the abstain label (0.0 if no probs)
+      probabilities: raw dict of cN -> p (may be empty)
     """
     abstain = _abstain_enabled()
     j_labels = list(labels)
@@ -488,15 +497,22 @@ def _jev_choice(client, state: dict, labels: list, timeout: float) -> Optional[i
                     )
         if resp.status_code != 200:
             log.info("Jev choice HTTP %s", resp.status_code)
-            return None
+            return None, 0.0, {}
         ans = (resp.json().get("answers") or {}).get("best") or {}
         choice = ans.get("choice")
+        probs = ans.get("probabilities") or {}
+        # abstain 확률: 마지막 라벨의 probability (없으면 confidence fallback)
+        abstain_p = 0.0
+        if probs:
+            abstain_p = float(probs.get(f"c{len(j_labels) - 1}", 0.0) or 0.0)
+        elif ans.get("confidence") is not None and abstain:
+            abstain_p = float(ans["confidence"])
         if choice is None:
-            return None
-        return int(str(choice).lstrip("c"))
+            return None, abstain_p, probs
+        return int(str(choice).lstrip("c")), abstain_p, probs
     except Exception as exc:
         log.info("Jev choice failed: %s", type(exc).__name__)
-        return None
+        return None, 0.0, {}
 
 
 def build_state(query: str, candidates: List[dict]) -> dict:
@@ -508,7 +524,8 @@ def build_state(query: str, candidates: List[dict]) -> dict:
             "scope": c.get("scope") or "",
             "importance": float(c.get("importance") or 0.0),
             "source": c.get("source") or "",
-            "excerpt": _excerpt(c.get("content") or "", EXCERPT_LIMIT),
+            # 2026-10-06: state excerpt도 쿼리 윈도우 300자 (라벨과 일치).
+            "excerpt": _excerpt(_query_window(c.get("content") or "", query, 300), 150),
         })
     return {"question": query, "candidates": headers}
 
@@ -563,26 +580,25 @@ def jev_rerank(
         return pool, False
     state = build_state(query, pool)
     if labels is None:
-        # 2026-10-05 (stage17/18): 장문(>800자) 행은 쿼리 인지 300자 윈도우(150자 excerpt)로
-        # 라벨 생성 — head-100 절단이 mid-답 장문의 lift를 막던 문제 해소.
-        # 실측: gold 12건 lift 6/24→10/24 (+2, 손실 0), op-90 회귀 0, noans 변화 0.
-        # 단문은 head-100 유지 (윈도우 이득 없음 + 토큰 절약).
+        # 2026-10-06 (stage26/27): 전 후보 쿼리 윈도우 300자로 전면 확장.
+        # 실측: op hit@3 72→77(+5), hit@5 74→80, abstain 9→3. 단 noans 오주입
+        # 13→22 증가 → abstain_p>0.3 soft gate(빈 컨텍스트)로 상쇄 (hard 16, easy 0 FP).
         labels = [
-            (_excerpt(_query_window((c.get("content") or ""), query, 300), 150)
-             if len(c.get("content") or "") > 800
-             else _excerpt((c.get("content") or ""), 100))
+            _excerpt(_query_window((c.get("content") or ""), query, 300), 150)
             or "n/a"
             for c in pool
         ]
     t0 = time.perf_counter()
-    idx = _jev_choice(client, state, labels, timeout=timeout)
+    idx, abstain_p, probs = _jev_choice(client, state, labels, timeout=timeout)
     lat = (time.perf_counter() - t0) * 1000
-    log.info("Jev choice: idx=%s latency=%.0fms pool=%d", idx, lat, len(pool))
+    log.info("Jev choice: idx=%s abstain_p=%.2f latency=%.0fms pool=%d",
+             idx, abstain_p, lat, len(pool))
     _jtrace("jev", {
         "query": (query or "")[:120],
         "idx": idx if idx is not None else "none",
         "lat_ms": f"{lat:.0f}",
         "pool": len(pool),
+        "abstain_p": f"{abstain_p:.2f}",
         "pick": (pool[idx].get("id", "")[:12] if idx is not None and 0 <= idx < len(pool) else "") if idx is not None else "",
     })
     if idx is None:
@@ -592,6 +608,13 @@ def jev_rerank(
             and idx == len(labels)):
         # Run O abstain: Jev says no candidate is usable evidence.
         _jtrace("abstain", {"query": (query or "")[:120], "pool": len(pool)})
+        return pool, True
+    # 2026-10-06 (stage26/27): soft abstain gate — choice가 abstain이 아니어도
+    # abstain 라벨 확률이 높으면(τ=0.3) 빈 컨텍스트로. 실측: noans hard 22→16 FP,
+    # easy 0 FP, op 손실 0.
+    if _abstain_enabled() and abstain_p > _SOFT_ABSTAIN_TAU:
+        _jtrace("soft-abstain", {"query": (query or "")[:120], "pool": len(pool),
+                                 "abstain_p": f"{abstain_p:.2f}"})
         return pool, True
     if not (0 <= idx < len(pool)):
         return pool, False

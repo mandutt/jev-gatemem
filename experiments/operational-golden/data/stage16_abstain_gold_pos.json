@@ -1,0 +1,245 @@
+[
+ {
+  "query": "92번 호출 실험에서 라우팅 결과 어땠지?",
+  "cat": "A_env_config",
+  "gold_rank_full": 5,
+  "in40": true,
+  "in60": true,
+  "in100": true,
+  "total": 35
+ },
+ {
+  "query": "입력 토큰 늘어나면 응답 지연도 늘어?",
+  "cat": "A_env_config",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 7
+ },
+ {
+  "query": "TTFT가 입력 길이에 영향 받아?",
+  "cat": "A_env_config",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 2
+ },
+ {
+  "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+  "cat": "A_env_config",
+  "gold_rank_full": 2,
+  "in40": true,
+  "in60": true,
+  "in100": true,
+  "total": 16
+ },
+ {
+  "query": "프록시에서 특정 모델 강제 지정 기능 있어?",
+  "cat": "A_env_config",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 18
+ },
+ {
+  "query": "코덱스 앱이 PC 느려지게 한 원인 뭐였어?",
+  "cat": "B_debug_causal",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 14
+ },
+ {
+  "query": "리뷰 전용 턴에서 커밋해도 돼?",
+  "cat": "C_preference_short",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 15
+ },
+ {
+  "query": "commit governance 규칙이 뭐지?",
+  "cat": "C_preference_short",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 49
+ },
+ {
+  "query": "구현됐다는 말 믿기 전에 뭘 확인해?",
+  "cat": "C_preference_short",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 20
+ },
+ {
+  "query": "evidence 규칙 어땠지?",
+  "cat": "C_preference_short",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 21
+ },
+ {
+  "query": "DTO 분리 어디까지 하면 돼?",
+  "cat": "C_preference_short",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 10
+ },
+ {
+  "query": "그 프로젝트 진짜 목표가 뭐지?",
+  "cat": "C_preference_short",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 65
+ },
+ {
+  "query": "660초 타임아웃 원인 뭐였지?",
+  "cat": "C_preference_short",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 27
+ },
+ {
+  "query": "shutdown API 어떻게 만들었지?",
+  "cat": "C_preference_short",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 51
+ },
+ {
+  "query": "데스크톱 앱 띄우면 텔레그램 수신 끊겨?",
+  "cat": "C_preference_short",
+  "gold_rank_full": 3,
+  "in40": true,
+  "in60": true,
+  "in100": true,
+  "total": 44
+ },
+ {
+  "query": "codex config.toml 훅 어떻게 설정했지?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 64
+ },
+ {
+  "query": "코드 설명과 구조 라벨 언어 규칙?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 9
+ },
+ {
+  "query": "완전 번역 금지 규칙 뭐지?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 66
+ },
+ {
+  "query": "provider가 뭐지?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 12
+ },
+ {
+  "query": "deepseek 장문 스트림에서 뭐가 문제였어?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": 23,
+  "in40": true,
+  "in60": true,
+  "in100": true,
+  "total": 35
+ },
+ {
+  "query": "S8 시나리오 실패 원인?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 25
+ },
+ {
+  "query": "TimeoutExpired 처리 어떻게 바뀌지?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 59
+ },
+ {
+  "query": "웹 추출 백엔드 뭘로 설정했지?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 10
+ },
+ {
+  "query": "Exa 왜 안 써?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 1
+ },
+ {
+  "query": "18080 프록시가 뭐 하는 거야?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 16
+ },
+ {
+  "query": "supermemory 왜 안 쓰는 거야?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 5
+ },
+ {
+  "query": "전환 전 어떤 문제 있었지?",
+  "cat": "E_factual_misc",
+  "gold_rank_full": null,
+  "in40": false,
+  "in60": false,
+  "in100": false,
+  "total": 12
+ }
+]

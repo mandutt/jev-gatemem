@@ -1,0 +1,140 @@
+[
+ {
+  "query": "입력 토큰 늘어나면 응답 지연도 늘어?",
+  "gold_id": "a112c8b5932fbc1f",
+  "cat": "A_env_config",
+  "vec_rank": 39
+ },
+ {
+  "query": "TTFT가 입력 길이에 영향 받아?",
+  "gold_id": "a112c8b5932fbc1f",
+  "cat": "A_env_config",
+  "vec_rank": 2
+ },
+ {
+  "query": "프록시에서 특정 모델 강제 지정 기능 있어?",
+  "gold_id": "e5bbd0063f1356f6",
+  "cat": "A_env_config",
+  "vec_rank": 10
+ },
+ {
+  "query": "코덱스 앱이 PC 느려지게 한 원인 뭐였어?",
+  "gold_id": "ef3d9670463aea79",
+  "cat": "B_debug_causal",
+  "vec_rank": 1
+ },
+ {
+  "query": "리뷰 전용 턴에서 커밋해도 돼?",
+  "gold_id": "9150f1246613b092",
+  "cat": "C_preference_short",
+  "vec_rank": 41
+ },
+ {
+  "query": "commit governance 규칙이 뭐지?",
+  "gold_id": "9150f1246613b092",
+  "cat": "C_preference_short",
+  "vec_rank": 1
+ },
+ {
+  "query": "구현됐다는 말 믿기 전에 뭘 확인해?",
+  "gold_id": "c9e4828c93bdb0a0",
+  "cat": "C_preference_short",
+  "vec_rank": 4
+ },
+ {
+  "query": "evidence 규칙 어땠지?",
+  "gold_id": "c9e4828c93bdb0a0",
+  "cat": "C_preference_short",
+  "vec_rank": 11
+ },
+ {
+  "query": "DTO 분리 어디까지 하면 돼?",
+  "gold_id": "1cef4743165b7707",
+  "cat": "C_preference_short",
+  "vec_rank": 1
+ },
+ {
+  "query": "그 프로젝트 진짜 목표가 뭐지?",
+  "gold_id": "f2421b7b489858bb",
+  "cat": "C_preference_short",
+  "vec_rank": 2
+ },
+ {
+  "query": "660초 타임아웃 원인 뭐였지?",
+  "gold_id": "c69c459c7c67c2d1",
+  "cat": "C_preference_short",
+  "vec_rank": 5
+ },
+ {
+  "query": "shutdown API 어떻게 만들었지?",
+  "gold_id": "efb4e9a38f6ee270",
+  "cat": "C_preference_short",
+  "vec_rank": 20
+ },
+ {
+  "query": "codex config.toml 훅 어떻게 설정했지?",
+  "gold_id": "90b4edf612db6b2c",
+  "cat": "E_factual_misc",
+  "vec_rank": 1
+ },
+ {
+  "query": "코드 설명과 구조 라벨 언어 규칙?",
+  "gold_id": "2ff550d144b5ae03",
+  "cat": "E_factual_misc",
+  "vec_rank": 2
+ },
+ {
+  "query": "완전 번역 금지 규칙 뭐지?",
+  "gold_id": "2ff550d144b5ae03",
+  "cat": "E_factual_misc",
+  "vec_rank": 1
+ },
+ {
+  "query": "provider가 뭐지?",
+  "gold_id": "ed3a3442d3bcbb33",
+  "cat": "E_factual_misc",
+  "vec_rank": 1
+ },
+ {
+  "query": "S8 시나리오 실패 원인?",
+  "gold_id": "edf486fa0d3cd079",
+  "cat": "E_factual_misc",
+  "vec_rank": 2
+ },
+ {
+  "query": "TimeoutExpired 처리 어떻게 바뀌지?",
+  "gold_id": "3581b9a33901eba4",
+  "cat": "E_factual_misc",
+  "vec_rank": 4
+ },
+ {
+  "query": "웹 추출 백엔드 뭘로 설정했지?",
+  "gold_id": "0ea67a3b101917e5",
+  "cat": "E_factual_misc",
+  "vec_rank": 3
+ },
+ {
+  "query": "Exa 왜 안 써?",
+  "gold_id": "0ea67a3b101917e5",
+  "cat": "E_factual_misc",
+  "vec_rank": 27
+ },
+ {
+  "query": "18080 프록시가 뭐 하는 거야?",
+  "gold_id": "5e8516d6f91b46dd",
+  "cat": "E_factual_misc",
+  "vec_rank": 13
+ },
+ {
+  "query": "supermemory 왜 안 쓰는 거야?",
+  "gold_id": "132fb95d922f9bc5",
+  "cat": "E_factual_misc",
+  "vec_rank": 1
+ },
+ {
+  "query": "전환 전 어떤 문제 있었지?",
+  "gold_id": "132fb95d922f9bc5",
+  "cat": "E_factual_misc",
+  "vec_rank": 230
+ }
+]

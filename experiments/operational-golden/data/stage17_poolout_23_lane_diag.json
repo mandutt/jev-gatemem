@@ -1,0 +1,430 @@
+[
+ {
+  "query": "입력 토큰 늘어나면 응답 지연도 늘어?",
+  "cat": "A_env_config",
+  "gold_id": "a112c8b5932fbc1f",
+  "query_tokens": [
+   "늘어",
+   "늘어나면",
+   "응답",
+   "입력",
+   "지연도",
+   "토큰"
+  ],
+  "matched_tokens_in_gold": [],
+  "n_match": 0,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "TTFT가 입력 길이에 영향 받아?",
+  "cat": "A_env_config",
+  "gold_id": "a112c8b5932fbc1f",
+  "query_tokens": [
+   "TTFT가",
+   "길이에",
+   "받아",
+   "영향",
+   "입력"
+  ],
+  "matched_tokens_in_gold": [],
+  "n_match": 0,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "프록시에서 특정 모델 강제 지정 기능 있어?",
+  "cat": "A_env_config",
+  "gold_id": "e5bbd0063f1356f6",
+  "query_tokens": [
+   "강제",
+   "기능",
+   "모델",
+   "있어",
+   "지정",
+   "특정",
+   "프록시에서"
+  ],
+  "matched_tokens_in_gold": [
+   "모델"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "코덱스 앱이 PC 느려지게 한 원인 뭐였어?",
+  "cat": "B_debug_causal",
+  "gold_id": "ef3d9670463aea79",
+  "query_tokens": [
+   "PC",
+   "느려지게",
+   "뭐였어",
+   "앱이",
+   "원인",
+   "코덱스",
+   "한"
+  ],
+  "matched_tokens_in_gold": [
+   "PC"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "리뷰 전용 턴에서 커밋해도 돼?",
+  "cat": "C_preference_short",
+  "gold_id": "9150f1246613b092",
+  "query_tokens": [
+   "돼",
+   "리뷰",
+   "전용",
+   "커밋해도",
+   "턴에서"
+  ],
+  "matched_tokens_in_gold": [],
+  "n_match": 0,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": true,
+  "in_graph": false
+ },
+ {
+  "query": "commit governance 규칙이 뭐지?",
+  "cat": "C_preference_short",
+  "gold_id": "9150f1246613b092",
+  "query_tokens": [
+   "commit",
+   "governance",
+   "규칙이",
+   "뭐지"
+  ],
+  "matched_tokens_in_gold": [
+   "commit",
+   "governance"
+  ],
+  "n_match": 2,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": true,
+  "in_graph": false
+ },
+ {
+  "query": "구현됐다는 말 믿기 전에 뭘 확인해?",
+  "cat": "C_preference_short",
+  "gold_id": "c9e4828c93bdb0a0",
+  "query_tokens": [
+   "구현됐다는",
+   "말",
+   "뭘",
+   "믿기",
+   "전에",
+   "확인해"
+  ],
+  "matched_tokens_in_gold": [],
+  "n_match": 0,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": true,
+  "in_graph": false
+ },
+ {
+  "query": "evidence 규칙 어땠지?",
+  "cat": "C_preference_short",
+  "gold_id": "c9e4828c93bdb0a0",
+  "query_tokens": [
+   "evidence",
+   "규칙",
+   "어땠지"
+  ],
+  "matched_tokens_in_gold": [
+   "evidence"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": true,
+  "in_graph": false
+ },
+ {
+  "query": "DTO 분리 어디까지 하면 돼?",
+  "cat": "C_preference_short",
+  "gold_id": "1cef4743165b7707",
+  "query_tokens": [
+   "DTO",
+   "돼",
+   "분리",
+   "어디까지",
+   "하면"
+  ],
+  "matched_tokens_in_gold": [
+   "DTO",
+   "분리"
+  ],
+  "n_match": 2,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": true,
+  "in_graph": false
+ },
+ {
+  "query": "그 프로젝트 진짜 목표가 뭐지?",
+  "cat": "C_preference_short",
+  "gold_id": "f2421b7b489858bb",
+  "query_tokens": [
+   "그",
+   "목표가",
+   "뭐지",
+   "진짜",
+   "프로젝트"
+  ],
+  "matched_tokens_in_gold": [
+   "진짜"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "660초 타임아웃 원인 뭐였지?",
+  "cat": "C_preference_short",
+  "gold_id": "c69c459c7c67c2d1",
+  "query_tokens": [
+   "660초",
+   "뭐였지",
+   "원인",
+   "타임아웃"
+  ],
+  "matched_tokens_in_gold": [],
+  "n_match": 0,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "shutdown API 어떻게 만들었지?",
+  "cat": "C_preference_short",
+  "gold_id": "efb4e9a38f6ee270",
+  "query_tokens": [
+   "API",
+   "shutdown",
+   "만들었지",
+   "어떻게"
+  ],
+  "matched_tokens_in_gold": [
+   "API",
+   "shutdown"
+  ],
+  "n_match": 2,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "codex config.toml 훅 어떻게 설정했지?",
+  "cat": "E_factual_misc",
+  "gold_id": "90b4edf612db6b2c",
+  "query_tokens": [
+   "codex",
+   "config.toml",
+   "설정했지",
+   "어떻게",
+   "훅"
+  ],
+  "matched_tokens_in_gold": [
+   "codex"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "코드 설명과 구조 라벨 언어 규칙?",
+  "cat": "E_factual_misc",
+  "gold_id": "2ff550d144b5ae03",
+  "query_tokens": [
+   "구조",
+   "규칙",
+   "라벨",
+   "설명과",
+   "언어",
+   "코드"
+  ],
+  "matched_tokens_in_gold": [
+   "언어"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "완전 번역 금지 규칙 뭐지?",
+  "cat": "E_factual_misc",
+  "gold_id": "2ff550d144b5ae03",
+  "query_tokens": [
+   "규칙",
+   "금지",
+   "뭐지",
+   "번역",
+   "완전"
+  ],
+  "matched_tokens_in_gold": [
+   "완전",
+   "번역",
+   "금지"
+  ],
+  "n_match": 3,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "provider가 뭐지?",
+  "cat": "E_factual_misc",
+  "gold_id": "ed3a3442d3bcbb33",
+  "query_tokens": [
+   "provider가",
+   "뭐지"
+  ],
+  "matched_tokens_in_gold": [],
+  "n_match": 0,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "S8 시나리오 실패 원인?",
+  "cat": "E_factual_misc",
+  "gold_id": "edf486fa0d3cd079",
+  "query_tokens": [
+   "S8",
+   "시나리오",
+   "실패",
+   "원인"
+  ],
+  "matched_tokens_in_gold": [
+   "실패",
+   "S8"
+  ],
+  "n_match": 2,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "TimeoutExpired 처리 어떻게 바뀌지?",
+  "cat": "E_factual_misc",
+  "gold_id": "3581b9a33901eba4",
+  "query_tokens": [
+   "TimeoutExpired",
+   "바뀌지",
+   "어떻게",
+   "처리"
+  ],
+  "matched_tokens_in_gold": [
+   "TimeoutExpired"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "웹 추출 백엔드 뭘로 설정했지?",
+  "cat": "E_factual_misc",
+  "gold_id": "0ea67a3b101917e5",
+  "query_tokens": [
+   "뭘로",
+   "백엔드",
+   "설정했지",
+   "웹",
+   "추출"
+  ],
+  "matched_tokens_in_gold": [
+   "추출",
+   "웹"
+  ],
+  "n_match": 2,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "Exa 왜 안 써?",
+  "cat": "E_factual_misc",
+  "gold_id": "0ea67a3b101917e5",
+  "query_tokens": [
+   "Exa",
+   "써",
+   "안",
+   "왜"
+  ],
+  "matched_tokens_in_gold": [
+   "Exa"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "18080 프록시가 뭐 하는 거야?",
+  "cat": "E_factual_misc",
+  "gold_id": "5e8516d6f91b46dd",
+  "query_tokens": [
+   "18080",
+   "거야",
+   "뭐",
+   "프록시가",
+   "하는"
+  ],
+  "matched_tokens_in_gold": [
+   "18080"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "supermemory 왜 안 쓰는 거야?",
+  "cat": "E_factual_misc",
+  "gold_id": "132fb95d922f9bc5",
+  "query_tokens": [
+   "supermemory",
+   "거야",
+   "쓰는",
+   "안",
+   "왜"
+  ],
+  "matched_tokens_in_gold": [
+   "supermemory"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ },
+ {
+  "query": "전환 전 어떤 문제 있었지?",
+  "cat": "E_factual_misc",
+  "gold_id": "132fb95d922f9bc5",
+  "query_tokens": [
+   "문제",
+   "어떤",
+   "있었지",
+   "전",
+   "전환"
+  ],
+  "matched_tokens_in_gold": [
+   "전환"
+  ],
+  "n_match": 1,
+  "vec_err": "Failed to load embedding model hotchpotch/bekko-embedding-v1-a8m: Model hotchpot",
+  "in_imp": false,
+  "in_graph": false
+ }
+]
