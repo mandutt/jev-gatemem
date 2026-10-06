@@ -215,3 +215,20 @@ B AI Q3 신규 제안: "abstain일 때 빈 컨텍스트 대신 pool 상위 1~3�
 - **기각** — 이득 0건(현재 abstain은 이미 정직한 빈 컨텍스트) vs 리스크 50%
   유해 노출. B AI의 실패 기준(IRREL 노출 > gold 회수)을 충족하는 방향
 - abstain = 빈 컨텍스트 유지 (현행 최적)
+
+## stage47a~h: excerpt 윈도우 계열 (win150/head+겹침) — **전부 기각** (2026-10-06)
+
+3차 AI 검토(B) 제안(150자 직접 윈도우, head+겹침) 8단계 실측. 전체 요약:
+- 1-run은 유망(win150 hit@3 +1·FP -3, head+겹침 전 지표 개선)했으나 **3-run에서
+  규칙형 noans 붕괴 또는 gold50 손실** — WHY 3건 구제 대가가 더 큼 (순손실)
+- **현행(300→150 절단 + current 라벨) 유지 확정**, 재실험 금지
+- 상세: `STAGE47H_FINAL_20261006.md` (47a~h 연쇄)
+
+## stage48: 라이브 60쿼리 교차 — **abstain 무력** (2026-10-06)
+
+- 실사용 60건 + 사용자 판정 교차: recall 100%(35/35) vs **noans FP 100%(22/22)**,
+  **abstain 0건** (abstain_p 전부 0.00~0.16)
+- 버그 3건 수정: `_filter_and_rank` 기본값 (2,0.30)→(1,0.0), 러너 row_factory,
+  load_queries 시트 고정
+- **u_true=38.6%** — 라이브 ~39%가 무답인데 전부 오주입. abstain 메커니즘 재설계 필요
+- 상세: `STAGE48_LIVE60_CROSS_20261006.md`

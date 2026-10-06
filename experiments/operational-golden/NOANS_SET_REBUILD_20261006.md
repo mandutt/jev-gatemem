@@ -94,3 +94,13 @@ B AI Q4-1 "가장 먼저 할 것": abstain 라벨 위치(c0 첫번째 vs cN 마�
 - 다음: **#1 abstain 라벨 문구 재검증** — cN 기준 + 스냅샷에서 실행 (stage45)
 
 러너: `stage44_abstain_pos_2x2.py`, raw: `data/stage44_abstain_pos_2x2.json`
+
+## stage48: 라이브 noans 교차 — 스냅샷 noans와 라이브의 차이 확인 (2026-10-06)
+
+라이브 실사용 60쿼리 중 사용자 판정 "답 없음" 22건을 스냅샷에서 재실측:
+- **noans FP 100%** (22/22 전부 pick) — abstain 0건
+- 반면 스냅샷 골든 noans hard는 FP 21/50 — **셋 구성 차이 확인**:
+  골든 hard는 "의도적으로 까다로운 무답"이라 abstain 유도, 라이브 무답은
+  "유사 이웃 존재"라 JEV가 답으로 오인
+- **결론**: noans FP 지표는 셋 의존성이 강함 — 운영 지표로는 부적합.
+  라이브 abstain율 + 정기 샘플 라벨링(u_true 38.6%)이 더 신뢰 가능.

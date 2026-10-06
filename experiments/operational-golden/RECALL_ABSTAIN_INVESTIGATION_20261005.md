@@ -119,3 +119,42 @@ abstain 8건 중 gold가 pool에 있는 3건(upstream 404, gold50, S8)은 gold_l
 
 - 메모리 경로 LLM = **JEV만** (SystemOne), 보조 = 임베딩(bekko-a8m, 로컬 0원). 일반 LLM(9router 등) 사용 금지 — stage18은 위반 사례.
 - 실험 venv = **데몬 venv만**. 프로젝트 .venv 금지 (임베딩 부재).
+
+## 9. excerpt 윈도우 계열 전수 조사 (2026-10-06, stage47a~h) — **모두 기각**
+
+3차 AI 검토(B) 제안 "150자 직접 윈도우·head+겹침"을 8단계 실측. **전부 3-run에서 붕괴**:
+
+| 단계 | 변형 | 1-run | 3-run 판정 |
+|---|---|---|---|
+| 47a | win150 (겹침 150 직접) | hit@3 +1, FP -3 | WHY 구제는 1-run 착시 |
+| 47b | win150 3-run | — | 마우스만 확정, gemini/codex 열위 → 기각 |
+| 47c | improved+win150 | FP 12 | noans 최강 but op hit@1 -5 |
+| 47d | head+겹침 | 전 지표 개선 | WHY abstain (겹침=head 겹침) |
+| 47e | head+겹침 non-overlap | hit@1 75/@3 79/FP 14 | WHY 3건 3/3 구제 확정 |
+| 47f | imphbn 3-run | — | gold50 0/3 abstain (improved 라벨 효과) |
+| 47g | curhb (current+head겹침) | WHY+gold50 모두 해결 | 규칙형 noans 4건 FP |
+| 47h | 최종 3-run 교차 | — | **둘 다 기각 — WHY 3건 vs 규칙형 4건+gold50 1건 = 순손실** |
+
+- **결론**: 현행(300→150 절단 + current 라벨)이 유일한 균형. WHY 질문 구제는
+  excerpt가 아닌 다른 레버로만. 이 계열 재실험 금지.
+- **러너 교훈 3건**: ① POOL_BUDGET 캡 누락 → criteria 64+ 400 (47에서 75건 폐기)
+  ② 장기 러너 stdout 파일 리다이렉트 필수 (백그라운드 kill 3회) ③ 1-run ±3~5는
+  반드시 3-run 확인.
+
+## 10. 라이브 60쿼리 교차 검증 (2026-10-06, stage48) — **abstain 무력 발견**
+
+trace 실사용 쿼리 60건을 사용자 판정(yes/no/maybe)과 교차. **버그 3건 수정 후**:
+- `_filter_and_rank` 기본값 (2, 0.30) → **(1, 0.0) 통일** (core만 완화돼 있던 것)
+- 러너 row_factory 누락 → pool 2~9 (abstain 93% 오염)
+- load_queries trace 재수집 → 시트 하드코딩
+
+**최종 — 사용자 판정 교차 (cur)**:
+- 답 있음 35건 → **pick 35 (recall 100%)** ✅
+- 답 없음 22건 → **pick 22 (noans FP 100%)** ❌
+- **abstain 0건** — abstain_p 전부 0.00~0.16
+- **u_true = 38.6%** (사용자 판정, B 추정 범위 20~41%의 상단)
+
+**결론**: 회수는 100%로 우수하나, **abstain 라벨이 라이브 쿼리에서 완전 무력** —
+골든셋 하드 noans에서만 작동. 유사 메모리가 있으면 JEV가 무조건 답을 고름.
+라이브 트래픽 ~39%(무답)에서 전부 오주입 중. improved 라벨도 abstain 1/60뿐 →
+**라벨 문구가 아닌 abstain 메커니즘 재설계 필요**. 상세: `STAGE48_LIVE60_CROSS_20261006.md`.
