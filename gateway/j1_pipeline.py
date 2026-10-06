@@ -773,10 +773,11 @@ def jev_rerank(
             # 2콜째 선택을 전체 pool에 반영 (rank 1로 lift)
             return [picked] + [c for c in pool if c.get("id") != picked.get("id")], False
         return pool, False
-    if len(pool) <= HYBRID_MAX_CANDIDATES:
-        # 1콜 hybrid (2026-10-06, stage32): choice + noul N 병렬 (N ≤ 30).
-        # 실측: op hit@3 76, noans FP 12 (soft gate), noul τ=0.5 시 75/8 —
-        #   현행 pool60 choice-only(77/16) 대비 noans 방어 우위, hit@3 동등.
+    if os.environ.get("JEV_HYBRID_ENABLED", "0") != "0" and len(pool) <= HYBRID_MAX_CANDIDATES:
+        # 1콜 hybrid (2026-10-06, stage32/37): choice + noul N 병렬 (N ≤ 30).
+        # 3회 반복 실측에서 현행 pool60 choice-only 대비 열위 확정(hit@3 77 동일,
+        # noans FP 20 vs 16) → 기본 비활성. env JEV_HYBRID_ENABLED=1로 재현 가능.
+        # (2026-10-06 외부 AI 검토: 기각 구조가 운영에 남아 있던 잔재 — 가드 추가)
         idx, abstain_p, noul, err = _jev_hybrid(client, state, labels, timeout=timeout)
         lat = (time.perf_counter() - t0) * 1000
         log.info("Jev hybrid: idx=%s abstain_p=%.2f latency=%.0fms pool=%d",

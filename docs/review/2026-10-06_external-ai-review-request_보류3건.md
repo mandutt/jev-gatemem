@@ -15,7 +15,7 @@
 | 저장소 | SQLite `mnemosyne.db` (working_memory 1,721행 + episodic 113행, 스냅샷 2026-10-06) |
 | 임베딩 | `bench/bekko-a8m` (384차원, 로컬 fastembed) — 전체 전용 |
 | 검색 | 4-lane RRF: FTS5 + vec + importance + graph → 게이트(어휘 overlap≥1, coverage) → **POOL_BUDGET=60** 컷 |
-| rerank | JEV SystemOne `choice` 1콜/쿼리 — "최고 증거 1개 선택" + abstain 라벨(cN, 마지막) |
+| rerank | JEV SystemOne `choice` 1콜/쿼리 — "최고 증거 1개 선택" + abstain 라벨(cN, 마지막). ⚠️ 운영 `jev_rerank`에는 `len(pool)<=30`일 때 플래그 없이 실행되던 1콜 hybrid(choice+noul) 분기가 있었음 — **2026-10-06 외부 AI 검토로 발견, `JEV_HYBRID_ENABLED` 가드로 기본 비활성화** (stage37 기각 구조 잔재). 실험 러너(stage45)는 jev_rerank 미사용·자체 choice 구현이라 실험 수치에는 비영향 |
 | excerpt | 전 후보 **쿼리 인지 300자 윈도우 → 150자** (win-300, 2026-10-06 채택) |
 | soft gate | choice 응답의 **abstain 라벨 확률(abstain_p) > 0.3** → 빈 컨텍스트 (τ=0.3, 운영) |
 | abstain 라벨 | 문구: "No candidate is usable evidence for answering the question" |
@@ -24,7 +24,7 @@
 | 평가 프로토콜 | **3-Run Majority Vote 권장** — JEV 비결정성 ±3~5건 실측 (파일럿 79가 재현 75로 붕괴한 사례) |
 | 실험 환경 주의 | JEV 호출은 `EXPLABS_API_KEY` SET 터미널에서만 (무료 레인, 240콜/분, 503은 1회 재시도, 429는 키 전환) |
 
-**핵심 구조**: 코퍼스 → lane 검색 → pool 60 → JEV choice(1콜) → pick 1개 노출 (abstain 시 빈 컨텍스트).
+**핵심 구조**: 코퍼스 → lane 검색 → pool 60 → JEV choice(1콜) → pick 1개 lift → **context 노출** (abstain 시 빈 컨텍스트). 단 **실제 노출은 `rows[:5]` 최대 5개**(`jev_mem_core/pipeline.py _render`) — "1개 노출"이 아니라 **Top-5**가 운영 실노출. hit@3는 reranker 진단 지표, 실노출 지표는 hit@5 병행 필요.
 
 ---
 
