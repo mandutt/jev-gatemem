@@ -310,6 +310,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - **추후 검토(보류)**: audit T1 주기 점검(0콜)은 shadow enforcement(3~5일 축적) 판정 **완료 후** 재검토. 에피소드 기록은 stale 감사 대상 제외, 사실/설정/선호만 대상으로 하는 설계 원칙도 그때 함께 검토.
 - **★ abstain 라벨 문구 개선 — 보류 (2026-10-06, 추후 채택 결정)**: 세 AI(A·B·C) 공통 제안 "same topic is not evidence" + 시점·버전 불일치 배제. 실측: stage38(live DB) current FP 25 vs improved 28 (DB 변질로 판정 불가) / **stage39(pool 고정) current 22 vs improved 20 (-2 FP)** — 개별 사례 2건(과거 시점 질문)이 정확히 차단됨. 비결정성 범위 안이라 확정 불가 → **보류**. 채택 시 `j1_pipeline.ABSTAIN_LABEL` 교체 (0콜, 무비용). noans 셋 재구성(시점 고정/신선) 후 재검증 권장. 상세: `STAGE29_35_HYBRID_2CALL_20261006.md` stage38/39
 - **★ evidence-span scratch index — 기각 (2026-10-06)**: C AI Q4-3 제안(800자 초과 memory를 문단/문장 span으로 분할해 검색 단위 변경). 0콜 실측: gold span이 기존 pool max sim보다 유리한 11/58(19%)이나, **그중 실제 pool 밖 miss는 1건뿐** — pool 밖 miss 11건에서 gold-span 유리 9%. 회수 개선 상한 1건 vs 구현 비용 과다 → **기각**. op-90 retrieval 병목은 write-path 태그/lane 확장 영역. 상세: `STAGE29_35_HYBRID_2CALL_20261006.md` stage40
+- **★ 로컬 식별자/IDF 필터 — 보류 (2026-10-06, 추후 결정·타 AI 검토 예정)**: B AI Q1(c) "쿼리 식별자가 pick 원문에 없으면 abstain". 0콜 실측: v3(IDF 드문 단어 DF≤10)가 noans FP 7건 차단·op 오차단 0 (+7 순효과). **그러나 시간 의존성**: 잡은 7건 전부 숫자 패턴 무관(순수 영문 식별자), "드물다"는 코퍼스 DF 통계 의존 → **메모리 성장 시 DF 상승으로 무력화 + 신규 주제 과민 오차단 위험**. 근본 해법은 abstain 라벨 문구(stage38/39 보류)와 함께 재검토. 상세: `STAGE29_35_HYBRID_2CALL_20261006.md` stage41
 
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
