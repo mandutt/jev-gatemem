@@ -79,7 +79,7 @@
 | Q3: **abstain 라벨 '시점/버전 불일치' 특화** | stage45 improved 문구 (시점·버전·수치·조건 명시) 실측 → **사안 1** | ⏸️ 판정 대기 |
 | Q4-1: **Dynamic budget 25~30** | POOL_BUDGET=60 유지 판단 (pool 30은 §1.3 hybrid 실험에서 이미 검증 — hit@3 열위) | ❌ 기각 |
 | Q4-2: **문장 단위 임베딩 excerpt** | 0콜 검토 — bekko는 문장·문단 구분이 아닌 **고정 300자 윈도우** 구조라 문장 분할 이득 예측 불가 | ❌ 기각 (C Q1 evidence-span으로 대체 시도 → 역시 기각) |
-| Q4-3: **Two-stage tournament** | stage24 조건부 2콜과 동일 구조 → 실측 **(net -3, 기각)** | ❌ 기각 |
+| Q4-3: **Two-stage tournament** | (B AI 제안은 stage24와 다른 구조 — "후보 청크 분할→승자 최종 choice". stage24는 1차 choice→abstain만 2차로 **미실측 구조**) | ⚠️ 미실측 (요청서 v2에서 "동일 구조" 오기재 정정) |
 | Q5: **write-path header 보강** | A Q5 0콜 검증: 저장 시점 대화 주제 태그 시뮬레이션 → **복구 0/10** | ❌ 기각 (부록 A) |
 | Q6: **hit@1 메인 지표·Top-3** | stage44~47에서 hit@1 병행 실측 — hit@1 74~75, hit@3 77~78. 운영 Top-5 노출로 지표 정합 | ⚠️ hit@5 병행 권고로 문서화 |
 
