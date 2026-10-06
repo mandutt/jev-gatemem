@@ -1,0 +1,1922 @@
+[
+ {
+  "idx": 1,
+  "verdict": "no",
+  "query": "auto 라우팅이 확률적이라는 결론이었나?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 2,
+  "verdict": "no",
+  "query": "config.yaml에 18080 프록시 등록 방법?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   },
+   {
+    "id": "26efd95898ed8fcb",
+    "created": "2026-08-25",
+    "text": "camelAI 모델별 스트리밍 속도 실측(2026-08-26, 18080 경유, TTFT+디코딩 분리): ①디코딩 tok/s(가시출력): gemini-3.7-flash ~360-443(최속), gpt-5.6-luna ~176-357, deepseek-v4-flash ~29(10배 느림). ②TTFT: auto 경유 3.7-6.4초(라우터 결정 비용으로 추정—deepseek 직접호출은 0.89초여서 프록시 자체 오버헤드는 <1초). ③max 효과: gemini 디코딩 속도 불변(클램프 재확인)+추론토큰 2배, luna는 가시 디코딩 절반 이하로 저하+숨은추론 증가, deepseek는 첫 토큰까지 26초(무effort 0.9초 대비 29배)—내부 지시문 선처리 정황. ④auto 모드 고정비: TTFT +4~6초"
+   }
+  ]
+ },
+ {
+  "idx": 3,
+  "verdict": "yes",
+  "query": "custom_providers에서 Local 프록시 어떻게 설정하지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 4,
+  "verdict": "yes",
+  "query": "gemini 별칭으로 모델 호출되나?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 5,
+  "verdict": "no",
+  "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 6,
+  "verdict": "no",
+  "query": "프록시에서 특정 모델 강제 지정 기능 있어?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 7,
+  "verdict": "yes",
+  "query": "model_override와 effort 주입 기능 언제 추가됐지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 8,
+  "verdict": "yes",
+  "query": "한국어 말투 규칙 뭐지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 9,
+  "verdict": "no",
+  "query": "반말 써도 돼?",
+  "cands": [
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 10,
+  "verdict": "yes",
+  "query": "작업 스케줄러 등록해도 돼?",
+  "cands": [
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 11,
+  "verdict": "no",
+  "query": "자동 시작 설정 어떻게 하는 게 원칙이야?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 12,
+  "verdict": "yes",
+  "query": "설계 확정 후 리팩터 제안해도 돼?",
+  "cands": [
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 13,
+  "verdict": "yes",
+  "query": "ADR Final 이후에 뭐 하면 안 돼?",
+  "cands": [
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 14,
+  "verdict": "yes",
+  "query": "감사 보고서는 어떤 섹션으로 써?",
+  "cands": [
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 15,
+  "verdict": "yes",
+  "query": "리뷰 산출물 형식 규칙?",
+  "cands": [
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 16,
+  "verdict": "no",
+  "query": "리뷰 전용 턴에서 커밋해도 돼?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 17,
+  "verdict": "yes",
+  "query": "commit governance 규칙이 뭐지?",
+  "cands": [
+   {
+    "id": "9150f1246613b092",
+    "created": "2026-07-31",
+    "text": "Commit governance: (1) review/fix-only turns NEVER git add/commit (literal). (2) co-mingled phases + feature-mixed files (manager.py=1-D+1-E) → accept single milestone commit over forced per-phase split (file-level add limit). (3) any commit needs explicit approval + full code display; no pre-emptive commit."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   }
+  ]
+ },
+ {
+  "idx": 18,
+  "verdict": "yes",
+  "query": "설계 리뷰에서 SOLID랑 일관성 중 뭐 우선?",
+  "cands": [
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   }
+  ]
+ },
+ {
+  "idx": 19,
+  "verdict": "no",
+  "query": "신규 타입 만드는 게 원칙이야?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 20,
+  "verdict": "yes",
+  "query": "evidence 규칙 어땠지?",
+  "cands": [
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "c9e4828c93bdb0a0",
+    "created": "2026-07-31",
+    "text": "Evidence-based only; no speculation — separate confirmed vs hypothesis w/ evidence table. Verify 'implemented' read-only before trusting. Lesson: patch 'no match'/'read fail' ≠ file missing (wrong-path typo); inherited context-summary claims are NOT trusted — re-verify live (e.g. memory-middleware: summary claimed 'bootstrap↔audit/metrics 2 import-cycles' but AST full-scan of 32 modules showed cyc"
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   }
+  ]
+ },
+ {
+  "idx": 21,
+  "verdict": "no",
+  "query": "사용자 언어 습관이 어때?",
+  "cands": [
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 22,
+  "verdict": "yes",
+  "query": "한국어 영어 어떻게 섞어 써?",
+  "cands": [
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "1cef4743165b7707",
+    "created": "2026-07-31",
+    "text": "아키텍처 선호: (1) 영속성과 비즈니스 로직 분리. (2) Runtime/Middleware DTO 분리. (3) 결정 로직 pure function. (4)(5) 데이터모델·불필요 컴포넌트 YAGNI."
+   }
+  ]
+ },
+ {
+  "idx": 23,
+  "verdict": "yes",
+  "query": "아키텍처 설계 시 분리 원칙이 뭐였지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 24,
+  "verdict": "yes",
+  "query": "DTO 분리 어디까지 하면 돼?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 25,
+  "verdict": "no",
+  "query": "verifier-pilot은 코딩 품질만 보면 돼?",
+  "cands": [
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 26,
+  "verdict": "no",
+  "query": "그 프로젝트 진짜 목표가 뭐지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 27,
+  "verdict": "yes",
+  "query": "스킬 만들 때 file_content로 보내면 돼?",
+  "cands": [
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   }
+  ]
+ },
+ {
+  "idx": 28,
+  "verdict": "yes",
+  "query": "skill_manage create 파라미터 뭐 써야 하지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 29,
+  "verdict": "no",
+  "query": "opencode에서 메모리 자동 기록돼?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 30,
+  "verdict": "yes",
+  "query": "Mnemosyne 플러그인 repo 주소 뭐야?",
+  "cands": [
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   },
+   {
+    "id": "e941022a685c2be1",
+    "created": "2026-07-31",
+    "text": "opencode에 Mnemosyne 자동 기록 플러그인 구축 완료 (v0.1). 리포지토리: https://github.com/mandutt/Mnemosyne-opencode. 플러그인(~/.config/opencode/plugin/mnemosyne-session-memory.ts)이 세션 이벤트(chat.message, tool.execute.after, message.part.updated)를 수집해 session.idle마다 다이제스트를 source=opencode-session, scope=session, importance=0.6으로 Mnemosyne에 기록한다. 쓰기는 mnemosyne_record.py 헬퍼가 mnemosyne.mcp_tools.handle_tool_call('mnemosyne_"
+   }
+  ]
+ },
+ {
+  "idx": 31,
+  "verdict": "maybe",
+  "query": "commitment FP 필터 실측 결과 어때?",
+  "cands": [
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 32,
+  "verdict": "yes",
+  "query": "hermes update 후 cua-driver 왜 실패해?",
+  "cands": [
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   },
+   {
+    "id": "c69c459c7c67c2d1",
+    "created": "2026-08-03",
+    "text": "Windows에서 hermes update 후 cua-driver refresh가 660s 타임아웃으로 실패하는 패턴: 근본 원인은 설치 스크립트(install.ps1)가 High-IL stale 데몬을 일반 권한으로 못 죽여 UAC 프롬프트를 띄우고 무한정 대기하는 것 (Hermes _CUA_INSTALLER_TIMEOUT=660s = 600s stale-lock + 60s). 재발 방지: 게임/풀스크린 앱(MabinogiMobile 등) 종료 후 업데이트, 업데이트 전 관리자로 Stop-Process -Force 또는 리부트, hermes config set updates.refresh_cua_driver false로 끄고 수동 `hermes computer-use install --upgrade` 사용"
+   },
+   {
+    "id": "dce5e8ceddf18db9",
+    "created": "2026-07-31",
+    "text": "hermes update 중단→venv 손상: 전체 종료 후 hermes-made\\hermes-repair\\ (상세: 스킬 hermes-venv-repair)."
+   }
+  ]
+ },
+ {
+  "idx": 33,
+  "verdict": "no",
+  "query": "660초 타임아웃 원인 뭐였지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 34,
+  "verdict": "yes",
+  "query": "start_proxy.cmd 재부팅 후 왜 안 돌아가?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 35,
+  "verdict": "yes",
+  "query": "배치 파일 인코딩 문제였어?",
+  "cands": [
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   }
+  ]
+ },
+ {
+  "idx": 36,
+  "verdict": "no",
+  "query": "프록시 대시보드에 종료 버튼 있어?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 37,
+  "verdict": "yes",
+  "query": "shutdown API 어떻게 만들었지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 38,
+  "verdict": "yes",
+  "query": "Hermes 데스크톱 워치독 런처 어디 있어?",
+  "cands": [
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "1cef4743165b7707",
+    "created": "2026-07-31",
+    "text": "아키텍처 선호: (1) 영속성과 비즈니스 로직 분리. (2) Runtime/Middleware DTO 분리. (3) 결정 로직 pure function. (4)(5) 데이터모델·불필요 컴포넌트 YAGNI."
+   },
+   {
+    "id": "c69c459c7c67c2d1",
+    "created": "2026-08-03",
+    "text": "Windows에서 hermes update 후 cua-driver refresh가 660s 타임아웃으로 실패하는 패턴: 근본 원인은 설치 스크립트(install.ps1)가 High-IL stale 데몬을 일반 권한으로 못 죽여 UAC 프롬프트를 띄우고 무한정 대기하는 것 (Hermes _CUA_INSTALLER_TIMEOUT=660s = 600s stale-lock + 60s). 재발 방지: 게임/풀스크린 앱(MabinogiMobile 등) 종료 후 업데이트, 업데이트 전 관리자로 Stop-Process -Force 또는 리부트, hermes config set updates.refresh_cua_driver false로 끄고 수동 `hermes computer-use install --upgrade` 사용"
+   },
+   {
+    "id": "26efd95898ed8fcb",
+    "created": "2026-08-25",
+    "text": "camelAI 모델별 스트리밍 속도 실측(2026-08-26, 18080 경유, TTFT+디코딩 분리): ①디코딩 tok/s(가시출력): gemini-3.7-flash ~360-443(최속), gpt-5.6-luna ~176-357, deepseek-v4-flash ~29(10배 느림). ②TTFT: auto 경유 3.7-6.4초(라우터 결정 비용으로 추정—deepseek 직접호출은 0.89초여서 프록시 자체 오버헤드는 <1초). ③max 효과: gemini 디코딩 속도 불변(클램프 재확인)+추론토큰 2배, luna는 가시 디코딩 절반 이하로 저하+숨은추론 증가, deepseek는 첫 토큰까지 26초(무effort 0.9초 대비 29배)—내부 지시문 선처리 정황. ④auto 모드 고정비: TTFT +4~6초"
+   }
+  ]
+ },
+ {
+  "idx": 39,
+  "verdict": "yes",
+  "query": "Hermes_With_Watchdog.cmd 위치?",
+  "cands": [
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "36f843b4b1886e39",
+    "created": "2026-08-14",
+    "text": "Windows Hermes 데스크톱용 게이트웨이 워치독: C:\\Users\\mandu\\hermes-made\\hermes-gateway-watchdog\\ (Hermes_With_Watchdog.cmd 런처 + watchdog.ps1). 데스크톱 실행을 이 런처로 해야 워치독이 따라오며, 수명=데스크톱 프로세스 수명(코어 닫으면 자동 종료, 스케줄 태스크·상주 없음). Hermes_Gateway 태스크가 등록돼 있고 게이트웨이(gateway run) 프로세스가 없을 때만 `venv python -m hermes_cli.main gateway start` 호출 → 데스크톱 reap 후 텔레그램 자동 복구. 2026-08-14 엔드투엔드 검증 완료(게이트웨이 killed→재기동 PID 23604→\"Connected "
+   },
+   {
+    "id": "7b45efc7e895d9e9",
+    "created": "2026-08-15",
+    "text": "[codex session] task: 이 세션을 worker-a 세션으로 지정할게\nproject: C:\\Users\\mandu\\Documents\\opencode\\testproject\nturns: 7\noutcome: 확실해졌다. `ui.FileExplorer`는 GUI 스레드 전용으로 설계됐는데, watcher 이벤트를 Coordinator 가져다 직접 `FilePresenter.Update`로 호출하는 현재 배선이 이를 두 고루틴에서 돌려 race를 만든다. Fyne은 GUI 조작을 `fyne.Do`(main goroutine)로 넣도록 요구한다. 가장 안전하고 일관된 수정은 UI 갱신을 Fyne 메인 스레드로 강제하는 것이다. `ui` 패키지에 thread-safe 갱신 유틸리티가 없는지, `fyne.Do"
+   }
+  ]
+ },
+ {
+  "idx": 40,
+  "verdict": "no",
+  "query": "데스크톱 앱 띄우면 텔레그램 수신 끊겨?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 41,
+  "verdict": "maybe",
+  "query": "orphan gateway reap 회귀 맞아?",
+  "cands": [
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "1cef4743165b7707",
+    "created": "2026-07-31",
+    "text": "아키텍처 선호: (1) 영속성과 비즈니스 로직 분리. (2) Runtime/Middleware DTO 분리. (3) 결정 로직 pure function. (4)(5) 데이터모델·불필요 컴포넌트 YAGNI."
+   },
+   {
+    "id": "90b4edf612db6b2c",
+    "created": "2026-08-07",
+    "text": "Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source='codex' 기록. hooks.json은 .disabled-20260807로 비활성화(이중 로드로 중복 기록 방지). [features]는 codex_hooks 아니라 hooks=true로 정리(deprecated alias 경고 제거). hooks trust는 대화형 codex에서 \"Trust all\"(숫자2+Enter) 승인으로 영구 등록 — 이제 --dangerously-bypass-hook-trust 없이 recall 주입+record 저장 자동 동작. 재사용 절차는 codex-mnemosyne"
+   },
+   {
+    "id": "b5f5672a2446d4e8",
+    "created": "2026-08-14",
+    "text": "Windows/macOS 공통 회귀(2026-08-04 커밋 bc1223840 #77276 \"reap orphan gateways at startup\") 확인: 데스크톱 앱의 serve 백엔드(HERMES_DESKTOP=1) 부팅 시 web_server.py lifespan(~line 253)이 `_reap_unsupervised_gateway_orphans()`(gateway.py ~1528)를 호출 → Windows(스케줄 태스크)와 macOS(launchd)의 정상 standalone 게이트웨이를 \"orphan\"으로 오분류해 SIGKILL/SIGTERM. v0.20.0 회귀(2026-08-11 업데이트부터). GitHub에 동일 이슈 다수: #85044(#Windows scheduled-task 게이트"
+   }
+  ]
+ },
+ {
+  "idx": 42,
+  "verdict": "yes",
+  "query": "KoDialogBench 4종 검증 결과 어땠어?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 43,
+  "verdict": "yes",
+  "query": "X1 외부 데이터셋 실험에서 bekko 성능?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 44,
+  "verdict": "yes",
+  "query": "best-of-5에 recovery 얹으면 개선돼?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 45,
+  "verdict": "yes",
+  "query": "67차 실험 최종 결론 뭐였지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 46,
+  "verdict": "no",
+  "query": "codex CLI에서 메모리 기록되나?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 47,
+  "verdict": "yes",
+  "query": "codex config.toml 훅 어떻게 설정했지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 48,
+  "verdict": "no",
+  "query": "bekko랑 koen 벤치 비교 결과?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   },
+   {
+    "id": "1cef4743165b7707",
+    "created": "2026-07-31",
+    "text": "아키텍처 선호: (1) 영속성과 비즈니스 로직 분리. (2) Runtime/Middleware DTO 분리. (3) 결정 로직 pure function. (4)(5) 데이터모델·불필요 컴포넌트 YAGNI."
+   }
+  ]
+ },
+ {
+  "idx": 49,
+  "verdict": "yes",
+  "query": "P3b 확장 gold MRR 수치?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 50,
+  "verdict": "no",
+  "query": "bekko-a8m 채택 이유가 뭐야?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 51,
+  "verdict": "maybe",
+  "query": "S3에서 임베딩 모델 최종 선택 근거?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 52,
+  "verdict": "no",
+  "query": "코드 설명과 구조 라벨 언어 규칙?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 53,
+  "verdict": "no",
+  "query": "완전 번역 금지 규칙 뭐지?",
+  "cands": [
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   }
+  ]
+ },
+ {
+  "idx": 54,
+  "verdict": "yes",
+  "query": "브라우저 도구 라우팅 설정 어떻게 돼?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 55,
+  "verdict": "no",
+  "query": "CAMOFOX_URL 제거한 이유?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 56,
+  "verdict": "no",
+  "query": "models.json에 어떤 엔드포인트 있지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 57,
+  "verdict": "yes",
+  "query": "stealth 브라우저 언제 써야 해?",
+  "cands": [
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   },
+   {
+    "id": "ec0cab43bd0c52e1",
+    "created": "2026-10-03",
+    "text": "jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수정+24건 백필. 결함B=FTS/imp/graph lane+hydration에 temporal 필터 부재(vec만 보유) → hydration(j1_engine.hydration_get·backends.get_hydrated, pool 단일 choke point)+_imp_search·_graph_lane_search에 "
+   }
+  ]
+ },
+ {
+  "idx": 58,
+  "verdict": "yes",
+  "query": "webdriver 숨김이 필요한 경우가 뭐지?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 59,
+  "verdict": "yes",
+  "query": "메모리 백엔드 뭐 쓰고 있어?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ },
+ {
+  "idx": 60,
+  "verdict": "yes",
+  "query": "hermes update 중간에 꺼지면 어떻게 해?",
+  "cands": [
+   {
+    "id": "d1c90516d9870c95",
+    "created": "2026-09-28",
+    "text": "default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립)."
+   },
+   {
+    "id": "2ecef73164830638",
+    "created": "2026-07-31",
+    "text": "사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\\Users\\mandu\\hermes-made\\ 하위에만 생성(홈 직하 생성 금지)."
+   },
+   {
+    "id": "9f04ed2c8e14f11b",
+    "created": "2026-07-31",
+    "text": "설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제안 금지."
+   },
+   {
+    "id": "a13019e1f438960c",
+    "created": "2026-07-31",
+    "text": "감사/리뷰 산출물 형식: (1)Verified Facts(객관증거: git diff/status/pytest/mypy/ruff/import graph, 추론 금지), (2)Inferred Analysis(추론·단정금지·별도섹션), (3)Recommendations(Blocker-Major-Minor-Future), (4)Final Judgement(Release Status, Release Ready YES-NO, Issues N, Confidence). (5)선택지 중 하나만 강제 선택. (6)read-only 모드선 파일 생성 금지 — 보고서는 채팅 출력."
+   },
+   {
+    "id": "5a3ebc06a87940da",
+    "created": "2026-07-31",
+    "text": "설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. '분리 불필요'도 evidence-based 재판단."
+   }
+  ]
+ }
+]
