@@ -1,0 +1,323 @@
+{
+ "created_at": "2026-10-06T16:17:00+0900",
+ "results": {
+  "코덱스 앱이 PC 느려지게 한 원인 뭐였어?": {
+   "grp": "op",
+   "gold_id": "ef3d9670463aea79",
+   "pool_n": 35,
+   "runs": {
+    "cur": [
+     {
+      "idx": 34,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.2,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.21,
+      "err": null
+     },
+     {
+      "idx": 34,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.19,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": 2,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.04,
+      "err": null
+     },
+     {
+      "idx": 2,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.03,
+      "err": null
+     },
+     {
+      "idx": 2,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.04,
+      "err": null
+     }
+    ]
+   }
+  },
+  "마우스 버벅임 원인 조사 결과?": {
+   "grp": "op",
+   "gold_id": "ef3d9670463aea79",
+   "pool_n": 42,
+   "runs": {
+    "cur": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.4,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.37,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.43,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.03,
+      "err": null
+     },
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.03,
+      "err": null
+     },
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.02,
+      "err": null
+     }
+    ]
+   }
+  },
+  "gemini 별칭으로 모델 호출되나?": {
+   "grp": "op",
+   "gold_id": "7de2c1dfef632694",
+   "pool_n": 53,
+   "runs": {
+    "cur": [
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.02,
+      "err": null
+     },
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.02,
+      "err": null
+     },
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.01,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.05,
+      "err": null
+     },
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.05,
+      "err": null
+     },
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.05,
+      "err": null
+     }
+    ]
+   }
+  },
+  "codex CLI에서 메모리 기록되나?": {
+   "grp": "op",
+   "gold_id": "90b4edf612db6b2c",
+   "pool_n": 60,
+   "runs": {
+    "cur": [
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     }
+    ]
+   }
+  },
+  "pi 에이전트에 등록된 프록시 목록?": {
+   "grp": "op",
+   "gold_id": "f9d466b9cdc3cd88",
+   "pool_n": 60,
+   "runs": {
+    "cur": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.31,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.35,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.33,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.03,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.04,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.04,
+      "err": null
+     }
+    ]
+   }
+  },
+  "gold50 기준선 수치가 뭐지?": {
+   "grp": "op",
+   "gold_id": "498bb204de3b1d14",
+   "pool_n": 60,
+   "runs": {
+    "cur": [
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.18,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.17,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.19,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.36,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.33,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.35,
+      "err": null
+     }
+    ]
+   }
+  }
+ }
+}

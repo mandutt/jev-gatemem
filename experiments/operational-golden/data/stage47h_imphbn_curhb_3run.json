@@ -1,0 +1,461 @@
+{
+ "created_at": "2026-10-06T16:45:35+0900",
+ "results": {
+  "gold50 기준선 수치가 뭐지?": {
+   "grp": "op",
+   "gold_id": "498bb204de3b1d14",
+   "pool_n": 60,
+   "runs": {
+    "cur": [
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.19,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.22,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.23,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.35,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.35,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.39,
+      "err": null
+     }
+    ],
+    "curhb": [
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.23,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.19,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.24,
+      "err": null
+     }
+    ]
+   }
+  },
+  "주석을 영어로만 쓰는 규칙이 있었어?": {
+   "grp": "noans",
+   "gold_id": [],
+   "pool_n": 53,
+   "runs": {
+    "cur": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.42,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.44,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.42,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": 3,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.19,
+      "err": null
+     },
+     {
+      "idx": 3,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.2,
+      "err": null
+     },
+     {
+      "idx": 3,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.16,
+      "err": null
+     }
+    ],
+    "curhb": [
+     {
+      "idx": 3,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.16,
+      "err": null
+     },
+     {
+      "idx": 3,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.15,
+      "err": null
+     },
+     {
+      "idx": 3,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.13,
+      "err": null
+     }
+    ]
+   }
+  },
+  "테스트를 실행하지 않고 커밋하던 규칙이 있었어?": {
+   "grp": "noans",
+   "gold_id": [],
+   "pool_n": 60,
+   "runs": {
+    "cur": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.45,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.44,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.44,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.42,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.42,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.39,
+      "err": null
+     }
+    ],
+    "curhb": [
+     {
+      "idx": 10,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.23,
+      "err": null
+     },
+     {
+      "idx": 10,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.25,
+      "err": null
+     },
+     {
+      "idx": 10,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.25,
+      "err": null
+     }
+    ]
+   }
+  },
+  "로그를 한국어로 남기던 규칙이 있었어?": {
+   "grp": "noans",
+   "gold_id": [],
+   "pool_n": 60,
+   "runs": {
+    "cur": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.32,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.31,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.35,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.39,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.41,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.37,
+      "err": null
+     }
+    ],
+    "curhb": [
+     {
+      "idx": 11,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.29,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.34,
+      "err": null
+     },
+     {
+      "idx": 11,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.25,
+      "err": null
+     }
+    ]
+   }
+  },
+  "Hermes v0.19.x 시절 browser.backend 설정값이 뭐였어?": {
+   "grp": "noans",
+   "gold_id": [],
+   "pool_n": 38,
+   "runs": {
+    "cur": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.38,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.44,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.51,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.38,
+      "err": null
+     },
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.29,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.32,
+      "err": null
+     }
+    ],
+    "curhb": [
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.22,
+      "err": null
+     },
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.24,
+      "err": null
+     },
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.19,
+      "err": null
+     }
+    ]
+   }
+  },
+  "Exa 왜 안 써?": {
+   "grp": "op",
+   "gold_id": "0ea67a3b101917e5",
+   "pool_n": 6,
+   "runs": {
+    "cur": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.8,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.78,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.83,
+      "err": null
+     }
+    ],
+    "imphbn": [
+     {
+      "idx": 2,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.28,
+      "err": null
+     },
+     {
+      "idx": 2,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.3,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.32,
+      "err": null
+     }
+    ],
+    "curhb": [
+     {
+      "idx": 2,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.19,
+      "err": null
+     },
+     {
+      "idx": 2,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.21,
+      "err": null
+     },
+     {
+      "idx": 2,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.18,
+      "err": null
+     }
+    ]
+   }
+  }
+ }
+}

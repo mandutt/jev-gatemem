@@ -1,0 +1,483 @@
+{
+ "created_at": "2026-10-06T14:33:47+0900",
+ "targets": 9,
+ "results": {
+  "코덱스 앱이 PC 느려지게 한 원인 뭐였어?": {
+   "grp": "op",
+   "gold_id": "ef3d9670463aea79",
+   "pool_n": 35,
+   "runs": {
+    "current": [
+     {
+      "idx": 16,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.19,
+      "err": null
+     },
+     {
+      "idx": 34,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.21,
+      "err": null
+     },
+     {
+      "idx": 34,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.19,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": 34,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.15,
+      "err": null
+     },
+     {
+      "idx": 34,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.14,
+      "err": null
+     },
+     {
+      "idx": 34,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.21,
+      "err": null
+     }
+    ]
+   }
+  },
+  "마우스 버벅임 원인 조사 결과?": {
+   "grp": "op",
+   "gold_id": "ef3d9670463aea79",
+   "pool_n": 42,
+   "runs": {
+    "current": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.38,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.42,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.44,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.28,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.33,
+      "err": null
+     },
+     {
+      "idx": 1,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.28,
+      "err": null
+     }
+    ]
+   }
+  },
+  "provider가 뭐지?": {
+   "grp": "noans",
+   "gold_id": "ed3a3442d3bcbb33",
+   "pool_n": 41,
+   "runs": {
+    "current": [
+     {
+      "idx": 5,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.27,
+      "err": null
+     },
+     {
+      "idx": 5,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.26,
+      "err": null
+     },
+     {
+      "idx": 5,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.26,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.29,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.31,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.3,
+      "err": null
+     }
+    ]
+   }
+  },
+  "임베딩 모델을 bekko-a8m으로 바꾸기 전에 쓰던 모델의 정확한 버전이 뭐야?": {
+   "grp": "noans",
+   "gold_id": [],
+   "pool_n": 60,
+   "runs": {
+    "current": [
+     {
+      "idx": 46,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.03,
+      "err": null
+     },
+     {
+      "idx": 46,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.02,
+      "err": null
+     },
+     {
+      "idx": 46,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.03,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": 29,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.28,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.31,
+      "err": null
+     },
+     {
+      "idx": 29,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.29,
+      "err": null
+     }
+    ]
+   }
+  },
+  "deepseek 스트림 오류가 프롬프트 길이 초과 때문이었던 적 있어?": {
+   "grp": "noans",
+   "gold_id": [],
+   "pool_n": 60,
+   "runs": {
+    "current": [
+     {
+      "idx": 21,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.3,
+      "err": null
+     },
+     {
+      "idx": 21,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.27,
+      "err": null
+     },
+     {
+      "idx": 21,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.25,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.44,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.44,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.45,
+      "err": null
+     }
+    ]
+   }
+  },
+  "API 키를 코드에 하드코딩하던 규칙이 있었어?": {
+   "grp": "noans",
+   "gold_id": [],
+   "pool_n": 60,
+   "runs": {
+    "current": [
+     {
+      "idx": 40,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.12,
+      "err": null
+     },
+     {
+      "idx": 40,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.19,
+      "err": null
+     },
+     {
+      "idx": 40,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.15,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.26,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.28,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.28,
+      "err": null
+     }
+    ]
+   }
+  },
+  "golden_eval_v2에 영어 쿼리가 포함된 적이 있어?": {
+   "grp": "noans",
+   "gold_id": [],
+   "pool_n": 60,
+   "runs": {
+    "current": [
+     {
+      "idx": 48,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.11,
+      "err": null
+     },
+     {
+      "idx": 48,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.12,
+      "err": null
+     },
+     {
+      "idx": 48,
+      "abstain": false,
+      "hit": null,
+      "abstain_p": 0.14,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.3,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.3,
+      "err": null
+     },
+     {
+      "idx": null,
+      "abstain": true,
+      "hit": null,
+      "abstain_p": 0.32,
+      "err": null
+     }
+    ]
+   }
+  },
+  "gemini 별칭으로 모델 호출되나?": {
+   "grp": "op",
+   "gold_id": "7de2c1dfef632694",
+   "pool_n": 53,
+   "runs": {
+    "current": [
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.02,
+      "err": null
+     },
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.02,
+      "err": null
+     },
+     {
+      "idx": 8,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.02,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": 9,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.11,
+      "err": null
+     },
+     {
+      "idx": 9,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.09,
+      "err": null
+     },
+     {
+      "idx": 9,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.09,
+      "err": null
+     }
+    ]
+   }
+  },
+  "codex CLI에서 메모리 기록되나?": {
+   "grp": "op",
+   "gold_id": "90b4edf612db6b2c",
+   "pool_n": 60,
+   "runs": {
+    "current": [
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     },
+     {
+      "idx": 4,
+      "abstain": false,
+      "hit": true,
+      "abstain_p": 0.0,
+      "err": null
+     }
+    ],
+    "win150": [
+     {
+      "idx": 11,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.02,
+      "err": null
+     },
+     {
+      "idx": 11,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.03,
+      "err": null
+     },
+     {
+      "idx": 11,
+      "abstain": false,
+      "hit": false,
+      "abstain_p": 0.03,
+      "err": null
+     }
+    ]
+   }
+  }
+ }
+}
