@@ -132,8 +132,8 @@ tags_lane (신규, LANE_TAGS_BUDGET=10):
   표면 어휘·개념 단절** (의역/상위 개념 접근) — write-path로 해결 불가
 - 남은 대안:
   - **read-path 쿼리 확장** (로컬 0콜: 쿼리 임베딩의 top-N 유사 메모리에서 단어 주입)
-  - 또는 **구조적 상한 수용** (pool_recall 87.8%는 현 lane 구조의 실질 상한 —
-    Run M에서 이미 "vec-rank 예외 레버 소진" 확인, stage40 evidence-span도 기각)
+  - 또는 **구조적 상한 수용** (pool_recall 90.0% — 81/90 — 는 현 lane 구조의 실질
+    상한; Run M에서 이미 "vec-rank 예외 레버 소진" 확인, stage40 evidence-span도 기각)
 - [11] 문맥 의존 건은 prefetch 쿼리에 최근 턴 키워드 결합 (B Q5) — 별도 후보
 
 ---
@@ -152,6 +152,9 @@ tags_lane (신규, LANE_TAGS_BUDGET=10):
 ### 판정
 - **read-path 쿼리 확장 — 기각** (단순 빈도 주입은 노이즈만 추가)
 - 더 정교한 확장(불용어 강화 등)도 개선 여지 제한적 — 근본은 쿼리-골드 의미 단절
-- **최종: 구조적 상한 수용** — pool_recall 87.8% (79/90; 문맥 의존 [11] 제외 시
-  실질 80/89 = 89.9%)를 현 lane 구조의 상한으로 확정
-- miss 11건 정리: 진짜 retrieval miss 10건 (수용) + 문맥 의존 1건 (B Q5 후보)
+- **최종: 구조적 상한 수용** — pool_recall 90.0% (81/90; 문맥 의존 [11] 제외 시
+  81/89 = 91.0%)를 현 lane 구조의 상한으로 확정 **[(2026-10-06 정정) — pool_ids가
+  있는 최근 raw(exp8a/stage25/26/32/33) 5종 전부 81/90 일치. 기존 87.8% (79/90)은
+  hit@3(문구 실험 79/90)와 혼동해 잘못 기재]**
+- miss 11건 정리: 진짜 retrieval miss 11건 (전부 q1=direct, q3=exists — 그중 [11]
+  만 q4=dependent) (수용) + 문맥 의존 1건 (B Q5 후보)
