@@ -180,9 +180,14 @@ def _synthesize_histories(row: dict) -> dict:
 
 
 def _filter_and_rank(rows: List[dict], query: str,
-                     min_distinctive: int = 2, min_coverage: float = 0.30) -> List[dict]:
+                     min_distinctive: int = 1, min_coverage: float = 0.0) -> List[dict]:
     """Conservative prefetch gate (lexical + source quality), matching
-    mnemosyne_hermes's automatic-injection thresholds. Rows keep relevance."""
+    mnemosyne_hermes's automatic-injection thresholds. Rows keep relevance.
+
+    (2026-10-06) 기본값 (2, 0.30) → (1, 0.0) 완화 반영: core/j1_engine.py는 이미
+    완화값으로 호출 중이었으나 gateway/러너 경로는 기본값(2, 0.30)이라 짧은 라이브
+    쿼리에서 pool 0~5로 줄어 abstain 폭증(stage48 실측: 93% abstain). 완화는
+    vec-rank exemption과 별개로, 어휘 overlap 1개만 있어도 통과 + coverage 무제한."""
     q_tokens = _tokenize(query) - _STOPWORDS
     if not q_tokens:
         return []
