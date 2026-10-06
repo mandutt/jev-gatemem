@@ -52,7 +52,7 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 | **★ stage53 미실측 3건 실측 (2026-10-06, 500콜)** | ✅ | **A-7 pool20 / B-4 dual / C-4 two_call 실측**: IRREL 차단 0/1/2 (여전히 미미), 정답희생 0, noans hard FP 13→8/7/5 (절반 개선). **양분 확정**: 구조 개선은 하드 noans 방어엔 유효, 라이브 이웃형 무답엔 미미. 상세: STAGE53_MISSED3_20261006.md |
 | **★ stage54 op-90 회귀 1-run (2026-10-06, 360콜)** | ✅ | base 79/80/3 vs pool20 78/79/2 vs dual 77/78/6 vs two_call 76/77/7. dual·two_call abstain +3~4 과다거부 → 기각. pool20만 -1 (비결정성 범위). |
 | **★ stage55 pool20 3-run (2026-10-06, 270콜)** | ✅ | 3-run 전부 78/79/2 완전 동일 — 비결정성 0, "-1" 실질로 보임. (단, 세션 분리 측정의 한계) |
-| **★ stage56 풀 비교 ★최종 (2026-10-06, 840콜)** | ✅ | **같은 세션 3-run paired**: base 78/79/abstain2-3·noansFP 21.3 vs pool20 78/79/2·noansFP 13.0. **op 완전 동일 (stage54/55의 -1은 세션 잡음 착시), noans FP -39%** → pool20 채택 근거 확정 (일방 개선, h 불필요). **단, 코드 반영 보류 — 다른 AI 검토 요청과 함께 진행 예정**. 부수: criteria 61→21 토큰 ~35% 절감. 상세: STAGE56_FULL_COMPARE_20261006.md, RECALL §14. |
+| **★ stage56 풀 비교 (2026-10-06, 840콜)** | ⚠️→🔀 | **같은 세션 3-run paired**: base 78/79/abstain2-3·noansFP 21.3 vs pool20 78/79/2·noansFP 13.0. 표면 op 완전 동일. **단 3-AI v3 검토 + 0콜 재검증으로 결론 변경**: \"동일 78\"은 **구조적 손실 2(#80 deepseek rank41·#87 camelai rank36, pool20 회수 불가) + 우연 개선 2(#58·#72 rank8)** 의 상쇄 → pool20 실질 op **76/90**. noans도 개선 10/동일 39/**악화 1**(#41). **\"일방 개선\" 철회 → 조건부 채택** (production-exact live60 paired 3-run 360콜 + rank-veto 시뮬 + answer-support rank>20 0건 조건). 코드 반영 보류 유지. 상세: STAGE56_FULL_COMPARE_20261006.md, `docs/review/2026-10-06_3AI-v3_종합+0콜검증.md`. |
 
 ## 3. 오늘(2026-09-27 저녁) 변경 사항 — 반드시 읽을 것
 
@@ -201,7 +201,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
   > | 운영 hybrid 분기 | ✅ `JEV_HYBRID_ENABLED` 가드 (기본 비활성) |
   > | 노출 구조 | ✅ 요청서 정정 — 운영은 `rows[:5]` Top-5 (hit@5 병행 필요) |
   > | abstain 라벨 τ 스윕 | ⏸️ 0콜 완료 — 문구 효과 τ 무관 확인, u·h 실측 대기 |
-  > | IDF v2/v3 재계산 | ✅ v2 ⊇ v3 확정 (형태 기반이 DF 상위호환, 드리프트 없음) — 채택 대기 |
+  > | IDF v2/v3 재계산 | ✅ v2·v3는 **별도 휴리스틱** (v2=형태 기반 underscore/dot, v3=DF 기반) — 일부 중복 포착, 상위호환 아님 (3-AI v3, C AI 지적 수용). v2는 보류·specificity detector로 재정의 |
   > | excerpt 윈도우 (win150/head겹침) | ❌ 전수 기각 — WHY 구제가 순손실 (STAGE47H_FINAL) |
   >
   > **남은 보류 3건 최종 상태**: ① improved 라벨 — u·h 실측 후 결정 ② IDF v2 — τ_eff 연속 조정 0콜 스윕 후 결정 ③ 스냅샷 — 보완(플립 8건 원인·평가 세션 제외).
