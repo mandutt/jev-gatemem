@@ -38,6 +38,9 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 | **★ Graph/Fact lane (2026-09-27 밤)** | ✅ | **`_graph_lane_search()` 3경로 (facts subject/object→source_msg_id, graph_edges gist→관련성 게이트, memoria_facts key/value→source_memory_id). 합성 데이터 검증 6/6 PASS (회수 경로 정확), 실데이터 4-lane 지표 3-lane과 동일 (100%/82.69%/71.15%, 성능 무하락). 현재 실데이터로는 gold 추가 회수 0 (facts 5개뿐) — 데이터 축적 후 재평가** |
 | **★ 한국어 어미 분류 패치 (2026-09-27 밤)** | ✅ | **Mnemosyne `typed_memory.py`에 한국어 어미 패치** (28종성 클래스 + 의문/지시/단정/격식 24패턴). "좋아 진행해줘" fact 오분류 해결. 한국어 39/39, 영어 13/13, 라이브 36건 재분류 정상. **②번 `\b`→ASCII 경계 수정** ("error가" 한-영 혼용 매치, 관계 패턴 동사 정밀화로 relationship 오분류 36→0) + **④번 F1/F2 구조 수정** (종결형 FACT 어미 10개 `(?![가-힣])` 후방차단 + version 패턴 `(?![A-Za-z0-9_-])` — 라이브 823건 A/B 7건 fact→context 전부 개선, 회귀 0) + **⑤번 한글 ERROR 구문 패턴** (2026-09-28, "오류가 발생했어"류 6개 패턴 — 라이브 828건 3건 context/relationship→error 실제 오류 보고, 회귀 0, 스모크 15/15). ①(어휘)·③(score=conf)은 실험 결과 부정적(179건 회귀)로 **보류**. **재적용**: `scripts/reapply_korean_classifier.py` (②+④+⑤ 통합, f4/f5_patch import, 멱등). 문서: `docs/korean-classifier-patch.md` (①③④⑤ 실험 결과 포함). 스킬: `mnemosyne-korean-classifier` |
 | **★ G-AS 적용 확인 (2026-09-29)** | ✅ | **§8.5 체크리스트 실측 통과** — `sync_roles=[user, assistant]` 로드, trace `write-gate-as` 이벤트 실세션 발화로 기록(KEEP/SKIP 모두), session `hermes_20260929_104012_df1103`에 `[ASSISTANT]` 레코드 8건 저장, final 발화 KEEP/중간 진행 SKIP 판정 정상 |
+| **★ excerpt 윈도우 계열 전수 기각 (2026-10-06, stage47a~h)** | ❌ | **150자 직접(win150)·head+겹침·non-overlap·improved 라벨 조합 전부 3-run에서 붕괴** — WHY 3건(코덱스·마우스·pi) 구제 대가로 규칙형 noans 4건 오주입(curhb) 또는 gold50 3/3 abstain(imphbn) = **순손실**. **현행(300→150 절단 + current 라벨) 유지 확정.** 상세: `STAGE47H_FINAL_20261006.md` (47a~h 연쇄). 이 계열 재실험 금지. |
+| **★ 운영 hybrid 분기 가드 (2026-10-06, 3차 AI 검토 발견)** | ✅ | **`j1_pipeline.py` L776의 플래그 없는 1콜 hybrid 분기를 `JEV_HYBRID_ENABLED` env로 기본 비활성** (stage37 기각 구조가 운영에 잔존 — 라이브 trace jev-hybrid 2건 실측). 러너는 jev_rerank 미사용이라 실험 수치 비영향. |
+| **★ abstain 라벨 τ 스윕 (2026-10-06, B AI 제안)** | ⏸️ | **0콜 완료**: improved의 FP 이득은 τ와 무관하게 일관(같은 τ에서 항상 -4~8), τ≥0.4 민감도 0. 문구=실효과 확인. 채택은 u·h 실측 대기. |
 
 ## 3. 오늘(2026-09-27 저녁) 변경 사항 — 반드시 읽을 것
 
@@ -179,6 +182,18 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 > | F17 동시성 | ✅ Jev live 조건 명시: 4클라이언트×10, p50=276ms/p95=453ms (목표 <800ms) |
 >
 > **잔여**: F16(검토 브리프 번호 정정 — 다음 외부 검토 시 반영), 장기 관측(§8.5).
+
+  > **2026-10-06 갱신 — 3차 AI 검토 후속 사이클 완료 (보류 3건 + excerpt 계열)**:
+  > | 항목 | 결과 |
+  > |---|---|
+  > | 운영 hybrid 분기 | ✅ `JEV_HYBRID_ENABLED` 가드 (기본 비활성) |
+  > | 노출 구조 | ✅ 요청서 정정 — 운영은 `rows[:5]` Top-5 (hit@5 병행 필요) |
+  > | abstain 라벨 τ 스윕 | ⏸️ 0콜 완료 — 문구 효과 τ 무관 확인, u·h 실측 대기 |
+  > | IDF v2/v3 재계산 | ✅ v2 ⊇ v3 확정 (형태 기반이 DF 상위호환, 드리프트 없음) — 채택 대기 |
+  > | excerpt 윈도우 (win150/head겹침) | ❌ 전수 기각 — WHY 구제가 순손실 (STAGE47H_FINAL) |
+  >
+  > **남은 보류 3건 최종 상태**: ① improved 라벨 — u·h 실측 후 결정 ② IDF v2 — τ_eff 연속 조정 0콜 스윕 후 결정 ③ 스냅샷 — 보완(플립 8건 원인·평가 세션 제외).
+  > **공통 선행**: 라이브 쿼리 60건 사람 라벨링 (u_true·FP율·h 한 번에, 0콜).
 
 > **2026-09-28 갱신 — JEV 생성 분류(Ingestion Classification) 평가 + 쓰기 게이트 구현 완료**. 최종: **P8 + G-qual**
 > 명명 규칙: **P{번호}** = JEV 프롬프트 버전 (P8 = 84.9%, 채택) / **G{규칙}** = 저장 게이트 (G-qual = store==NO_STORE && type==NO_STORE && conf≥0.6 → SKIP, type rescue 포함). 조합 표기가 곧 최종.
