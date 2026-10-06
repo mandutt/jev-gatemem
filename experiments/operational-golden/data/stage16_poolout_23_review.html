@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>abstain 23건 풀밖 gold 판정</title>
+<style>
+ body { font-family: 'Malgun Gothic', sans-serif; margin: 12px; background: #fff; }
+ .card { border:1px solid #ccc; border-radius:8px; padding:12px; margin:10px 0; }
+ .q { font-size:15px; margin-bottom:8px; }
+ .num { background:#333; color:#fff; border-radius:50%; padding:1px 7px; font-size:13px; }
+ .gold { background:#f5f5f5; padding:8px; border-radius:6px; font-size:13px; margin-bottom:8px; }
+ .gold pre { white-space:pre-wrap; word-break:break-all; margin:4px 0 0; font-family:'Malgun Gothic',sans-serif; }
+ .btns button { margin-right:6px; padding:6px 12px; border-radius:6px; border:1px solid #aaa; cursor:pointer; font-size:13px; }
+ .y { background:#e6f4ea; } .n { background:#fdecea; } .m { background:#fef7e0; }
+ .verdict { margin-top:6px; font-size:14px; font-weight:bold; }
+</style></head><body>
+<h2>abstain 23건 — 'gold가 풀에 없음' 원인 판정</h2>
+<p>Q가 묻는 답이 GOLD에 실제로 들어 있는가? (들어 있음=회수 실패, 없음=라벨 문제, 모호=판단 어려움)</p>
+
+<div class="card">
+  <div class="q"><span class="num">1</span> <b>[A_env_config]</b> 입력 토큰 늘어나면 응답 지연도 늘어?</div>
+  <div class="gold"><b>GOLD</b> (580자):<br><pre>camelAI 입력토큰·effort레벨 지연 실험(2026-08-26, 36호출): ①입력토큰→지연: 20K 토큰까지 무관 확인 — ds 직접 TTFT 23tok=1.1s vs 7811tok=1.2-1.5s(+0.2-0.4s), luna auto 경유도 스캐터만(2.1-6.6s, 추세 없음). 커뮤니티 &#x27;긴 인풋 지연&#x27;은 이 범위에선 미재현. ②high/xhigh/max 차이: gemini는 전부 동일분포(wall 9-11s, rt 1.7-2.4K)=클램프 재확정, 그러나 deepseek는 뚜렷한 3단계(high 11s/288tok, max 19.5s/530tok, xhigh 33-48s/1050tok)—래더에 없는 xhigh가 최대 노력. 단 auto는 deepseek를 안 뽑으므로 auto에선 체감 불가, model_override 강제 시에만 유효. ③신규 발견: 긴 중립 필러 텍스트가 라우팅을 바꿈(hard 퍼즐+8K필러→luna 2/2, gemini 아님)—라우터 카테고리 판정이 프롬프트 형태에 민감. 원본: proxy-model-switch/input_scaling.jsonl, level_compare.jsonl</pre></div>
+  <div class="btns">
+    <button class="y" data-i="1">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="1">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="1">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v1"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">2</span> <b>[A_env_config]</b> TTFT가 입력 길이에 영향 받아?</div>
+  <div class="gold"><b>GOLD</b> (580자):<br><pre>camelAI 입력토큰·effort레벨 지연 실험(2026-08-26, 36호출): ①입력토큰→지연: 20K 토큰까지 무관 확인 — ds 직접 TTFT 23tok=1.1s vs 7811tok=1.2-1.5s(+0.2-0.4s), luna auto 경유도 스캐터만(2.1-6.6s, 추세 없음). 커뮤니티 &#x27;긴 인풋 지연&#x27;은 이 범위에선 미재현. ②high/xhigh/max 차이: gemini는 전부 동일분포(wall 9-11s, rt 1.7-2.4K)=클램프 재확정, 그러나 deepseek는 뚜렷한 3단계(high 11s/288tok, max 19.5s/530tok, xhigh 33-48s/1050tok)—래더에 없는 xhigh가 최대 노력. 단 auto는 deepseek를 안 뽑으므로 auto에선 체감 불가, model_override 강제 시에만 유효. ③신규 발견: 긴 중립 필러 텍스트가 라우팅을 바꿈(hard 퍼즐+8K필러→luna 2/2, gemini 아님)—라우터 카테고리 판정이 프롬프트 형태에 민감. 원본: proxy-model-switch/input_scaling.jsonl, level_compare.jsonl</pre></div>
+  <div class="btns">
+    <button class="y" data-i="2">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="2">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="2">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v2"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">3</span> <b>[A_env_config]</b> 프록시에서 특정 모델 강제 지정 기능 있어?</div>
+  <div class="gold"><b>GOLD</b> (389자):<br><pre>18080 camelai-serial-proxy에 모델 스위치(model_override)·라우팅 표시(routed_model)·추론레벨 주입(default_reasoning_effort + effort_injection_mode respect/force) 추가됨(2026-08-26, 10/10 와이어 검증). camelAI auto 실측: 내부 모델 직접 지정은 404로 불가 → 모델별 effort 매핑 불가, 글로벌만 가능. responses는 reasoning={&quot;effort&quot;:..} 중첩 형식만 수용(top-level은 400). high/max effort는 max_tokens 부족 시 본문 0자(finish=length). 상세: openai-compatible-proxy 스킬</pre></div>
+  <div class="btns">
+    <button class="y" data-i="3">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="3">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="3">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v3"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">4</span> <b>[B_debug_causal]</b> 코덱스 앱이 PC 느려지게 한 원인 뭐였어?</div>
+  <div class="gold"><b>GOLD</b> (687자):<br><pre>[codex session] task: 최근 코덱스앱이 지나치게 PC 성능을 저하시키면서 마우스 포인터까지 버벅거리게 만들고 있어. 뭐가 원인인지 조사해서 알려줘. 실제로 조치를 취하지는 말고.
+project: C:\Users\mandu\Documents\Codex\2026-08-17\new-chat
+turns: 1
+outcome: 조사 결과를 정리했어요. 결론부터 말하면, **PC가 메모리 한계에 도달해 있고**, Codex가 그 한계 상황에서 마무리 손을 대는 셈이라 포인터까지 버벅이는 거예요. **시스템 상태 (가장 중요한 단서)** - RAM 전체 15.6GB 중 **97.8%가 사용 중**, 가용 메모리 317MB뿐이에요. - 전체 프로세스 합계가 **16.5GB**로 물리 RAM을 이미 초과 → Windows가 디스크에 페이징(`Pages/sec` 1626)과 **Memory Compression 275MB**를 지속적으로 돌리면서 버벅임이 발생합니다. - 즉, 지금 현상은 특정 앱 하나의 버그라기보다 **단순 메모리 부족**이에요. **메모리 점유 그룹별 현황** - MabinogiMobile(게임) + Lay + BlackCipher: **약 3.3GB** - python* 18개 프로세스: **약 2.1GB** - Codex 앱 (ChatGPT.exe + codex.exe 10개 프로세스): *</pre></div>
+  <div class="btns">
+    <button class="y" data-i="4">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="4">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="4">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v4"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">5</span> <b>[C_preference_short]</b> 리뷰 전용 턴에서 커밋해도 돼?</div>
+  <div class="gold"><b>GOLD</b> (309자):<br><pre>Commit governance: (1) review/fix-only turns NEVER git add/commit (literal). (2) co-mingled phases + feature-mixed files (manager.py=1-D+1-E) → accept single milestone commit over forced per-phase split (file-level add limit). (3) any commit needs explicit approval + full code display; no pre-emptive commit.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="5">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="5">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="5">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v5"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">6</span> <b>[C_preference_short]</b> commit governance 규칙이 뭐지?</div>
+  <div class="gold"><b>GOLD</b> (309자):<br><pre>Commit governance: (1) review/fix-only turns NEVER git add/commit (literal). (2) co-mingled phases + feature-mixed files (manager.py=1-D+1-E) → accept single milestone commit over forced per-phase split (file-level add limit). (3) any commit needs explicit approval + full code display; no pre-emptive commit.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="6">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="6">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="6">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v6"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">7</span> <b>[C_preference_short]</b> 구현됐다는 말 믿기 전에 뭘 확인해?</div>
+  <div class="gold"><b>GOLD</b> (538자):<br><pre>Evidence-based only; no speculation — separate confirmed vs hypothesis w/ evidence table. Verify &#x27;implemented&#x27; read-only before trusting. Lesson: patch &#x27;no match&#x27;/&#x27;read fail&#x27; ≠ file missing (wrong-path typo); inherited context-summary claims are NOT trusted — re-verify live (e.g. memory-middleware: summary claimed &#x27;bootstrap↔audit/metrics 2 import-cycles&#x27; but AST full-scan of 32 modules showed cycles=0). Cite actual re-run output. SoT-gate: before each impl step verify SoT vs agreed design; fix SoT (minimal+rationale) BEFORE coding.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="7">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="7">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="7">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v7"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">8</span> <b>[C_preference_short]</b> evidence 규칙 어땠지?</div>
+  <div class="gold"><b>GOLD</b> (538자):<br><pre>Evidence-based only; no speculation — separate confirmed vs hypothesis w/ evidence table. Verify &#x27;implemented&#x27; read-only before trusting. Lesson: patch &#x27;no match&#x27;/&#x27;read fail&#x27; ≠ file missing (wrong-path typo); inherited context-summary claims are NOT trusted — re-verify live (e.g. memory-middleware: summary claimed &#x27;bootstrap↔audit/metrics 2 import-cycles&#x27; but AST full-scan of 32 modules showed cycles=0). Cite actual re-run output. SoT-gate: before each impl step verify SoT vs agreed design; fix SoT (minimal+rationale) BEFORE coding.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="8">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="8">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="8">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v8"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">9</span> <b>[C_preference_short]</b> DTO 분리 어디까지 하면 돼?</div>
+  <div class="gold"><b>GOLD</b> (114자):<br><pre>아키텍처 선호: (1) 영속성과 비즈니스 로직 분리. (2) Runtime/Middleware DTO 분리. (3) 결정 로직 pure function. (4)(5) 데이터모델·불필요 컴포넌트 YAGNI.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="9">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="9">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="9">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v9"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">10</span> <b>[C_preference_short]</b> 그 프로젝트 진짜 목표가 뭐지?</div>
+  <div class="gold"><b>GOLD</b> (143자):<br><pre>verifier-pilot 프로젝트의 진짜 목표는 &quot;코딩 품질&quot;이 아니라 &quot;더 나은 답변 품질&quot;(도메인 비한정 — 코드·텍스트·분석·문서 등 모든 산출물). 품질 게이트는 코딩 산출물에 한정되면 안 되며, 필요하면 품질 평가에 LLM 호출 사용을 허용한다.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="10">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="10">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="10">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v10"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">11</span> <b>[C_preference_short]</b> 660초 타임아웃 원인 뭐였지?</div>
+  <div class="gold"><b>GOLD</b> (488자):<br><pre>Windows에서 hermes update 후 cua-driver refresh가 660s 타임아웃으로 실패하는 패턴: 근본 원인은 설치 스크립트(install.ps1)가 High-IL stale 데몬을 일반 권한으로 못 죽여 UAC 프롬프트를 띄우고 무한정 대기하는 것 (Hermes _CUA_INSTALLER_TIMEOUT=660s = 600s stale-lock + 60s). 재발 방지: 게임/풀스크린 앱(MabinogiMobile 등) 종료 후 업데이트, 업데이트 전 관리자로 Stop-Process -Force 또는 리부트, hermes config set updates.refresh_cua_driver false로 끄고 수동 `hermes computer-use install --upgrade` 사용. 진단 명령: cua-driver status / autostart status / Get-CimInstance Win32_Process로 부모 체인 확인.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="11">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="11">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="11">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v11"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">12</span> <b>[C_preference_short]</b> shutdown API 어떻게 만들었지?</div>
+  <div class="gold"><b>GOLD</b> (325자):<br><pre>camelai-serial-proxy 대시보드 개선 완료(2026-08-17): ① /api/shutdown 종료버튼(대시보드 &quot;🛑 프록시 종료&quot;, call_later 0.5s os._exit, SECRET_PATHS에 추가) ② 설정 영속화 — /api/config PATCH 시 save_config()가 config.yaml에 저장(config.yaml이 재시작 시 로드되므로 유지), streams를 3으로 저장해 재시작 후에도 3 유지 실측 ③ 활성/최근 요청 카드를 실시간 상태 카드 바로 아래로 이동. /api/state, /v1/models, 채팅 스트림 모두 정상.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="12">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="12">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="12">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v12"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">13</span> <b>[E_factual_misc]</b> codex config.toml 훅 어떻게 설정했지?</div>
+  <div class="gold"><b>GOLD</b> (410자):<br><pre>Codex CLI↔Mnemosyne 연동 완료·검증됨: ~/.codex/config.toml [hooks] 블록(UserPromptSubmit→recall.py, Stop→record.py)으로 source=&#x27;codex&#x27; 기록. hooks.json은 .disabled-20260807로 비활성화(이중 로드로 중복 기록 방지). [features]는 codex_hooks 아니라 hooks=true로 정리(deprecated alias 경고 제거). hooks trust는 대화형 codex에서 &quot;Trust all&quot;(숫자2+Enter) 승인으로 영구 등록 — 이제 --dangerously-bypass-hook-trust 없이 recall 주입+record 저장 자동 동작. 재사용 절차는 codex-mnemosyne-hooks 스킬.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="13">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="13">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="13">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v13"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">14</span> <b>[E_factual_misc]</b> 코드 설명과 구조 라벨 언어 규칙?</div>
+  <div class="gold"><b>GOLD</b> (126자):<br><pre>언어: 한국어/영어 혼용. Structural/metadata(분류·상태·step label)는 한국어, code/기술 설명은 영어. 완전 번역 금지. 한국어 출력은 존댓말(합니다체)로 통일 — 반말·해요체·무종결 혼용 금지.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="14">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="14">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="14">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v14"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">15</span> <b>[E_factual_misc]</b> 완전 번역 금지 규칙 뭐지?</div>
+  <div class="gold"><b>GOLD</b> (126자):<br><pre>언어: 한국어/영어 혼용. Structural/metadata(분류·상태·step label)는 한국어, code/기술 설명은 영어. 완전 번역 금지. 한국어 출력은 존댓말(합니다체)로 통일 — 반말·해요체·무종결 혼용 금지.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="15">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="15">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="15">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v15"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">16</span> <b>[E_factual_misc]</b> provider가 뭐지?</div>
+  <div class="gold"><b>GOLD</b> (63자):<br><pre>메모리 provider=mnemosyne(로컬 SQLite, pip, Docker 불필요, 2026-07 전환).</pre></div>
+  <div class="btns">
+    <button class="y" data-i="16">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="16">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="16">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v16"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">17</span> <b>[E_factual_misc]</b> S8 시나리오 실패 원인?</div>
+  <div class="gold"><b>GOLD</b> (402자):<br><pre>18080 프록시 deepseek-v4-flash 도구 호출 오류 실측(2026-08-23): 과거 path→patch 키 직화(2026-08-20, 21/26 실패)는 0/32로 해결 유지 확인. 단 8시나리오 배치(S1키직화~S8장문)에서 S8 스트림 장문(~3.5KB write_file) 1회 BAD_JSON(arguments 조기 절단, 발생률 ~3%) = 진성 프로바이더 결함 간헐 존재. VALUE_MISMATCH +1은 모델의 말줄 개행 추가 행동(무해). 재현 도구: hermes-made\proxy-patch-test\ (test_tool_call.py 단일스키마 / test_tool_scenarios.py 8시나리오 배치). 절차·판정기준은 camelai-proxy-toolcall-repro 스킬</pre></div>
+  <div class="btns">
+    <button class="y" data-i="17">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="17">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="17">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v17"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">18</span> <b>[E_factual_misc]</b> TimeoutExpired 처리 어떻게 바뀌지?</div>
+  <div class="gold"><b>GOLD</b> (327자):<br><pre>StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). controller 2.0.2(08-21): TimeoutExpired 흡수 + phase별 budget 분리(plan240/exec720/repair480). 미니A/B(minab) t04 누적 R1~R3: A 2/4 vs C 5/6(C실패 2건=v2.0.0크래시·게이트맹점, 현버전에서 구조 제거). R3-C 2/2 합계1028s(R2대비-42%), plan 최악631→269s. plan은 여전히 240초과(268s)하나 exit=0 무해. 상세 minab/ANALYSIS.md</pre></div>
+  <div class="btns">
+    <button class="y" data-i="18">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="18">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="18">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v18"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">19</span> <b>[E_factual_misc]</b> 웹 추출 백엔드 뭘로 설정했지?</div>
+  <div class="gold"><b>GOLD</b> (270자):<br><pre>웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이 extract. Exa 키리스는 한글 mojibake(ISO-8859-1) → tavily 권장. ①agent-browser CLI(npx) ②MCP nodriver stealth ③Camofox 미사용. 상세: hermes-web-tools-diagnostics. 소스 ~/AppData/Local/hermes/hermes-agent/.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="19">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="19">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="19">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v19"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">20</span> <b>[E_factual_misc]</b> Exa 왜 안 써?</div>
+  <div class="gold"><b>GOLD</b> (270자):<br><pre>웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이 extract. Exa 키리스는 한글 mojibake(ISO-8859-1) → tavily 권장. ①agent-browser CLI(npx) ②MCP nodriver stealth ③Camofox 미사용. 상세: hermes-web-tools-diagnostics. 소스 ~/AppData/Local/hermes/hermes-agent/.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="20">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="20">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="20">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v20"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">21</span> <b>[E_factual_misc]</b> 18080 프록시가 뭐 하는 거야?</div>
+  <div class="gold"><b>GOLD</b> (160자):<br><pre>프록시 camelai-serial-proxy(hermes-made, 127.0.0.1:18080, streams 즉시조절, SQLite 토큰통계·캐시히트율, 180일 보존, queue_timeout 600) 검증완. opencodex camelaiprox.baseUrl=18080/v1.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="21">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="21">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="21">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v21"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">22</span> <b>[E_factual_misc]</b> supermemory 왜 안 쓰는 거야?</div>
+  <div class="gold"><b>GOLD</b> (118자):<br><pre>supermemory(미사용, 실측): 200k done/260k+ stuck, 안전150k, in-memory flush→비정상종료 0-byte 유실(전환 사유), ingest=/v4/conversations.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="22">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="22">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="22">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v22"></div>
+</div>
+<div class="card">
+  <div class="q"><span class="num">23</span> <b>[E_factual_misc]</b> 전환 전 어떤 문제 있었지?</div>
+  <div class="gold"><b>GOLD</b> (118자):<br><pre>supermemory(미사용, 실측): 200k done/260k+ stuck, 안전150k, in-memory flush→비정상종료 0-byte 유실(전환 사유), ingest=/v4/conversations.</pre></div>
+  <div class="btns">
+    <button class="y" data-i="23">✅ 답 있음 (회수 실패)</button>
+    <button class="n" data-i="23">❌ 답 없음 (라벨 문제)</button>
+    <button class="m" data-i="23">⚠️ 모호</button>
+  </div>
+  <div class="verdict" id="v23"></div>
+</div>
+<script>
+const v = {};
+document.querySelectorAll('.btns button').forEach(b => {
+  b.onclick = () => {
+    const i = b.dataset.i;
+    v[i] = b.textContent.trim().split(' ')[0];
+    const el = document.getElementById('v'+i);
+    const label = {'✅':'답 있음 (회수 실패)','❌':'답 없음 (라벨 문제)','⚠️':'모호'}[v[i]];
+    el.textContent = '판정: ' + label;
+    el.style.color = v[i]==='✅' ? 'green' : v[i]==='❌' ? 'red' : 'orange';
+  };
+});
+const LABEL = {'✅':'ok','❌':'bad','⚠️':'ambiguous'};
+function exportVerdicts() {
+  const verdicts = {};
+  document.querySelectorAll('.card').forEach(c => {
+    const i = c.querySelector('.num').textContent;
+    const raw = v[i] || '';
+    verdicts[i] = LABEL[raw] || 'unmarked';
+  });
+  const out = { judged_at: new Date().toISOString(), verdicts };
+  const blob = new Blob([JSON.stringify(out, null, 1)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'verdicts_' + new Date().toISOString().slice(0,19).replace(/[:T]/g,'-') + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  alert('판정 결과 JSON 파일이 다운로드됐습니다. (예전 형식: judged_at + verdicts)');
+}
+</script>
+<button onclick="exportVerdicts()" style="margin-top:12px;padding:8px 16px;">판정 결과 내보내기</button>
+</body></html>
