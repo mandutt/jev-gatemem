@@ -270,3 +270,73 @@ op −5, 라이브 영향 미미) ② 판정자 교체 (일반 LLM 금지 원칙
 - `data/stage50_noul_answerability.json` (200), `data/stage50b_noul_prompt_variants.json` (300)
 - 러너: `stage49c`/`stage49d_poolinscan`/`stage50_noul_answerability`/`stage50b_noul_prompt_variants.py`
 - 시트: `stage49c_label_booster.html`, `stage49d_poolinscan.html`
+## §14. 미실측 3건 실측 (2026-10-06) — pool20/dual/two_call + op-90 회귀 + 풀 비교
+
+### 14.1 stage53 — 3종 AI 미실측 3건 (500콜, err 0)
+
+3종 AI 검토 요청서(v2)에서 "미실측"으로 남았던 3건을 100쿼리(live 60 + op 20 + noans 20) 동일 벤치에서 실측:
+
+| 구조 | IRREL 차단(17) | 정답희생(38) | noans hard FP(20) |
+|---|---|---|---|
+| base (현행) | 0 | 0 | 13 |
+| pool20 (A-7) | 0 | 0 | 8 |
+| dual (B-4, 두 라벨) | 1 | 0 | 7 |
+| two_call (C-4, 2콜) | 2 | 0 | 5 |
+
+- **라이브 IRREL(이웃 존재형 무답) 차단은 3구조 모두 여전히 미미** (0~2/17) — abstain 무력의 구조적 한계 재확인.
+- **정답희생 0** — 전부 안전.
+- **하드 noans FP는 3구조 모두 절반 이상 개선** (13→5~8): pool20=softmax 집중(A AI 가설 지지), dual=라벨 분리(B 지지), two_call=winner 재검증(C 지지, 최강).
+- **양분 확정**: 구조 개선은 "하드 noans(이웃 부재)" 방어엔 유효, "라이브 무답(이웃 존재)"엔 미미.
+
+### 14.2 stage54 — op-90 회귀 1-run (360콜, err 0)
+
+| 구조 | hit@1 | hit@3 | abstain |
+|---|---|---|---|
+| base | 79 | 80 | 3 |
+| pool20 | 78 | 79 | 2 |
+| dual | 77 | 78 | 6 |
+| two_call | 76 | 77 | 7 |
+
+- dual·two_call은 abstain +3~4 (과다거부) — op 손실 > FP 이득 → 기각.
+- pool20만 -1 (비결정성 범위) — 유일한 후보.
+
+### 14.3 stage55 — pool20 3-run (270콜, err 0)
+
+3-run 전부 hit@1 78 / hit@3 79 / abstain 2 — **완전 동일, 비결정성 0**.
+→ pool20의 -1은 "실질적·재현 가능"으로 보였으나, 이는 세션 분리 측정의 한계였음.
+
+### 14.4 stage56 — 풀 비교 (같은 세션 3-run paired, 840콜, err 0) ★최종
+
+| 구조 | hit@1 | hit@3 | abstain | noans FP(50) |
+|---|---|---|---|---|
+| base | 78/78/78 | 79/79/79 | 2·2·3 | 21/22/21 (평균 21.3) |
+| pool20 | 78/78/78 | 79/79/79 | 2·2·2 | 13/13/13 (평균 13.0) |
+
+- **op hit@1/3 완전 동일 (78/79)** — stage54 base 1-run 79/80은 세션 잡음. **pool20의 "-1 회귀"는 착시**.
+- **noans FP 21.3 → 13.0 (−8.3, −39%)** 같은 세션 확정.
+- **쿼리별 majority: 4건만 차이, 2:2 상쇄** (pool20 개선: #58 KoDialogBench·#72 pi 프록시 / 손실: #80 deepseek 장문·#87 camelai-serial-proxy) — **체계적 손실 없음**.
+- **최종 판정: pool20 채택 근거 확정 — op 무회귀 + noans −39% = 일방 개선** (h 불필요).
+- 부수 이득: criteria 61→21 → 토큰 ~35% 절감 + latency 감소.
+- **단, 코드 반영 보류** — 다른 AI 검토 요청과 함께 진행 예정 (2026-10-06 사용자 지시).
+
+### 14.5 방법론 교훈 (중요)
+
+**세션 분리 1-run/3-run 비교는 비결정성에 취약** — stage54(base 1-run 79/80) vs stage55(pool20 3-run 78/79)
+의 -1이 실제로는 세션 잡음이었음. **파이프라인 변경 평가는 반드시 같은 세션 paired 3-run** 으로.
+(이전 stage49b "3-run majority 원칙"의 확장 — 비교 대상도 같은 세션.)
+
+### 14.6 raw
+
+- `stage53_missed3.py` + `data/stage53_missed3.json` + `STAGE53_MISSED3_20261006.md`
+- `stage54_op90_regress.py` + `data/stage54_op90_regress.json` + `STAGE54_OP90_REGRESS_20261006.md`
+- `stage55_pool20_3run.py` + `data/stage55_pool20_3run.json` + `STAGE55_POOL20_3RUN_20261006.md`
+- `stage56_full_compare.py` + `data/stage56_full_compare.json` + `STAGE56_FULL_COMPARE_20261006.md`
+- 로그: `data/stage53_run5.log`, `data/stage54_run2.log`, `data/stage55_run.log`, `data/stage56_run.log`
+
+### 14.7 JEV API 키별 한도 (운영 교훈)
+
+- 3종 한도(분당 240콜 / 시간당 0.5$=11.9M / 일일 2$=47.6M)는 **키별 독립**.
+- 키1 소진 → 키2는 새 할당으로 사용 가능. 시작 전 두 키 1콜 probe → **잔여 키로 시작**.
+- 429 본문 'daily free allowance' 확인 시 해당 키를 `rot.exhausted_until`에 넣어 정각까지 제외
+  (on_429는 순환만, daily 제외는 명시적으로 해야 함).
+- 키1 429 시에도 키2 200이면 실행 가능 (2026-10-06 stage53 실증).
