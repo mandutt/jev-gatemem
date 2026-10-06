@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<title>support_set 재감사 — pool 밖 miss 11건</title>
+<style>
+  body { font-family: sans-serif; max-width: 1100px; margin: 20px auto; padding: 0 16px; }
+  .item { border: 1px solid #ccc; border-radius: 8px; margin: 16px 0; padding: 12px; }
+  .q { font-size: 15px; margin-bottom: 8px; }
+  .num { background: #333; color: #fff; padding: 2px 8px; border-radius: 10px; }
+  .cols { display: flex; gap: 12px; }
+  .col { flex: 1; }
+  .colhead { font-size: 13px; color: #555; }
+  .cand { border: 1px solid #e0e0e0; border-radius: 6px; margin: 6px 0; padding: 8px; font-size: 13px; }
+  pre { white-space: pre-wrap; word-break: break-all; margin: 0; font-family: inherit; font-size: 12px; }
+  .verdict { margin-top: 10px; font-size: 14px; }
+  .vq { font-weight: bold; margin: 8px 0 2px; font-size: 13px; }
+  label { margin-right: 12px; cursor: pointer; font-size: 13px; }
+  button { position: fixed; bottom: 20px; right: 20px; padding: 12px 24px; font-size: 15px;
+           background: #2b6cb0; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+</style></head><body>
+<h2>support_set 재감사 — pool 밖 miss 11건 (C AI Q5)</h2>
+<p>11건 각각 ①직접 답 ②동등 support ③코퍼스 답 존재 ④문맥 의존을 판정해 주세요.<br>
+완료 후 우측 하단 버튼 → 결과가 하단 패널에 표시됩니다. 텍스트 복사 or 파일 저장 후 채팅으로 전달.</p>
+<div class="item">
+    <div class="q"><span class="num">1</span> <b>camelAI auto 라우팅에서 어려운 과제는 어떤 모델로 보내졌어?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-08-25)</div><pre>camelAI auto 에이전트형 대컨텍스트 라우팅 실측(2026-08-26, 92호출): 시스템프롬프트+u/a 대화로 2K/8K/32K 확대 후 마지막 발화 기준 — 어려운 과제→google/gemini-3.7-flash 17/18(94%), 사소한 마무리 요청→meta/muse-spark-1.2-contributor 13/18(72%)+gemini 5/18, openai/gpt-5.6-luna는 대컨텍스트에서 0회(작은 요청·단일블롭에서만 출현). 컨텍스트 크기(2K→32K) 자체는 분포를 거의 안 바꿈. luna→muse 전환은 ~1.9K 토큰 부근(구조·크기 단독으로는 설명 안 됨). 실용 함의: 긴 세션 마무리/사소한 도구호출은 저성능 모델(muse)이 맡고 진짜 추론은 gemini가 맡음 — 대컨</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=c66472eaa1 | 2026-08-25 | sim=pool 내</div><pre>[2026-08-26 재검증으로 부분 기각] camelAI auto 라우팅 플립 트리거(08-25, 24호출): 당일엔 패딩 ~242~296토큰에서 gemini→luna 전환이 결정적으로 관측됐으나, 다음날(08-26, 92호출) 미재현 — 필러 1,458~1,938ptok에서도 luna 유지, 플립은 순수 크기 함수가 아님(라우터 버전 변경 또는 프롬프트캐시 왜곡 가능성). 유지되는 결론:</pre></div><div class="cand"><div class="meta">id=e481f1a2bb | 2026-08-25 | sim=pool 내</div><pre>camelAI auto 라우팅 실험(2026-08-26, 37호출 실측): ①동일 프롬프트 반복해도 호출마다 라우팅 변동(확률적, 균등랜덤 아님—조건별 우선 모델 + ~10-25% 이탈). ②결정요인은 프롬프트 난이도: 어려운 퍼즐→gemini-3.7-flash(17/18), 사소한 프롬프트→gpt-5.6-luna(15/18). reasoning_effort 파라미터는 라우팅에 무관(effo</pre></div><div class="cand"><div class="meta">id=098d90e014 | 2026-08-25 | sim=pool 내</div><pre>camelAI effort=max 모델별 실측(2026-08-26, 41호출): ①max·xhigh 전 모델 200 수용, 에러 없음—비지원 레벨은 조용한 클램프(gemini: max≈high 동일분포 1879vs1874 rtoks, 클램프 확정). ②luna는 max 인식(사소한 프롬프트에서 none/high=0토큰→max/xhigh=17~19토큰). ③deepseek-v4-flash는 e</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_1" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_1" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_1" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_1" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_1" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_1" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_1" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_1" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_1" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">2</span> <b>92번 호출 실험에서 라우팅 결과 어땠지?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-08-25)</div><pre>camelAI auto 에이전트형 대컨텍스트 라우팅 실측(2026-08-26, 92호출): 시스템프롬프트+u/a 대화로 2K/8K/32K 확대 후 마지막 발화 기준 — 어려운 과제→google/gemini-3.7-flash 17/18(94%), 사소한 마무리 요청→meta/muse-spark-1.2-contributor 13/18(72%)+gemini 5/18, openai/gpt-5.6-luna는 대컨텍스트에서 0회(작은 요청·단일블롭에서만 출현). 컨텍스트 크기(2K→32K) 자체는 분포를 거의 안 바꿈. luna→muse 전환은 ~1.9K 토큰 부근(구조·크기 단독으로는 설명 안 됨). 실용 함의: 긴 세션 마무리/사소한 도구호출은 저성능 모델(muse)이 맡고 진짜 추론은 gemini가 맡음 — 대컨</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_2" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_2" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_2" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_2" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_2" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_2" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_2" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_2" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_2" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">3</span> <b>리뷰 전용 턴에서 커밋해도 돼?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-07-31)</div><pre>Commit governance: (1) review/fix-only turns NEVER git add/commit (literal). (2) co-mingled phases + feature-mixed files (manager.py=1-D+1-E) → accept single milestone commit over forced per-phase split (file-level add limit). (3) any commit needs explicit approval + full code display; no pre-emptive commit.</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=9f04ed2c8e | 2026-07-31 | sim=pool 내</div><pre>설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제</pre></div><div class="cand"><div class="meta">id=ec0cab43bd | 2026-10-03 | sim=pool 내</div><pre>jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수</pre></div><div class="cand"><div class="meta">id=8222434793 | 2026-10-01 | sim=pool 내</div><pre>[USER] @file:`Downloads/a-ai-perfectrecall대비 비교 보고서 검토-v3.md`
+@file:`Downloads/b-ai-perfectrecall대비 비교 보고서 검토-v3.md`
+@file:`Downloads/c-ai-perfectrecall대비 비교 보고서 검토-v3.md`
+
+세 ai에게 받은 답변이야. 검토 후 종합해서 보고해줘
+
+--- Attached Co</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_3" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_3" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_3" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_3" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_3" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_3" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_3" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_3" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_3" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">4</span> <b>구현됐다는 말 믿기 전에 뭘 확인해?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-07-31)</div><pre>Evidence-based only; no speculation — separate confirmed vs hypothesis w/ evidence table. Verify &#x27;implemented&#x27; read-only before trusting. Lesson: patch &#x27;no match&#x27;/&#x27;read fail&#x27; ≠ file missing (wrong-path typo); inherited context-summary claims are NOT trusted — re-verify live (e.g. memory-middleware: summary claimed &#x27;bootstrap↔audit/metrics 2 import-cycles&#x27; but AST full-scan of 32 modules showed cyc</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=d1c90516d9 | 2026-09-28 | sim=pool 내</div><pre>default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립).</pre></div><div class="cand"><div class="meta">id=9f04ed2c8e | 2026-07-31 | sim=pool 내</div><pre>설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제</pre></div><div class="cand"><div class="meta">id=0bb865391b | 2026-08-15 | sim=pool 내</div><pre>[codex session] task: 현재 세션 01a005ed-a403-7d91-b885-2c7976ebb91c에 연결된 모델에서 코덱스와 작동 시 다음과 같은 문제가 있었다고 해. --- 어제 오늘 간에 codex, opencodex의 모델별 adapter 설정 변화 전후로, Camel 요청이 &#x27;Openai-chat&#x27;이 아닌 Openai-responses 경로로 전달되면서 문제 발생. </pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_4" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_4" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_4" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_4" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_4" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_4" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_4" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_4" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_4" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">5</span> <b>evidence 규칙 어땠지?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-07-31)</div><pre>Evidence-based only; no speculation — separate confirmed vs hypothesis w/ evidence table. Verify &#x27;implemented&#x27; read-only before trusting. Lesson: patch &#x27;no match&#x27;/&#x27;read fail&#x27; ≠ file missing (wrong-path typo); inherited context-summary claims are NOT trusted — re-verify live (e.g. memory-middleware: summary claimed &#x27;bootstrap↔audit/metrics 2 import-cycles&#x27; but AST full-scan of 32 modules showed cyc</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=5a3ebc06a8 | 2026-07-31 | sim=pool 내</div><pre>설계 리뷰: SRP/YAGNI/순수함수 원칙 기반 구체 검토, 코드 근거 필수. 일관성(기존 관례)을 SOLID보다 최우선 — 신규 타입 생성은 목표 아닌 기존 타입 확장 택할 것. 최종 리뷰 범위(Bug/손상/API계약) 한정, TD/리팩터 제안 금지. &#x27;분리 불필요&#x27;도 evidence-based 재판단.</pre></div><div class="cand"><div class="meta">id=d1c90516d9 | 2026-09-28 | sim=pool 내</div><pre>default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립).</pre></div><div class="cand"><div class="meta">id=9f04ed2c8e | 2026-07-31 | sim=pool 내</div><pre>설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_5" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_5" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_5" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_5" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_5" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_5" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_5" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_5" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_5" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">6</span> <b>shutdown API 어떻게 만들었지?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-08-17)</div><pre>camelai-serial-proxy 대시보드 개선 완료(2026-08-17): ① /api/shutdown 종료버튼(대시보드 &quot;🛑 프록시 종료&quot;, call_later 0.5s os._exit, SECRET_PATHS에 추가) ② 설정 영속화 — /api/config PATCH 시 save_config()가 config.yaml에 저장(config.yaml이 재시작 시 로드되므로 유지), streams를 3으로 저장해 재시작 후에도 3 유지 실측 ③ 활성/최근 요청 카드를 실시간 상태 카드 바로 아래로 이동. /api/state, /v1/models, 채팅 스트림 모두 정상.</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=40fd9b067a | 2026-08-15 | sim=pool 내</div><pre>[codex session] task: 너는 Worker-A다. 이 프로젝트의 모든 코드 수정 담당이다. 프로젝트: - 경로: C:\Users\mandu\Documents\opencode\testproject - 목적: Notion-backed Windows 파일 동기화 프로그램 - core와 GUI를 분리하고, 향후 Android에서도 core를 재사용할 수 있도록 설계 - Android </pre></div><div class="cand"><div class="meta">id=3cb01e34f8 | 2026-10-03 | sim=pool 내</div><pre>[USER] 나는 experientiallabs.ai 사이트에서 api를 이용하려 해. 이 사이트의 api를 환경 변수에 등록하려면 어떻게 해야 할까? 기술 문서는 @url:`https://platform.experientiallabs.ai/docs` 에 있어
+
+--- Attached Context ---
+
+🌐 @url:`https://platform.experientiallabs.ai/do</pre></div><div class="cand"><div class="meta">id=0580b8ce4d | 2026-10-04 | sim=pool 내</div><pre>[USER] [ASYNC DELEGATION COMPLETE — deleg_97f4ca46]
+A background subagent you dispatched earlier has finished. You may have moved on since dispatching it; the full task source is below so you can act on the result or re-</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_6" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_6" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_6" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_6" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_6" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_6" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_6" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_6" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_6" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">7</span> <b>provider가 뭐지?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-07-31)</div><pre>메모리 provider=mnemosyne(로컬 SQLite, pip, Docker 불필요, 2026-07 전환).</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=d1c90516d9 | 2026-09-28 | sim=pool 내</div><pre>default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립).</pre></div><div class="cand"><div class="meta">id=9f04ed2c8e | 2026-07-31 | sim=pool 내</div><pre>설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제</pre></div><div class="cand"><div class="meta">id=ec0cab43bd | 2026-10-03 | sim=pool 내</div><pre>jev-memory-middleware archived recall 누출 수정 완료(2026-10-03, 커밋 f5aa4ef): 재판정 skip(archived) 행이 live recall에서 제외되지 않던 2중 결함. 결함A=P3 recover.py·rejudge_v2.py가 valid_until을 metadata에만 쓰고 컬럼 누락(P1 apply는 정상, P3만) → 컬럼 write 수</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_7" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_7" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_7" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_7" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_7" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_7" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_7" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_7" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_7" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">8</span> <b>TimeoutExpired 처리 어떻게 바뀌지?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-08-21)</div><pre>StateM: statem-skill/statem-bench, pin 8c3309a(PyPI동명X). controller 2.0.2(08-21): TimeoutExpired 흡수 + phase별 budget 분리(plan240/exec720/repair480). 미니A/B(minab) t04 누적 R1~R3: A 2/4 vs C 5/6(C실패 2건=v2.0.0크래시·게이트맹점, 현버전에서 구조 제거). R3-C 2/2 합계1028s(R2대비-42%), plan 최악631→269s. plan은 여전히 240초과(268s)하나 exit=0 무해. 상세 minab/ANALYSIS.md</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=801a615849 | 2026-08-17 | sim=pool 내</div><pre>[codex session] task: 현재 이 세션과 mnemosyne 메모리는 어떻게 연동되고 있는지 파악해줘
+project: C:\Users\mandu\Documents\Codex\2026-08-17\gus
+turns: 1
+outcome: 조사가 완전히 끝났어요. 이제 그림이 명확합니다. 정리해서 공유드릴게요. ## 이 세션과 Mnemosyne 연동 방식 지금 보시는 이 Codex 세션</pre></div><div class="cand"><div class="meta">id=fcb6471ed8 | 2026-09-27 | sim=pool 내</div><pre>[USER] 일단 2번은 바로 수정한다고 치고, 3번은 어떻게 해결해야 해?</pre></div><div class="cand"><div class="meta">id=0580b8ce4d | 2026-10-04 | sim=pool 내</div><pre>[USER] [ASYNC DELEGATION COMPLETE — deleg_97f4ca46]
+A background subagent you dispatched earlier has finished. You may have moved on since dispatching it; the full task source is below so you can act on the result or re-</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_8" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_8" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_8" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_8" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_8" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_8" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_8" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_8" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_8" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">9</span> <b>Exa 왜 안 써?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-08-20)</div><pre>웹 수집·추출: web.extract_backend=tavily(키리스, v0.20.4+, 2026-08-21 설정) — ddgs 검색+키 없이 extract. Exa 키리스는 한글 mojibake(ISO-8859-1) → tavily 권장. ①agent-browser CLI(npx) ②MCP nodriver stealth ③Camofox 미사용. 상세: hermes-web-tools-diagnostics. 소스 ~/AppData/Local/hermes/hermes-agent/.</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=9d1ec71f34 | 2026-10-01 | sim=pool 내</div><pre>[USER] 아까 excerpt 말고도 상향할까 고민했던 사항에서 안했던 게 있는 것 같은데 그게 뭐였지?</pre></div><div class="cand"><div class="meta">id=03bd281207 | 2026-09-26 | sim=pool 내</div><pre>[USER] 그렇다면 조금 전에 microg re가 왜 설치가 안 됐었는지 그 이유를 설명해 줘</pre></div><div class="cand"><div class="meta">id=3eca5cebf4 | 2026-10-01 | sim=pool 내</div><pre>[ASSISTANT] 분석 완료 — 원인이 명확하게 나왔습니다.
+
+## E_factual_misc가 약한 이유: **전부 어휘 게이트 커버리지 탈락**
+
+실패 10건(전수 추적)의 레인별 정답 순위:
+
+| gold | fts | vec | RRF 풀 | 게이트 통과 | 쿼리 |
+|---|---|---|---|---|---|
+| 90b4edf6 | 6 | **1** | 1 | ✗ (cov 0.</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_9" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_9" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_9" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_9" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_9" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_9" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_9" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_9" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_9" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">10</span> <b>18080 프록시가 뭐 하는 거야?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-08-18)</div><pre>프록시 camelai-serial-proxy(hermes-made, 127.0.0.1:18080, streams 즉시조절, SQLite 토큰통계·캐시히트율, 180일 보존, queue_timeout 600) 검증완. opencodex camelaiprox.baseUrl=18080/v1.</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=d1c90516d9 | 2026-09-28 | sim=pool 내</div><pre>default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립).</pre></div><div class="cand"><div class="meta">id=9f04ed2c8e | 2026-07-31 | sim=pool 내</div><pre>설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제</pre></div><div class="cand"><div class="meta">id=b2ed9f4dc0 | 2026-08-25 | sim=pool 내</div><pre>Hermes 18080 프로바이더 설정 구조(2026-08-26): $LOCALAPPDATA/hermes/config.yaml custom_providers[4] = Local (127.0.0.1:18080). models는 반드시 맵핑 형태({auto: {}, ...})로 유지 — 프록시 /v1/models가 auto만 광고하므로 문자열 리스트 형태로 두면 모델 피커 재발견 시 live 목</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_10" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_10" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_10" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_10" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_10" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_10" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_10" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_10" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_10" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div><div class="item">
+    <div class="q"><span class="num">11</span> <b>전환 전 어떤 문제 있었지?</b></div>
+    <div class="cols">
+      <div class="col"><div class="colhead">🎯 GOLD (정답 라벨, 2026-07-31)</div><pre>supermemory(미사용, 실측): 200k done/260k+ stuck, 안전150k, in-memory flush→비정상종료 0-byte 유실(전환 사유), ingest=/v4/conversations.</pre></div>
+      <div class="col"><div class="colhead">📚 POOL 상위 3 (회수된 후보)</div><div class="cand"><div class="meta">id=d1c90516d9 | 2026-09-28 | sim=pool 내</div><pre>default 프로필에서만: 사용자는 Hermes가 한국어로 대화할 때 존댓말(합니다체)로 말투를 통일하기를 원함. 반말과 존댓말이 섞인 혼용은 어색하므로 금지. 다른 프로필에서는 존댓말 규칙이 적용되지 않을 수 있음(프로필별 독립).</pre></div><div class="cand"><div class="meta">id=2ecef73164 | 2026-07-31 | sim=pool 내</div><pre>사용자 제약/스타일: 작업 스케줄러 수정/생성 금지(안전종료/기동은 .ps1/.bat+Startup만). Hermes 데스크탑 앱 선호. 코드추론이 라이브 데이터 실험반증과 충돌 시 즉시 철회. Hermes 코어/프론트엔드 직접수정 금지(업데이트 덮어씀)→외부 스킬·독립 스크립트 우회. 헤르메스 작성 스크립트/프로그램은 C:\Users\mandu\hermes-made\ 하위에만 생성(홈 직하</pre></div><div class="cand"><div class="meta">id=9f04ed2c8e | 2026-07-31 | sim=pool 내</div><pre>설계 확정(ADR Final) 후 운영 모드: 신규 설계/ADR/감사/TD목록 추가·리팩터 금지. Implementation Phase 원칙: (1)구현 단위 최소화 (2)ruff+mypy --strict+pytest gate 통과 즉시 해당 단위만 커밋 (3)다음 단계 전 현재 커밋 완료 (4)기존 ADR/Design Final을 SoT로만 사용. 문제 발견 시 즉시 보고하되 임의 수정/제</pre></div></div>
+    </div>
+    <div class="verdict">
+      <div class="vq">① 이 gold는 쿼리의 직접 답인가?</div>
+      <label><input type="radio" name="q1_11" value="direct"> 직접 답 (단독으로 답함)</label>
+      <label><input type="radio" name="q1_11" value="partial"> 부분/맥락적</label>
+      <label><input type="radio" name="q1_11" value="spurious"> 라벨 오류(답 아님)</label>
+      <div class="vq">② 다른 메모리가 동등하게 답하는가? (support_set)</div>
+      <label><input type="radio" name="q2_11" value="yes"> 있다 (pool 후보 중 동등 답 존재)</label>
+      <label><input type="radio" name="q2_11" value="no"> 없다 (gold가 유일)</label>
+      <div class="vq">③ 코퍼스에 답이 존재하는가?</div>
+      <label><input type="radio" name="q3_11" value="exists"> 존재 (retrieval 실패)</label>
+      <label><input type="radio" name="q3_11" value="absent"> 부재 (답 없음 = noans성)</label>
+      <div class="vq">④ 문맥 의존인가? (직전 대화 없이 쿼리만으로 특정 가능한가)</div>
+      <label><input type="radio" name="q4_11" value="dep"> 의존 (사람도 못 특정)</label>
+      <label><input type="radio" name="q4_11" value="indep"> 독립 (사람이 특정 가능)</label>
+    </div>
+  </div>
+<button onclick="collect()">결과 JSON 복사</button>
+<div id="resultWrap" style="display:none; position:fixed; bottom:70px; right:10px; left:10px; background:#fff; border:2px solid #2b6cb0; border-radius:8px; padding:12px; z-index:99; max-height:55vh; overflow:auto; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+  <div style="font-weight:bold; margin-bottom:6px;">✅ 판정 수집됨 — 아래 중 하나로 전달해 주세요:</div>
+  <textarea id="resultBox" rows="4" style="width:100%; font-size:12px;" readonly></textarea>
+  <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;">
+    <button type="button" onclick="copyResult()" style="padding:8px 14px; background:#2b6cb0; color:#fff; border:none; border-radius:6px;">📋 복사</button>
+    <button type="button" onclick="downloadResult()" style="padding:8px 14px; background:#38a169; color:#fff; border:none; border-radius:6px;">💾 파일 저장</button>
+    <button type="button" onclick="closeResult()" style="padding:8px 14px; background:#888; color:#fff; border:none; border-radius:6px;">닫기</button>
+  </div>
+  <div id="copyMsg" style="font-size:12px; color:#555; margin-top:4px;"></div>
+</div>
+<script>
+function collect() {
+  const out = {};
+  document.querySelectorAll('.item').forEach((el, i) => {
+    const get = (name) => { const el2 = el.querySelector(`input[name=${name}_${i+1}]:checked`); return el2 ? el2.value : null; };
+    out[i+1] = { q1: get('q1'), q2: get('q2'), q3: get('q3'), q4: get('q4') };
+  });
+  const txt = JSON.stringify(out, null, 1);
+  document.getElementById('resultBox').value = txt;
+  document.getElementById('resultWrap').style.display = 'block';
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(
+      () => document.getElementById('copyMsg').textContent = '자동 복사 성공 — 채팅에 붙여넣기만 하면 됩니다',
+      () => document.getElementById('copyMsg').textContent = '자동 복사 실패 — 텍스트를 길게 눌러 수동 복사, 또는 💾 파일 저장 후 파일을 보내 주세요'
+    );
+  } else {
+    document.getElementById('copyMsg').textContent = '자동 복사 불가 — 텍스트를 길게 눌러 수동 복사, 또는 💾 파일 저장';
+  }
+  document.getElementById('resultWrap').scrollIntoView({behavior:'smooth'});
+}
+function copyResult() {
+  const box = document.getElementById('resultBox');
+  box.select(); box.setSelectionRange(0, 999999);
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch(e) {}
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(box.value).then(
+      () => document.getElementById('copyMsg').textContent = '✅ 복사됨 — 채팅에 붙여넣어 주세요',
+      () => { if (!ok) document.getElementById('copyMsg').textContent = '브라우저가 복사를 거부 — 텍스트 직접 길게 눌러 복사'; }
+    );
+  } else {
+    document.getElementById('copyMsg').textContent = ok ? '✅ 복사됨' : '직접 길게 눌러 복사해 주세요';
+  }
+}
+function downloadResult() {
+  const txt = document.getElementById('resultBox').value;
+  const blob = new Blob([txt], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'stage46_verdicts.json';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 100);
+  document.getElementById('copyMsg').textContent = '💾 저장됨 — 이 파일을 전송해 주세요';
+}
+function closeResult() { document.getElementById('resultWrap').style.display = 'none'; }
+</script></body></html>

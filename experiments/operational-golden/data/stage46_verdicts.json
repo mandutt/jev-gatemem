@@ -1,0 +1,13 @@
+{
+ "1": {"q1":"direct","q2":"yes","q3":"exists","q4":"indep"},
+ "2": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "3": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "4": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "5": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "6": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "7": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "8": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "9": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "10": {"q1":"direct","q2":"no","q3":"exists","q4":"indep"},
+ "11": {"q1":"direct","q2":"no","q3":"exists","q4":"dependent"}
+}
