@@ -158,3 +158,41 @@ trace 실사용 쿼리 60건을 사용자 판정(yes/no/maybe)과 교차. **버�
 골든셋 하드 noans에서만 작동. 유사 메모리가 있으면 JEV가 무조건 답을 고름.
 라이브 트래픽 ~39%(무답)에서 전부 오주입 중. improved 라벨도 abstain 1/60뿐 →
 **라벨 문구가 아닌 abstain 메커니즘 재설계 필요**. 상세: `STAGE48_LIVE60_CROSS_20261006.md`.
+
+## 11. 측정 유효성 진단 + 시점 일관 재실측 (2026-10-06, stage49a/b) — **무력 최종 확정**
+
+v2 요청서에 대한 3종 AI 검토(10-06)에서 B AI가 stage48 자체의 측정 오염을 의심.
+3축 진단 + 시점 일관 재실측으로 모두 기각됨.
+
+### stage49a (0콜 진단) — `STAGE49A_LEAK_DIAGNOSIS_20261006.md`
+
+| 가설 | 검사 | 판정 |
+|---|---|---|
+| 자기참조 누수 | near-dup(sim≥0.85)/문자열 복제: no 22·yes 35 전부 0건, 10월 생성 후보 0건 | **기각** |
+| retrieval floor 컷(0.25) | floor<0.25: no 77% vs yes 49% — 분포 겹침, no만 잡지 못함 | **기각** |
+| 라이브 abstain_p는 높았다 | trace 로테이션으로 쌍비교 불가 (잔존 2건은 0.13/0.12 저값) | 확증 불가 |
+
+- 부수: 무답 표본 5건 모두 pool[0]이 동일 131자 프로필 규칙 행 (sim 0.23~0.27 저유사 무의미 상위 반환)
+
+### stage49b (시점 일관 리플레이, 540콜 3조건×3-run, err 0) — `STAGE49B_TIMECONSIST_20261006.md`
+
+`created_at < 2026-10-05` 필터(라이브 시기 135행 배제) 후 cur/head100/imp 3조건 재실측:
+
+| cond | no(22) abstain | yes(35) abstain | abstain_p med/max |
+|---|---|---|---|
+| cur | 0/0/0 | 0/0/0 | 0.00 / 0.17 |
+| head100 | 0/0/0 | 0/0/0 | 0.01 / 0.17 |
+| imp | 0/0/0 | 0/0/0 | 0.01 / 0.24 |
+
+- **자기참조 누수 기각** (필터 후에도 abstain 0) / **win-300 증폭 기각** (head-100에서도 0) / **라벨 무력 재확인**
+- **최종 확정**: abstain 0/60은 실재. 원인 = closed-set Choice(61-option softmax)에서 abstain은
+  calibrated answerability가 아니라 상대 경쟁의 잔여 확률 (C AI 구조 진단 채택)
+- **soft gate τ=0.3은 라이브 dead code 확정** — τ 조정 실험 중단
+
+### 다음 단계 (3종 AI 검토 수렴안)
+
+1. 라벨 보강: no 22건 해로움(VALID/PLAUS/IRREL) + yes 35건 top-5 정답 포함 여부
+2. **stage50: Noul answerability 실험** — winner-Noul soft risk(2콜) vs Noul top30 병행(1콜),
+   200-query 벤치(op90+noans50+live60) 1-run → 생존자만 3-run. **Noul 자체는 stage32에서
+   answerability 신호로 실측된 바 있음(noul_top<0.5로 FP 16→8) — 기각된 것은 pool30 축소 구조**
+3. 라이브 60을 회귀 검증 셋으로 고정 (릴리스 게이트: 스냅샷 통과 + 라이브 교차 통과)

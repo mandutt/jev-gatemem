@@ -60,3 +60,10 @@
 - 러너: `stage48_live60_cross.py` (시트 쿼리 하드코딩, row_factory 포함)
 - 시트: `live60_label_review.html`
 - 사용자 판정: 위 JSON (1~60)
+
+## 후속 검증 (2026-10-06, stage49a/b) — 본 실측의 유효성 확정
+
+3종 AI 검토에서 B AI가 본 리플레이의 측정 오염(자기참조 누수·win-300 증폭)을 의심 →
+0콜 진단 + 시점 일관 3조건×3-run(540콜)으로 **모두 기각, 본 결론(abstain 무력) 최종 확정**.
+상세: `STAGE49A_LEAK_DIAGNOSIS_20261006.md`, `STAGE49B_TIMECONSIST_20261006.md`,
+종합: `RECALL_ABSTAIN_INVESTIGATION_20261005.md` §11.

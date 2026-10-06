@@ -43,6 +43,9 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 | **★ abstain 라벨 τ 스윕 (2026-10-06, B AI 제안)** | ⏸️ | **0콜 완료**: improved의 FP 이득은 τ와 무관하게 일관(같은 τ에서 항상 -4~8), τ≥0.4 민감도 0. 문구=실효과 확인. 채택은 u·h 실측 대기. |
 | **★ 라이브 60쿼리 교차 (2026-10-06, stage48)** | 🚨 | **abstain 무력 발견**: recall 100%(35/35) vs **noans FP 100%(22/22)**, abstain 0/60 (abstain_p 전부 0.00~0.16). u_true=38.6% → 라이브 ~39% 무답 전부 오주입 중. 골든 하드 noans에서만 abstain 유효. **abstain 메커니즘 재설계 필요** (라벨 문구로는 불가 — improved도 1/60뿐). |
 | **★ 게이트 기본값 통일 (2026-10-06, stage48 발견)** | ✅ | **`_filter_and_rank` 기본값 (2, 0.30) → (1, 0.0)** — core만 완화돼 있고 gateway/러너 경로는 기본값 잔존 버그. 짧은 라이브 쿼리 pool 0~5 → abstain 93% (stage48 1차). 데몬 재시작 반영 필요. |
+| **★ stage49a 누수 진단 (2026-10-06, 3종 AI 검토 대응)** | ✅ | **B AI 측정 오염 의심 3축 0콜 진단 — 전부 기각**: 자기참조 누수(복제 0건)·retrieval floor(no/yes 분포 겹침)·라이브 abstain_p(확증 불가, 잔존 2건 저값). 부수: 무답 pool[0] = 동일 131자 프로필 행 (sim 0.23~0.27). 상세: `STAGE49A_LEAK_DIAGNOSIS_20261006.md` |
+| **★ stage49b 시점 일관 리플레이 (2026-10-06, 540콜)** | ✅ | **abstain 무력 최종 확정** — `created_at<10-05` 필터 + cur/head100/imp 3조건×3-run, **9조건 전부 abstain 0/60**. 자기참조 누수·win-300 증폭·라벨 문구 모두 기각. 원인 = closed-set Choice 구조(C AI 진단 채택). **soft gate τ=0.3 라이브 dead code 확정, τ 조정 중단**. 상세: `STAGE49B_TIMECONSIST_20261006.md` |
+| **★ 다음 실험 확정 (2026-10-06, 3종 AI 수렴)** | ⏭️ | **stage50: Noul answerability** — winner-Noul soft risk(2콜) vs Noul top30 병행(1콜), 200-query 벤치 1-run→생존자 3-run. Noul은 stage32에서 answerability 신호 실측됨(noul_top<0.5 → FP 16→8, 기각된 건 pool30 축소 구조). 라벨 보강(no 22건 해로움 + yes 35건 top-5 정답) 선행. 라이브 60 회귀 셋 고정 + 릴리스 게이트 명문화. |
 
 ## 3. 오늘(2026-09-27 저녁) 변경 사항 — 반드시 읽을 것
 
