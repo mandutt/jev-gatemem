@@ -1,0 +1,161 @@
+[
+ {
+  "idx": 3,
+  "q": "custom_providers에서 Local 프록시 어",
+  "ans_rank_49d": 9,
+  "rrf_rank": 9,
+  "fts_rank": 2,
+  "vec_rank": 1
+ },
+ {
+  "idx": 4,
+  "q": "gemini 별칭으로 모델 호출되나?",
+  "ans_rank_49d": 9,
+  "rrf_rank": 9,
+  "fts_rank": 4,
+  "vec_rank": 8
+ },
+ {
+  "idx": 7,
+  "q": "model_override와 effort 주입 기능 언",
+  "ans_rank_49d": 9,
+  "rrf_rank": 9,
+  "fts_rank": 1,
+  "vec_rank": 2
+ },
+ {
+  "idx": 27,
+  "q": "스킬 만들 때 file_content로 보내면 돼?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 1,
+  "vec_rank": 1
+ },
+ {
+  "idx": 28,
+  "q": "skill_manage create 파라미터 뭐 써야 ",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 1,
+  "vec_rank": 1
+ },
+ {
+  "idx": 31,
+  "q": "commitment FP 필터 실측 결과 어때?",
+  "ans_rank_49d": 9,
+  "rrf_rank": 9,
+  "fts_rank": 1,
+  "vec_rank": 1
+ },
+ {
+  "idx": 34,
+  "q": "start_proxy.cmd 재부팅 후 왜 안 돌아가?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 2,
+  "vec_rank": 6
+ },
+ {
+  "idx": 35,
+  "q": "배치 파일 인코딩 문제였어?",
+  "ans_rank_49d": 7,
+  "rrf_rank": 7,
+  "fts_rank": 1,
+  "vec_rank": 2
+ },
+ {
+  "idx": 37,
+  "ans_rank": null,
+  "note": "answer candidate not found by keyword"
+ },
+ {
+  "idx": 42,
+  "q": "KoDialogBench 4종 검증 결과 어땠어?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 2,
+  "vec_rank": 2
+ },
+ {
+  "idx": 43,
+  "q": "X1 외부 데이터셋 실험에서 bekko 성능?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 1,
+  "vec_rank": 2
+ },
+ {
+  "idx": 44,
+  "ans_rank": null,
+  "note": "answer candidate not found by keyword"
+ },
+ {
+  "idx": 45,
+  "q": "67차 실험 최종 결론 뭐였지?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 3,
+  "vec_rank": 46
+ },
+ {
+  "idx": 47,
+  "q": "codex config.toml 훅 어떻게 설정했지?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 7,
+  "vec_rank": 1
+ },
+ {
+  "idx": 49,
+  "q": "P3b 확장 gold MRR 수치?",
+  "ans_rank_49d": 7,
+  "rrf_rank": 7,
+  "fts_rank": 1,
+  "vec_rank": 2
+ },
+ {
+  "idx": 51,
+  "q": "S3에서 임베딩 모델 최종 선택 근거?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 35,
+  "vec_rank": 4
+ },
+ {
+  "idx": 54,
+  "q": "브라우저 도구 라우팅 설정 어떻게 돼?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 10,
+  "vec_rank": 5
+ },
+ {
+  "idx": 57,
+  "q": "stealth 브라우저 언제 써야 해?",
+  "ans_rank_49d": 8,
+  "rrf_rank": 8,
+  "fts_rank": 1,
+  "vec_rank": 1
+ },
+ {
+  "idx": 58,
+  "ans_rank": null,
+  "note": "answer candidate not found by keyword"
+ },
+ {
+  "idx": 59,
+  "q": "메모리 백엔드 뭐 쓰고 있어?",
+  "ans_rank_49d": 10,
+  "rrf_rank": 10,
+  "fts_rank": 6,
+  "vec_rank": 53
+ },
+ {
+  "idx": 60,
+  "q": "hermes update 중간에 꺼지면 어떻게 해?",
+  "ans_rank_49d": 7,
+  "rrf_rank": 7,
+  "fts_rank": 6,
+  "vec_rank": 5
+ }
+]

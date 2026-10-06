@@ -221,9 +221,12 @@ no 22건의 top-1 해로움 + yes 35건의 top-5 정답 포함 여부를 사용�
 
 ### stage49d pool-in-pool 스캔 (`stage49d_poolinscan.html`)
 
-"답 있는데 놓침" 19+2건의 rank 6~60 후보를 사용자 판정 → **IN 21/21 (100%)** —
-**retrieval ceiling이 아니라 rerank 실패**. 무작위 4건 기계 교차검증에서 답 후보가
-**rank 8~9**에 위치 확인 — RRF가 답을 하위로 밀고 JEV choice도 못 건짐.
+**"답 있는데 놓침" 19+2건의 rank 6~60 후보를 사용자 판정 → **IN 21/21 (100%)** —
+retrieval ceiling이 아니라 rerank 실패로 해석했다. **단 ⚠️ 후속 실측(stage50c/d, 0콜)으로 정정**:
+이 pool은 **시점 필터(created_at<10-05) 적용 평가용 pool**이고, 실운영 pool(필터 없음)에서는
+**답이 RRF 1~3위**였다 (18건 중 15건, stage50d3). "rank 8~9"는 시점 필터 pool의 인공물 —
+**실제 원인은 RRF가 아니라 JEV choice가 답(1~3위)을 못 고르는 rerank 실패**로 최종 확정.
+상세: STAGE50CD_RRF_LANE_20261006.md
 
 ## 13. Noul answerability 실험 (2026-10-06, stage50/50b) — **기각·소진 확정**
 

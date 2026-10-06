@@ -1,0 +1,182 @@
+[
+ {
+  "idx": 3,
+  "ans_id": "b2ed9f4dc0b1efea",
+  "lane": {
+   "fts": 2,
+   "vec": 1,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 4,
+  "ans_id": "26efd95898ed8fcb",
+  "lane": {
+   "fts": 4,
+   "vec": 8,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 7,
+  "ans_id": "e5bbd0063f1356f6",
+  "lane": {
+   "fts": 1,
+   "vec": 2,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 27,
+  "ans_id": "e6b3887395a2ac45",
+  "lane": {
+   "fts": 1,
+   "vec": 1,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 28,
+  "ans_id": "e6b3887395a2ac45",
+  "lane": {
+   "fts": 1,
+   "vec": 1,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 31,
+  "ans_id": "498bb204de3b1d14",
+  "lane": {
+   "fts": 1,
+   "vec": 1,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 34,
+  "ans_id": "ac6b11080109c3fe",
+  "lane": {
+   "fts": 2,
+   "vec": 6,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 35,
+  "ans_id": "ac6b11080109c3fe",
+  "lane": {
+   "fts": 1,
+   "vec": 2,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 42,
+  "ans_id": "d28786a095ace1ae",
+  "lane": {
+   "fts": 2,
+   "vec": 2,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 43,
+  "ans_id": "d28786a095ace1ae",
+  "lane": {
+   "fts": 1,
+   "vec": 2,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 45,
+  "ans_id": "2f199c68ab243ff8",
+  "lane": {
+   "fts": 3,
+   "vec": 46,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 47,
+  "ans_id": "90b4edf612db6b2c",
+  "lane": {
+   "fts": 7,
+   "vec": 1,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 49,
+  "ans_id": "509622f2ecaf7c06",
+  "lane": {
+   "fts": 1,
+   "vec": 2,
+   "imp": null,
+   "graph": 9
+  }
+ },
+ {
+  "idx": 51,
+  "ans_id": "7a3675ebfc5a1829",
+  "lane": {
+   "fts": 35,
+   "vec": 4,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 54,
+  "ans_id": "1928d454e0ed168b",
+  "lane": {
+   "fts": 10,
+   "vec": 5,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 57,
+  "ans_id": "09547ea49fc36991",
+  "lane": {
+   "fts": 1,
+   "vec": 1,
+   "imp": null,
+   "graph": null
+  }
+ },
+ {
+  "idx": 59,
+  "ans_id": "ef3d9670463aea79",
+  "lane": {
+   "fts": 6,
+   "vec": 53,
+   "imp": null,
+   "graph": 8
+  }
+ },
+ {
+  "idx": 60,
+  "ans_id": "c69c459c7c67c2d1",
+  "lane": {
+   "fts": 6,
+   "vec": 5,
+   "imp": null,
+   "graph": null
+  }
+ }
+]
