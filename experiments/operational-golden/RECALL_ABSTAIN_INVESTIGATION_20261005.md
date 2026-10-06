@@ -338,6 +338,54 @@ op −5, 라이브 영향 미미) ② 판정자 교체 (일반 LLM 금지 원칙
 - `stage56_full_compare.py` + `data/stage56_full_compare.json` + `STAGE56_FULL_COMPARE_20261006.md`
 - 로그: `data/stage53_run5.log`, `data/stage54_run2.log`, `data/stage55_run.log`, `data/stage56_run.log`
 
+## §15. abstain "폭증" → 정직 abstain + 노출 한계 → 캡 트레이드오프 (2026-10-07, stage60~66)
+
+### 15.1 stage60~63 — abstain 폭증 미스터리 해소: URL·모델 문제 아님
+
+- stage60(k 실험)에서 abstain_p 중앙 0.86~0.94로 폭등 (어제 0.0) — k 효과 해석 불가 → 무효.
+- stage61(base 재확인): block abstain 36/38, valid/yes 오차단 2/22 (실질 0 — 라벨 너그러움),
+  abstain_p 중앙 0.86, chose_abstain 38/60. **어제의 "abstain 무력"이 뒤집힘.**
+- stage62(3-run): **완전 결정적** (36/38·2/22·0플립) — 일시적 아님.
+- stage63(op+noans): op hit@1 **19** (66 abstain)·noans FP 1/50 — "무차별 abstain"처럼 보임.
+- **원인 추적**: URL(typesafe 401 vs experientiallabs 정상 — 무관), 러너 코드(정상),
+  **결정적 재현**: experientiallabs 직접 호출 + 실제 라벨로 같은 결과.
+- **진짜 원인**: abstain된 사실 질문의 gold가 **전부 top5 밖** (rank 8·14·36·41).
+  top5는 **규칙/프로필 행 5개가 도배** (90쿼리 중 73~89회 진입).
+  → **abstain = "답이 top5에 없어서 정직하게 거부"** — 모델 회귀 아님.
+- **결론**: 어제 hit 78은 "규칙 행으로 틀린 답" 포함 과대평가. 사실 질문 recall이 진짜 병목.
+
+### 15.2 stage64~65 — 규칙 행 캡 1: op hit 회복 (0콜 시뮬 + JEV 검증)
+
+- 0콜 시뮬: importance 축소(0.05→0) +17, **캡 1 +35** (52/90), 캡 2 +30, 전체 제거 +32.
+- **분류기 없이 빈도 기반 캡** (도메인 무관 — 사용자 우려 해소).
+- JEV 검증(stage65, 180콜): **hit@1 19→66, abstain 66→14** — 49건 회복, 신규 abstain 4건은
+  gold가 캡 top5에 없어 정상 (오차단 0).
+
+### 15.3 stage66 — 캡 1은 라이브 방어 붕괴 (트레이드오프 확정)
+
+| | noans FP | 라이브 block abstain | valid/yes 오차단 |
+|---|---|---|---|
+| base (규칙 5) | **1/50** | **36/38 (94.7%)** | 2/22 |
+| cap1 (규칙 1) | 4/50 | **4/38 (10.5%)** | 3/22 |
+
+- **원인**: abstain은 "규칙 행 5개 경쟁"에서만 작동 — 규칙 1개면 유일 주제 일치로 pick (오주입).
+- 즉 **규칙 행 도배가 abstain 유도 역할** — stage60~63 미스터리의 실체.
+- **캡 1 단독 채택 불가**: op hit 66 vs 라이브 방어 10.5% — 양립 불가 트레이드오프.
+
+### 15.4 후보 방향 (미실측)
+
+1. 혼합 노출: 규칙 2~3 + 사실 2~3 (규칙 경쟁 유지 + 사실 hit)
+2. decision-time 조건부 (분류기 — 도메인 한계)
+3. 2콜 구조: 규칙 5 abstain 판정 → abstain이면 사실 행만 hit (비용 2배)
+4. abstain 라벨 강화 (규칙 5 + 사실 행 별도 신호)
+
+### 15.5 raw
+
+- stage60~63: `STAGE60_63_ABSTAIN_MYSTERY_20261007.md` + data 4종
+- stage64: `STAGE64_RULE_CONDITIONAL_20261007.md` (0콜 시뮬)
+- stage65: `STAGE65_CAP1_20261007.md` + `data/stage65_cap1_jev.json` (180콜)
+- stage66: `STAGE66_CAP1_TRADEOFF_20261007.md` + `data/stage66_cap1_noans_live.json` (220콜)
+
 ### 14.7 JEV API 키별 한도 (운영 교훈)
 
 - 3종 한도(분당 240콜 / 시간당 0.5$=11.9M / 일일 2$=47.6M)는 **키별 독립**.
