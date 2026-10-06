@@ -313,6 +313,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - **★ 로컬 식별자/IDF 필터 — 보류 (2026-10-06, 추후 결정·타 AI 검토 예정)**: B AI Q1(c) "쿼리 식별자가 pick 원문에 없으면 abstain". 0콜 실측: v3(IDF 드문 단어 DF≤10)가 noans FP 7건 차단·op 오차단 0 (+7 순효과). **그러나 시간 의존성**: 잡은 7건 전부 숫자 패턴 무관(순수 영문 식별자), "드물다"는 코퍼스 DF 통계 의존 → **메모리 성장 시 DF 상승으로 무력화 + 신규 주제 과민 오차단 위험**. 근본 해법은 abstain 라벨 문구(stage38/39 보류)와 함께 재검토. 상세: `STAGE29_35_HYBRID_2CALL_20261006.md` stage41
 - **★ soft abstain 노출 — 기각 (2026-10-06)**: B AI Q3 "abstain 시 상위 1~3개를 [LOW_CONF] 태그로 노출". 0콜 시뮬레이션: **op abstain(win-300 적용 후) 0건 → gold 회수 이득 0**. noans abstain 상위 3 노출 시 주제 겹침(유해 후보) 50% — 소비 에이전트 앵커링 위험. abstain=빈 컨텍스트 유지(현행 최적). 상세: `STAGE29_35_HYBRID_2CALL_20261006.md` stage42
 - **★ noans 셋 재구성 — 완료 (2026-10-06, 스냅샷 고정)**: 평가용 DB 스냅샷 고정(`snapshots/mnemosyne_snapshot_20261006.db`, sqlite backup, 1721행). **noans 50건 변질 판정**: 자기참조 오염(실험 대화가 메모리에 누적)으로 "답 없음" 전제가 깨진 **spoiled 5건 제외**(nans2_008/009/015/028/047) + **신규 5건 보충**(nans3_001~005, 전체 1729벡터 top-1 sim 0.11~0.16으로 답 없음 검증). 최종 50건 = hard 45 + fresh 5. **이후 noans 평가는 스냅샷 기준 필수**. 재검증 대상: abstain 라벨(stage38/39), IDF 필터(stage41), #3 abstain 위치 2×2. 상세: `NOANS_SET_REBUILD_20261006.md` + `data/stage43_*`
+- **★ abstain 위치 × 지시문 2×2 — 기각 (2026-10-06, stage44)**: B AI Q4-1. 스냅샷 기준 560콜: c0 vs cN hit@3 77~78 동일, noans FP 25~27 (±2 비결정성) / 지시문도 무효과. abstain 3건 4조건 동일 → **현행 cN 유지**. stage15 abstain 폭증 원인은 라벨 위치 아님(후보 수·정보량)으로 확정. **새 기준선: noans FP 25~27 (스냅샷+신선 셋)**. 다음: #1 라벨 문구 재검증(stage45, cN+스냅샷). 러너: `stage44_abstain_pos_2x2.py`
 
 ## 8.5 G-AS 적용 확인 체크리스트 (재시작 후)
 
