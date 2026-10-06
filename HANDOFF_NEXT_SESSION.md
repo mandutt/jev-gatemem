@@ -46,6 +46,9 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 | **★ stage49a 누수 진단 (2026-10-06, 3종 AI 검토 대응)** | ✅ | **B AI 측정 오염 의심 3축 0콜 진단 — 전부 기각**: 자기참조 누수(복제 0건)·retrieval floor(no/yes 분포 겹침)·라이브 abstain_p(확증 불가, 잔존 2건 저값). 부수: 무답 pool[0] = 동일 131자 프로필 행 (sim 0.23~0.27). 상세: `STAGE49A_LEAK_DIAGNOSIS_20261006.md` |
 | **★ stage49b 시점 일관 리플레이 (2026-10-06, 540콜)** | ✅ | **abstain 무력 최종 확정** — `created_at<10-05` 필터 + cur/head100/imp 3조건×3-run, **9조건 전부 abstain 0/60**. 자기참조 누수·win-300 증폭·라벨 문구 모두 기각. 원인 = closed-set Choice 구조(C AI 진단 채택). **soft gate τ=0.3 라이브 dead code 확정, τ 조정 중단**. 상세: `STAGE49B_TIMECONSIST_20261006.md` |
 | **★ 다음 실험 확정 (2026-10-06, 3종 AI 수렴)** | ⏭️ | **stage50: Noul answerability** — winner-Noul soft risk(2콜) vs Noul top30 병행(1콜), 200-query 벤치 1-run→생존자 3-run. Noul은 stage32에서 answerability 신호 실측됨(noul_top<0.5 → FP 16→8, 기각된 건 pool30 축소 구조). 라벨 보강(no 22건 해로움 + yes 35건 top-5 정답) 선행. 라이브 60 회귀 셋 고정 + 릴리스 게이트 명문화. |
+| **★ stage49c 라벨 보강 (2026-10-06, 사람 판정)** | ✅ | **u_true 보정 38.6%→29.8%**: no 22건 = IRREL 15/PLAUS 2/**VALID 5**(기존 라벨 오류 — 규칙형 질문에 프로필 규칙 행이 실제 답). yes 35건 top-5 정답 포함 = **YES 16(46%)/NO 19** — C AI "recall 100%는 노출율" 입증. **판정 원칙: 시트 excerpt(400자)만으로** (운영 노출 기준). 라이브 실태 3분할: 정답노출 37% / 오주입 30% / **답 놓침 33%**. |
+| **★ stage49d pool-in-pool 스캔 (2026-10-06)** | ✅ | **"답 놓침" 21건 전부 IN** — 답이 pool 60 안 rank 6~60에 존재(표본 rank 8~9). **retrieval ceiling이 아니라 rerank 실패 확정** — RRF가 답을 하위로 밀고 choice도 못 건짐. rerank 실패가 오주입과 대등한 1급 손실로 승격. |
+| **★ stage50/50b Noul 실험 (2026-10-06, 500콜)** | ❌→⏸️ | **기각·소진 확정**: noul은 골든 noans(0.26) 완벽 분리(FP 50→8)하나 **라이브 IRREL(0.91)과 보호그룹(0.92+) 분포 겹침** — 구조 4종·프롬프트 3변형(간격 +0.03~0.07, v2는 valid 역전) 전부 미달. **라이브 무답(이웃 존재형) 차단은 JEV 단일 모델 판정 불가** — 소진 레버 9종. 남은 선택지(부분 채택 noul<0.5 / 판정자 교체)는 **보류 → 외부 AI 문의 예정**. 상세: `STAGE50B_NOUL_PROMPT_20261006.md`, RECALL §12~13. |
 
 ## 3. 오늘(2026-09-27 저녁) 변경 사항 — 반드시 읽을 것
 

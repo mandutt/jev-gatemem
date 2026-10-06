@@ -196,3 +196,74 @@ v2 요청서에 대한 3종 AI 검토(10-06)에서 B AI가 stage48 자체의 측
    200-query 벤치(op90+noans50+live60) 1-run → 생존자만 3-run. **Noul 자체는 stage32에서
    answerability 신호로 실측된 바 있음(noul_top<0.5로 FP 16→8) — 기각된 것은 pool30 축소 구조**
 3. 라이브 60을 회귀 검증 셋으로 고정 (릴리스 게이트: 스냅샷 통과 + 라이브 교차 통과)
+
+## 12. 라벨 보강 + pool-in-pool 스캔 (2026-10-06, stage49c/d) — 두 축의 실체 확정
+
+### stage49c 라벨 보강 (사람 판정, `stage49c_label_booster.html`)
+
+no 22건의 top-1 해로움 + yes 35건의 top-5 정답 포함 여부를 사용자가 판정:
+- **no 22건 = IRREL 15 (68%) / PLAUS 2 (9%) / VALID 5 (23%)**
+  - IRREL 68%가 실재 해로움 (B AI "오주입이 실제 해로운가" 의심에 대한 답)
+  - **VALID 5건 = 기존 'no' 라벨이 틀렸음** — 전부 규칙/선호형 질문(#9 반말, #11 자동시작,
+    #19 신규타입, #21 언어습관, #52 라벨언어)에 JEV가 프로필 규칙 행을 pick한 것이 옳은 동작
+  - 판정 원칙 확립: **시트에 표시된 excerpt(400자)만으로 판정** (운영이 실제로 노출하는 것 기준)
+    — 원문 뒷부분에 답이 있어도 에이전트는 못 받으므로 무효
+- **yes 35건 = top-5 정답 포함 YES 16 (46%) / NO 19 (54%)** — C AI "recall 100%는 노출율" 지적 입증
+- **u_true 보정: 38.6% → 29.8%** (IRREL+PLAUS 17/57; VALID 5건은 원래 답 있는 질문)
+
+### 라이브 실태 최종 (57 유효 쿼리)
+
+| 상태 | 건수 | 비율 | 원인 |
+|---|---|---|---|
+| 정답 노출 성공 | 21 | 37% | — |
+| 해로운 오주입 (IRREL+PLAUS) | 17 | 30% | **abstain 무력** |
+| 답 있는데 놓침 (yes-NO) | 19 | 33% | **rerank 실패** |
+
+### stage49d pool-in-pool 스캔 (`stage49d_poolinscan.html`)
+
+"답 있는데 놓침" 19+2건의 rank 6~60 후보를 사용자 판정 → **IN 21/21 (100%)** —
+**retrieval ceiling이 아니라 rerank 실패**. 무작위 4건 기계 교차검증에서 답 후보가
+**rank 8~9**에 위치 확인 — RRF가 답을 하위로 밀고 JEV choice도 못 건짐.
+
+## 13. Noul answerability 실험 (2026-10-06, stage50/50b) — **기각·소진 확정**
+
+### stage50 (200쿼리 × 1-run, `stage50_noul_answerability.py`, err 0)
+
+choice+noul30 1콜/쿼리, 후처리로 4구조 비교. **cls별 noul_top 중앙값**:
+
+| cls | noul_top |
+|---|---|
+| noans_hard (골든) | **0.26** — 완벽 분리 ✅ |
+| **live_irrel** | **0.91** — 보호그룹과 완전 겹침 ❌ |
+| live_valid / yes_miss / op | 0.92~0.94 |
+
+- noul_top<0.5 게이트: **noans FP 50→8 (42건 차단)**, op abstain 5 — 골든셋 방어는 강력
+- 그러나 **IRREL 차단 1/15 (합격선 5 미달)**, 희생 0
+- 구조 변형(noul_top/noul_win/복합) 전부 동일 — **구조로 해결 불가**
+
+### stage50b 프롬프트 3변형 (100쿼리 × 3 = 300콜, `stage50b_noul_prompt_variants.py`, err 0)
+
+- v1 현행 / v2 구체성 강조("specific fact...same-topic is NOT an answer") / v3 부재 판정(역방향)
+- **분리 간격(op−irrel): +0.03 / +0.03 / +0.07 — 프롬프트로 안 벌어짐**
+- v2는 역전 발생: valid(0.83) < irrel(0.87) — 구체성 강조가 정답까지 깎음
+- τ 게이트 어느 지점에서도 "IRREL ≥5 차단 + 희생 ≤1" 동시 만족 없음
+
+### 판정 (stage50/50b 종합)
+
+**라이브 무답 = "주제 근접 이웃이 존재하는 무답"이라 JEV가 (choice든 noul이든, 어떤
+프롬프트로든) 0.85~0.94의 높은 점수를 부여** — relevance와 answerability의 구분이
+모델 수준에서 불가. 골든 noans(이웃 부재형)만 분리 가능.
+
+**소진 완료 레버 9종**: abstain 라벨 문구 2종 · excerpt 윈도우 8종(stage47a~h) ·
+soft gate τ · noul 구조(1콜/2콜/하이브리드) · noul 프롬프트 3종 · retrieval floor ·
+시점 필터 · 게이트 완화 · 쿼리 확장(write/read-path).
+
+**남은 선택지**: ① 부분 채택 — noul_top<0.5를 골든셋 회귀 방어로만 추가 (noans FP 50→8,
+op −5, 라이브 영향 미미) ② 판정자 교체 (일반 LLM 금지 원칙과 충돌) — **보류, 외부 AI 문의 예정**
+
+### raw·재현
+- `data/stage49c_label_booster_input.json` + 사용자 판정 JSON (Downloads)
+- `data/stage49d_poolinscan_input.json` + 판정 JSON
+- `data/stage50_noul_answerability.json` (200), `data/stage50b_noul_prompt_variants.json` (300)
+- 러너: `stage49c`/`stage49d_poolinscan`/`stage50_noul_answerability`/`stage50b_noul_prompt_variants.py`
+- 시트: `stage49c_label_booster.html`, `stage49d_poolinscan.html`
