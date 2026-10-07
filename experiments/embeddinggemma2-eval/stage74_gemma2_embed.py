@@ -24,7 +24,7 @@ from jev_mem_core.pipeline import _jev_client
 MODEL_FILE = sys.argv[1] if len(sys.argv) > 1 else "model_q4f16.onnx"  # or model_quantized.onnx
 LABEL = sys.argv[2] if len(sys.argv) > 2 else "q4f16"
 
-SNAP = m48.SNAP
+SNAP = os.path.join(REPO, "experiments", "operational-golden", "snapshots", "mnemosyne_snapshot_20261006_gemma2.db")  # stage77: work DB (768d, vec lane live)
 DATA = os.path.join(REPO, "experiments", "operational-golden", "data")
 s = sqlite3.connect(SNAP); s.row_factory = sqlite3.Row
 

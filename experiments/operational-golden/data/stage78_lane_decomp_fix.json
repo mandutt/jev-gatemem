@@ -1,0 +1,70 @@
+[
+ {
+  "idx": 36,
+  "q": "사용자 언어 습관이 어때?",
+  "fts_rank": null,
+  "vec_rank": 1,
+  "imp_rank": 10,
+  "graph_rank": null,
+  "rrf_rank": 5,
+  "gate_rank": 3,
+  "rrf_top5": [
+   "2ecef7316483",
+   "d1c90516d987",
+   "4ed39d1b4169",
+   "2ac6adb80b21",
+   "a68b370287d1"
+  ]
+ },
+ {
+  "idx": 59,
+  "q": "X1 외부 데이터셋 실험에서 bekko 성능?",
+  "fts_rank": 1,
+  "vec_rank": 1,
+  "imp_rank": null,
+  "graph_rank": null,
+  "rrf_rank": 1,
+  "gate_rank": 9,
+  "rrf_top5": [
+   "d28786a095ac",
+   "a955a5af5317",
+   "e30e42b2827f",
+   "256898f9c9f8",
+   "d014c16ad5e9"
+  ]
+ },
+ {
+  "idx": 64,
+  "q": "bekko랑 koen 벤치 비교 결과?",
+  "fts_rank": 10,
+  "vec_rank": 3,
+  "imp_rank": null,
+  "graph_rank": null,
+  "rrf_rank": 6,
+  "gate_rank": 7,
+  "rrf_top5": [
+   "0580b8ce4d19",
+   "e30e42b2827f",
+   "d28786a095ac",
+   "d7aeede6fcc9",
+   "c37d5978be73"
+  ]
+ },
+ {
+  "idx": 71,
+  "q": "CAMOFOX_URL 제거한 이유?",
+  "fts_rank": 2,
+  "vec_rank": 3,
+  "imp_rank": null,
+  "graph_rank": null,
+  "rrf_rank": 1,
+  "gate_rank": 8,
+  "rrf_top5": [
+   "1928d454e0ed",
+   "0580b8ce4d19",
+   "2319432549a0",
+   "68ffe9f55e65",
+   "ec0cab43bd0c"
+  ]
+ }
+]

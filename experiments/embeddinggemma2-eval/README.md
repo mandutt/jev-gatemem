@@ -144,18 +144,71 @@ op-90을 쿼리↔gold 문자 2-gram overlap 기준으로 분해:
 
 ## 3. 결론 (잠정)
 
-1. **운영(JEV 파이프라인 전체) 기준 gemma2는 bekko에 열위** — hit@1 74.4% vs 87.8%, abstain 3배.
-2. **RAM 절감(≈40~150MB)은 실재하나 답변 품질 13.4%p 손실의 대가로는 부적합.**
-3. **"EmbeddingGemma 2가 성능 우월"이라는 모델 카드/일반 도메인 지표는 JEV 운영에서 재현되지 않음** — 도메인 한정 증거(X1 반전 사례와 동일 패턴).
-4. 채택 여부: **현재로서는 bekko 유지가 유력하나, 아래 "남은 탐구 축"으로 검증 여지 있음.**
+1. **운영(JEV 파이프라인 전체) 기준 gemma2는 bekko에 열위** — hit@1 74.4% vs 87.8%, abstain 3배. **[교정 전 결론 — 아래 §7의 차원 미스매치 발견으로 폐기]**
+2. **RAM 절감(≈40~150MB)은 실재하나 답변 품질 13.4%p 손실의 대가로는 부적합.** **[교정 전 — 폐기]**
+3. **"EmbeddingGemma 2가 성능 우월"이라는 모델 카드/일반 도메인 지표는 JEV 운영에서 재현되지 않음** — 도메인 한정 증거(X1 반전 사례와 동일 패턴). **[교정 전 — 폐기]**
+4. **교정 후 (vec lane 768d 정상 작동): gemma2-q8은 bekko와 실질 동급** (76/90 vs 78/90, §7.3) — 잔여 차이는 임베딩이 아니라 **파이프라인 재정렬 정책**에 기인 (§7.4).
 
 ## 4. 남은 탐구 축 (do-not-re-run 아님)
 
 1. **문서 임베딩 프롬프트 변형**: 이번 실험은 doc 프롬프트 `title: none | text:`를 고정 적용. EmbeddingGemma 2는 `Retrieval-document` 등 프롬프트 선택이 성능에 민감할 수 있음 (prompt ablation 미수행).
-2. **어휘 게이트(lexical gate) 상호작용**: gemma2 pool 손실 12건이 "벡터 공간 변화"가 아니라 "어휘 게이트+RRF 병합 정책" 때문일 가능성 — `vec_rank` exemption이 이미 있으나, gemma2 공간에선 cosine 분포가 달라 RRF 가중치(현행 k=60) 재튜닝 여지. lane 단독 순위 분해(stage50c 방식)로 원인 규명 가능 (0콜).
+2. **어휘 게이트/RRF 재정렬 정책**: §7.4에서 gemma2가 RRF 1위로 찾은 gold를 `_filter_and_rank` 재정렬이 8~9위로 강등하는 것을 실측. **모델 무관 파이프라인 개선 축** — RRF 순위 보존/vec 신호 가중 재조정 시뮬레이션 (0콜).
 3. **fp16 (543MB)**: q8(0.9997)와 cosine 차이 0.0001로 기대 미미 — 우선순위 낮음.
-4. **JEV choice abstain 라벨 상호작용**: gemma2에서 abstain이 3배 는 것이 "pool excerpt 품질" 탓인지 "abstain 라벨이 gemma2 벡터 공간과 안 맞음"인지 분리 실험 (excerpt만 gemma2, 판정은 bekko pool 등 — 격리 A/B).
+4. **JEV choice abstain 라벨 상호작용**: 교정 후 abstain은 q8 2건(≥bekko 3건)으로 오히려 적음 → 격리 실험 불필요해짐.
 5. **multimodal (img/audio) 활용**: jev-mem이 미디어 메모리를 받기 시작하면 재평가 가치. 현재 text-only가 RAM 정답 (세션 로드 시 +~290MB 확인).
+6. **768d vec 테이블 운영 마이그레이션**: 차원 변경(384→768)은 vec_working 스키마 재구축 + 전체 재인덱싱 필요 (S4 교훈: 벡터 공간 마이그레이션). 운영 전환 시 §7.2의 시행착오(int8 포맷)를 참조.
+
+## 7. ★ 교정 기록 (2026-10-07, stage74→77) — 차원 미스매치 발견
+
+### 7.1 발견
+
+stage74(임베딩 교체 실측) 후 lane 분해(stage75)에서 **gemma2 vec_rank가 19건 중 17건 None** — 비정상. 원인 규명:
+
+- `vec_working`은 `int8[384]` 고정 스키마 (S4 구축 당시 384d)
+- gemma2 쿼리 벡터는 **768d** → `_wm_vec_search_sqlite`의 `vec_quantize_int8(?, 'unit')`가 차원 불일치로 **0건 반환** (에러 없이 조용히)
+- fallback `_wm_vec_search_fallback`도 768d vs 저장 384d dot product → **0건**
+- **즉 stage74의 "gemma2 67/90"은 "vec lane 완전 제거 상태"를 측정한 것** — 임베딩 교체 실험이 아니라 vec lane 비활성화 실험이었음
+
+### 7.2 교정 방법 (stage76/76b)
+
+1. 스냅샷 DB 복사본 생성 (`mnemosyne_snapshot_20261006_gemma2.db`)
+2. working_memory 1721행을 gemma2-q4f16로 재임베딩 (doc 프롬프트, ~31분)
+3. `memory_embeddings`를 768d JSON으로 교체
+4. `vec_working`을 `int8[768]`으로 재생성 — **시행착오**: `qi.tobytes()` 직접 주입은 `expected type int8, got float32` 실패 → `vec_quantize_int8(?, 'unit')` JSON 입력이 정석
+5. 검증: 768d 쿼리로 `_wm_vec_search` 정상 반환 (5건)
+
+### 7.3 교정 후 JEV 판정 경로 (stage77, vec live)
+
+| 모델 | hit@1 | abstain | pool 내 gold |
+|---|---|---|---|
+| bekko (현행) | **78/90 (86.7%)** | 3 | 83/90 |
+| gemma2-q8 (vec live) | **76/90 (84.4%)** | **2** | **84/90** |
+| gemma2-q4f16 (vec live) | 75/90 (83.3%) | 3 | 84/90 |
+| gemma2-q8 (vec dead) [stage74] | 66/90 | 9 | 71/90 |
+
+- vec lane 활성화: hit@1 66→76~77, abstain 9→2~3, pool gold 71→84
+- **gemma2-q8 ≈ bekko (2건 차이)**, pool 진입은 gemma2가 우위(84>83)
+- abstain 과다 우려 해소 (q8 2건 < bekko 3건)
+
+### 7.4 잔여 4건 lane 분해 (stage78, 0콜)
+
+교정 후 bekko-vs-gemma2 hit 불일치 = 4건 (bekko 우세 3, gemma2 우세 1):
+
+| 쿼리 | fts | vec | RRF | 게이트 후 | 진단 |
+|---|---|---|---|---|---|
+| [36] 사용자 언어 습관 | None | 1 | 5 | 3 | RRF 병합이 vec 1위를 5위로 약화 |
+| [59] X1 bekko 성능 | 1 | 1 | **1** | **9** | **게이트 재정렬이 1→9 강등** |
+| [64] bekko/koen 비교 | 10 | 3 | 6 | 7 | 전반 하위 (모델 한계) |
+| [71] CAMOFOX_URL | 2 | 3 | **1** | **8** | **게이트 재정렬이 1→8 강등** |
+
+**핵심**: 4건 중 2건([59],[71])은 검색·RRF가 gold를 1위로 올렸는데도 `_filter_and_rank`의 adjusted-score 재정렬(score 0.65 + signal 0.35 + importance 0.05)이 8~9위로 강등. **임베딩 문제가 아니라 파이프라인 재정렬 정책 문제** (stage50c 선행 실측과 동일 패턴). 1건([36])은 RRF 병합 정책, 1건([64])만 모델 한계.
+
+**→ gemma2는 검색 품질에서 bekko와 동급 이상이며, 잔여 손실의 절반은 파이프라인 정책으로 회수 가능한 여지가 있음.**
+
+### 7.5 교정 후 종합
+
+- **채택 판정**: bekko 78 vs gemma2-q8 76 — 2건 차이. RAM -151MB(466 vs 617), abstain 1건 적음, 의역 retrieval 우위. **"동급 + 운영 이점"으로 채택 여지가 있으나, 최종 판단은 사용자/외부 검토에 위임** (do-not-re-run 아님, 후속 실험 가능).
+- **파이프라인 개선 축이 별도로 확인됨**: `_filter_and_rank` 재정렬이 RRF 순위를 파괴 — gemma2 유무와 무관하게 운영 품질 개선 여지.
 
 ## 5. 재현
 
