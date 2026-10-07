@@ -108,7 +108,7 @@ def run_choice(q):
     qs = {"best": {"type": "choice", "instructions": INSTR,
                    "criteria": {f"c{i}": jl[i] for i in range(len(jl))}}}
     t0 = time.time()
-    resp = CLIENT.post(_API, json={"state": st, "questions": qs, "model": "jev-latest"}, timeout=25)
+    resp = CLIENT.post(_API, json={"state": st, "questions": qs, "model": "jev-latest"}, timeout=5)
     lat = (time.time() - t0) * 1000
     if resp.status_code != 200:
         return {"q": q, "err": f"http{resp.status_code}", "latency_ms": lat}
@@ -125,12 +125,17 @@ def run_choice(q):
 def summarize(recs, prefix):
     n = len(recs)
     abst = sum(1 for r in recs if r.get("abstain"))
+    chose = sum(1 for r in recs if r.get("chose_abstain"))
     aps = sorted(r.get("abstain_p", 0) for r in recs if r.get("abstain_p") is not None)
     ap_med = aps[len(aps)//2] if aps else 0
+    ap_gt03 = sum(1 for r in recs if (r.get("abstain_p") or 0) > 0.3)
+    picks = [r.get("choice_idx") for r in recs if r.get("choice_idx") is not None]
     lats = [r.get("latency_ms", 0) for r in recs if r.get("latency_ms", 0) > 0]
     lat_med = sorted(lats)[len(lats)//2] if lats else 0
     errs = sum(1 for r in recs if r.get("err"))
-    return {"prefix": prefix, "n": n, "abstain": abst, "abstain_p_med": ap_med,
+    return {"prefix": prefix, "n": n, "abstain": abst, "chose_abstain": chose,
+            "abstain_p_med": ap_med, "abstain_p_gt03": ap_gt03,
+            "pick_med": sorted(picks)[len(picks)//2] if picks else None,
             "latency_med_ms": lat_med, "errs": errs}
 
 def main():
@@ -169,9 +174,9 @@ def main():
 
     base = json.load(open(BASELINE, encoding="utf-8"))
     alerts = []
-    # L1 abstain율 drift (±20pp)
+    # L1 abstain율 drift (±20pp → 2콜 플립)
     b_a = base["l1"]["abstain"]; c_a = s_l1["abstain"]
-    if abs(c_a - b_a) >= 3:  # 12개 중 3개 = 25pp
+    if abs(c_a - b_a) >= 2:  # 12개 중 2개 = ~17pp
         alerts.append(f"L1 abstain율: {b_a}/12 → {c_a}/12")
     # L1 abstain_p drift (±0.1)
     b_p = base["l1"]["abstain_p_med"]; c_p = s_l1["abstain_p_med"]
@@ -179,8 +184,20 @@ def main():
         alerts.append(f"L1 abstain_p 중앙: {b_p} → {c_p}")
     # L2 noans abstain율 drift (무답 감시)
     b_n = base["l2_noans"]["abstain"]; c_n = s_l2n["abstain"]
-    if abs(c_n - b_n) >= 3:  # 10개 중 3개
+    if abs(c_n - b_n) >= 2:  # 10개 중 2개
         alerts.append(f"L2 무답 abstain율: {b_n}/10 → {c_n}/10")
+    # ★ L2_YES 감시 — 정답 10개 중 1개라도 abstain이면 즉시 (과다거부 센서, c-ai 지적)
+    b_y = base["l2_yes"]["abstain"]; c_y = s_l2y["abstain"]
+    if c_y > b_y:
+        alerts.append(f"L2 정답 abstain: {b_y}/10 → {c_y}/10 (과다거부 위험)")
+    # ★ abstain_p > 0.3 발생 수 감시 (τ 게이트 발동 근접, 사안 F)
+    b_g = base["l1"].get("abstain_p_gt03", 0); c_g = s_l1["abstain_p_gt03"]
+    if c_g > b_g:
+        alerts.append(f"L1 abstain_p>0.3: {b_g} → {c_g}건")
+    # pick 중앙 drift (choice_idx — 모델 선택 경향 변화)
+    b_pk = base["l1"].get("pick_med"); c_pk = s_l1["pick_med"]
+    if b_pk is not None and c_pk is not None and abs(c_pk - b_pk) >= 5:
+        alerts.append(f"L1 pick 중앙: {b_pk} → {c_pk}")
     # L1 latency drift (2배)
     b_l = base["l1"]["latency_med_ms"]; c_l = s_l1["latency_med_ms"]
     if b_l > 0 and c_l > 2 * b_l:
