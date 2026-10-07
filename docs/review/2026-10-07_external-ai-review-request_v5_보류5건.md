@@ -109,27 +109,15 @@
   abstain_p가 천천히 오르면 gate가 "곧" 걸리기 시작 — 그때까지 기다릴지, 선제 조정할지
   ③ canary(사안 D)로 추세를 모니터링하는 설계가 충분한지
 
-### 사안 G (신규, 10-07 실측): 2질문 분리 구조 — rule_q abstain 76% + "규칙 노출 제거" 결합이 유망
-- **배경**: b-ai 제안 (하나의 요청에서 규칙/사실 질문 분리) — API 2질문 동시 전송 **1콜 probe로 지원 확정**
-  (HTTP 200, usage 합산, 1요청=1콜, cost 0)
-- **실측 (stage89, 400콜)** — rule6+fact20:
-  | 지표 | base | dual |
-  |---|---|---|
-  | op hit@1 | **78**/90 | 67/90 (-11) |
-  | rule_q abstain | — | **29/38 (76%)** ★ |
-  | fact_q abstain | — | 0/38 |
-- **실측 (stage91, 400콜)** — rule6+fact60 (fact 확장):
-  | 지표 | base | dual2 |
-  |---|---|---|
-  | op hit@1 | **79**/90 | **78**/90 (-1) ← fact60으로 복원 |
-  | noans FP | 21/50 | 25/50 (+4) |
-  | rule_q abstain | — | **28/38 (74%)** ★ |
-  | fact_q abstain | — | 0/38 |
-- **0콜 시뮬 — "rule_q abstain → 규칙 노출만 제거" 결합 (stage91 raw)**:
-  - live block rule abstain 28/38 → 규칙 노출 0 (fact 1개만) / op rule abstain 56건에서도 fact가 gold 49건 회수 → **손실 0, hit@1 78 유지** / noans rule abstain 46/50
-  - **무답 노출 190 → 78행 (-59%)** — k=2(-60%)와 동급, 단 정답 보존 (k=2는 정답도 2개 제한)
-- **판단 요청**: ① 이 결합(rule-abstain → 규칙 제거)을 권장 구조로 확정할지 ② 1콜 2질문의 토큰 증가(rule_q 6개, +~500/콜) 감수 여부 ③ RULE_IDS 6개 고정 drift 위험 (운영 전 실험 한정 — c-ai 지적과 동일)
-- **검증 필요**: rule_q abstain 판정의 안정성 (3-run) + production-exact 라이브 paired (360콜)
+### 사안 G: 2질문 분리 구조 — **실측 기각 (2026-10-07, stage89~92)**
+- API 2질문 동시 전송 1콜 지원 확정 (probe) — 기술적 가능성은 확인
+- **stage89 (rule6+fact20)**: rule_q abstain 76% ★ (b-ai 가설 실측 확인) but op hit@1 -11
+- **stage91 (rule6+fact60)**: op 78 복원 (base 79와 -1), rule_q abstain 74% 유지
+  - 0콜 시뮬 "규칙 노출 제거" 결합: 무답 노출 -59% + op 손실 0 (op-90 기준)
+- **stage92 (3-run 안정성)**: rule_q abstain 77% 안정적 (플립 2/38) **but valid/yes 규칙 오차단 2.3/22 (10%)**
+  - 정답이 규칙 행인 쿼리에서 규칙 노출 제거 → **정답 유실 위험 10%**
+  - stage91의 "손실 0"은 op-90 셋 특수성 (규칙 답 gold 없음) — 라이브에는 규칙 답 존재
+- **최종 판단**: k=2(사안 A)가 동급 피해 축소(-60% vs -59%) + 정답 유실 0 + 구현 1줄로 **우월** → **G 기각
 
 ---
 
@@ -154,6 +142,7 @@
 | `experiments/operational-golden/STAGE89_DUAL_QUESTION_20261007.md` | 2질문 분리 실측 (400콜) |
 | `experiments/operational-golden/STAGE90_K2_IDF_20261007.md` | k2+IDF 조합 실측 (200콜) |
 | `experiments/operational-golden/STAGE91_DUAL2_20261007.md` | 2단 구조 실측 (400콜) |
+| `experiments/operational-golden/STAGE92_DUAL2_3RUN_20261007.md` | 사안 G 3-run 검증 (180콜) |
 | `experiments/operational-golden/data/stage{83,84,85,87}_*.json` | raw (stage86 raw 유실 — 로그 대체) |
 | `experiments/operational-golden/stage{83,84,85,86,87}_*.py` | 러너 (재현 가능) |
 | `docs/review/2026-10-07_external-ai-review-request_v4_종합개정판.md` | v4 + §8(사안9) |
