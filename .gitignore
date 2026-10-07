@@ -17,4 +17,4 @@ Thumbs.db
 .DS_Store
 
 # 실험 임시 산출물 (재생성 가능)
-experiments/tmp/
+experiments/tmp/experiments/operational-golden/snapshots/mnemosyne_snapshot_20261006_gemma2.db
