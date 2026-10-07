@@ -1,0 +1,794 @@
+{
+ "policy": "B_avg_rank",
+ "model": "bekko",
+ "live": {
+  "records": [
+   {
+    "query": "auto 라우팅이 확률적이라는 결론이었나?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "config.yaml에 18080 프록시 등록 방법?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "custom_providers에서 Local 프록시 어떻게 설정하지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "gemini 별칭으로 모델 호출되나?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.03,
+    "err": null
+   },
+   {
+    "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "프록시에서 특정 모델 강제 지정 기능 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "model_override와 effort 주입 기능 언제 추가됐지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "한국어 말투 규칙 뭐지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "반말 써도 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "작업 스케줄러 등록해도 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "자동 시작 설정 어떻게 하는 게 원칙이야?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.04,
+    "err": null
+   },
+   {
+    "query": "설계 확정 후 리팩터 제안해도 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "ADR Final 이후에 뭐 하면 안 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "감사 보고서는 어떤 섹션으로 써?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "리뷰 산출물 형식 규칙?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "리뷰 전용 턴에서 커밋해도 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.16,
+    "err": null
+   },
+   {
+    "query": "commit governance 규칙이 뭐지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "설계 리뷰에서 SOLID랑 일관성 중 뭐 우선?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "신규 타입 만드는 게 원칙이야?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "evidence 규칙 어땠지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.18,
+    "err": null
+   },
+   {
+    "query": "사용자 언어 습관이 어때?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "한국어 영어 어떻게 섞어 써?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "아키텍처 설계 시 분리 원칙이 뭐였지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "DTO 분리 어디까지 하면 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.04,
+    "err": null
+   },
+   {
+    "query": "verifier-pilot은 코딩 품질만 보면 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "그 프로젝트 진짜 목표가 뭐지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.02,
+    "err": null
+   },
+   {
+    "query": "스킬 만들 때 file_content로 보내면 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "skill_manage create 파라미터 뭐 써야 하지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "opencode에서 메모리 자동 기록돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "Mnemosyne 플러그인 repo 주소 뭐야?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "commitment FP 필터 실측 결과 어때?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.04,
+    "err": null
+   },
+   {
+    "query": "hermes update 후 cua-driver 왜 실패해?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "660초 타임아웃 원인 뭐였지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "start_proxy.cmd 재부팅 후 왜 안 돌아가?",
+    "pool_n": 58,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "배치 파일 인코딩 문제였어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "프록시 대시보드에 종료 버튼 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "shutdown API 어떻게 만들었지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "Hermes 데스크톱 워치독 런처 어디 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "Hermes_With_Watchdog.cmd 위치?",
+    "pool_n": 26,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "데스크톱 앱 띄우면 텔레그램 수신 끊겨?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.1,
+    "err": null
+   },
+   {
+    "query": "orphan gateway reap 회귀 맞아?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.02,
+    "err": null
+   },
+   {
+    "query": "KoDialogBench 4종 검증 결과 어땠어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "X1 외부 데이터셋 실험에서 bekko 성능?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "best-of-5에 recovery 얹으면 개선돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "67차 실험 최종 결론 뭐였지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "codex CLI에서 메모리 기록되나?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "codex config.toml 훅 어떻게 설정했지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "bekko랑 koen 벤치 비교 결과?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "P3b 확장 gold MRR 수치?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "bekko-a8m 채택 이유가 뭐야?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "S3에서 임베딩 모델 최종 선택 근거?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "코드 설명과 구조 라벨 언어 규칙?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "완전 번역 금지 규칙 뭐지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "브라우저 도구 라우팅 설정 어떻게 돼?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "CAMOFOX_URL 제거한 이유?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "models.json에 어떤 엔드포인트 있지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.06,
+    "err": null
+   },
+   {
+    "query": "stealth 브라우저 언제 써야 해?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "webdriver 숨김이 필요한 경우가 뭐지?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.0,
+    "err": null
+   },
+   {
+    "query": "메모리 백엔드 뭐 쓰고 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   },
+   {
+    "query": "hermes update 중간에 꺼지면 어떻게 해?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.01,
+    "err": null
+   }
+  ],
+  "summary": {
+   "abstain": 0,
+   "pick": 60,
+   "err": null,
+   "n": 60
+  }
+ },
+ "noans": {
+  "records": [
+   {
+    "query": "web_extract의 백엔드로 ddgs를 쓰고 있었던 기간이 언제야?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.13,
+    "err": null
+   },
+   {
+    "query": "tavily API key가 환경변수에 설정된 날짜가 언제야?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.36,
+    "err": null
+   },
+   {
+    "query": "임베딩 모델을 bekko-a8m으로 바꾸기 전에 쓰던 모델의 정확한 버전이 뭐야?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.03,
+    "err": null
+   },
+   {
+    "query": "sqlite-vec 확장의 정확한 설치 경로가 어디야?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.44,
+    "err": null
+   },
+   {
+    "query": "Hermes config.yaml에서 browser.backend를 camofox로 설정한 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.04,
+    "err": null
+   },
+   {
+    "query": "Mnemosyne DB 파일의 WAL 모드가 꺼져 있던 시기가 언제야?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.62,
+    "err": null
+   },
+   {
+    "query": "텔레그램 게이트웨이의 chat_id가 1234567890이던 때가 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.97,
+    "err": null
+   },
+   {
+    "query": "RRF pool 크기가 60이던 시점의 성능이 어땠어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.03,
+    "err": null
+   },
+   {
+    "query": "exa 검색이 키리스로 작동하던 기간이 언제야?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.2,
+    "err": null
+   },
+   {
+    "query": "BrokenPipeError가 처음 발생한 날짜가 언제야?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.97,
+    "err": null
+   },
+   {
+    "query": "Windows 진단 스크립트가 ps1이 아니라 cmd로 작성되던 때가 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.52,
+    "err": null
+   },
+   {
+    "query": "Hermes v0.19.x 시절 browser.backend 설정값이 뭐였어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.66,
+    "err": null
+   },
+   {
+    "query": "임베딩 OOM이 GPU 메모리 부족 때문에 발생했던 적이 있어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.39,
+    "err": null
+   },
+   {
+    "query": "camelai 프록시 429가 API 키 만료 때문이었던 적이 있어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.91,
+    "err": null
+   },
+   {
+    "query": "벤치마크 실패 원인이 네트워크 지연이었던 경우가 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.19,
+    "err": null
+   },
+   {
+    "query": "state.db 손상이 디스크 용량 부족 때문에 발생했어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.82,
+    "err": null
+   },
+   {
+    "query": "텔레그램 수신 끊김이 인터넷 연결 문제 때문이던 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.28,
+    "err": null
+   },
+   {
+    "query": "deepseek 스트림 오류가 프롬프트 길이 초과 때문이었던 적 있어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.33,
+    "err": null
+   },
+   {
+    "query": "임베딩 모델 교체 후 성능이 하락했던 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.2,
+    "err": null
+   },
+   {
+    "query": "skip_shadow 테이블이 처음엔 없어서 누락됐던 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.2,
+    "err": null
+   },
+   {
+    "query": "Jev 호출 타임아웃이 30초였던 시절이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.49,
+    "err": null
+   },
+   {
+    "query": "Mnemosyne consolidation이 중복 메모리를 생성했던 버그가 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.41,
+    "err": null
+   },
+   {
+    "query": "pipeline.py에 json import가 없어서 실패했던 게 언제야?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.74,
+    "err": null
+   },
+   {
+    "query": "레이트 리밋 429가 hourly limit 때문이었던 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.04,
+    "err": null
+   },
+   {
+    "query": "choice criteria 64개 초과로 500 에러가 났던 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.27,
+    "err": null
+   },
+   {
+    "query": "diag6 스크립트가 API 호출 없이 오프라인으로 돌았던 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.19,
+    "err": null
+   },
+   {
+    "query": "커밋 메시지를 한국어로만 쓰는 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.4,
+    "err": null
+   },
+   {
+    "query": "모든 실험을 Docker로 돌리는 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.99,
+    "err": null
+   },
+   {
+    "query": "브라우저 자동화를 항상 창 모드로 하던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.03,
+    "err": null
+   },
+   {
+    "query": "HEAD 브랜치에 직접 실험 커밋을 올리던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.53,
+    "err": null
+   },
+   {
+    "query": "API 키를 코드에 하드코딩하던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.12,
+    "err": null
+   },
+   {
+    "query": "실험 보고서를 파일로 남기지 않고 채팅으로만 정리하던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.63,
+    "err": null
+   },
+   {
+    "query": "주석을 영어로만 쓰는 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.23,
+    "err": null
+   },
+   {
+    "query": "메모리 저장을 승인 없이 자동으로 하던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.09,
+    "err": null
+   },
+   {
+    "query": "모든 검색을 Exa로 통일하던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.17,
+    "err": null
+   },
+   {
+    "query": "릴리스마다 버전을 0.1씩 올리던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.86,
+    "err": null
+   },
+   {
+    "query": "테스트를 실행하지 않고 커밋하던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.21,
+    "err": null
+   },
+   {
+    "query": "Tailscale 대신 ngrok을 쓰던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.82,
+    "err": null
+   },
+   {
+    "query": "pip 대신 항상 conda를 쓰던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.85,
+    "err": null
+   },
+   {
+    "query": "로그를 한국어로 남기던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.13,
+    "err": null
+   },
+   {
+    "query": "매주 일요일에 메모리를 백업하던 규칙이 있었어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.84,
+    "err": null
+   },
+   {
+    "query": "web_extract가 JS 렌더링을 기본으로 켜는 옵션이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.15,
+    "err": null
+   },
+   {
+    "query": "run_ablation이 GPU를 사용하는 모드가 있어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.7,
+    "err": null
+   },
+   {
+    "query": "golden_eval_v2에 영어 쿼리가 포함된 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.14,
+    "err": null
+   },
+   {
+    "query": "diag63이 pointwise 대신 choice를 쓰는 옵션이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.15,
+    "err": null
+   },
+   {
+    "query": "deepseek 모델을 muse로 바꾼 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.29,
+    "err": null
+   },
+   {
+    "query": "RRF 가중치를 바꿔본 적이 있어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.48,
+    "err": null
+   },
+   {
+    "query": "cron 작업이 한 번도 실패한 적이 있어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.13,
+    "err": null
+   },
+   {
+    "query": "게이트가 KEEP 대신 SKIP을 먼저 반환하던 시절이 있었어?",
+    "pool_n": 60,
+    "abstained": false,
+    "abstain_p": 0.07,
+    "err": null
+   },
+   {
+    "query": "Tailscale 대신 ZeroTier를 쓴 적이 있어?",
+    "pool_n": 60,
+    "abstained": true,
+    "abstain_p": 0.84,
+    "err": null
+   }
+  ],
+  "summary": {
+   "abstain": 25,
+   "pick": 25,
+   "err": 0,
+   "n": 50
+  }
+ }
+}

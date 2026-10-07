@@ -1,0 +1,733 @@
+{
+ "policy": "A_rrf_preserve",
+ "model": "bekko",
+ "results": [
+  {
+   "q": "camelAI auto 라우팅에서 어려운 과제는 어떤 모델로 보내졌어?",
+   "gold": "618362fc6d33e3c1",
+   "choice_idx": 3,
+   "abstain": false,
+   "gold_rank_pool": 4,
+   "err": null
+  },
+  {
+   "q": "92번 호출 실험에서 라우팅 결과 어땠지?",
+   "gold": "618362fc6d33e3c1",
+   "choice_idx": 7,
+   "abstain": false,
+   "gold_rank_pool": 8,
+   "err": null
+  },
+  {
+   "q": "라우팅 플립 트리거 패딩 토큰 가설 맞았어?",
+   "gold": "c66472eaa13fd3dc",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "패딩 토큰 수가 라우팅 전환을 결정한다는 결론 나왔나?",
+   "gold": "c66472eaa13fd3dc",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "web_extract API 키 없이 쓸 수 있어?",
+   "gold": "9d4feaccfa1020b4",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "키리스 웹 추출 설정 어떻게 돼 있지?",
+   "gold": "9d4feaccfa1020b4",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "입력 토큰 늘어나면 응답 지연도 늘어?",
+   "gold": "a112c8b5932fbc1f",
+   "choice_idx": 46,
+   "abstain": false,
+   "gold_rank_pool": 47,
+   "err": null
+  },
+  {
+   "q": "TTFT가 입력 길이에 영향 받아?",
+   "gold": "a112c8b5932fbc1f",
+   "choice_idx": 5,
+   "abstain": false,
+   "gold_rank_pool": 6,
+   "err": null
+  },
+  {
+   "q": "디코딩 속도 제일 빠른 모델이 뭐였어?",
+   "gold": "26efd95898ed8fcb",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "모델별 스트리밍 tok/s 실측 결과?",
+   "gold": "26efd95898ed8fcb",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "luna에 effort max 넣으면 에러 나?",
+   "gold": "098d90e014006142",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "max 추론 레벨 미지원 모델 어떻게 처리돼?",
+   "gold": "098d90e014006142",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "같은 프롬프트 여러 번 보내면 라우팅 고정돼?",
+   "gold": "e481f1a2bb8f7969",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "auto 라우팅이 확률적이라는 결론이었나?",
+   "gold": "e481f1a2bb8f7969",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "config.yaml에 18080 프록시 등록 방법?",
+   "gold": "b2ed9f4dc0b1efea",
+   "choice_idx": 5,
+   "abstain": false,
+   "gold_rank_pool": 6,
+   "err": null
+  },
+  {
+   "q": "custom_providers에서 Local 프록시 어떻게 설정하지?",
+   "gold": "b2ed9f4dc0b1efea",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "gemini 별칭으로 모델 호출되나?",
+   "gold": "7de2c1dfef632694",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+   "gold": "7de2c1dfef632694",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "프록시에서 특정 모델 강제 지정 기능 있어?",
+   "gold": "e5bbd0063f1356f6",
+   "choice_idx": 27,
+   "abstain": false,
+   "gold_rank_pool": 28,
+   "err": null
+  },
+  {
+   "q": "model_override와 effort 주입 기능 언제 추가됐지?",
+   "gold": "e5bbd0063f1356f6",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "코덱스 앱이 PC 느려지게 한 원인 뭐였어?",
+   "gold": "ef3d9670463aea79",
+   "choice_idx": 17,
+   "abstain": false,
+   "gold_rank_pool": 8,
+   "err": null
+  },
+  {
+   "q": "마우스 버벅임 원인 조사 결과?",
+   "gold": "ef3d9670463aea79",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "한국어 말투 규칙 뭐지?",
+   "gold": "d1c90516d9870c95",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "반말 써도 돼?",
+   "gold": "d1c90516d9870c95",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "작업 스케줄러 등록해도 돼?",
+   "gold": "2ecef73164830638",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "자동 시작 설정 어떻게 하는 게 원칙이야?",
+   "gold": "2ecef73164830638",
+   "choice_idx": 26,
+   "abstain": false,
+   "gold_rank_pool": 19,
+   "err": null
+  },
+  {
+   "q": "설계 확정 후 리팩터 제안해도 돼?",
+   "gold": "9f04ed2c8e14f11b",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "ADR Final 이후에 뭐 하면 안 돼?",
+   "gold": "9f04ed2c8e14f11b",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "감사 보고서는 어떤 섹션으로 써?",
+   "gold": "a13019e1f438960c",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "리뷰 산출물 형식 규칙?",
+   "gold": "a13019e1f438960c",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "리뷰 전용 턴에서 커밋해도 돼?",
+   "gold": "9150f1246613b092",
+   "choice_idx": 24,
+   "abstain": false,
+   "gold_rank_pool": null,
+   "err": null
+  },
+  {
+   "q": "commit governance 규칙이 뭐지?",
+   "gold": "9150f1246613b092",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "설계 리뷰에서 SOLID랑 일관성 중 뭐 우선?",
+   "gold": "5a3ebc06a87940da",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "신규 타입 만드는 게 원칙이야?",
+   "gold": "5a3ebc06a87940da",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "구현됐다는 말 믿기 전에 뭘 확인해?",
+   "gold": "c9e4828c93bdb0a0",
+   "choice_idx": 4,
+   "abstain": false,
+   "gold_rank_pool": null,
+   "err": null
+  },
+  {
+   "q": "evidence 규칙 어땠지?",
+   "gold": "c9e4828c93bdb0a0",
+   "choice_idx": 2,
+   "abstain": false,
+   "gold_rank_pool": 3,
+   "err": null
+  },
+  {
+   "q": "사용자 언어 습관이 어때?",
+   "gold": "a68b370287d1892f",
+   "choice_idx": 3,
+   "abstain": false,
+   "gold_rank_pool": 4,
+   "err": null
+  },
+  {
+   "q": "한국어 영어 어떻게 섞어 써?",
+   "gold": "a68b370287d1892f",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 22,
+   "err": null
+  },
+  {
+   "q": "아키텍처 설계 시 분리 원칙이 뭐였지?",
+   "gold": "1cef4743165b7707",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "DTO 분리 어디까지 하면 돼?",
+   "gold": "1cef4743165b7707",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "verifier-pilot은 코딩 품질만 보면 돼?",
+   "gold": "f2421b7b489858bb",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "그 프로젝트 진짜 목표가 뭐지?",
+   "gold": "f2421b7b489858bb",
+   "choice_idx": 13,
+   "abstain": false,
+   "gold_rank_pool": 14,
+   "err": null
+  },
+  {
+   "q": "스킬 만들 때 file_content로 보내면 돼?",
+   "gold": "e6b3887395a2ac45",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "skill_manage create 파라미터 뭐 써야 하지?",
+   "gold": "e6b3887395a2ac45",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "opencode에서 메모리 자동 기록돼?",
+   "gold": "e941022a685c2be1",
+   "choice_idx": 43,
+   "abstain": false,
+   "gold_rank_pool": 16,
+   "err": null
+  },
+  {
+   "q": "Mnemosyne 플러그인 repo 주소 뭐야?",
+   "gold": "e941022a685c2be1",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "commitment FP 필터 실측 결과 어때?",
+   "gold": "498bb204de3b1d14",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "gold50 기준선 수치가 뭐지?",
+   "gold": "498bb204de3b1d14",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "hermes update 후 cua-driver 왜 실패해?",
+   "gold": "c69c459c7c67c2d1",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "660초 타임아웃 원인 뭐였지?",
+   "gold": "c69c459c7c67c2d1",
+   "choice_idx": 20,
+   "abstain": false,
+   "gold_rank_pool": 21,
+   "err": null
+  },
+  {
+   "q": "start_proxy.cmd 재부팅 후 왜 안 돌아가?",
+   "gold": "ac6b11080109c3fe",
+   "choice_idx": 2,
+   "abstain": false,
+   "gold_rank_pool": 3,
+   "err": null
+  },
+  {
+   "q": "배치 파일 인코딩 문제였어?",
+   "gold": "ac6b11080109c3fe",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "프록시 대시보드에 종료 버튼 있어?",
+   "gold": "efb4e9a38f6ee270",
+   "choice_idx": 4,
+   "abstain": false,
+   "gold_rank_pool": 5,
+   "err": null
+  },
+  {
+   "q": "shutdown API 어떻게 만들었지?",
+   "gold": "efb4e9a38f6ee270",
+   "choice_idx": 4,
+   "abstain": false,
+   "gold_rank_pool": 5,
+   "err": null
+  },
+  {
+   "q": "Hermes 데스크톱 워치독 런처 어디 있어?",
+   "gold": "36f843b4b1886e39",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "Hermes_With_Watchdog.cmd 위치?",
+   "gold": "36f843b4b1886e39",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "데스크톱 앱 띄우면 텔레그램 수신 끊겨?",
+   "gold": "b5f5672a2446d4e8",
+   "choice_idx": 59,
+   "abstain": false,
+   "gold_rank_pool": 10,
+   "err": null
+  },
+  {
+   "q": "orphan gateway reap 회귀 맞아?",
+   "gold": "b5f5672a2446d4e8",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "KoDialogBench 4종 검증 결과 어땠어?",
+   "gold": "d28786a095ace1ae",
+   "choice_idx": 4,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "X1 외부 데이터셋 실험에서 bekko 성능?",
+   "gold": "d28786a095ace1ae",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "best-of-5에 recovery 얹으면 개선돼?",
+   "gold": "2f199c68ab243ff8",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "67차 실험 최종 결론 뭐였지?",
+   "gold": "2f199c68ab243ff8",
+   "choice_idx": 2,
+   "abstain": false,
+   "gold_rank_pool": 3,
+   "err": null
+  },
+  {
+   "q": "codex CLI에서 메모리 기록되나?",
+   "gold": "90b4edf612db6b2c",
+   "choice_idx": 4,
+   "abstain": false,
+   "gold_rank_pool": 5,
+   "err": null
+  },
+  {
+   "q": "codex config.toml 훅 어떻게 설정했지?",
+   "gold": "90b4edf612db6b2c",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "bekko랑 koen 벤치 비교 결과?",
+   "gold": "509622f2ecaf7c06",
+   "choice_idx": 11,
+   "abstain": false,
+   "gold_rank_pool": 4,
+   "err": null
+  },
+  {
+   "q": "P3b 확장 gold MRR 수치?",
+   "gold": "509622f2ecaf7c06",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "bekko-a8m 채택 이유가 뭐야?",
+   "gold": "7a3675ebfc5a1829",
+   "choice_idx": 8,
+   "abstain": false,
+   "gold_rank_pool": 9,
+   "err": null
+  },
+  {
+   "q": "S3에서 임베딩 모델 최종 선택 근거?",
+   "gold": "7a3675ebfc5a1829",
+   "choice_idx": 8,
+   "abstain": false,
+   "gold_rank_pool": 9,
+   "err": null
+  },
+  {
+   "q": "코드 설명과 구조 라벨 언어 규칙?",
+   "gold": "2ff550d144b5ae03",
+   "choice_idx": 5,
+   "abstain": false,
+   "gold_rank_pool": 6,
+   "err": null
+  },
+  {
+   "q": "완전 번역 금지 규칙 뭐지?",
+   "gold": "2ff550d144b5ae03",
+   "choice_idx": 4,
+   "abstain": false,
+   "gold_rank_pool": 5,
+   "err": null
+  },
+  {
+   "q": "브라우저 도구 라우팅 설정 어떻게 돼?",
+   "gold": "1928d454e0ed168b",
+   "choice_idx": 4,
+   "abstain": false,
+   "gold_rank_pool": 5,
+   "err": null
+  },
+  {
+   "q": "CAMOFOX_URL 제거한 이유?",
+   "gold": "1928d454e0ed168b",
+   "choice_idx": 3,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "pi 에이전트에 등록된 프록시 목록?",
+   "gold": "f9d466b9cdc3cd88",
+   "choice_idx": 60,
+   "abstain": true,
+   "gold_rank_pool": null,
+   "err": null
+  },
+  {
+   "q": "models.json에 어떤 엔드포인트 있지?",
+   "gold": "f9d466b9cdc3cd88",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "stealth 브라우저 언제 써야 해?",
+   "gold": "09547ea49fc36991",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "webdriver 숨김이 필요한 경우가 뭐지?",
+   "gold": "09547ea49fc36991",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "메모리 백엔드 뭐 쓰고 있어?",
+   "gold": "ed3a3442d3bcbb33",
+   "choice_idx": 55,
+   "abstain": false,
+   "gold_rank_pool": 56,
+   "err": null
+  },
+  {
+   "q": "provider가 뭐지?",
+   "gold": "ed3a3442d3bcbb33",
+   "choice_idx": 17,
+   "abstain": true,
+   "gold_rank_pool": null,
+   "err": null
+  },
+  {
+   "q": "hermes update 중간에 꺼지면 어떻게 해?",
+   "gold": "dce5e8ceddf18db9",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "venv 손상 시 복구 방법?",
+   "gold": "dce5e8ceddf18db9",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "deepseek 장문 스트림에서 뭐가 문제였어?",
+   "gold": "edf486fa0d3cd079",
+   "choice_idx": 11,
+   "abstain": false,
+   "gold_rank_pool": 12,
+   "err": null
+  },
+  {
+   "q": "S8 시나리오 실패 원인?",
+   "gold": "edf486fa0d3cd079",
+   "choice_idx": 9,
+   "abstain": false,
+   "gold_rank_pool": 10,
+   "err": null
+  },
+  {
+   "q": "statem controller 버전 뭐였어?",
+   "gold": "3581b9a33901eba4",
+   "choice_idx": 4,
+   "abstain": false,
+   "gold_rank_pool": 5,
+   "err": null
+  },
+  {
+   "q": "TimeoutExpired 처리 어떻게 바뀌지?",
+   "gold": "3581b9a33901eba4",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "웹 추출 백엔드 뭘로 설정했지?",
+   "gold": "0ea67a3b101917e5",
+   "choice_idx": 9,
+   "abstain": false,
+   "gold_rank_pool": 10,
+   "err": null
+  },
+  {
+   "q": "Exa 왜 안 써?",
+   "gold": "0ea67a3b101917e5",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "18080 프록시가 뭐 하는 거야?",
+   "gold": "5e8516d6f91b46dd",
+   "choice_idx": 29,
+   "abstain": false,
+   "gold_rank_pool": 30,
+   "err": null
+  },
+  {
+   "q": "camelai-serial-proxy 기능 정리해줘",
+   "gold": "5e8516d6f91b46dd",
+   "choice_idx": 0,
+   "abstain": false,
+   "gold_rank_pool": 1,
+   "err": null
+  },
+  {
+   "q": "supermemory 왜 안 쓰는 거야?",
+   "gold": "132fb95d922f9bc5",
+   "choice_idx": 1,
+   "abstain": false,
+   "gold_rank_pool": 2,
+   "err": null
+  },
+  {
+   "q": "전환 전 어떤 문제 있었지?",
+   "gold": "132fb95d922f9bc5",
+   "choice_idx": 60,
+   "abstain": true,
+   "gold_rank_pool": null,
+   "err": null
+  }
+ ],
+ "summary": {
+  "hit@1": 78,
+  "hit@3": 79,
+  "abstain": 3,
+  "err": 0,
+  "n": 90
+ }
+}

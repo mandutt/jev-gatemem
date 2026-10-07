@@ -59,6 +59,14 @@ def build_pool(q, cap):
 CLIENT = _jev_client()
 assert CLIENT
 _API = getattr(CLIENT, "_jev_api", None)
+# 429·일일 한도 대비: 시작 키를 키2(잔여 가능성 높음)로 강제
+_rot_i = getattr(CLIENT, "_jev_rotator", None)
+if _rot_i is not None and hasattr(_rot_i, "_active"):
+    _act = _rot_i._active()
+    if len(_act) >= 2:
+        _nk = _act[1][1]
+        CLIENT.headers["Authorization"] = f"Bearer {_nk}"
+        sys.stderr.write(f"  [start] 키2로 시작: {_act[1][0]}\n")
 
 # 분당 조직 한도(240/분) 대비 자기 디바운스: 초당 최대 3콜 = 분당 180
 _LAST_CALL = [0.0]
@@ -79,16 +87,26 @@ def post(state, questions):
         try:
             resp = CLIENT.post(_API, json={"state": state, "questions": questions, "model": "jev-latest"}, timeout=25)
             if resp.status_code == 429:
-                sys.stderr.write(f"  [429 attempt={attempt}] 키 전환\n")
+                sys.stderr.write(f"  [429 attempt={attempt}] 키 전환(on_429)\n")
                 sys.stderr.flush()
-                if rot is not None and hasattr(rot, "next"):
+                body = resp.text or ""
+                is_daily = "daily free allowance" in body or "resets at 00:00 UTC" in body
+                if is_daily and rot is not None:
+                    # 일일 한도 소진 키는 정각까지 영구 제외
                     try:
-                        nk = rot.next()
+                        import time as _t
+                        rot.exhausted_until[rot.last_key] = _t.monotonic() + 3600
+                        sys.stderr.write(f"  [daily-quota] 키 제외: {str(rot.last_key)[:8]}...\n")
+                    except Exception:
+                        pass
+                if rot is not None and hasattr(rot, "on_429"):
+                    try:
+                        nk = rot.on_429()  # 현재 키를 끝으로 밀고 다른 키 반환
                     except Exception:
                         nk = None
                     if nk:
                         CLIENT.headers["Authorization"] = f"Bearer {nk}"
-                time.sleep(10.0)
+                time.sleep(2.0)
                 continue
             if resp.status_code == 503:
                 time.sleep(3.0)
