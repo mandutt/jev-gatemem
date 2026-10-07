@@ -178,6 +178,20 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 
 ## 8. 다음 단계 (남은 작업 우선순위)
 
+> **2026-10-07 — EmbeddingGemma 2 평가 + 게이트 재정렬 실험 (5개 커밋: 1d0c383→70f588c)**:
+>
+> | 항목 | 결과 |
+> |---|---|
+> | EmbeddingGemma 2 기본 벤치 (RAM/retrieval/하이브리드/외부도메인) | ✅ 완료 — q8 RAM 466MB(최소), 외부도메인 우세, 의역 retrieval 우위. 상세: `experiments/embeddinggemma2-eval/README.md` |
+> | ★ 384d/768d 차원 미스매치 발견 | ✅ stage74는 vec lane 비활성 상태로 측정돼 폐기 → 768d work DB로 교정(stage76/77). **교훈: 임베딩 교체 실험은 vec 테이블 차원 확인이 선행 조건** |
+> | 교정 후 JEV 경로 (stage77) | ✅ gemma2-q8 76/90 vs bekko 78/90 (실질 동급), RAM -151MB, abstain 2(≤3) — **채택 보류, 외부 검토/사용자 판단 위임** |
+> | 게이트 재정렬 시뮬레이션 (stage79, 0콜) | ✅ RRF 보존 시 gold rank1 10→44 (4.4배) — **그러나 실측 미실현** |
+> | A/RRF 보존 실측 (stage80) | ❌ hit@1 78 (동률) — 기각 |
+> | B/평균 순위 실측 (stage81+82 3셋) | ❌ op hit@3 +1·abstain -2지만 **noans FP 25 (현행 20~23)로 순손실** — 기각, 현행 유지 |
+> | **DO-NOT-RE-RUN** | 재정렬 정책 변경(A/B), EmbeddingGemma 2 재실험 전 차원 게이트 |
+>
+> **남은**: EmbeddingGemma 2 채택 여부 최종 판단 (모델 동결 후, 하네스로 1시간 재실행 가능) — README §9 정책 참조.
+
 > **2026-09-30 외부 AI 검토 후속 사이클 완료** — 검토 브리프(`docs/design/multi-agent-implementation-review-brief.md`)에 대한 외부 검토서(`jev-mem-core-implementation-review.md`)의 지적을 전부 처리:
 >
 > | 항목 | 결과 |
