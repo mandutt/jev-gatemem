@@ -56,6 +56,16 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 | **★ stage60~63 abstain 폭증 (2026-10-07)** | 🔀 | k 실험서 abstain_p 0.86~0.94 폭등 → 3-run 결정적(36/38·0플립), op hit@1 19. **원인 = URL·모델 아님**: experientiallabs 직접 재호출 동일. **진짜 = top5 규칙 행 도배** (90쿼리 중 73~89회 진입) → 사실 질문 답(rank 8~41)이 안 보여 abstain. 어제 hit 78은 "규칙 행으로 틀린 답" 포함 과대평가. 상세: STAGE60_63_ABSTAIN_MYSTERY_20261007.md, RECALL §15. |
 | **stage64~65 규칙 캡 1 (2026-10-07)** | ⚠️→🔀 | 0콜 시뮬: 캡 1 gold top5 17→52(+35), importance 축소 +17. JEV 180콜: **hit@1 19→66, abstain 66→14, 오차단 0** — 49건 회복. 분류기 없이 빈도 기반 (도메인 무관). 상세: STAGE64/65. |
 | **stage66 캡 1 트레이드오프 (2026-10-07)** | 🔀 | **캡 1은 라이브 방어 붕괴**: noans FP 1→4, 라이브 block abstain 36→4(94.7%→10.5%), valid/yes 2→3. 원인: abstain은 "규칙 5개 경쟁"에서만 작동 — 규칙 1개면 유일 일치로 pick. **캡 1 단독 채택 불가. 후보: ①혼합(규칙2~3+사실) ②조건부 ③2콜 ④라벨 강화**. 상세: STAGE66_CAP1_TRADEOFF_20261007.md. |
+| **★ stage83 60vs5 control (2026-10-07, 360콜)** | ✅ | **confound 해소**: k60(production) block abstain 0/38 vs k5 36/38 — 같은 세션·스냅샷·모델. **"10-07 모델 변경" 기각, abstain = 후보 수 60→5 효과** (b-ai 추측 실측 입증). stage60~66(k=5) 전부 인공물로 확정. "10-06 abstain 무력"(60 후보) 결론 유지. **러너 원칙: JEV 입력 후보 수 = 운영 60**. 상세: STAGE83. |
+| **★ stage84 후보 수 곡선 (2026-10-07, 1,000콜)** | ✅ | k{5,10,20,40,60}: abstain은 k=5 극단에서만(36/38, op 19 파괴), k=10+ 붕괴. op hit@1: k20 78/k40 77/k60 79 — **안전 하한 20**. noans FP k20 15 vs k60 20. 상세: STAGE84. |
+| **★ stage85 pool20 게이트 (2026-10-07, 400콜)** | ❌ | **C AI 규칙 발동: op90 gold rank>20 = 2건(rank 41·36) → pool20/30/40 전면 채택 금지, pool 60 유지 확정**. live paired k20/k60 모두 abstain 0. 상세: STAGE85. |
+| **★ stage86 diversification (2026-10-07, 600콜)** | ❌ | rule cap 1/2/3 모두 base와 동일(op 78/79, live 0) — **0콜 노출 시뮬 ≠ JEV 60개 lift 실측** 교훈. 14번째 레버 소진. ⚠️ raw JSON 유실(로그 대체). 상세: STAGE86. |
+| **★ stage87 노출 k 실측 (2026-10-07, 200콜)** | ✅ | **k=2: hit@1/3 보존(78/79) + 무답 노출 190→76행(-60%), noans 노출 105→42**. FP율 동일(21/50). abstain 불가 구조의 유일한 피해 축소 레버. **운영 반영(rows[:2]) 보류 — v5 사안 A**. 상세: STAGE87. |
+| **★ stage88 데몬 trace 시계열 (2026-10-07, 0콜)** | ✅ | 라이브 운영 abstain 1/14(7%) — 폭증 아님, 모델 불변 운영 레벨 재확인. **abstain_p 중앙 0.00→0.11 소폭 상향** (τ 재조정 검토 — v5 사안 F). 상세: STAGE88. |
+| **★ stage89/91 2질문 분리 (2026-10-07, 800콜)** | 🔀 | API 2질문 동시 전송 1콜 지원 확정. rule_q abstain 29/38(76%) — b-ai 가설 실측 확인. fact20은 op -11, fact60은 78 복원. 단, **abstain_all 결합 무답 방어 0** (fact_q가 abstain 0). 상세: STAGE89/91. |
+| **★ stage90 k2+IDF (2026-10-07, 200콜)** | ❌ | **IDF v2 실질 무가치**: 라이브 발동 1/60(1.7%) — 쿼리 대부분 식별자 미포함. stage57 12구제는 셋 특수성. k2+idf 추가 이득 0. 상세: STAGE90. |
+| **★ stage92 사안 G 검증 (2026-10-07, 180콜)** | ❌ | rule_q abstain 77% 안정적(플립 2/38)이나 **valid/yes 규칙 오차단 2.3/22(10%)** — 규칙 답 쿼리 정답 유실. **k=2가 우월(피해 -60%·유실 0·1줄) → 사안 G 기각**. v5 보류 A~F로 축소. 상세: STAGE92. |
+| **★ canary 구축 (2026-10-07)** | ⏸️ | **2계층 일일 drift 감시**: L1 범용 12콜(사용자 독립 — 모델/API 상태) + L2 내 라벨 20콜(무답/정답). `canary_run.py --init/--check` + drift 시 `hermes send` 텔레그램. **cron 등록(job 723c06e97a84, 매일 09:00) but PAUSED** — 사용자 활성화 대기. 기준선: canary_baseline.json (L1 abstain 12/12 — 내 DB 일반지식 부재, 상대 비교). wrapper: `~/AppData/Local/hermes/scripts/jev_canary_daily.py`. |
 
 ## 3. 오늘(2026-09-27 저녁) 변경 사항 — 반드시 읽을 것
 
