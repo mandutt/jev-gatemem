@@ -29,9 +29,10 @@ def _resolve_path() -> Path:
     else:
         base = Path(os.environ.get("LOCALAPPDATA", ""))
         if base.is_dir():
-            p = base / "hermes" / "logs" / "jev_trace.log"
+            # 일별 로테이션: jev_trace_YYYYMMDD.log (2026-10-07, b-ai F#4)
+            p = base / "hermes" / "logs" / f"jev_trace_{time.strftime('%Y%m%d')}.log"
         else:
-            p = Path.home() / "jev_trace.log"
+            p = Path.home() / f"jev_trace_{time.strftime('%Y%m%d')}.log"
     return p
 
 
@@ -43,6 +44,7 @@ def trace(event: str, fields: dict) -> None:
         path = _resolve_path()
         with _LOCK:
             try:
+                path.parent.mkdir(parents=True, exist_ok=True)
                 with open(path, "a", encoding="utf-8") as fh:
                     fh.write(line)
             except OSError:
@@ -53,6 +55,8 @@ def trace(event: str, fields: dict) -> None:
                 return
             if size > TRACE_CAP_BYTES:
                 _trim(path)
+                # 로테이션 파일이 새로 생겼으면 그 기회에 오래된 것 정리 (최대 1회/일)
+                _cleanup_old()
     except Exception:
         pass  # tracing must never raise
 
@@ -72,5 +76,31 @@ def _trim(path: Path) -> None:
         with open(tmp, "w", encoding="utf-8") as fh:
             fh.write(tail)
         os.replace(tmp, path)
+    except OSError:
+        pass
+
+
+_RETENTION_DAYS = 30  # 일별 로테이션 파일 보관 일수 (2026-10-07, b-ai F#4)
+
+
+def _cleanup_old():
+    """Remove rotated trace files older than retention days (best-effort)."""
+    try:
+        days = int(os.environ.get("JEV_TRACE_RETENTION_DAYS", str(_RETENTION_DAYS)))
+    except ValueError:
+        days = _RETENTION_DAYS
+    if days <= 0:
+        return
+    base = Path(os.environ.get("LOCALAPPDATA", "")) / "hermes" / "logs"
+    if not base.is_dir():
+        return
+    cutoff = time.time() - days * 86400
+    try:
+        for p in base.glob("jev_trace_*.log"):
+            try:
+                if p.stat().st_mtime < cutoff:
+                    p.unlink()
+            except OSError:
+                pass
     except OSError:
         pass
