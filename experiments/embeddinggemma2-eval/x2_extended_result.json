@@ -1,0 +1,12 @@
+{
+  "gemma2-q4f16": {
+    "acc@1": 0.925,
+    "hits": 37,
+    "total": 40
+  },
+  "bench/bekko-a8m": {
+    "acc@1": 0.9,
+    "hits": 36,
+    "total": 40
+  }
+}
