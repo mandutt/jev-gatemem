@@ -65,7 +65,7 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 | **★ stage89/91 2질문 분리 (2026-10-07, 800콜)** | 🔀 | API 2질문 동시 전송 1콜 지원 확정. rule_q abstain 29/38(76%) — b-ai 가설 실측 확인. fact20은 op -11, fact60은 78 복원. 단, **abstain_all 결합 무답 방어 0** (fact_q가 abstain 0). 상세: STAGE89/91. |
 | **★ stage90 k2+IDF (2026-10-07, 200콜)** | ❌ | **IDF v2 실질 무가치**: 라이브 발동 1/60(1.7%) — 쿼리 대부분 식별자 미포함. stage57 12구제는 셋 특수성. k2+idf 추가 이득 0. 상세: STAGE90. |
 | **★ stage92 사안 G 검증 (2026-10-07, 180콜)** | ❌ | rule_q abstain 77% 안정적(플립 2/38)이나 **valid/yes 규칙 오차단 2.3/22(10%)** — 규칙 답 쿼리 정답 유실. **k=2가 우월(피해 -60%·유실 0·1줄) → 사안 G 기각**. v5 보류 A~F로 축소. 상세: STAGE92. |
-| **★ canary 구축 (2026-10-07)** | ⏸️ | **2계층 일일 drift 감시**: L1 범용 12콜(사용자 독립 — 모델/API 상태) + L2 내 라벨 20콜(무답/정답). `canary_run.py --init/--check` + drift 시 `hermes send` 텔레그램. **cron 등록(job 723c06e97a84, 매일 09:00) but PAUSED** — 사용자 활성화 대기. 기준선: canary_baseline.json (L1 abstain 12/12 — 내 DB 일반지식 부재, 상대 비교). wrapper: `~/AppData/Local/hermes/scripts/jev_canary_daily.py`. |
+| **★ canary 구축 (2026-10-07)** | ✅ | **2계층 일일 drift 감시**: L1 범용 12콜(사용자 독립 — 모델/API 상태) + L2 내 라벨 20콜(무답/정답). `canary_run.py --init/--check` + drift 시 `hermes send` 텔레그램. **cron 등록(job 723c06e97a84, 매일 09:00) + resume 완료 (10-07)** — 다음 실행 10-08 09:00 KST. **v7 보강 반영 (STAGE95)**: ① L2_YES 정답 abstain>0 즉시 알림 (과다거부 센서) ② timeout 25s→5s (production 일치) ③ abstain_p>0.3 카운트 + drift ④ pick 중앙 drift ±5 ⑤ L1 임계 ±3→±2콜. 기준선: canary_baseline.json (L1 abstain 12/12 — 내 DB 일반지식 부재, 상대 비교). wrapper: `~/AppData/Local/hermes/scripts/jev_canary_daily.py`. |
 
 ## 3. 오늘(2026-09-27 저녁) 변경 사항 — 반드시 읽을 것
 
@@ -187,6 +187,19 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 17. **★ trace 로그도 bare import 금지 (2026-09-27 밤 실증)**: `gateway/j1_pipeline.py`에 `from gateway.trace import trace`를 모듈 레벨로 추가하면 Hermes 프로세스에서 **조용히 prefetch가 fallback**됨 (warning/에러 로그도 안 남음 — j1_access가 alias로 로드하고 원본 gateway를 복원한 뒤라 bare import가 Hermes core gateway를 봄). **해결: `_jtrace()` 지연 헬퍼** — alias(`__j1mw_gateway`).trace 우선 → standalone `from gateway.trace` → repo 직접 파일 로드 fallback. **주의: `alias.trace`는 첫 호출 시 서브모듈이 로드되며 모듈→함수 변환이 필요** (`getattr(t, "trace", None) or t`) — 이걸 빼면 첫 호출만 기록되고 이후 조용히 누락 (실측: smoke 8쿼리 중 1줄만 기록됨)
 
 ## 8. 다음 단계 (남은 작업 우선순위)
+
+> **2026-10-07 후반 — v6 3-AI 검토 + stage93~95 (커밋 42f3756, v7 요청서)**:
+>
+> | 항목 | 결과 |
+> |---|---|
+> | 3-AI v6 답변 수신 | ✅ A: k=2 채택 vs B: k=3 채택 vs C: k=2 채택·문서 수정 4건 — 쟁점은 A뿐, 나머지 합의 |
+> | c-ai 문서 수정 4건 | ✅ v7에 반영 (hit@3→visible@2, IDF 범위, 35%→65.6%, canary 보강) |
+> | 소비 2×2 QA (stage93/94) | ✅ JEV 60 + deepcombo 240 + 판정 240 — **framing ON 환각 −44%** (23.7→13.2%) → **채택 후보 승격**. **k=2 정답 활용 −16pp → 보류** |
+> | τ 감사 (stage95, 0콜) | ✅ 정답군 132건 abstain_p>0.3 = 0건 — **τ=0.3 유지 근거 확보** |
+> | canary 보강 | ✅ L2_YES 과다거부 센서·timeout 5s·abstain_p>0.3 카운트·pick drift (**cron resume 완료**) |
+> | v6 복원·v7 작성 | ✅ v6은 9ad4dd4로 복원, v7에 후속 작업 전부 반영 (`df70966`) |
+>
+> **남은**: ① b-ai "7+7건 라벨링" (발동 7건 정직 거부 vs 과다거부 — 0콜 사람 판정) ② 2×2 판정 12건 사람 감사 20% ③ framing 운영 반영 (Hermes 소비 측 — 사용자 승인 대기) ④ k=3 실측 (k=2 손실 확인 후 자연 제외).
 
 > **2026-10-07 — EmbeddingGemma 2 평가 + 게이트 재정렬 실험 (5개 커밋: 1d0c383→70f588c)**:
 >
