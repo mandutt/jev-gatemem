@@ -1,4 +1,4 @@
-# 외부 AI 검토 요청서 v5 — 보류 6건 + stage83~88 confound 해소 실측 (2026-10-07)
+# 외부 AI 검토 요청서 v5 — 보류 7건 + stage83~89 confound 해소 실측 (2026-10-07)
 
 - 작성일: 2026-10-07
 - 대상: 메모리 파이프라인 (jev-mem) — SQLite + 로컬 임베딩(bekko-a8m) + 4-lane RRF + JEV choice 1콜 + soft gate
@@ -106,6 +106,24 @@
   abstain_p가 천천히 오르면 gate가 "곧" 걸리기 시작 — 그때까지 기다릴지, 선제 조정할지
   ③ canary(사안 D)로 추세를 모니터링하는 설계가 충분한지
 
+### 사안 G (신규, 10-07 실측): 2질문 분리 구조 — rule_q abstain 76% 확인, 결합 규칙 미해결
+- **배경**: b-ai 제안 (하나의 요청에서 규칙/사실 질문 분리) — API 2질문 동시 전송 **1콜 probe로 지원 확정**
+  (HTTP 200, usage 합산, 1요청=1콜, cost 0)
+- **실측 (stage89, 400콜)**:
+  | 지표 | base | dual (rule6+fact20) |
+  |---|---|---|
+  | op hit@1 | **78**/90 | 67/90 (-11) |
+  | noans FP | 22/50 | 19/50 (-3) |
+  | live block abstain(합산) | 0/38 | 0/38 |
+  | **rule_q abstain** | — | **29/38 (76%)** ★ |
+  | fact_q abstain | — | 0/38 |
+- **발견**: "규칙 행만 보면 abstain 살아남" **실측 확인** (k=5 효과와 동일).
+  그러나 fact_q(20개)가 abstain 0 → **abstain_all 결합은 무답 방어 0** + fact_q 20개는 op 회수력 저하(-11)
+- **판단 요청**: ① 다음 변형 중 무엇이 유망한가 —
+  (a) rule abstain → fact_q 60개 2단 구조 (b) fact_q 20→10 (c) rule abstain 우선 결합 (d) fact_q 항상 + rule만 제거
+  ② 이 구조가 1콜 유지+피해 축소 목표(k=2)와 어떤 조합이 최적인가
+  ③ RULE_IDS 6개 고정의 drift 위험 (운영 전 실험 한정 권장 — c-ai 지적과 동일)
+
 ---
 
 ## 3. 참고 — 확정·기각된 사안 (재검토 불필요)
@@ -126,6 +144,7 @@
 | `experiments/operational-golden/STAGE86_DIVERSIFICATION_20261007.md` | diversification 기각 (600콜) |
 | `experiments/operational-golden/STAGE87_EXPOSURE_K_20261007.md` | 노출 k 실측 (200콜) |
 | `experiments/operational-golden/STAGE88_TRACE_TIMESERIES_20261007.md` | 데몬 trace 시계열 (0콜) |
+| `experiments/operational-golden/STAGE89_DUAL_QUESTION_20261007.md` | 2질문 분리 실측 (400콜) |
 | `experiments/operational-golden/data/stage{83,84,85,87}_*.json` | raw (stage86 raw 유실 — 로그 대체) |
 | `experiments/operational-golden/stage{83,84,85,86,87}_*.py` | 러너 (재현 가능) |
 | `docs/review/2026-10-07_external-ai-review-request_v4_종합개정판.md` | v4 + §8(사안9) |
