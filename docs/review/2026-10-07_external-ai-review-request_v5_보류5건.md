@@ -1,4 +1,4 @@
-# 외부 AI 검토 요청서 v5 — 보류 5건 + stage83~87 confound 해소 실측 (2026-10-07)
+# 외부 AI 검토 요청서 v5 — 보류 6건 + stage83~88 confound 해소 실측 (2026-10-07)
 
 - 작성일: 2026-10-07
 - 대상: 메모리 파이프라인 (jev-mem) — SQLite + 로컬 임베딩(bekko-a8m) + 4-lane RRF + JEV choice 1콜 + soft gate
@@ -99,6 +99,13 @@
 - **판단 요청**: k=2 채택 시 pool20 재론이 의미가 있는지 (criteria 토큰 절감 ~35% vs 정답 2건 유실),
   아니면 영구 종결인지.
 
+### 사안 F (신규, 10-07 보강): abstain_p 상향 추세 — soft gate τ 재조정?
+- 실측 (stage88, 0콜): 라이브 데몬 trace — abstain_p 중앙 **10-06 0.00 → 10-07 0.11** (n=14),
+  abstain 선택 1/14 (7%), abstain_p>0.3 0건 (gate dead code 유지)
+- **판단 요청**: ① 이 추세가 실질적인가 (14건 표본 한계) ② τ=0.3 유지 vs 0.2/0.1 하향 —
+  abstain_p가 천천히 오르면 gate가 "곧" 걸리기 시작 — 그때까지 기다릴지, 선제 조정할지
+  ③ canary(사안 D)로 추세를 모니터링하는 설계가 충분한지
+
 ---
 
 ## 3. 참고 — 확정·기각된 사안 (재검토 불필요)
@@ -118,6 +125,7 @@
 | `experiments/operational-golden/STAGE85_POOL20_GATE_20261007.md` | pool20 게이트 (400콜) |
 | `experiments/operational-golden/STAGE86_DIVERSIFICATION_20261007.md` | diversification 기각 (600콜) |
 | `experiments/operational-golden/STAGE87_EXPOSURE_K_20261007.md` | 노출 k 실측 (200콜) |
+| `experiments/operational-golden/STAGE88_TRACE_TIMESERIES_20261007.md` | 데몬 trace 시계열 (0콜) |
 | `experiments/operational-golden/data/stage{83,84,85,87}_*.json` | raw (stage86 raw 유실 — 로그 대체) |
 | `experiments/operational-golden/stage{83,84,85,86,87}_*.py` | 러너 (재현 가능) |
 | `docs/review/2026-10-07_external-ai-review-request_v4_종합개정판.md` | v4 + §8(사안9) |
