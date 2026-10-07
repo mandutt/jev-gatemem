@@ -21,7 +21,10 @@ import sys
 from datetime import datetime
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
-TRACE = os.path.expandvars(r"%LOCALAPPDATA%/hermes/logs/jev_trace.log")
+# 2026-10-07부터 일별 로테이션 (stage97) — 오늘 날짜 파일 + 옛 고정 경로 폴백
+from datetime import date as _date
+_TRACE_TODAY = os.path.expandvars(rf"%LOCALAPPDATA%/hermes/logs/jev_trace_{_date.today():%Y%m%d}.log")
+TRACE = _TRACE_TODAY if os.path.exists(_TRACE_TODAY) else os.path.expandvars(r"%LOCALAPPDATA%/hermes/logs/jev_trace.log")
 OUT = os.path.join(ROOT, "experiments", "operational-golden", "weak_label_probe.json")
 
 CORRECTION_PATTERN = re.compile(

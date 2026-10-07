@@ -112,7 +112,7 @@ Mnemosyne (Hermes 로컬 메모리)에 TypeSafe Jev (System One) rerank를 접�
 grep "Jev choice" "$LOCALAPPDATA/hermes/logs/agent.log"
 
 # Jev 개입 trace (lane별 기여/gate/Jev 선택/lift) 확인
-tail -20 "$LOCALAPPDATA/hermes/logs/jev_trace.log"
+tail -20 "$LOCALAPPDATA/hermes/logs/jev_trace_$(date +%Y%m%d).log"
 
 # CLI로 턴 1회 → Jev choice 라인 확인
 "$LOCALAPPDATA/hermes/bin/hermes.exe" chat -q "검증 쿼리"
@@ -275,7 +275,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 - [x] **★ Hydration 버그 수정 (2026-09-27 밤)** — `get_hydrated()` cross-session 조회 추가 (backends/mnemosyne.py, gateway.py 2곳, harnesses/hermes_j1.py). pool 78.85%→92.31%, filtered 67.31%→78.85%. fallback §19 재검증 + runtime smoke PASS. **플러그인 재설치 필요 없음** (harnesses/hermes_j1.py가 단일 소스, sys.path에 middleware repo 있음) — 단, **데스크톱 재시작해야 새 코드 로드**
 - [x] **★ Importance 보조 lane (2026-09-27 밤)** — `_imp_search()` lane 추가 (`gateway/j1_pipeline.py`, `gateway.py` 2곳, `harnesses/hermes_j1.py`). importance≥0.85 최신 8개를 RRF 통합. 검증: verify_imp_lane.py → pool 92.31%→**100%**, filtered 82.69%, top-5 71.15%. fallback F 재실행 PASS + runtime smoke PASS
 - [x] **★ Graph/Fact lane (2026-09-27 밤)** — `_graph_lane_search()` 3경로 구현 (`gateway/j1_pipeline.py`, `gateway.py` 2곳, `harnesses/hermes_j1.py`): ①facts/consolidated_facts subject/object 매치→source_msg_id ②graph_edges gist 스트립+관련성 게이트 ③memoria_facts key/value→source_memory_id. **검증: 합성 데이터 6/6 PASS** (verify_graph_lane_synthetic.py), 실데이터 4-lane 지표 무하락 (100%/82.69%/71.15%), fallback F PASS, runtime smoke PASS. 현재 실데이터로 gold 추가 회수 0 → **data 축적 후 재평가 (facts 수십+ 이후)**
-- [x] **★ Jev 개입 trace 로그 (2026-09-27 밤)** — `gateway/trace.py` — ring buffer 로거: `$LOCALAPPDATA/hermes/logs/jev_trace.log` (기본, `JEV_TRACE_PATH`로 오버라이드), cap 512KB 초과 시 선두 절반 폐기 (파일 상시 ~256~512KB 수렴, 무한 증가 없음). prefetch당 4이벤트 기록: `pool`(lane별 기여: fts/vec/imp/graph/pool) → `gate`(pool/passed) → `jev`(idx/lat_ms/pick) → `lift`(lifted/from_idx/picked_id/prev_top). Jev OFF/fallback 시 trace 미기록. **검증: verify_trace.py (ring 단위), 섀도잉 시뮬레이션 PASS, smoke --on 8쿼리×4이벤트=32줄, --off 회귀 8/8, verify_gateway_api pass**
+- [x] **★ Jev 개입 trace 로그 (2026-09-27 밤)** — `gateway/trace.py` — ring buffer 로거: `$LOCALAPPDATA/hermes/logs/jev_trace_YYYYMMDD.log` (일별 로테이션, 2026-10-07 stage97; `JEV_TRACE_PATH`로 오버라이드), cap 512KB 초과 시 선두 절반 폐기 (파일 상시 ~256~512KB 수렴, 무한 증가 없음). prefetch당 4이벤트 기록: `pool`(lane별 기여: fts/vec/imp/graph/pool) → `gate`(pool/passed) → `jev`(idx/lat_ms/pick) → `lift`(lifted/from_idx/picked_id/prev_top). Jev OFF/fallback 시 trace 미기록. **검증: verify_trace.py (ring 단위), 섀도잉 시뮬레이션 PASS, smoke --on 8쿼리×4이벤트=32줄, --off 회귀 8/8, verify_gateway_api pass**
 - [ ] **Mnemosyne 업데이트 시** — `typed_memory.py` 한국어 패치 재적용: `.venv\Scripts\python.exe scripts\reapply_korean_classifier.py` (라이브 vs 재적용 40/40 검증됨). 업데이트 자체는 §7-12 정책(3.15.1 고정, 4.0.0 stable 확인 후) 따름
 - [ ] graph/fact lane — **실데이터 재평가**: facts/graph_edges/memoria_facts가 쌓이면 (수십 개 이상) verify_graph_lane_synthetic.py 방식으로 실데이터 gold 회수 확인 후 lane 상세 튜닝 (budget/confidence 임계값)
 - [x] **★ Hermes 종속성 독립화 (P1 일부)** — `core/j1_engine.py` 분리 완료 (hermes_j1은 얇은 어댑터로), smoke 7/7 + verify_core_j1_engine.py live DB PASS, 커밋 `140fa46`
@@ -396,9 +396,9 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
    SELECT COUNT(*) FROM working_memory WHERE content LIKE '[ASSISTANT]%';
    -- 0 → sync_roles 미적용 (config 확인), N>0 → 정상
    ```
-3. **G-AS 게이트 동작 확인** — `jev_trace.log`에서 `write-gate-as` 이벤트:
+3. **G-AS 게이트 동작 확인** — `jev_trace_YYYYMMDD.log`에서 `write-gate-as` 이벤트:
    ```
-   $LOCALAPPDATA/hermes/logs/jev_trace.log  (tail)
+   $LOCALAPPDATA/hermes/logs/jev_trace_$(date +%Y%m%d).log  (tail)
    # keep=skip ... reason=no-store / reason=context  → 게이트 정상 SKIP
    # reason=commitment-fp-v4  → commitment FP 필터 v4 동작 (2026-09-28 추가)
    # 이벤트 없음 → JEV_WRITE_GATE=0 확인 / TYPESAFE_API_KEY 확인
@@ -418,7 +418,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
    - assistant 저장 끄기: `hermes config unset memory.mnemosyne.sync_roles` → user만
 5. **장기 관측 후 리포트 갱신**: 1~2주 후 `[ASSISTANT]` 저장량·recall 영향 → `ASSISTANT_GATE_REPORT.md`에 실측 반영
 5b. **v4 필터 실측 기준선/관측** (2026-09-28 협의 — gold50 50건은 추정치, 운용 데이터로 검증):
-   - 기준선: `grep -c 'commitment-fp-v4' $LOCALAPPDATA/hermes/logs/jev_trace.log` (적용 직후 0건)
+   - 기준선: `grep -c 'commitment-fp-v4' $LOCALAPPDATA/hermes/logs/jev_trace_$(date +%Y%m%d).log` (적용 직후 0건)
    - 관측: 1~2주 후 `grep 'commitment-fp-v4' ... | wc -l` + SKIP된 utterance(로그에 100자까지)를 gold 판정
    - 판정 기준: SKIP 중 실제 NO_STORE(FP) 비율 = live precision; **TP를 버린 회귀 1건이라도 발견 시 즉시 필터 비활성화 보고**
    - 결과를 `ASSISTANT_GATE_REPORT.md` §7 실측 표에 반영 (추정치 → 운용치 갱신)
@@ -442,8 +442,8 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 | 스냅샷 | `data/snapshots/snap-20260927.db` (실험용, 프로덕션 DB와 분리) |
 | 평가셋 | `data/dataset_curated.json` (52쿼리, 6유형, gold 16자리 ID) |
 | 로그 | `C:\Users\mandu\AppData\Local\hermes\logs\agent.log` (`grep "Jev choice"`) |
-| **Jev trace 로그** | `C:\Users\mandu\AppData\Local\hermes\logs\jev_trace.log` (ring buffer 512KB, `JEV_TRACE_PATH`로 경로 변경 가능) |
-| **쓰기 게이트** | `JEV_WRITE_GATE=0` → 비활성(KEEP). **KEEP/SKIP 모두** `jev_trace.log`에 `write-gate`(user) / `write-gate-as`(assistant) 기록 (2026-09-29 B: unconditional, `keep=keep`/`keep=skip`) |
+| **Jev trace 로그** | `C:\Users\mandu\AppData\Local\hermes\logs\jev_trace_YYYYMMDD.log` (일별 로테이션, 2026-10-07 stage97 — 옛 `jev_trace.log` 고정 경로는 폐기. `JEV_TRACE_PATH`로 커스텀 경로 가능, 30일 보관) |
+| **쓰기 게이트** | `JEV_WRITE_GATE=0` → 비활성(KEEP). **KEEP/SKIP 모두** `jev_trace_YYYYMMDD.log`에 `write-gate`(user) / `write-gate-as`(assistant) 기록 (2026-09-29 B: unconditional, `keep=keep`/`keep=skip`) |
 
 ## 10. 세션 전환 방법
 
