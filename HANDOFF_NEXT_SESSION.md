@@ -194,7 +194,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 > | 항목 | 결과 |
 > |---|---|
 > | 점수 융합(α) stage100/101/101b | ⏸️ **보류 확정** — op +2/+3·abstain −2, noans +1, 조건부 신호 없음, 재현 노이즈. 코드 미반영. (자세한 건 상태 표 §2 fusion 행 + `STAGE100_101_FUSION_20261008.md`·`STAGE101B_CONDITIONAL_ALPHA_20261008.md`) |
-> | **한국어 지시문 A/B 후보 (외부 6편)** | 📋 **신규 실험 후보** — core.today 실측: Jev rerank에서 한국어 지시문이 영어보다 미세 우위(0.929→0.933, 정답1등 89.4→90.6%, n=85라 잡음 가능). 우리 INSTR/abstain 라벨이 전부 영어 → **같은 세션 한글 vs 영어 A/B(~120콜)로 판정** — 채택 시 `m48.INSTR`+`ABSTAIN_CURRENT` 한 줄 교체 |
+> | **한국어 지시문 A/B (2026-10-08)** | ⏸️ **실측 완료·보류** — stage102 (400콜, same-session paired): op hit@1/3·abstain **완전 동일** (77/86·78/86·2, flip 0건), noans FP 24→23 (−1, 잡음). 외부 6편의 '한국어 지시문 우위'는 우리 데이터에서 미재현·무손해. 단 noans 방어 3건이 규칙/사실 질문·FP 2건이 과거사 질문에 몰린 패턴 (n=5, 별도 실측 시에만 추적). **코드 미변경 — 현행 영어 유지.** raw: `stage102_instr_ko_raw.json` (STAGE102) |
 > | 'Jev 한 질문' 조건 순서 민감(외부 10편) | ✅ 우리 stage92 2질문 구조 기각의 외부 재확인 — do not re-run |
 > | Noul pointwise 리랭크(외부 6편) | ✅ 우리 stage50 라이브 무력 확정의 외부 대조 — 의역 셋 한정 성공 |
 > | 제외 쿼리 "빼고" 처리(외부 9편) | ⏸️ 참고 — 떼기·글자강등 0.676 / +Jev 0.790. 라이브 발동률 낮아 후순위 (stage90 식별자 1.7%와 같은 기준) |
