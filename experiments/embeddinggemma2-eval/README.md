@@ -210,6 +210,44 @@ stage74(임베딩 교체 실측) 후 lane 분해(stage75)에서 **gemma2 vec_ran
 - **채택 판정**: bekko 78 vs gemma2-q8 76 — 2건 차이. RAM -151MB(466 vs 617), abstain 1건 적음, 의역 retrieval 우위. **"동급 + 운영 이점"으로 채택 여지가 있으나, 최종 판단은 사용자/외부 검토에 위임** (do-not-re-run 아님, 후속 실험 가능).
 - **파이프라인 개선 축이 별도로 확인됨**: `_filter_and_rank` 재정렬이 RRF 순위를 파괴 — gemma2 유무와 무관하게 운영 품질 개선 여지.
 
+## 8. ★ 재정렬 정책 시뮬레이션 (stage79, 0콜) — 파이프라인 개선 축
+
+### 8.1 동기
+
+§7.4에서 gemma2가 RRF 1위로 찾은 gold를 `_filter_and_rank`의 adjusted-score 재정렬(score 0.65 + signal 0.35 + importance 0.05)이 8~9위로 강등 확인. **모델 무관 파이프라인 정책 문제** — 0콜 시뮬레이션으로 대안 평가.
+
+### 8.2 대안 (gate 통과 행 대상)
+
+- **cur**: 현행 — adjusted score로 재정렬
+- **A**: 게이트 통과 후 **RRF 순서 보존** (정렬 제거)
+- **B**: RRF rank와 adjusted rank의 평균으로 정렬
+- **C**: quality 승수만 제거 (adjusted score 유지)
+
+### 8.3 결과 (90쿼리, 두 모델 동일 패턴)
+
+| 정렬 정책 | RRF pool 내 gold 1위 | 게이트 후 gold rank1 (gemma2) | 게이트 후 gold rank1 (bekko) |
+|---|---|---|---|
+| RRF pool (시작) | 44 / 43 | — | — |
+| **cur (현행)** | — | **10** | **10** |
+| **A: RRF 보존** | — | **44** | **44** |
+| B: 평균 순위 | — | 43 | 42 |
+| C: quality 제거 | — | 10 | 10 |
+
+- **A가 두 모델 모두에서 gold rank1을 10→44 (4.4배) 개선**, 중앙값 8→1
+- C는 무효 (문제는 quality가 아니라 재정렬 자체)
+- B도 A와 유사 (rank≤3은 B가 더 좋음: 70 vs 58)
+
+### 8.4 해석과 한계
+
+- 보정 계수 (gold_rank_pool==1 → choice==gold): gemma2 0.91 (10/11), bekko 0.90 (9/10). 적용 시 추정 hit@1 ≈ 40/90 — **단 이는 "rank1 gold만 choice가 고른다"는 과소 가정**으로, 실제 JEV는 rank 2~8 후보에서도 excerpt를 읽고 gold를 집어냄 (실측 bekko 78/90 = choice의 상위 후보 선별 능력 포함).
+- **A의 실질 이득은 JEV choice 180콜 실측으로만 확정 가능** (rank1 노출 4.4배 → choice hit 증가 여지).
+- 주의: A는 RRF 원순서를 노출하므로 importance/graph lane의 도배 후보가 상위에 오를 수 있음 (stage66: 규칙 행 도배 → abstain 유도 사례). 노출 구성 변경은 op·라이브·noans 세 셋 함께 측정 필요 (기존 교훈).
+
+### 8.5 후속
+
+- **stage80: bekko + A 정책 JEV choice 180콜 실측** — 재정렬 제거의 실질 hit@1 측정 (진행 예정)
+- 채택 시 노출 구성 변경은 3셋 회귀 필수.
+
 ## 5. 재현
 
 - 벤치 러너+raw: `experiments/embeddinggemma2-eval/` (아래 파일)
