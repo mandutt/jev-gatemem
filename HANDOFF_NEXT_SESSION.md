@@ -202,6 +202,8 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 > | 환각 검문소·계산 분리(외부 7편) | 📋 참고 — supported/contradicted/not_mentioned 3지선다 + '계산은 Jev에 안 맡김'. **소비 측 개입이라 사용자 승인 후에만** (framing 실험과 같은 소비 파이프라인) |
 > | 한국어 BM25 토크나이저(외부 5편) | ⏸️ 참고 — 토크나이저가 BM25 절반(0.419→0.622). 우리 FTS unicode61 공백분리이지만 retrieval miss 원인은 의역 확정 → 토크나이저 개선은 pool_recall 상한 못 바꿈 (do not re-run 방향) |
 >
+> | AnchorMind (구 Memento-mcp) 검토 (2026-10-08) | ✅ **형태소 보조 벡터 실측 기각** — stage103 (0콜): 현재 pool miss 4/90에서 Kiwi 형태소 보조 gold 구제 **0/4** (miss 원인 = 한영 미스매치 2·쿼리 과단축 1·의역 1 — 형태소는 표면 어휘 정규화라 연결 불가). **do not re-run**, 영문 메모리 증가 시 합성 역질의로 재검토만. 기타: 임계값 보정·랭킹 가중치 정규화는 우리 stage100·fusion과 교차 검증. 상세: `docs/review/2026-10-08_anchormind-review.md` |
+> 
 > **남은**: ① 한국어 지시문 A/B (실험 후보 — 사용자 지시 시 진행) ② framing 운영 반영 대기 ③ EmbeddingGemma 2 채택 최종 판단 ④ GitHub push 대기 (6251ad2·54c5cfd 등 로컬 밀림 — 장애 해소 후 `git push origin main`).
 
 > **2026-10-07 후반 — v6 3-AI 검토 + stage93~95 (커밋 42f3756, v7 요청서)**:

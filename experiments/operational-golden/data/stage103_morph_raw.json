@@ -1,0 +1,54 @@
+[
+ {
+  "q": "리뷰 전용 턴에서 커밋해도 돼?",
+  "gold": "9150f1246613b092",
+  "gold_content": "Commit governance: (1) review/fix-only turns NEVER git add/commit (literal). (2)",
+  "gold_in_fts200": false,
+  "q_toks": [
+   "리뷰",
+   "전용",
+   "커밋"
+  ],
+  "morph_best_id": "3d63b44c8bbc371d",
+  "morph_best_is_gold": false,
+  "morph_score": 3
+ },
+ {
+  "q": "구현됐다는 말 믿기 전에 뭘 확인해?",
+  "gold": "c9e4828c93bdb0a0",
+  "gold_content": "Evidence-based only; no speculation — separate confirmed vs hypothesis w/ eviden",
+  "gold_in_fts200": false,
+  "q_toks": [
+   "구현",
+   "확인"
+  ],
+  "morph_best_id": "0bb865391baf5229",
+  "morph_best_is_gold": false,
+  "morph_score": 2
+ },
+ {
+  "q": "provider가 뭐지?",
+  "gold": "ed3a3442d3bcbb33",
+  "gold_content": "메모리 provider=mnemosyne(로컬 SQLite, pip, Docker 불필요, 2026-07 전환).",
+  "gold_in_fts200": false,
+  "q_toks": [
+   "provider"
+  ],
+  "morph_best_id": "9d4feaccfa1020b4",
+  "morph_best_is_gold": false,
+  "morph_score": 1
+ },
+ {
+  "q": "전환 전 어떤 문제 있었지?",
+  "gold": "132fb95d922f9bc5",
+  "gold_content": "supermemory(미사용, 실측): 200k done/260k+ stuck, 안전150k, in-memory flush→비정상종료 0-byt",
+  "gold_in_fts200": false,
+  "q_toks": [
+   "전환",
+   "문제"
+  ],
+  "morph_best_id": "5dd6175adee3c8e8",
+  "morph_best_is_gold": false,
+  "morph_score": 2
+ }
+]
