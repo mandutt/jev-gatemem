@@ -92,10 +92,20 @@
 - **판단 요청**: Hermes 시스템 프롬프트에 이 완화문을 넣는 것이 방법론적으로 타당한지
   (메모리 경로 밖 = 원칙 충돌 없음 주장). 실측 설계 자문.
 
-### 사안 D: 일일 canary (미구축)
-- 고정 쿼리 30~40개 매일 실행 → abstain율·pick 분포 drift 감지 (40콜/일)
-- **판단 요청**: canary 쿼리 선정 기준 (무엇을 잡아야 하나 — 모델 변경? 파이프라인 회귀?),
-  운영 통합 방식 (cron? 데몬?).
+### 사안 D: 일일 canary — **✅ 구축 완료 (2026-10-07), 활성화(pause 해제) 대기**
+- **구축 내역**:
+  - **2계층 설계**: L1 범용 12콜(사용자 독립 — 모델/API 상태 감시: abstain율·abstain_p·latency·결정성) +
+    L2 내 라벨 20콜(무답 10 + 정답 10 — 파이프라인 회귀: pick 분포·규칙 행 노출)
+  - 스크립트: `experiments/operational-golden/canary_run.py` (`--init` 기준선 저장 / `--check` drift 판정)
+  - **cron 등록됨**: job `723c06e97a84`, 매일 09:00, no_agent+script, 전달 텔레그램 — **PAUSED 상태**
+    (사용자 지시: 구축만, 활성화는 추후)
+  - wrapper: `~/AppData/Local/hermes/scripts/jev_canary_daily.py` — drift 시에만 stdout(전송), 정상이면 무전송
+  - **기준선 (2026-10-07 INIT)**: L1 abstain 12/12 (내 DB 일반지식 부재 — 상대 비교로 drift 감지),
+    L2 무답 0/10 abstain, L2 정답 0/10 — err 0
+- **drift 임계**: L1 abstain율 ±25pp / L2 무답 ±30pp / abstain_p 중앙 ±0.1 / latency 2배 / 오류>0
+- **판단 요청 (잔여)**: ① 임계값의 타당성 (12콜 기준 ±25pp가 너무 둔감한지) ② L1 쿼리 구성(일반지식)이
+  적절한지 — "내 DB에 없어 전부 abstain"이 고정 조건이라 drift 감지엔 안정적이나, 모델 변화 감지
+  민감도 검토 ③ 활성화(pause 해제) 시점 권고
 
 ### 사안 E: pool20 재론 여부
 - stage85 게이트에서 기각 (rank>20 2건) — 그러나 k=2 채택 시 "노출 수 축소"라는 대안 경로가 생김
@@ -143,6 +153,7 @@
 | `experiments/operational-golden/STAGE90_K2_IDF_20261007.md` | k2+IDF 조합 실측 (200콜) |
 | `experiments/operational-golden/STAGE91_DUAL2_20261007.md` | 2단 구조 실측 (400콜) |
 | `experiments/operational-golden/STAGE92_DUAL2_3RUN_20261007.md` | 사안 G 3-run 검증 (180콜) |
+| `experiments/operational-golden/canary_run.py` + `data/canary_baseline.json` + `data/canary_log.jsonl` | canary (구축 완료, cron PAUSED) |
 | `experiments/operational-golden/data/stage{83,84,85,87}_*.json` | raw (stage86 raw 유실 — 로그 대체) |
 | `experiments/operational-golden/stage{83,84,85,86,87}_*.py` | 러너 (재현 가능) |
 | `docs/review/2026-10-07_external-ai-review-request_v4_종합개정판.md` | v4 + §8(사안9) |
