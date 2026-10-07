@@ -199,7 +199,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 > | canary 보강 | ✅ L2_YES 과다거부 센서·timeout 5s·abstain_p>0.3 카운트·pick drift (**cron resume 완료**) |
 > | v6 복원·v7 작성 | ✅ v6은 9ad4dd4로 복원, v7에 후속 작업 전부 반영 (`df70966`) |
 >
-> **남은**: ① b-ai "7+7건 라벨링" (발동 7건 정직 거부 vs 과다거부 — 0콜 사람 판정) ② 2×2 판정 12건 사람 감사 20% ③ framing 운영 반영 (Hermes 소비 측 — 사용자 승인 대기) ④ k=3 실측 (k=2 손실 확인 후 자연 제외).
+> **남은**: ① ~~b-ai "7+7건 라벨링"~~ → **완료 (stage96)**: 발동 10건 라벨링 — 무답 0·과다거부 3건·작업지시 6건·첨부 1건 (a-ai/b-ai "정직 거부" 기각). F#3 재현 8/9 — 쿼리·코퍼스 의존 확정, replay에서 ap 상승 = 과다거부 확대 위험 ② 2×2 판정 12건 사람 감사 20% ③ framing 운영 반영 (Hermes 소비 측 — 사용자 승인 대기) ④ k=3 실측 (k=2 손실 확인 후 자연 제외) ⑤ Downloads 의존성 정리 (재현성, 31개 스크립트) ⑥ trace 일별 회전 (b-ai F#4).
 
 > **2026-10-07 — EmbeddingGemma 2 평가 + 게이트 재정렬 실험 (5개 커밋: 1d0c383→70f588c)**:
 >
