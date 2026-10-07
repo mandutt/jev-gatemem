@@ -7,7 +7,7 @@ Also prints summary stats.
 """
 import json, os
 
-V = r"C:/Users/mandu/Downloads/stage2_row_verdicts.json"
+V = r"C:/Users/mandu/hermes-made/jev-memory-middleware/experiments/operational-golden/data/stage2_row_verdicts.json"
 ITEMS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "stage2_row_adjudicate.json")
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "stage2_final_gold.json")
 

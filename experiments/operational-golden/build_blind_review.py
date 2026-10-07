@@ -18,7 +18,7 @@ DATA = os.path.join(ROOT, "experiments/operational-golden/data")
 DB = os.path.join(os.environ.get("LOCALAPPDATA", ""), "hermes/mnemosyne/data/mnemosyne.db")
 
 # 맹검 대상 24건 (exp7g 기준 + 사람 판정)
-vp = os.path.expandvars(r"%USERPROFILE%\Downloads\wgate_3class_verdicts.json")
+vp = os.path.expandvars(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\wgate_3class_verdicts.json")
 v = json.load(open(vp, encoding="utf-8"))
 g = json.load(open(os.path.join(DATA, "exp7g_gate_fulltext_raw.json"), encoding="utf-8"))
 recs = g["records"]

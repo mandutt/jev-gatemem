@@ -7,9 +7,9 @@ from collections import Counter
 sys.stdout.reconfigure(encoding="utf-8")
 
 # 맹검 결과
-blind = json.load(open(os.path.expandvars(r"%USERPROFILE%\Downloads\wgate3_blind_verdicts.json"), encoding="utf-8"))
+blind = json.load(open(os.path.expandvars(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\wgate3_blind_verdicts.json"), encoding="utf-8"))
 # 이전 사람 판정
-vp = os.path.expandvars(r"%USERPROFILE%\Downloads\wgate_3class_verdicts.json")
+vp = os.path.expandvars(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\wgate_3class_verdicts.json")
 v = json.load(open(vp, encoding="utf-8"))
 # exp7g full-text 게이트 결과
 g = json.load(open("experiments/operational-golden/data/exp7g_gate_fulltext_raw.json", encoding="utf-8"))

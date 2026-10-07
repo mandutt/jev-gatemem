@@ -118,7 +118,7 @@ print(f"\n플립률: {dt['flip_rate']:.1f}% — 저장: stage52_noans_flip3run.j
 # ---- 4번: 노출 k 축소 시뮬레이션 (0콜) ----
 print("\n=== [4번] 노출 k 축소 시뮬레이션 (live 60) ===")
 d50 = json.load(open(os.path.join(DATA, "stage50_noul_answerability.json"), encoding="utf-8"))
-v49c = json.load(open(r"C:\Users\mandu\Downloads\stage49c_label_booster_verdicts.json", encoding="utf-8"))
+v49c = json.load(open(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\stage49c_label_booster_verdicts.json", encoding="utf-8"))
 input49c = json.load(open(os.path.join(DATA, "stage49c_label_booster_input.json"), encoding="utf-8"))
 qtext = {d["idx"]: d["query"] for d in input49c}
 live = [r for r in d50["results"] if r["src"] == "live" and not r["err"]]

@@ -106,7 +106,7 @@ def qtype(q):
     return "기타"
 s48r = s48[0]["records"] if s48[0]["cond"] == "cur" else s48[1]["records"]
 # noans 라벨 — stage48에 없으면 49c verdicts로
-verdicts = json.load(open(r"C:\Users\mandu\Downloads\stage49c_label_booster_verdicts.json", encoding="utf-8"))
+verdicts = json.load(open(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\stage49c_label_booster_verdicts.json", encoding="utf-8"))
 # verdicts 키는 1-indexed... 실제 매핑 확인
 print(f"  stage48 cur {len(s48r)}건, 49c verdicts {len(verdicts)}건")
 # stage48 쿼리와 49c 쿼리가 같은 순서인지 확인

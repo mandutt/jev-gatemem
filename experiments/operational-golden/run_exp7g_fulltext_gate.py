@@ -149,7 +149,7 @@ def main():
     for r in changed:
         print(f"  CHANGED {r['qid']}: {r['old_gate']} → {r['new_verdict']}")
     # 오탐(사람 VALID + old NO)이 full-text에서 YES로 바뀌는지
-    vp = os.path.expandvars(r"%USERPROFILE%\Downloads\wgate_3class_verdicts.json")
+    vp = os.path.expandvars(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\wgate_3class_verdicts.json")
     v = json.load(open(vp, encoding="utf-8"))
     hm = {v[i]["idx"]: v[i]["v"] for i in range(len(v))}
     for r in results:

@@ -12,7 +12,7 @@ SNAP = m48.SNAP
 s = sqlite3.connect(SNAP)
 s.row_factory = sqlite3.Row
 
-VERDICTS = json.load(open(r"C:\Users\mandu\Downloads\stage49c_label_booster_verdicts.json", encoding="utf-8"))
+VERDICTS = json.load(open(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\stage49c_label_booster_verdicts.json", encoding="utf-8"))
 input49c = json.load(open(os.path.join(REPO, "experiments", "operational-golden", "data", "stage49c_label_booster_input.json"), encoding="utf-8"))
 
 targets = []

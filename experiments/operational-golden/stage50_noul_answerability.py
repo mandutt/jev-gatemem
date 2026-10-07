@@ -29,7 +29,7 @@ DATA = os.path.join(REPO, "experiments", "operational-golden", "data")
 s = sqlite3.connect(SNAP)
 s.row_factory = sqlite3.Row
 
-VERDICTS_49C = json.load(open(r"C:\Users\mandu\Downloads\stage49c_label_booster_verdicts.json", encoding="utf-8"))
+VERDICTS_49C = json.load(open(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\stage49c_label_booster_verdicts.json", encoding="utf-8"))
 
 # 라이브 60 분류 (49c+49d 판정 통합)
 CLASSES = {}

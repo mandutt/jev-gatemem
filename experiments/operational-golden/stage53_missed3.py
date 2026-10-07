@@ -201,7 +201,7 @@ def run_two_call(rows, q):
     return idx, (nv < 0.5), None
 
 # ---- 벤치 구성 ----
-v49c = json.load(open(r"C:\Users\mandu\Downloads\stage49c_label_booster_verdicts.json", encoding="utf-8"))
+v49c = json.load(open(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\stage49c_label_booster_verdicts.json", encoding="utf-8"))
 input49c = json.load(open(os.path.join(DATA, "stage49c_label_booster_input.json"), encoding="utf-8"))
 qtext = {d["idx"]: d["query"] for d in input49c}
 live = m48.load_queries(None)

@@ -26,7 +26,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 DATA = "experiments/operational-golden/data"
 
 # --- 데이터 로드 ---
-vp = os.path.expandvars(r"%USERPROFILE%\Downloads\wgate_3class_verdicts.json")
+vp = os.path.expandvars(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\wgate_3class_verdicts.json")
 v = json.load(open(vp, encoding="utf-8"))
 d = json.load(open(os.path.join(DATA, "exp7f_winner_gate_raw.json"), encoding="utf-8"))
 recs = d["records"]

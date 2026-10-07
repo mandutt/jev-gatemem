@@ -25,7 +25,7 @@ SNAP = os.path.join(REPO, "experiments", "operational-golden", "snapshots", "mne
 s = sqlite3.connect(SNAP); s.row_factory = sqlite3.Row
 
 d50 = json.load(open(os.path.join(DATA, "stage50_noul_answerability.json"), encoding="utf-8"))
-v49c = json.load(open(r"C:\Users\mandu\Downloads\stage49c_label_booster_verdicts.json", encoding="utf-8"))
+v49c = json.load(open(r"C:\Users\mandu\hermes-made\jev-memory-middleware\experiments\operational-golden\data\stage49c_label_booster_verdicts.json", encoding="utf-8"))
 input49c = json.load(open(os.path.join(DATA, "stage49c_label_booster_input.json"), encoding="utf-8"))
 
 # 시트 쿼리 텍스트 (idx → query)
