@@ -5,6 +5,9 @@
   + JEV(SystemOne API) choice rerank 1콜 + soft abstain gate
 - **경위**: v2 요청서 → 3종 AI 답변 → v3(10-06 23:33) → **3-AI v3 검토 반영(7f34920) + stage57~82 실측(16커밋)**
   → 본 v4에서 **최신 실측 전수 보고 + 재판정 요청**.
+- **v4.1 수정 (2026-10-07, 3종 AI v4 검토 반영)**: stage61~66 실험의 confound(후보 수 60→5) 정정 —
+  아래 §1.4·§4에 "production-pipeline retrieval + experimental k=5 candidate exposure"로 명시.
+  "10-06 abstain 무력 = 모델 인공물" 표현 삭제, u_true/abstain율 용어 정정, 구체 수치 오기재 수정.
 - **전제**: 전 수치는 실측(raw JSON·러너 경로 포함, err 0, 데몬 venv 고정, 스냅샷 고정).
   **추가 정보 요청 없이 답변 가능**하도록 자족적으로 기술.
 - **구성**: §0 시스템 요약 → §1 실험 함정 → §2 사안 1~4 최종 상태(10-07 갱신) →
@@ -47,12 +50,18 @@
 - stage56 같은 세션 3-run paired: base도 78/79 → 차이 0 (세션 잡음)
 - **교훈: 파이프라인 변경 평가는 반드시 같은 세션 paired 3-run**
 
-### 1.4 ★모델/서버 상태 의존성 (10-07, 신규 — 가장 중요한 함정)
-- 10-06 stage48: abstain 0/60, abstain_p 0.00~0.16 → **"abstain 무력" 결론**
-- 10-07 stage61: **같은 파이프라인·같은 스냅샷에서 abstain 36/38 (94.7%)**, abstain_p 중앙 0.86
-- **JEV 모델/서버가 밤사이 변경됨** (chose_abstain 38/60) — 어제 결론은 **어제 모델 기준**
-- **교훈: JEV 실험 결론은 측정일 모델 상태에 귀속** — 교차일 비교는 유의. 이 요청서의 수치는
-  10-06(abstain 무력) / 10-07(abstain 작동) 양쪽 모두 실측으로 기록
+### 1.4 ★모델/서버 상태 의존성 + 후보 수 confound (10-07, 3종 AI v4 검토 반영 — 최우선 전제)
+- 10-06 stage48: abstain 0/60, abstain_p 0.00~0.16 → **"abstain 무력" 결론** (JEV 후보 60개 입력)
+- 10-07 stage61: abstain 36/38 (94.7%), abstain_p 중앙 0.86 — **단, 러너가 `rows[:5]`로
+  JEV에 후보 5개만 전달** (stage61/63/66 모두 동일)
+- ⚠️ **confound**: 10-06(60개) vs 10-07(5개)는 후보 수가 다름 — "모델 변경"과 "후보 수 60→5"를
+  **분리할 수 없음** (c-ai 지적, 코드 확인). stage62 3-run 결정성은 5개 조건에서의 안정성일 뿐.
+- stage65/66 cap1도 "render 정책"이 아니라 **JEV 입력 후보 구성 변경 실험** (c-ai).
+- **정확한 표현**: 10-07 실험 = "production-pipeline retrieval + experimental k=5 candidate exposure".
+  "10-06 abstain 무력은 모델 인공물" — **삭제** (causal attribution 불가).
+- **해결**: 같은 세션 60 vs 5 control (360콜) — 60도 abstain 많으면 모델 변경,
+  60=0/5=36이면 후보 수 효과 (아래 §8).
+- **교훈: 실험 결론은 (모델 상태 × 후보 수)에 귀속** — 러너의 JEV 입력 후보 수를 운영과 일치시켜야 함.
 
 ### 1.5 운영 무답 비율 u
 - u=22.5% (query_log 87건, 10-05) → 라이브 60 사람 라벨링 → **u_true=29.8%** (10-06 보정, VALID 5건 재판정)
@@ -78,13 +87,12 @@
 - **B-5(eval 세션 제외)는 "운영 코퍼스 위생"으로 재분류 → 구현 불필요, 우선순위 낮음** (B AI).
   실험 대화가 이웃 존재형 무답을 키울 가능성 [추측] — 월간 라이브 샘플 라벨링으로 모니터.
 
-### 사안 4: 라이브 무답(IRREL) — **"구조적 한계" → "표현 완화 + 10-07 모델에서 abstain 작동"** ★수정
-- **10-06 결론 "abstain 무력·구조적 한계 확정"은 10-07 실측으로 수정 필요**:
-  - stage61/62(10-07): block(무답) abstain **36/38 (94.7%)**, 3-run 0플립 — abstain 실작동
-  - **오주입 ~30% → ~2% 가능성** (u_true 29.8% 환경)
-- 원인: abstain은 "답이 top5에 없을 때"만 작동 — **top5가 규칙/프로필 행으로 도배** (90쿼리 중 73~89회)
-- **"abstain 무력"은 10-06 모델의 인공물**이자 "노출 top5 한계"의 이중 구조. 전략: **노출/retrieval 개선** (아래 §4)
-- 3-AI v3 재정의 (C AI): "Jev Choice는 relative best-candidate selection에 강하나 open-set rejection에 충분한 신호 제공 못 함" — **유지하되, 10-07 실측으로 "거부 신호"가 모델 버전에 따라 존재함을 추가**
+### 사안 4: 라이브 무답(IRREL) — **"구조적 한계" → "표현 완화 + 10-07 실험은 k=5 조건"** ★수정
+- **10-06 결론 "abstain 무력·구조적 한계 확정"**: JEV 60개 후보 입력 기준 — 유효
+- **10-07 stage61/62**: abstain 36/38 (94.7%) — **단, k=5 후보 입력** → 모델 변경 여부 미분리 (§1.4)
+- **현재는 두 해석 모두 확정 불가** — 같은 세션 60 vs 5 control로 분리 필요 (아래 §8)
+- 오주입 ~30% → ~2% 가능성 ([추측], 10-07 k=5 조건 한정 — production 적용 전 검증 필수)
+- 3-AI v3 재정의 (C AI): "Jev Choice는 relative best-candidate selection에 강하나 open-set rejection에 충분한 신호 제공 못 함" — **유지** (10-07 실험으로 "거부 신호" 존재는 확인, 단 k=5 조건 한정)
 
 ---
 
@@ -119,23 +127,26 @@
 
 ## 4. 사안 6 (신규·핵심★): "abstain 폭증" 미스터리 → 정직 abstain + 노출 한계 → 캡 트레이드오프 (10-07, stage60~66)
 
-### 4.1 stage60~63 — abstain 폭증 미스터리 해소 (URL·모델 문제 아님)
+### 4.1 stage60~63 — abstain 폭증 미스터리 해소 (URL·모델 문제 아님) — **k=5 조건 한정**
 - stage60(k 실험): abstain_p 중앙 0.86~0.94로 폭등 (어제 0.0) — **k 효과 해석 불가 → 무효**
-- stage61(base 재확인): block abstain **36/38**, valid/yes 오차단 2/22 (실질 0 — 라벨 너그러움),
-  abstain_p 중앙 0.86, chose_abstain 38/60 — **어제 "abstain 무력"이 뒤집힘**
-- stage62(3-run): **완전 결정적** (36/38·2/22·0플립) — 일시적 아님
-- stage63(op+noans): op hit@1 **19** (66 abstain)·noans FP **1/50** — "무차별 abstain"처럼 보임
-- **원인 추적**: URL 무관 (experientiallabs 직접 재호출 동일 abstain 0.79~1.00), 러너 코드 정상
-- **진짜 원인**: abstain된 사실 질문의 gold가 **전부 top5 밖** (rank 8·14·36·41).
-  **top5는 규칙/프로필 행 5개가 도배** (90쿼리 중 73~89회 진입)
-- **결론**: abstain = **"답이 top5에 없어 정직하게 거부"** — 모델 회귀 아님.
-  **어제 hit 78은 "규칙 행으로 틀린 답" 포함 과대평가** — 사실 질문 recall이 진짜 병목.
+  (단, 이 실험은 "노출 k"가 아니라 **JEV 입력 후보 수 k**로 구현 — 설계 혼동, b-ai 지적)
+- stage61(base 재확인): block abstain **36/38**, abstain_p 중앙 0.86 — **rows[:5] (k=5) 입력**.
+  **"어제 stage48과 동일 조건" docstring은 오류** (stage48은 60개 입력)
+- stage62(3-run): 완전 결정적 (36/38·0플립) — **5개 후보 조건에서의 안정성** (모델 결정성 증거 아님)
+- stage63(op+noans): op hit@1 **19** (66 abstain)·noans FP 1/50 — **k=5 조건에서의 결과**
+- **원인 해석 (k=5 조건 한정)**: abstain된 사실 질문의 gold가 top5 밖 (rank 8·14·36·41) +
+  top5가 규칙/프로필 행 도배 (90쿼리 중 73~89회)
+- **"어제 hit 78은 규칙 행 오답 포함 과대평가" → 삭제** — hit는 gold id 일치로 계산
+  (규칙 행을 골랐다고 hit가 되지 않음, b-ai 지적)
+- **결론**: "정직 abstain + 노출 한계"는 **k=5 후보 입력에서의 가설** — production(60개) 적용 전 control 필수
 
-### 4.2 stage64~65 — 규칙 행 캡 1 (op 회복, 180콜)
+### 4.2 stage64~65 — 규칙 행 캡 1 (op 회복, 180콜) — **JEV 입력 후보 구성 실험** (c-ai)
 - 0콜 시뮬: importance 축소(0.05→0) +17, **캡 1 +35** (52/90), 캡 2 +30, 전체 제거 +32
 - **분류기 없이 빈도 기반 캡** (도메인 무관 — 사용자 우려 해소)
-- JEV 검증(stage65, 180콜): **hit@1 19→66 (+47), abstain 66→14, 오차단 0** — 49건 회복.
-  신규 abstain 4건은 gold가 캡 top5에 없어 정상 (오차단 아님)
+- JEV 검증(stage65, 180콜, **k=5 입력**): **hit@1 19→66 (+47), abstain 66→14, 오차단 0** — 49건 회복
+- ⚠️ **단, 이건 "최종 Top-5 노출 정책" 실험이 아니라 JEV에 전달되는 후보 집합을 5개로 축소·재구성한 실험**
+  (c-ai). production은 JEV가 60개를 보므로 동일 효과 보장 없음
+- 신규 abstain 4건은 gold가 캡 top5에 없어 정상 (오차단 아님)
 
 ### 4.3 stage66 — 캡 1은 라이브 방어 붕괴 (트레이드오프 확정, 220콜)
 
@@ -186,27 +197,66 @@
 
 | 레버 | 실측 | 결과 |
 |---|---|---|
-| 허브 행 집중도 (stage57 0콜) | IRREL 38건 pick이 단 3개 고유 id — **'default 프로필 규칙' 행 32/38 (84%)** | 확인 (다운웨이트 레버 유망) |
+| 허브 행 집중도 (stage57 0콜) | **block 38건**의 pick이 단 3개 고유 id — 'default 프로필 규칙' 행 32/38 (84%) | 확인 (다운웨이트 레버 유망) |
 | 허브 다운웨이트 (stage58 0콜) | hub 제거 시 다른 규칙 행 4종이 항상 대체 (38/38), VALID 5건 hub 의존 | **기각** (개별 행 조작 불가) |
 | read-path meta 라벨 (stage59 120콜) | criteria '[USER-RULE]' 접두 추가 — block abstain 0/38 동일, choice_idx 1건만 변경 | **기각** (13번째 레버 소진) |
-| rank-veto (stage57 0콜) | deep pick 6건 중 gold 3건 (rank 8·41·36) | **기각** (정답 3 손실) |
+| rank-veto (stage57 0콜) | deep pick 6건 중 gold 3건 (rank 8·41·36) — **rank 8은 pool20 안쪽** (b-ai 정정) | **기각** (정답 3 손실) |
 | hit@k (stage57 0콜) | k=2 = k=5 (80/90) — 노출 축소 지지 | A의 "노출 축소" 실측 지지 |
 | 문형 분리 (stage57) | 라이브 60 전부 질문형 — 표본 부재 | 기각 |
 
+- ⚠️ **용어 정정 (b-ai)**: "IRREL 38건"은 혼용 — IRREL은 **15~17건**, 38은 **block** (IRREL+PLAUS+NO).
+  32/38=84%는 block 기준. IRREL 단독 abstain 비율은 현재 미보고.
 - **결론: read-path·retrieval 조작으로 라이브 IRREL 해결 불가 재확인** — 남은 경로는 노출 축소(k=2~3)·
-  소비 측 프레이밍(B·A 수렴: "참고용, 직접 답 아니면 무시")뿐. **단, 10-07 모델에서 abstain이 작동**하므로
-  이 결론의 실익이 커짐 (§4).
+  소비 측 프레이밍뿐. **단, 10-07 k=5에서 abstain이 작동**한 것은 후보 수 효과일 수 있어 (§1.4)
+  control 후 재평가.
 
 ---
 
 ## 7. 잔여 사안 우선순위 (갱신)
 
-1. **사안 6 후보 실측** (혼합 노출 / 2콜 구조 / 라벨 강화) — 라이브 방어 + 사실 hit 양립
-2. **production-exact live60 paired 3-run (360콜)** — pool20 최종 게이트 (C AI, 아직 미실측)
-3. **소비 측 프레이밍 (~57콜)** — "참고용" 블록 헤더 (B·A 수렴, 메모리 경로 밖)
-4. **pool 크기 스윕 {10,15,20,30,40}** (2,100콜, B) — pool30 열위 근거가 hybrid뿐이라 choice-only 재비교
-5. **월간 라이브 샘플 라벨링** (u_true·FP율·h 추적, B-5 재분류 반영)
-6. **gemma2 채택 여부** (§5) — 재구축 비용 대 2건 차이
+1. **후보 수 곡선 {5,10,20,40,60}** (b-ai) — pool20 판정 + abstain-후보수 관계 일괄 (≈2,100콜)
+2. **candidate diversification** (c-ai·a-ai): 60 유지 + 규칙 2~3 + 사실 2~3 (0콜 시뮬 → ~600콜)
+3. **production-exact live60 paired 3-run (360콜)** — pool20 최종 게이트 (C AI, 미실측)
+4. **소비 측 프레이밍 (~57콜)** — "참고용" 블록 헤더 (B·A 수렴, 메모리 경로 밖)
+5. **일일 canary (40콜/일)** (b-ai) — 모델 drift 감시
+6. **월간 라이브 샘플 라벨링** (u_true·FP율·h 추적, B-5 재분류 반영)
+7. **gemma2 채택 여부** — 3-way 기각 (bekko 유지) 확인. 재개 조건: RAM 압박 또는 의역 쿼리 증가
+
+---
+
+## 8. ★사안 9 (신규): 60 vs 5 candidate control — confound 분리 확정 (2026-10-07, stage83, 360콜)
+
+> 3종 AI v4 검토(c-ai 최우선 제안)를 즉시 실행한 control 결과. **v4의 사안 4·6을 해소한다.**
+
+### 8.1 결과 (live60, 같은 세션 3-run, err 0)
+
+| 조건 | block abstain (3-run) | valid+yes 오차단 | abstain_p 중앙 |
+|---|---|---|---|
+| **k60** (production) | 0 / 0 / 0 (**0/38**) | 0 / 0 / 0 | **0.00** |
+| **k5** (stage61~66) | 36 / 36 / 36 (**36/38**) | 2 / 2 / 2 | 0.84~0.86 |
+
+- same snapshot / same query / same prompt / same model / **only candidate count 60 vs 5**
+- 3-run 전부 0플립 — 결정적
+
+### 8.2 판정 (사안 4·6 해소)
+
+1. **"10-07 모델/서버 변경" → 기각** — k60에서 abstain 여전히 0/38. **모델 불변, 운영 정상**
+2. **abstain 유발 요인 = JEV 입력 후보 수 60→5** (b-ai 추측 실측 입증)
+3. **10-06 "abstain 무력"(60 후보 기준) 결론 유지**
+4. **stage60~66(k=5) 전부 인공물** — "정직 abstain"·"노출 한계"·"캡1 트레이드오프"는
+   production(60 후보)에 적용 불가
+5. **러너 원칙**: JEV 입력 후보 수 = 운영(60)과 일치 — rows[:5] 실험 설계 금지
+
+### 8.3 함의 (차기 레버)
+
+- **pool20 채택 시 "후보 축소 → abstain 증가" 효과 동반 평가 필수** (b-ai: 후보 수 곡선 {5,10,20,40,60})
+- **candidate diversification** (c-ai): 60 유지 + 규칙 2~3 + 사실 2~3 (k=5 인공물 아님, 60 기반 재설계)
+- 10-07 실험들이 남긴 유효한 실측: "candidate count → abstain" 관계 (b-ai), 규칙/프로필 행의
+  top-5 도배·IRREL 집중 (a-ai 슬롯 분리 설계의 근거)
+
+### 8.4 raw
+
+- `data/stage83_60vs5_control.json` (360 레코드), 러너 `stage83_60vs5_control.py`
 
 ---
 
@@ -225,8 +275,9 @@
 | `experiments/operational-golden/STAGE66_CAP1_TRADEOFF_20261007.md` | stage66 캡1 트레이드오프 (220콜) |
 | `experiments/embeddinggemma2-eval/README.md` | gemma2 평가 전체 + 교정 기록 |
 | `experiments/embeddinggemma2-eval/stage74~82_*.{py,json}` | gemma2/게이트 재정렬 raw |
-| `experiments/operational-golden/RECALL_ABSTAIN_INVESTIGATION_20261005.md` §14~15 | 통합 기록 |
-| `experiments/operational-golden/data/stage{53~66,74~82}_*.json` | 10-06~07 전 실측 raw |
+| `experiments/operational-golden/RECALL_ABSTAIN_INVESTIGATION_20261005.md` §14~16 | 통합 기록 |
+| `experiments/operational-golden/STAGE83_60VS5_CONTROL_20261007.md` | stage83 control 정리 |
+| `experiments/operational-golden/data/stage{53~66,74~83}_*.json` | 10-06~07 전 실측 raw |
 
 ## 요청 형식
 사안별로: **① 판정 (채택/기각/수정/보류 유지) ② 근거 (실측 인용) ③ 권장 다음 단계 (콜·비용·실험 설계 포함)**

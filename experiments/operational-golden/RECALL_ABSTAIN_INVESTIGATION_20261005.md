@@ -393,3 +393,28 @@ op −5, 라이브 영향 미미) ② 판정자 교체 (일반 LLM 금지 원칙
 - 429 본문 'daily free allowance' 확인 시 해당 키를 `rot.exhausted_until`에 넣어 정각까지 제외
   (on_429는 순환만, daily 제외는 명시적으로 해야 함).
 - 키1 429 시에도 키2 200이면 실행 가능 (2026-10-06 stage53 실증).
+
+## §16. 60 vs 5 candidate control — confound 분리 확정 (2026-10-07, stage83, 360콜)
+
+> 3종 AI v4 검토(c-ai)가 지적한 stage61~66의 confound(후보 수 60→5)를 같은 세션 control로 분리.
+
+### 16.1 결과 (live60, 같은 세션 3-run)
+
+| 조건 | block abstain | valid+yes 오차단 | abstain_p 중앙 |
+|---|---|---|---|
+| **k60** (production) | **0/38** (3-run 0·0·0) | 0/22 | 0.00 |
+| **k5** (stage61~66) | **36/38** (3-run 36·36·36) | 2/22 | 0.84~0.86 |
+
+### 16.2 판정
+
+1. **"10-07 모델 변경" 기각** — k60에서 abstain 0/38 (모델 불변, 운영 정상)
+2. **abstain 유발 = 후보 수 60→5** (b-ai 추측 실측 입증)
+3. **10-06 "abstain 무력"(60 후보) 결론 유지**
+4. **stage60~66(k=5) 전부 인공물** — production 적용 불가
+5. **러너 원칙**: JEV 입력 후보 수는 운영(60)과 일치 — rows[:5] 실험 설계 금지
+
+### 16.3 함의
+
+- pool20 채택 시 "후보 축소 → abstain 증가" 효과 동반 평가 필요 (b-ai 후보 수 곡선)
+- candidate diversification (c-ai): 60 유지 + 규칙/사실 슬롯 — 다음 레버
+- raw: `data/stage83_60vs5_control.json`, 러너 `stage83_60vs5_control.py`
