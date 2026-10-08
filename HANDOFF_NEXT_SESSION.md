@@ -204,6 +204,8 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 >
 > | AnchorMind (구 Memento-mcp) 검토 (2026-10-08) | ✅ **형태소 보조 벡터 실측 기각** — stage103 (0콜): 현재 pool miss 4/90에서 Kiwi 형태소 보조 gold 구제 **0/4** (miss 원인 = 한영 미스매치 2·쿼리 과단축 1·의역 1 — 형태소는 표면 어휘 정규화라 연결 불가). **do not re-run**, 영문 메모리 증가 시 합성 역질의로 재검토만. 기타: 임계값 보정·랭킹 가중치 정규화는 우리 stage100·fusion과 교차 검증. 상세: `docs/review/2026-10-08_anchormind-review.md` |
 > 
+> | **pplx-embed-v2-late-0.6b 검토 (2026-10-08)** | ❌ **리젝트 (아키텍처 게이트)** — Perplexity v2 late = **ColBERT(다중벡터 late-interaction, 토큰당 128-dim + MaxSim)**, 340M 활성, 멀티모달. 단일벡터 sqlite-vec 구조와 비호환 (mLateOn·KURE-v2와 동일 사유) → 실측 불필요. '새 출시'로 알려졌으나 **HF createdAt 2026-08-03** (8월 존재). v2는 전부 late 계열, 단일벡터 v2 없음. 상세: 스킬 `embedding-model-selection.md` 기각 목록 |
+> 
 > **남은**: ① 한국어 지시문 A/B (실험 후보 — 사용자 지시 시 진행) ② framing 운영 반영 대기 ③ EmbeddingGemma 2 채택 최종 판단 ④ GitHub push 대기 (6251ad2·54c5cfd 등 로컬 밀림 — 장애 해소 후 `git push origin main`).
 
 > **2026-10-07 후반 — v6 3-AI 검토 + stage93~95 (커밋 42f3756, v7 요청서)**:
