@@ -226,6 +226,20 @@ stage74(임베딩 교체 실측) 후 lane 분해(stage75)에서 **gemma2 vec_ran
 - **X1 전체 7모델 순위**: gemma2-q8 0.690 > gemma2-q4f16 0.683 > koen 0.622 > baseline 0.587 > bekko 0.583 > granite-fp32 0.557 > granite-q4f16 0.541.
 - **운영 결론**: gemma2 채택 시 **q8이 정답** (RAM 최소+품질 최고). 외부 도메인에서 bekko 대비 +0.107로 압도 — 다만 768d 스키마 전환 + 속도(재인덱스 ~31분) 부담. 상세: `docs/design/granite-rerun-report-20261009.md`
 
+### 8.5 ★ 2026-10-09 — GPU/Vulkan 실측: DirectML·llama.cpp 모두 기각
+
+RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
+
+| 경로 | X1 Acc@1 | B=1 지연 | 판정 |
+|---|---|---|---|
+| ONNX CPU q8+프롬프트 (기준) | **0.690** | 71ms | ✅ 유지 |
+| ONNX DirectML (q8/q4f16/fp32) | 미측정(속도 실패) | 229~365ms | ❌ CPU보다 3~50배 느림 |
+| **llama.cpp Vulkan** (Q8_0/BF16/AD-Q6_K) | 0.626~0.629 | 43ms | ❌ GGUF 자체가 ONNX-raw(0.672) 대비 -0.043~0.046, +프롬프트(0.690) 대비 -0.061~0.064 |
+
+- GGUF 4종(unsloth Q8, AtomicChat Q8/AD-Q6, BF16) 전부 0.626~0.629로 수렴 — **파일·양자화·dense head 유무와 무관** → llama.cpp gemma-embedding2 그래프 구현 한계로 확정.
+- **cos 0.9999(단건)여도 검색이 raw 기준 -0.043~0.046 드리프트** — "cos 동일 = 검색 동일" 추론 금지 재확인.
+- 상세: `docs/design/gemma2-gpu-vulkan-experiment-20261009.md` (DO-NOT-RE-RUN)
+
 ### 8.1 동기
 
 §7.4에서 gemma2가 RRF 1위로 찾은 gold를 `_filter_and_rank`의 adjusted-score 재정렬(score 0.65 + signal 0.35 + importance 0.05)이 8~9위로 강등 확인. **모델 무관 파이프라인 정책 문제** — 0콜 시뮬레이션으로 대안 평가.
