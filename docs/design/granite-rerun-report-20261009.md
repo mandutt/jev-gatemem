@@ -97,6 +97,24 @@
 - **Q6 vs bekko 최종**: 0.684 vs 0.583 (+0.101) — 품질 압도, 그러나 **jev-mem 개발 중이라 당장 전환하지 않음** (사용자 결정, 2026-10-09).
 - **최종 채택은 사용자 우선순위 몫**: 품질(외부) = gemma2-Q6_Vulkan / 경량·무마이그레이션 = granite-q4f16 / 현행 유지 = bekko.
 
+### 6.1 granite vs gemma2 직접 비교 (같은 X1 조건, 2026-10-09)
+
+| 축 | granite (q4f16/fp32) | gemma2 (q8/Q6) | 판정 |
+|---|---|---|---|
+| X1 Acc@1 (1,200문항) | 0.541 / 0.557 | **0.684~0.690** | gemma2 **+0.133~0.149 압도** |
+| X1 순위 (7모델) | 6~7위 (최하위권) | **1위** | — |
+| 내부 gold-50 MRR | 0.550 / 0.570 | **0.739** | gemma2 **+0.17** |
+| RAM (warm commit) | **311MB (최소)** | 466MB / GPU VRAM | granite 우위 |
+| 재인덱스 | **~50s (최속)** | ~31분(CPU) / **232s(Vulkan)** | granite 우위 (GPU로 격차 축소) |
+| 차원 | **384d (스키마 유지)** | 768d (마이그레이션 필요) | granite 우위 |
+| 파일 크기 | 148~250MB | 314MB / **245MB(Q6)** | granite 근소 우위 |
+
+**해석**:
+- **품질 축에서는 granite의 채택 근거 없음** — gemma2가 외부 X1(+0.133~0.149)·내부 gold(+0.17) 모두 압도. granite은 bekko(0.583)보다도 X1에서 낮은 중위권.
+- **granite 고유 강점은 "운영 보수성"뿐**: 최경량(311MB)·최속 재인덱스(50s)·**384d 무전환**.
+- **Vulkan 등장으로 격차 축소**: AD-Q6_K(245MB, 232s)로 gemma2 재인덱스가 31분→4분으로 단축 → granite의 "빠름" 장점이 상당 부분 무의미해짐. 남는 granite 이점은 **384d 무마이그레이션** 하나뿐.
+- **결론**: granite 채택은 "지금 스키마 안 바꾸고 가볍게"라는 운영 보수성에서만 정당화. 품질·미래 관점은 gemma2(특히 Vulkan Q6)가 압도적.
+
 ## 7. 실행 산출물
 
 - 스크립트: `%LOCALAPPDATA%/jev-mem/bench/run-20260930/phase_a2.py`, `phase_a_drift.py`, `phase_b.py`, `x1_granite.py` / `run-20261006-embedgemma2/x1_gemma2.py`, `probe_trunc_speed.py`
