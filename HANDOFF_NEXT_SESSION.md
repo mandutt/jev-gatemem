@@ -249,18 +249,22 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 >
 > **남은**: 모델 채택 최종 판단 + 보고서 커밋/푸시 (+ `granite-rerun-report-20261009.md` 미커밋 상태).
 
-> **2026-10-09 (후속) — EmbeddingGemma 2 GPU/Vulkan 실측 — 전부 기각**:
+> **2026-10-09 (후속) — EmbeddingGemma 2 GPU/Vulkan 실측 — DirectML 기각, Vulkan 부활!**:
 >
 > | 항목 | 결과 |
 > |---|---|
 > | DirectML (q8/q4f16/fp32) | ❌ 전부 CPU보다 느림 (B=1 229~365ms vs CPU 6.6~71ms) — 그래프·폴백 문제, RX 580 한계 |
-> | Vulkan/llama.cpp (Q8/BF16/AD-Q6) | ❌ **X1 0.626~0.629** — 파일·양자화·head 무관, ONNX-raw(0.672) 대비 **-0.043~0.046**, +프롬프트(0.690) 대비 -0.061~0.064 손실 |
-> | GGUF 원인 규명 | BF16도 동일 → **양자화 아님, llama.cpp gemma-embedding2 그래프 구현 한계** (cos 0.9999여도 검색 드리프트 재확인) |
-> | 알려진 사례 | #19040 dense head 누락(우리 v2엔 무관), #26282 캐시 오염(-np 1로 배제), llama.cpp 공식 "cos≠검색 검증" 권고 |
-> | **최종** | GPU 경로(Vulkan 포함) 전부 기각. **ONNX CPU q8+프롬프트(0.690) 유지가 최적** |
-> | 산출물 | `docs/design/gemma2-gpu-vulkan-experiment-20261009.md` |
+> | Vulkan/llama.cpp (Q8/BF16/AD-Q6, 프롬프트 없음) | 0.626~0.630 — **"GGUF 손실"로 오인** |
+> | **원인 규명 (대발견)** | 기존 ONNX 스크립트(`EmbGemma2Runner.embed`)는 doc=False여도 **쿼리에 "task: search result \| query: " 자동 부착** — GGUF 실험은 프롬프트 누락이었음! 벡터 cos 0.9999·토크나이저 일치인데 순위만 바뀐 것 |
+> | **Vulkan + 쿼리 프롬프트** | 0.649 (+0.023) |
+> | **Vulkan + 쿼리+문서 프롬프트** | **0.688 (ONNX 0.690과 동급!)** — 228s로 CPU(790~1,301s) 대비 ~3.5~5.7배 빠름 |
+> | 알려진 사례 | #19040 dense head 누락(우리 v2엔 무관), #26282 캐시 오염(-np 1로 배제), llama.cpp "cos≠검색 검증" |
+> | b11516 회귀 | 0.480/0.530 — b11515와 벡터 동일(cos 1.0)인데 스코어 이상 → b11516 사용 금지, b11515 유지 |
+> | 산출물 | `docs/design/gemma2-gpu-vulkan-experiment-20261009.md` (2026-10-09 수정판) |
 >
-> **DO-NOT-RE-RUN**: gemma2 GPU(DirectML·Vulkan) 재실험 — RX 580 환경에서 전부 기각 확정.
+> **DO-NOT-RE-RUN**: DirectML 재실험, b11516 사용, "프롬프트 없는 GGUF 임베딩으로 X1 판정"(= 프로토콜 불일치 착시 재현 금지). GGUF 임베딩 시 ONNX와 동일한 프롬프트("task: search result | query: " / "title: none | text: ") 적용 필수.
+>
+> **후속 진행 중**: AtomicChat AD-Q6_K vs unsloth Q8_0 프롬프트 적용 비교 (양자화 수준별 품질 동등성).
 
 > **2026-09-30 외부 AI 검토 후속 사이클 완료** — 검토 브리프(`docs/design/multi-agent-implementation-review-brief.md`)에 대한 외부 검토서(`jev-mem-core-implementation-review.md`)의 지적을 전부 처리:
 >

@@ -226,19 +226,22 @@ stage74(임베딩 교체 실측) 후 lane 분해(stage75)에서 **gemma2 vec_ran
 - **X1 전체 7모델 순위**: gemma2-q8 0.690 > gemma2-q4f16 0.683 > koen 0.622 > baseline 0.587 > bekko 0.583 > granite-fp32 0.557 > granite-q4f16 0.541.
 - **운영 결론**: gemma2 채택 시 **q8이 정답** (RAM 최소+품질 최고). 외부 도메인에서 bekko 대비 +0.107로 압도 — 다만 768d 스키마 전환 + 속도(재인덱스 ~31분) 부담. 상세: `docs/design/granite-rerun-report-20261009.md`
 
-### 8.5 ★ 2026-10-09 — GPU/Vulkan 실측: DirectML·llama.cpp 모두 기각
+### 8.5 ★ 2026-10-09 — GPU/Vulkan 실측: DirectML 기각, Vulkan 부활 (프롬프트 누락이 "GGUF 손실" 착시)
 
 RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
 
-| 경로 | X1 Acc@1 | B=1 지연 | 판정 |
+| 경로 | X1 Acc@1 | 시간 | 판정 |
 |---|---|---|---|
-| ONNX CPU q8+프롬프트 (기준) | **0.690** | 71ms | ✅ 유지 |
-| ONNX DirectML (q8/q4f16/fp32) | 미측정(속도 실패) | 229~365ms | ❌ CPU보다 3~50배 느림 |
-| **llama.cpp Vulkan** (Q8_0/BF16/AD-Q6_K) | 0.626~0.629 | 43ms | ❌ GGUF 자체가 ONNX-raw(0.672) 대비 -0.043~0.046, +프롬프트(0.690) 대비 -0.061~0.064 |
+| ONNX CPU q8+프롬프트 (기준) | **0.690** | 1,301s | ✅ 유지 |
+| ONNX DirectML (q8/q4f16/fp32) | 미측정(속도 실패) | 229~365ms B=1 | ❌ CPU보다 5~35배 느림 |
+| llama.cpp Vulkan (프롬프트 없음) | 0.626~0.630 | 397~579s | ⚠️ "GGUF 손실"로 오인 |
+| **Vulkan + 쿼리 프롬프트만** | 0.649 | 216s | +0.023 |
+| **Vulkan + 쿼리+문서 프롬프트** | **0.688** | **228s** | ✅ **ONNX와 동급! ~3.5~5.7배 빠름** |
 
-- GGUF 4종(unsloth Q8, AtomicChat Q8/AD-Q6, BF16) 전부 0.626~0.629로 수렴 — **파일·양자화·dense head 유무와 무관** → llama.cpp gemma-embedding2 그래프 구현 한계로 확정.
-- **cos 0.9999(단건)여도 검색이 raw 기준 -0.043~0.046 드리프트** — "cos 동일 = 검색 동일" 추론 금지 재확인.
-- 상세: `docs/design/gemma2-gpu-vulkan-experiment-20261009.md` (DO-NOT-RE-RUN)
+- **대발견**: 기존 ONNX 스크립트(`EmbGemma2Runner.embed`)는 doc=False여도 **쿼리에 "task: search result | query: "를 자동 부착** — GGUF 실험은 이 프롬프트를 누락 → 순위 변화(0.626~0.630)가 "GGUF 손실"처럼 보였던 것. 벡터 cos 0.9999·토크나이저 일치 실측과 부합.
+- GGUF/llama.cpp 자체는 정상 — **검색 품질은 벡터보다 프로토콜(프롬프트)이 지배**하는 사례.
+- **DO-NOT-RE-RUN**: DirectML 재실험·b11516(스케줄링 회귀)·프롬프트 없는 GGUF 판정. GGUF 임베딩은 ONNX와 동일 프롬프트 필수.
+- 상세: `docs/design/gemma2-gpu-vulkan-experiment-20261009.md` (2026-10-09 수정판)
 
 ### 8.1 동기
 
