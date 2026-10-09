@@ -265,6 +265,8 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 > **DO-NOT-RE-RUN**: DirectML 재실험, b11516 사용, "프롬프트 없는 GGUF 임베딩으로 X1 판정"(= 프로토콜 불일치 착시 재현 금지). GGUF 임베딩 시 ONNX와 동일한 프롬프트("task: search result | query: " / "title: none | text: ") 적용 필수.
 >
 > **후속 진행 중**: AtomicChat AD-Q6_K vs unsloth Q8_0 프롬프트 적용 비교 (양자화 수준별 품질 동등성).✅ **완료 (0.684 vs 0.686, 동급)** — Q6과 Q8·제작사 무관 동일 품질, AD-Q6_K(245MB) 최소. **Q6 vs bekko-a8m X1 비교도 완료: 0.684 vs 0.583 (+0.101, Q6 압도)** — 단 jev-mem 개발 중이라 **당장 전환 없음**, 추후 모델 동결 시 재평가 (전환 시 768d 스키마 재구축 + 프롬프트 반영 필요). **granite vs gemma2 비교도 확정**: 품질 전 축에서 gemma2 압도(+0.13~0.17), granite 강점은 384d 무마이그레이션 보수성뿐 — granite 채택 근거는 "스키마 안 바꾸고 가볍게"일 때만.
+>
+> **★ gemma2 운영 확정 (2026-10-09)**: llama.cpp 최신 upstream + can_split 패치 + **Vulkan + ReBAR 8GB 활성화** + `-c 8192 -ub 512 -ngl 99 -np 1 --no-host` + 쿼리/문서 프롬프트. **ReBAR 후 3000토큰 WS 938→581MB (-38%)**. 운영 가이드(빌드·패치·실행·검증): `docs/design/gemma2-llamacpp-operations-guide-20261009.md`. jev-mem 개발 완료 후 이 문서대로 운영.
 
 > **2026-09-30 외부 AI 검토 후속 사이클 완료** — 검토 브리프(`docs/design/multi-agent-implementation-review-brief.md`)에 대한 외부 검토서(`jev-mem-core-implementation-review.md`)의 지적을 전부 처리:
 >

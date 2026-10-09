@@ -455,6 +455,22 @@ RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
 
 **권장 갱신**: jev-mem 임베딩 서버는 **CPU 빌드(패치 적용) + `-c 8192 -ub 512`**가 RAM 관점 최적. Vulkan은 속도 1.5배가 필요할 때만.
 
+### 8.16 ★ 2026-10-09 — ReBAR 활성화 후 재실측 (Vulkan RAM -38% 개선!) ★ 운영 확정
+
+**사용자 BIOS에서 Resizable BAR 활성화 + 재부팅 후** — 메모리 힙 구성 변화:
+
+| 항목 | ReBAR 256MB (이전) | ReBAR 8GB (활성화 후) |
+|---|---|---|
+| vulkaninfo heap | heapIndex=2, 256MB DEVICE_LOCAL+HOST_VISIBLE | **heapIndex=1(8GB VRAM)에 DEVICE_LOCAL+HOST_VISIBLE+HOST_COHERENT** |
+| 짧은 요청 후 WS | 404MB | **171MB** |
+| 3000토큰 후 WS | 938MB | **581MB (-38%)** |
+| 3000토큰 후 VRAM | 191MB | 295MB |
+| Windows 집계 | Shared(RAM) 567MB | Dedicated 295MB + 일부 Shared |
+
+- **ReBAR 8GB 전체가 HOST_VISIBLE** → llama.cpp의 1순위 요청(`eDeviceLocal|eHostVisible`)이 8GB 힙에서 충족 → 513MB 대형 버퍼도 VRAM 매핑 처리.
+- **시스템 RAM 절감이 실제로 발생** (938→581MB WS). llama.cpp 로그는 여전히 "host"로 표기하나, Windows 커밋 기준 물리 RAM 부담은 감소.
+- **운영 확정 (사용자 결정)**: 추후 gemma2 채택 시 **Vulkan 빌드 + ReBAR + `-c 8192 -ub 512 -ngl 99 -np 1 --no-host` + 프롬프트**로 운영. 상세: `docs/design/gemma2-llamacpp-operations-guide-20261009.md`.
+
 **총평 (EmbeddingGemma 2 + 파이프라인 정책 전체)**:
 1. EmbeddingGemma 2 (q8/q4f16 768d 교정 후): bekko와 실질 동급 (76~77 vs 78/90), RAM -151MB, abstain 우위 — 채택 여지 있으나 hit@1 2건 손실 + 재인덱싱(~30분/1721행) + ORT 러너 유지보수로 **보류 권고**, 최종 판단은 외부 검토/사용자 위임.
 2. 게이트 재정렬 A/B: 0콜 시뮬레이션의 rank1 4.4배 개선은 실측에서 미실현 (A 동률, B noans 악화) — **둘 다 기각, 현행 유지**.
