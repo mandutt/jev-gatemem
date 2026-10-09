@@ -404,12 +404,32 @@ RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
 2. **llama-server reconfigurable discussion #25674**: reload_context()·reload_mmproj() 구현됐으나 HTTP API는 미완 — b11515에는 없음.
 3. **Router mode (2025-12 공식, `--models-dir`)**: 모델별 자식 프로세스로 동적 로드/언로드, preset으로 모델별 ctx 설정. 단 동시 상주 시 RAM 2배 (모델 수×).
 4. **llama-swap / gguf-switchboard**: 프록시로 한 번에 1모델만 상주, OOM/컨텍스트 초과 시 스왑. gguf-switchboard는 "OOM-only context fallback" 구현.
-5. **★ Jina llama.cpp 포크 (결정적)**: 임베딩 모델용으로 **`-b`(로지컬 배치)와 `-ub`(물리 배치) 분리** — 원본은 임베딩이 causal이 아니라는 가정으로 `-ub`를 `-b`에 강제(우리 RAM 폭증 원인!). 포크는 독립 설정 가능 → **큰 컨텍스트(-c) + 작은 물리 배치(-ub 512) = 컨텍스트 최대 유지 + RAM/VRAM 제한 동시 달성**. mean pooling 버그도 수정 (ub<b일 때). 실측: `-c 8192 -ub 512` = L4에서 2,025MB VRAM.
+5. **★ Jina llama.cpp 포크 (2025-09-09 이후 방치 확인)**: 블로그가 광고한 "-b/-ub 분리"는 공개 버전(서버·CLI 모두 `n_ubatch = n_batch` 강제)에 **미포함** — Jina의 내부 브랜치(`chore-ubatch-optimization`, 2025-08)에만 mean pooling 멀티-ubatch 누적 + ubatch 독립 설정 존재. 단 서버(`can_split`)는 여전히 차단.
 
-**권장 경로 (우선순위)**:
-1. **Jina 포크(-b/-ub 분리)** — 컨텍스트 최대 + RAM 최소를 동시에. c2048이라도 ub512면 RAM ~500-600MB 유지 가능성. **단 gemma2(Gemma4, 비-causal 아님)와 호환 검증 필요** — Jina 포크는 decoder-only embedding 전제.
-2. **libllama API 직접 구현** (llama-cpp-python) — 프로세스 kill 없는 컨텍스트 교체. 구현 비용 높음.
-3. **라우터/스왑 도구** — 기성품이나 프로세스 스왑 본질은 동일, RAM 절약 목적엔 부분적.
+### 8.14 ★ 2026-10-09 — 최신 upstream + can_split 패치 실측 (해법 확정!)
+
+**발견**: upstream 최신(2026-10-09) `llama-context.cpp`에 **Jina의 mean pooling 멀티-ubatch 누적 코드가 이미 병합됨** ("@Han" 주석 포함). CLI(`llama-embedding`)는 ubatch 512 유지 채 1,406토큰 문서 처리 성공 (768d, norm=1.0). but **서버는 `can_split()`이 memory-less(GEMMA_EMBEDDING2는 create_memory→nullptr) 임베딩을 차단** → "too large" 에러.
+
+**패치**: `server-context.cpp` `can_split()`에 **memory 없음 + mean pooling이면 true 허용** 10줄 추가 → **빌드 후 서버에서 `-c 2048 -ub 512`로 788토큰 문서 HTTP 성공** (768d, norm=1.0).
+
+**RAM 실측 (CPU 빌드, `-c 8192 -ub 512`) — 결정적 패턴**:
+
+| 시점 | WS | Private |
+|---|---|---|
+| 서버 시작 직후 (IDLE) | 123MB | 232MB |
+| 짧은 요청(≤512토큰) 1회 후 | **264MB** | 241MB |
+| 3000토큰 요청 1회 후 | **822MB** | 748MB |
+| 큰 요청 후 짧은 요청 (5/15s 경과) | 822MB **유지** | 748MB |
+
+- **짧은 요청만 하면 264MB 유지** — 큰 요청이 오지 않는 한 안 늘어남.
+- **한 번 큰 요청이 오면 822MB로 영구 상승** — 이후 짧은 요청에도 **줄어들지 않음** (ggml_backend_sched 버퍼 풀링: `sched->is_alloc` true → 재할당 없이 최대 크기 버퍼 재사용. 해제는 sched_free/컨텍스트 종료뿐).
+- **c8192와 c2048 상주 RAM 동일(822MB)** — gemma-embedding2는 memory-less라 KV 캐시 비용 0, RAM은 ubatch(512) 컴퓨트 버퍼만 지배. **컨텍스트를 최대(8192)로 둬도 RAM 불변 = 멀티모달 대비 구조적으로 안전.**
+- **시간 흐름에 따른 점진적 감소: 코드상 불가능** (해제 경로 부재). RAM을 되돌리는 유일한 방법은 **프로세스 재시작(760ms, 상태 없음)** — 멀티모달이 드물면 "큰 요청 후 재시작"으로 264MB 유지 가능.
+
+**운영 권장 (최종)**:
+1. **최신 upstream + can_split 패치(10줄) + `-c 8192 -ub 512`** — 컨텍스트 최대 + RAM 264MB(일상)/822MB(멀티모달 후), b11515 대비 45% 절감.
+2. 멀티모달이 드물면 **재시작 스케줄(야간 등)로 RAM 리셋** — 임베딩 stateless라 안전.
+3. Vulkan 빌드 시 RAM 더 절감 예상 (CPU 빌드 기준값 — 미실측).
 
 **총평 (EmbeddingGemma 2 + 파이프라인 정책 전체)**:
 1. EmbeddingGemma 2 (q8/q4f16 768d 교정 후): bekko와 실질 동급 (76~77 vs 78/90), RAM -151MB, abstain 우위 — 채택 여지 있으나 hit@1 2건 손실 + 재인덱싱(~30분/1721행) + ORT 러너 유지보수로 **보류 권고**, 최종 판단은 외부 검토/사용자 위임.
