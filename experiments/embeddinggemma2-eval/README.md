@@ -224,7 +224,7 @@ stage74(임베딩 교체 실측) 후 lane 분해(stage75)에서 **gemma2 vec_ran
 - 서브 (q8): dailydialog 0.743 / empathetic 0.750 / personachat 0.577 / socialdial 0.690 — 4개 전부 1위.
 - **q8 vs q4f16 정정 (RAM)**: q8 466MB / q4f16 **559MB** — q4f16은 활성화 fp16 유지로 중간 버퍼 큼 (파일 크기 157 vs 314MB와 반대). q8이 RAM·품질 우위, 속도는 q4f16이 1.5배 빠름(888s vs 1301s).
 - **X1 전체 7모델 순위**: gemma2-q8 0.690 > gemma2-q4f16 0.683 > koen 0.622 > baseline 0.587 > bekko 0.583 > granite-fp32 0.557 > granite-q4f16 0.541.
-- **운영 결론**: gemma2 채택 시 **q8이 정답** (RAM 최소+품질 최고). 외부 도메인에서 bekko 대비 +0.107로 압도 — 다만 768d 스키마 전환 + 속도(재인덱스 ~31분) 부담. 상세: `docs/design/granite-rerun-report-20261009.md`
+- **운영 결론**: gemma2 채택 시 **q8(또는 GGUF AD-Q6_K)이 정답** (RAM 최소+품질 최고). 외부 도메인에서 bekko 대비 +0.107로 압도 — 다만 768d 스키마 전환 + 속도(재인덱스 ~31분) 부담. **2026-10-09 추가: Vulkan GGUF+프롬프트로 동일 품질 0.688, AD-Q6_K 245MB, 재인덱스 232s** (§8.5~8.7). 상세: `docs/design/granite-rerun-report-20261009.md`, `docs/design/gemma2-gpu-vulkan-experiment-20261009.md`
 
 ### 8.5 ★ 2026-10-09 — GPU/Vulkan 실측: DirectML 기각, Vulkan 부활 (프롬프트 누락이 "GGUF 손실" 착시)
 
@@ -243,6 +243,33 @@ RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
 - GGUF/llama.cpp 자체는 정상 — **검색 품질은 벡터보다 프로토콜(프롬프트)이 지배**하는 사례.
 - **DO-NOT-RE-RUN**: DirectML 재실험·b11516(스케줄링 회귀)·프롬프트 없는 GGUF 판정. GGUF 임베딩은 ONNX와 동일 프롬프트 필수.
 - 상세: `docs/design/gemma2-gpu-vulkan-experiment-20261009.md` (2026-10-09 수정판)
+
+### 8.6 ★ 2026-10-09 — GGUF 파일별 비교 (Q6 vs Q8 vs 제작사, 프롬프트 적용)
+
+| GGUF | Acc@1 | MRR | 시간 | 파일 크기 |
+|---|---|---|---|---|
+| AtomicChat AD-Q6_K | 0.684 | 0.807 | 232s | **245MB** |
+| unsloth Q8_0 | 0.686 | 0.809 | 226s | 310MB |
+| AtomicChat Q8_0 | 0.688 | 0.812 | 228s | 310MB |
+
+- **양자화 수준(Q6 vs Q8)·제작사(unsloth vs AtomicChat) 모두 품질 차이 없음** (차이 0.002~0.004 = 노이즈).
+- AD-Q6_K는 파일 245MB(Q8 대비 -21%)로 최소 — **GPU 경로 채택 시 AD-Q6_K 권장**. 속도는 셋 다 동일(~230s).
+- 참고: 프롬프트 없으면 4종 모두 0.626~0.630 (프로토콜 차이 착시, §8.5).
+
+### 8.7 ★ 2026-10-09 — Q6(Vulkan+프롬프트) vs bekko-a8m X1 최종 비교
+
+동일 레시피(seed 42, last 6 turns, 5 options, 1,200문항)로 bekko 재실측 — 운영값과 정확히 일치(0.583):
+
+| 모델 | Acc@1 | MRR | 시간 | dim |
+|---|---|---|---|---|
+| **gemma2 AD-Q6_K (Vulkan+프롬프트)** | **0.684** | 0.807 | 232s | 768d |
+| **bekko-a8m (운영, 프롬프트 없음)** | 0.583 | 0.737 | 21s | 1024d |
+| (참고) gemma2 Q6 프롬프트 없음 | 0.629 | 0.756 | 405s | 768d |
+
+- **Q6가 bekko를 +0.101 압도** (프롬프트 적용 시). 프롬프트 없이도 +0.046.
+- bekko는 프롬프트 개념이 없는 모델(MODEL_ENV query/doc = "") — 0.583이 공정한 운영값.
+- **속도는 bekko 21s vs Q6 232s (재인덱스 11배 차)** — 품질 대비 속도 트레이드오프.
+- **운영 판정 (2026-10-09)**: jev-mem은 아직 개발 중 → **당장 전환하지 않음**. gemma2 Q6(+프롬프트)는 품질 면에서 강력한 후보로 기록, 추후 모델 동결 시 재평가. 전환 시: 768d vec 스키마 재구축 + 전체 재인덱스 + 프롬프트 적용 파이프라인 반영 필요.
 
 ### 8.1 동기
 

@@ -264,7 +264,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 >
 > **DO-NOT-RE-RUN**: DirectML 재실험, b11516 사용, "프롬프트 없는 GGUF 임베딩으로 X1 판정"(= 프로토콜 불일치 착시 재현 금지). GGUF 임베딩 시 ONNX와 동일한 프롬프트("task: search result | query: " / "title: none | text: ") 적용 필수.
 >
-> **후속 진행 중**: AtomicChat AD-Q6_K vs unsloth Q8_0 프롬프트 적용 비교 (양자화 수준별 품질 동등성).✅ **완료 (0.684 vs 0.686, 동급)** — Q6과 Q8·제작사 무관 동일 품질, AD-Q6_K(245MB) 최소. **다음: Q6 vs bekko-a8m X1 비교.**
+> **후속 진행 중**: AtomicChat AD-Q6_K vs unsloth Q8_0 프롬프트 적용 비교 (양자화 수준별 품질 동등성).✅ **완료 (0.684 vs 0.686, 동급)** — Q6과 Q8·제작사 무관 동일 품질, AD-Q6_K(245MB) 최소. **Q6 vs bekko-a8m X1 비교도 완료: 0.684 vs 0.583 (+0.101, Q6 압도)** — 단 jev-mem 개발 중이라 **당장 전환 없음**, 추후 모델 동결 시 재평가 (전환 시 768d 스키마 재구축 + 프롬프트 반영 필요).
 
 > **2026-09-30 외부 AI 검토 후속 사이클 완료** — 검토 브리프(`docs/design/multi-agent-implementation-review-brief.md`)에 대한 외부 검토서(`jev-mem-core-implementation-review.md`)의 지적을 전부 처리:
 >
