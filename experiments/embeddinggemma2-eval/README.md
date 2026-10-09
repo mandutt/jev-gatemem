@@ -395,6 +395,22 @@ RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
 - **512 클램프 위험**: ①컴팩션 덤프형 장문은 핵심이 뒤편에 있어 앞부분 클램프 시 의미 왜곡 ②FTS(전체) vs vec(클램프) 도메인 불일치로 RRF 어긋남 ③장문 @file 첨부 결론 누락.
 - **운영 권장**: Q6 서버 `-c 1024`(+`-ub 1024`) — 512토큰 클램프+프롬프트+여유 처리, RAM 906MB. 장문 문서는 청크 분할 병행 필수 (stage1 [ASSISTANT] 청킹 재활용).
 
+### 8.13 ★ 2026-10-09 — 컨텍스트 확장 전략 조사 (동적 컨텍스트·스왑 사례)
+
+**문제**: 멀티모달 대비 컨텍스트 최대 유지 vs 시스템 RAM 최소화 트레이드오프. llama-server의 `-c`는 시작 시 고정, 런타임 변경 API 없음.
+
+**동적 컨텍스트 관련 공식/커뮤니티 사례**:
+1. **dinamik context PR #13295 (미병합)**: 런타임 n_ctx 변경 제안 → ggerganov 거부. 사유: "worst-case 메모리 미리 할당이 옳다" + "**libllama API로 save state → 새 n_ctx 컨텍스트 생성 → load state가 이미 가능**" — 가중치 유지 채 컨텍스트만 교체 가능함을 공식 확인.
+2. **llama-server reconfigurable discussion #25674**: reload_context()·reload_mmproj() 구현됐으나 HTTP API는 미완 — b11515에는 없음.
+3. **Router mode (2025-12 공식, `--models-dir`)**: 모델별 자식 프로세스로 동적 로드/언로드, preset으로 모델별 ctx 설정. 단 동시 상주 시 RAM 2배 (모델 수×).
+4. **llama-swap / gguf-switchboard**: 프록시로 한 번에 1모델만 상주, OOM/컨텍스트 초과 시 스왑. gguf-switchboard는 "OOM-only context fallback" 구현.
+5. **★ Jina llama.cpp 포크 (결정적)**: 임베딩 모델용으로 **`-b`(로지컬 배치)와 `-ub`(물리 배치) 분리** — 원본은 임베딩이 causal이 아니라는 가정으로 `-ub`를 `-b`에 강제(우리 RAM 폭증 원인!). 포크는 독립 설정 가능 → **큰 컨텍스트(-c) + 작은 물리 배치(-ub 512) = 컨텍스트 최대 유지 + RAM/VRAM 제한 동시 달성**. mean pooling 버그도 수정 (ub<b일 때). 실측: `-c 8192 -ub 512` = L4에서 2,025MB VRAM.
+
+**권장 경로 (우선순위)**:
+1. **Jina 포크(-b/-ub 분리)** — 컨텍스트 최대 + RAM 최소를 동시에. c2048이라도 ub512면 RAM ~500-600MB 유지 가능성. **단 gemma2(Gemma4, 비-causal 아님)와 호환 검증 필요** — Jina 포크는 decoder-only embedding 전제.
+2. **libllama API 직접 구현** (llama-cpp-python) — 프로세스 kill 없는 컨텍스트 교체. 구현 비용 높음.
+3. **라우터/스왑 도구** — 기성품이나 프로세스 스왑 본질은 동일, RAM 절약 목적엔 부분적.
+
 **총평 (EmbeddingGemma 2 + 파이프라인 정책 전체)**:
 1. EmbeddingGemma 2 (q8/q4f16 768d 교정 후): bekko와 실질 동급 (76~77 vs 78/90), RAM -151MB, abstain 우위 — 채택 여지 있으나 hit@1 2건 손실 + 재인덱싱(~30분/1721행) + ORT 러너 유지보수로 **보류 권고**, 최종 판단은 외부 검토/사용자 위임.
 2. 게이트 재정렬 A/B: 0콜 시뮬레이션의 rank1 4.4배 개선은 실측에서 미실현 (A 동률, B noans 악화) — **둘 다 기각, 현행 유지**.
