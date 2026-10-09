@@ -46,9 +46,9 @@ Honcho는 Plastic Labs의 '에이전트 메모리 인프라' 서버(FastAPI + Po
 - **비동기 deriver/specialist 구조**: 데몬 구조 전환 + 코퍼스 2,085행 규모에서 LLM 추출 파이프라인 전체는 OptMem '세대 압축' 보류(2026-10-09)와 동일 논리 — 수만 행·수백 세션 규모에서 재검토. 우리는 write gate로 '들어오는 문'을 거르는 대척 설계를 이미 확정 운영 중.
 
 ### 보류 등록 (0콜 유병률 실측 전 채택 금지)
-1. **자동 모순/지식 업데이트 감지 배치**: corrected_by 사용 0건, 라이브 모순 빈도 미측정. Honcho는 deduction specialist가 배치로 처리하나 우리는 write-time supersede가 이미 주요 경로. 채택 전제 = 라이브 트래픽에서 'supersede로 못 잡는 모순' 유병률 실측(사람 라벨링, 0콜).
+1. **자동 모순/지식 업데이트 감지 배치**: corrected_by 사용 0건, 라이브 모순 빈도 미측정. 한계 인식: supersede 발동은 **write-time 게이트가 '같은 사실의 새 버전'을 인지한 경우**에만 일어나는데, G-qual/G-AS는 '이 내용을 저장할까'만 판정하고 기존 행과의 모순/대체 관계는 보지 않는다 — **새 버전이 별개 행으로 저장되는 경로가 기본**이며 supersede 113행은 그 우회가 이미 발생한 사례일 수 있다. 채택 전제 = 라이브 트래픽에서 'supersede로 못 잡은(별개 행으로 저장된) 모순' 유병률 실측(사람 라벨링, 0콜) + 검출된 경우가 실제 회수/노출에 해를 주는지(과거 gold 유실) 확인.
 2. **능동 소비(dialectic-style tool-use reading)**: 우리 소비는 정적 prefetch top-k + 프레이밍. '필요할 때만 추가 수집'은 stage93/94 정답 활용 −16pp 문제의 다른 해법 축일 수 있으나 Hermes 플러그인 구조 변경 + 턴당 비용 증가 → 사용자 승인 영역. 미실측.
-3. **surprisal 기반 표적 재추론**: 신규 축. 채택 전제 = 코퍼스 수만 행 (OptMem 보류와 동일 기준) + production-exact rank>20 gold 유지 회귀.
+3. **surprisal 기반 표적 재추론 (신규 축 — 상세 메커니즘, 소스 실측 기준)**: Honcho의 dream 주기가 '메모리 전체 재처리' 대신 **'이례적인 기억만 추려 추론 예산을 집중'**하는 표적화. 점수 = 정보 이론의 surprisal(−log P): 각 observation 임베딩을 트리 구조(설정 `TREE_TYPE`, kNN `TREE_K=5`)에 batch_insert 후 `tree.surprisal(embedding)`으로 이웃 밀도 추정 — **주변에 비슷한 기억이 거의 없는 기억 = 높은 surprisal**. min-max 정규화 후 상위 `TOP_PERCENT_SURPRISAL=0.10`(최소 1건)만 선별(`_filter_by_percent`), `SAMPLING_STRATEGY="recent"`(기본)으로 후보를 최근 observation으로 한정. 선별된 기억은 hint로 deduction specialist에 전달(specialist는 hint에 얽매이지 않고 자유 탐색 가능) — '평범한 기억은 건드리지 않고 특이한 기억에만 추론 예산을 쓰는' 전략. 매 dream 주기마다 새 observation이 들어오면 trigger(`DREAM.DOCUMENT_THRESHOLD` 등). **왜 우리는 보류인가 (chat 답변 요약)**: ① **코퍼스 규모** — 트리 분포가 있어야 점수 의미가 있고 Honcho 자체도 `TREE_K*2` 미만이면 skip; 우리 2,085행은 '회의가 화요일→목요일' 같은 명백한 버전 충돌이 이미 write-time supersede(113행)로 처리되는 밀집 규모라 이례성 표본이 대부분 작업 지시/이벤트 반복 노이즈(stage64~66 규칙 행 도배·mem0 프로브 정확 중복 15그룹의 재현) ② **문제가 이미 다른 경로로 처리됨** — 모순/버전 충돌은 write-time supersede+valid_until 담당, corrected_by 0건 = 자동 감지가 구제할 미처리 모순 유병률 미실측 ③ **fail-open 원칙 리스크** — '이례적인 기억' 표적 집중은 드물지만 중요한 기억의 강등/삭제 위험을 수반, 채택 전제 = production-exact rank>20 gold(stage85) 유지 3-run 전체 재현 회귀. → **'신규 축'으로만 등록, 0콜 유병률 실측(1차: supersede로 못 잡는 모순 존재 여부) 전 채택 금지.**
 
 ### 정합 확인 (변경 없음, 정보로만)
 - RRF k=60 동일 — 검색 융합 상수가 외부 SOTA 시스템과 일치 (우리 후보 풀 구성의 표준성을 지지하는 간접 신호).
@@ -62,4 +62,4 @@ Honcho는 Plastic Labs의 '에이전트 메모리 인프라' 서버(FastAPI + Po
 
 ## 6. 결론
 
-Honcho는 '저장 후 비동기 LLM 추론(deriver+dream+peer card)'으로 메모리 가치를 만드는 대척 설계 — 우리의 'write-time 게이트 + read-time JEV rerank'와 방향이 반대다. 직접 이식 사항은 없다: 지식 업데이트는 우리 supersede+valid_until이 기능적으로 우위(삭제 없음), peer card 규칙은 실측 기각 레버와 겹침, 비동기 추론은 코퍼스 규모상 시기상조. 유일한 가치 = 설계 정합 확인(RRF k=60 일치)과 보류 3건(모순 감지·능동 소비·surprisal)의 레버 지도 확장. 특별한 라이브 문제와 교차하지 않으므로 우선순위 낮음.
+Honcho는 '저장 후 비동기 LLM 추론(deriver+dream+peer card)'으로 메모리 가치를 만드는 대척 설계 — 우리의 'write-time 게이트 + read-time JEV rerank'와 방향이 반대다. 직접 이식 사항은 없다: 지식 업데이트는 우리 supersede+valid_until이 기능적으로 우위(삭제 없음)이나 **결합 한계**(G-qual이 모순을 보지 않아 '새 버전 별개 저장' 우회 가능, corrected_by 0건)를 보류 1로 등록. peer card 규칙은 실측 기각 레버와 겹침, 비동기 추론은 코퍼스 규모상 시기상조. 유일한 가치 = 설계 정합 확인(RRF k=60 일치)과 보류 3건(모순 감지·능동 소비·surprisal 표적 재추론)의 레버 지도 확장. 특별한 라이브 문제와 교차하지 않으므로 우선순위 낮음.
