@@ -39,9 +39,9 @@
 | unsloth BF16 (프롬프트 없음) | 0.627 | 579s | 양자화 없음 |
 | AtomicChat Q8_0 + add_special(BOS/EOS) | 0.630 | 401s | 토크나이저 ONNX와 100% 일치 |
 | AtomicChat Q8_0 + **쿼리 프롬프트만** | 0.649 | 216s | +0.023 개선 |
-| **AtomicChat Q8_0 + 쿼리+문서 프롬프트** | **0.688** | **228s** | **ONNX와 동급!** |
-| ONNX CPU raw (Q_PREFIX) | 0.672 | 790s | — |
-| ONNX CPU + 프롬프트 (doc=True) | 0.690 | 1,301s | 종전 최고 |
+| AtomicChat Q8_0 + **쿼리+문서 프롬프트** | **0.688** | **228s** | **ONNX와 동급!** |
+| ONNX CPU 쿼리프롬프트만 (=종전 "raw") | 0.672 | 790s | doc=False=Q_PREFIX 자동 적용 |
+| ONNX CPU + 쿼리+문서 프롬프트 (doc=True) | 0.690 | 1,301s | 종전 최고 |
 
 ### 확정 결론: GGUF/llama.cpp는 무죄, 실험 프로토콜 차이가 원인
 
@@ -66,7 +66,7 @@
 - **bekko-a8m 제작자**: Q8_0 cos 0.9997이지만 검색 delta는 따로 측정 — 저비트(IQ4_XS)에서 cos 0.986인데 NDCG -0.0195.
 - **gemma 임베딩 #19040/#18677**: unsloth/ggml-org GGUF는 dense head(2_Dense/3_Dense) 누락 — 포함하면 cos 1.0. 단 우리 모델(v2)은 head 미포함이어도 cos 0.9999였고 X1 손실은 head와 무관.
 - **llama-server 캐시 오염 #26282**: -np 1로 재실측했으나 동일 → 해당 없음 확인.
-- **AtomicChat "Q8_0 98.7% same top"**: 우리 X1 도메인(한국어 대화 응답 선택)에서는 재현 안 됨 — 그들의 30개 언어 검색 벤치와 도메인 차이.
+- **AtomicChat "Q8_0 98.7% same top"**: 우리 X1 도메인에서는 프롬프트 없이 재현 안 됐으나, **프롬프트 일치 후 0.688 vs 0.690으로 재현** (프로토콜 일치가 핵심).
 
 ## 6. 최종 결론 (2026-10-09 수정판)
 
@@ -87,5 +87,5 @@
 ## 8. 후속 (2026-10-09)
 
 - [x] **AtomicChat AD-Q6_K vs unsloth Q8_0 프롬프트 적용 비교** — ✅ **동급 확정**: AD-Q6_K 0.684 / unsloth Q8_0 0.686 / AtomicChat Q8_0 0.688 (MRR 0.807/0.809/0.812, 시간 232s/226s/228s). **양자화 수준(Q6 vs Q8)·제작사(unsloth vs AtomicChat) 모두 품질 차이 없음** (차이 0.002~0.004 = 노이즈). AD-Q6_K는 파일 245MB(Q8 310MB 대비 -21%)로 최소 — **GPU 경로 채택 시 AD-Q6_K 권장.**
-- [ ] Q6 vs bekko-a8m X1 비교 (2026-10-09 진행 중)
+- [x] **Q6 vs bekko-a8m X1 비교** — ✅ **완료**: gemma2 AD-Q6_K(Vulkan+프롬프트) **0.684** vs bekko-a8m(운영) **0.583** → **+0.101 압도** (MRR 0.807 vs 0.737, bekko 21s / Q6 232s). 프롬프트 없이도 Q6 0.629 > bekko 0.583. **당장 전환 없음** (jev-mem 개발 중, 모델 동결 시 재평가 — 사용자 결정 2026-10-09).
 - [ ] jev-mem 파이프라인 프롬프트 적용 지침 반영
