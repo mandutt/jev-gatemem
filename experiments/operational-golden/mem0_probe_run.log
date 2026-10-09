@@ -1,0 +1,130 @@
+[i] working_memory 전체 행: 2085
+[i] superseded 보유 (구버전 제거 메커니즘 존재): 113
+[i] valid_until 설정 행: 159
+[i] [ASSISTANT] 프리픽스 행: 728
+
+[중복 content] 정확히 같은 content가 2+ 행: 총 15 그룹 (상위 15)
+  x8 [2026-08-20~2026-08-21] ids=b3ec63e373ff987d,5800d7b5d274a6e3,ea42eb053c8ce34a,ee452382b
+    [USER] 작업 디렉토리에 `raw_sales.csv`가 있습니다. 컬럼: `gu,dong,year,quarter,price` (price는 문자열, 예: '5억 2000만원').
+다음을 수행하세
+  x6 [2026-09-28~2026-10-05] ids=bf3836681df5ecf4,db52a5c22c4a3d5f,d88dd3b9966484fb,537845e4d
+    [USER] 좋아 승인할게
+  x6 [2026-08-20~2026-08-21] ids=5e3942d7255b108c,a181917ea459b696,0d5480112e522eb1,eccc520bd
+    [USER] Python으로 CSV 파일을 입력받아 처리하는 명령줄 도구를 작성하세요.
+요구사항:
+1. `main.py` 파일: argparse로 `--input input.csv --output 
+  x5 [2026-09-27~2026-10-03] ids=44a9497948f0a382,01cc2b246d84ffa6,d9e5decd4d81b70b,67ca34255
+    [USER] 좋아 진행해줘
+  x5 [2026-08-21~2026-08-21] ids=708ee16b54104c7c,8813c8f70117fa7d,4060ddc905324dbf,4a0020449
+    [USER] 작업 디렉토리에 두 개의 실패하는 스크립트가 있습니다:
+1. `check_env.py` — 환경 설정 파일이 없어서 실패
+2. `run_report.py` — check_env.py 성
+  x5 [2026-08-20~2026-08-21] ids=7d864690e499592b,021dc34bb286138b,8e6517cfbb2241cb,8c253be3f
+    [USER] 5단계 데이터 파이프라인을 구축하고 실행하세요. 작업 디렉토리에 `orders.csv`가 있습니다
+(컬럼: order_id, customer, product, qty, price).
+다
+  x4 [2026-08-21~2026-08-21] ids=a3e42f655c0ae372,6085dd1b958416b7,1f96cb4a265a2b4f,76d06e369
+    [USER] 작업: progress.md에 'Hello StateM' 이라는 파일을 만들고 계획을 기록하세요.
+그 후 StateM run을 시작하고 plan 노드에서 멈추세요:
+1. `python 
+  x4 [2026-08-20~2026-08-21] ids=59a8695129af7d1e,dc19c482355b5472,8cc620cac2e7015f,bd54fec9a
+    [USER] 작업 디렉토리에 의도적으로 버그가 있는 `calc.py`와 테스트 파일 `test_calc.py`가 있습니다.
+`python -m pytest test_calc.py -q`를 실행하면 
+  x4 [2026-08-20~2026-08-21] ids=758820b5d429e846,21d9097c7a271e7f,d43406b564ffcc0f,aff0f62de
+    [USER] 작업 디렉토리에 단일 파일 `app.py`가 있습니다. 이 파일에는 세 가지 기능이 섞여 있습니다:
+1. 문자열 처리 (slugify, camel_to_snake)
+2. 파일 유틸리티 
+  x4 [2026-08-21~2026-08-21] ids=fed5431415f116b4,8826ce71ff4bba40,ae85cd0b68d4a0f9,0e56e3c59
+    [USER] 작업 디렉토리(CWD)에 progress.md 파일을 생성하세요 (반드시 현재 작업 디렉토리에). 내용:
+  - 계획: calc.py의 버그를 찾아 수정하여 pytest test_cal
+  x4 [2026-08-20~2026-08-21] ids=0944f1eb1c744c43,bdcf871ed72df6d6,eb83f4e515694312,8fc316450
+    [USER] 다음 주제를 웹에서 조사하고 보고서를 작성하세요:
+주제: '2025년 한국 아파트 분양가 상승률과 주요 원인'
+요구사항:
+1. web_search와 web_extract 도구를 사용해 
+  x3 [2026-08-20~2026-08-20] ids=5e41e1946a0bb6b5,4e47314ff6bc4d7c,8c4903d35143d340
+    [USER] 작업 디렉토리에 작은 Python 유틸리티 프로젝트를 문서화하세요.
+프로젝트 내용: `utils.py` (현재 존재) — `add(a,b)`, `mul(a,b)`, `greet(name
+  x3 [2026-08-21~2026-08-21] ids=db2becf32a9d2aca,54ae0e02ac72c5e1,5a7193f2dce97624
+    [USER] 작업 디렉토리에 progress.md 파일을 생성하세요. 내용:
+  - 계획: calc.py의 버그를 찾아 수정하여 pytest test_calc.py가 모두 통과하게 한다
+  - ve
+  x3 [2026-08-21~2026-08-21] ids=52759c40276daed9,3fb14a8a3726e0cf,fcf4e880558089c7
+    [USER] calc.py에 의도적인 버그가 있습니다. pytest test_calc.py -q를 실행하여 실패를 확인하고, 버그를 수정하세요. test_calc.py는 수정하지 마세요. 수정 후에
+  x2 [2026-08-18~2026-08-19] ids=4c118f7d329e35e6,9690f3f96dd26eb2
+    [USER] 중간에 중단되었어. 계속 이어서 해줘
+
+[i] 클러스터링 대상: 2085 행
+[클러스터] 명사 50%+ 겹침 & 3개 이상 공유 → 99 그룹 (2+ 행)
+
+  [30행, 2026-08-01~2026-08-01] types=Counter({'error': 29, 'learning': 1})
+    ca88c3cc7b035549 2026-08-01 02:58 | [opencode session] task: 정지되었었는데, 다시 이어서 시작해줘 project: C:\Users\mandu\Documents\opencode\t
+    37691fc654d86d5a 2026-08-01 03:15 | [opencode session] task: 정지되었었는데, 다시 이어서 시작해줘 project: C:\Users\mandu\Documents\opencode\t
+    434a51af68dfc0fd 2026-08-01 03:26 | [opencode session] task: 정지되었었는데, 다시 이어서 시작해줘 project: C:\Users\mandu\Documents\opencode\t
+    763fb0e81d993375 2026-08-01 03:30 | [opencode session] task: 정지되었었는데, 다시 이어서 시작해줘 project: C:\Users\mandu\Documents\opencode\t
+
+  [28행, 2026-09-30~2026-10-01] types=Counter({'context': 24, 'preference': 3, 'error': 1})
+    e1c7cbf266cb2733 2026-09-30 23:29 | [IMPORTANT: Background process proc_2ab03696cb75 completed (exit_code=0). Command: B="$LOC
+    bed1439cb846ff2f 2026-09-30 23:30 | [IMPORTANT: Background process proc_56298f399ff0 completed (exit_code=0). Command: B="$LOC
+    6b43d1a1b9c469de 2026-09-30 23:30 | [IMPORTANT: Background process proc_c96c148fdbab completed (exit_code=0). Command: B="$LOC
+    a23629ac94dba233 2026-09-30 23:31 | [IMPORTANT: Background process proc_a96a444fc9a8 completed (exit_code=0). Command: B="$LOC
+
+  [26행, 2026-10-04~2026-10-09] types=Counter({'instruction': 17, 'observation': 9})
+    8ad9a0bf4294f563 2026-10-04 03:29 | [IMPORTANT: Background process proc_221244447674 completed normally (exit code 0). Command
+    87995722b88d9c86 2026-10-04 03:30 | [IMPORTANT: Background process proc_f00cd63d2579 completed normally (exit code 0). Command
+    600dda9a00c1c9a9 2026-10-04 03:30 | [IMPORTANT: Background process proc_b72d67077e7f completed normally (exit code 0). Command
+    abc748e2cb66adae 2026-10-04 03:30 | [IMPORTANT: Background process proc_dd4ac6b8a718 completed normally (exit code 0). Command
+
+  [23행, 2026-08-08~2026-10-01] types=Counter({'preference': 21, 'error': 1, 'context': 1})
+    07c52240da83b166 2026-08-08 16:42 | [IMPORTANT: Background process proc_949b385c603d completed normally (exit code 0). Command
+    168dd0afa598f2cf 2026-10-01 00:38 | [IMPORTANT: Background process proc_4680ba347a8b completed normally (exit code 0). Command
+    f80eba582c392fec 2026-10-01 00:39 | [IMPORTANT: Background process proc_bc0f8ef193ef completed normally (exit code 0). Command
+    e8aeff3580e789d3 2026-10-01 00:47 | [IMPORTANT: Background process proc_05ca3b7b993d completed normally (exit code 0). Command
+
+  [20행, 2026-08-16~2026-08-17] types=Counter({'context': 20})
+    e2e8e224ee29660e 2026-08-16 13:39 | [codex session] task: 이 세션을 worker-a 세션으로 지정할게 project: C:\Users\mandu\Documents\opencode\
+    f69fd16bd022c7ce 2026-08-16 13:41 | [codex session] task: 이 세션을 worker-a 세션으로 지정할게 project: C:\Users\mandu\Documents\opencode\
+    99056232647ac6ad 2026-08-16 13:47 | [codex session] task: 이 세션을 worker-a 세션으로 지정할게 project: C:\Users\mandu\Documents\opencode\
+    34a109d365234dea 2026-08-16 13:47 | [codex session] task: 이 세션을 worker-a 세션으로 지정할게 project: C:\Users\mandu\Documents\opencode\
+
+  [18행, 2026-08-21~2026-08-21] types=Counter({'context': 18})
+    6a0f380b61b116f8 2026-08-21 08:43 | 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\proto-resume-work 모든 파일 생성/수정은 반드시
+    6affbe8131c7648e 2026-08-21 10:49 | 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\u1-work 모든 파일 생성/수정은 반드시 이 디렉토리 안에
+    fc40d2105f56117f 2026-08-21 10:52 | 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\u1-work 모든 파일 생성/수정은 반드시 이 디렉토리 안에
+    af6f052af28dd0a1 2026-08-21 10:59 | 작업 디렉토리(절대 경로): C:\Users\mandu\hermes-made\statem-bench\u2-work 모든 파일 생성/수정은 반드시 이 디렉토리 안에
+
+  [9행, 2026-08-20~2026-08-21] types=Counter({'context': 9})
+    b3ec63e373ff987d 2026-08-20 14:23 | 작업 디렉토리에 `raw_sales.csv`가 있습니다. 컬럼: `gu,dong,year,quarter,price` (price는 문자열, 예: '5억 2000만
+    5800d7b5d274a6e3 2026-08-20 14:26 | 작업 디렉토리에 `raw_sales.csv`가 있습니다. 컬럼: `gu,dong,year,quarter,price` (price는 문자열, 예: '5억 2000만
+    40632787f67cd437 2026-08-21 03:55 | 작업 디렉토리에 `raw_sales.csv`가 있습니다. 컬럼: `gu,dong,year,quarter,price` (price는 문자열, 예: '5억 2000만
+    ea42eb053c8ce34a 2026-08-21 03:59 | 작업 디렉토리에 `raw_sales.csv`가 있습니다. 컬럼: `gu,dong,year,quarter,price` (price는 문자열, 예: '5억 2000만
+
+  [9행, 2026-08-21~2026-08-21] types=Counter({'context': 9})
+    db2becf32a9d2aca 2026-08-21 07:25 | 작업 디렉토리에 progress.md 파일을 생성하세요. 내용: - 계획: calc.py의 버그를 찾아 수정하여 pytest test_calc.py가 모두 통과하
+    54ae0e02ac72c5e1 2026-08-21 07:30 | 작업 디렉토리에 progress.md 파일을 생성하세요. 내용: - 계획: calc.py의 버그를 찾아 수정하여 pytest test_calc.py가 모두 통과하
+    5a7193f2dce97624 2026-08-21 07:35 | 작업 디렉토리에 progress.md 파일을 생성하세요. 내용: - 계획: calc.py의 버그를 찾아 수정하여 pytest test_calc.py가 모두 통과하
+    fed5431415f116b4 2026-08-21 07:43 | 작업 디렉토리(CWD)에 progress.md 파일을 생성하세요 (반드시 현재 작업 디렉토리에). 내용: - 계획: calc.py의 버그를 찾아 수정하여 pyte
+
+  [8행, 2026-08-15~2026-08-17] types=Counter({'context': 7, 'error': 1})
+    de377235957504cc 2026-08-15 09:01 | [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\m
+    419383c5d896e070 2026-08-15 12:12 | [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\m
+    2554a78ba36bc7df 2026-08-15 12:52 | [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\m
+    6b3a695a8a6ad0de 2026-08-15 13:17 | [codex session] task: 너는 이 프로젝트의 Technical Lead이자 AI Orchestrator다. 프로젝트: - 경로: C:\Users\m
+
+  [7행, 2026-08-07~2026-08-19] types=Counter({'context': 7})
+    d605ceba5d71a624 2026-08-07 14:37 | 중간에 끊긴 것 같아. 계속 이어서 해줘
+    569b5511a88898c3 2026-08-08 02:58 | 중간에 끊긴 것 같은데, 다시 이어서 해줘
+    de66e16fc5a974fd 2026-08-13 13:54 | 중간에 중단된 것 같은데 이어서 해줘
+    48c84d663728ba37 2026-08-18 13:33 | 중간에 끊긴 것 같아. 계속 이어서 진행해줘
+
+  [7행, 2026-08-20~2026-08-21] types=Counter({'context': 7})
+    5e3942d7255b108c 2026-08-20 14:14 | Python으로 CSV 파일을 입력받아 처리하는 명령줄 도구를 작성하세요. 요구사항: 1. `main.py` 파일: argparse로 `--input input.
+    a181917ea459b696 2026-08-20 14:15 | Python으로 CSV 파일을 입력받아 처리하는 명령줄 도구를 작성하세요. 요구사항: 1. `main.py` 파일: argparse로 `--input input.
+    86d9270447c113fd 2026-08-21 02:46 | Python으로 CSV 파일을 입력받아 처리하는 명령줄 도구를 작성하세요. 요구사항: 1. `main.py` 파일: argparse로 `--input input.
+    0d5480112e522eb1 2026-08-21 02:48 | Python으로 CSV 파일을 입력받아 처리하는 명령줄 도구를 작성하세요. 요구사항: 1. `main.py` 파일: argparse로 `--input input.
+
+  [7행, 2026-08-21~2026-08-21] types=Counter({'context': 7})
+    708ee16b54104c7c 2026-08-21 02:09 | 작업 디렉토리에 두 개의 실패하는 스크립트가 있습니다: 1. `check_env.py` — 환경 설정 파일이 없어서 실패 2. `run_report.py` — c
+    37bb52e082eb1aa1 2026-08-21 02:27 | 작업 디렉토리에 두 개의 실패하는 스크립트가 있습니다: 1. `check_env.py` — 환경 설정 파일이 없어서 실패 2. `run_report.py` — c
+    8813c8f70117fa7d 2026-08-21 02:31 | 작업 디렉토리에 두 개의 실패하는 스크립트가 있습니다: 1. `check_env.py` — 환경 설정 파일이 없어서 실패 2. `run_report.py` — c
+    4060ddc905324dbf 2026-08-21 02:37 | 작업 디렉토리에 두 개의 실패하는 스크립트가 있습니다: 1. `check_env.py` — 환경 설정 파일이 없어서 실패 2. `run_report.py` — c
