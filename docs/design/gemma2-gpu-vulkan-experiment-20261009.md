@@ -84,7 +84,8 @@
 - 결과 JSON: `run-20260930/cand/x1_gemma2_vulkan_q8.json`, `run-20261006-embedgemma2/x1_vulkan_qp_result.json`, `x1_vulkan_both_result.json` (+ 로그 `x1_vulkan_qp.log`, `x1_vulkan_both.log`)
 - GPU: RX 580X (Polaris) — DirectML 부적합, Vulkan은 Q8 스루풋 228s로 실용적.
 
-## 8. 후속 (2026-10-09 진행 중)
+## 8. 후속 (2026-10-09)
 
-- [ ] AtomicChat AD-Q6_K vs unsloth Q8_0 프롬프트 적용 비교 (양자화 수준별 품질 동등성)
+- [x] **AtomicChat AD-Q6_K vs unsloth Q8_0 프롬프트 적용 비교** — ✅ **동급 확정**: AD-Q6_K 0.684 / unsloth Q8_0 0.686 / AtomicChat Q8_0 0.688 (MRR 0.807/0.809/0.812, 시간 232s/226s/228s). **양자화 수준(Q6 vs Q8)·제작사(unsloth vs AtomicChat) 모두 품질 차이 없음** (차이 0.002~0.004 = 노이즈). AD-Q6_K는 파일 245MB(Q8 310MB 대비 -21%)로 최소 — **GPU 경로 채택 시 AD-Q6_K 권장.**
+- [ ] Q6 vs bekko-a8m X1 비교 (2026-10-09 진행 중)
 - [ ] jev-mem 파이프라인 프롬프트 적용 지침 반영

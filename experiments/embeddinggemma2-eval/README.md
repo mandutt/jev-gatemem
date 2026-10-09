@@ -239,6 +239,7 @@ RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
 | **Vulkan + 쿼리+문서 프롬프트** | **0.688** | **228s** | ✅ **ONNX와 동급! ~3.5~5.7배 빠름** |
 
 - **대발견**: 기존 ONNX 스크립트(`EmbGemma2Runner.embed`)는 doc=False여도 **쿼리에 "task: search result | query: "를 자동 부착** — GGUF 실험은 이 프롬프트를 누락 → 순위 변화(0.626~0.630)가 "GGUF 손실"처럼 보였던 것. 벡터 cos 0.9999·토크나이저 일치 실측과 부합.
+- **Q6 vs Q8 vs 제작사 (프롬프트 적용, 2026-10-09)**: AD-Q6_K 0.684 / unsloth Q8_0 0.686 / AtomicChat Q8_0 0.688 (MRR 0.807/0.809/0.812) — **모두 동급** (차이 0.002~0.004 = 노이즈). AD-Q6_K 파일 245MB로 최소(-21%).
 - GGUF/llama.cpp 자체는 정상 — **검색 품질은 벡터보다 프로토콜(프롬프트)이 지배**하는 사례.
 - **DO-NOT-RE-RUN**: DirectML 재실험·b11516(스케줄링 회귀)·프롬프트 없는 GGUF 판정. GGUF 임베딩은 ONNX와 동일 프롬프트 필수.
 - 상세: `docs/design/gemma2-gpu-vulkan-experiment-20261009.md` (2026-10-09 수정판)
