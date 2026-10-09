@@ -1,0 +1,634 @@
+{
+ "retention": {
+  "λ=0.01/σ=0.3": {
+   "tiers": {
+    "cold": 372,
+    "warm": 1517,
+    "hot": 37
+   },
+   "evictable": [],
+   "evictable_n": 0,
+   "evictable_importance": {},
+   "evictable_detail": {
+    "importance": {},
+    "types": {},
+    "samples": []
+   }
+  },
+  "λ=0.05/σ=0.3": {
+   "tiers": {
+    "evictable": 646,
+    "cold": 727,
+    "warm": 551,
+    "hot": 2
+   },
+   "evictable": [
+    "a68b370287d1892f",
+    "78a245c364d090f5",
+    "261752817e5c7698",
+    "72f149d62c9b1c53",
+    "c2e4706866280281",
+    "c5137c518d9a8a23",
+    "c9e4828c93bdb0a0",
+    "5a3ebc06a87940da",
+    "1cef4743165b7707",
+    "9150f1246613b092",
+    "a13019e1f438960c",
+    "9f04ed2c8e14f11b",
+    "132fb95d922f9bc5",
+    "dce5e8ceddf18db9",
+    "2ecef73164830638",
+    "ed3a3442d3bcbb33",
+    "70d278ec0b1d9338",
+    "7957dfecc55960fe",
+    "49e64acfa51e5686",
+    "7b9a307f12eaba6c"
+   ],
+   "evictable_n": 646,
+   "evictable_importance": {
+    "0.9": 7,
+    "0.5": 531,
+    "0.85": 1,
+    "0.6": 91,
+    "0.8": 4,
+    "0.7": 5,
+    "0.75": 1,
+    "0.65": 5,
+    "0.55": 1
+   }
+  },
+  "λ=0.01/σ=0.0": {
+   "tiers": {
+    "cold": 406,
+    "warm": 1483,
+    "hot": 37
+   },
+   "evictable": [],
+   "evictable_n": 0,
+   "evictable_importance": {}
+  },
+  "λ=0.1/σ=0.3": {
+   "tiers": {
+    "evictable": 666,
+    "cold": 1127,
+    "warm": 133
+   },
+   "evictable": [
+    "a68b370287d1892f",
+    "78a245c364d090f5",
+    "261752817e5c7698",
+    "72f149d62c9b1c53",
+    "c2e4706866280281",
+    "c5137c518d9a8a23",
+    "c9e4828c93bdb0a0",
+    "5a3ebc06a87940da",
+    "1cef4743165b7707",
+    "9150f1246613b092",
+    "a13019e1f438960c",
+    "9f04ed2c8e14f11b",
+    "132fb95d922f9bc5",
+    "dce5e8ceddf18db9",
+    "2ecef73164830638",
+    "ed3a3442d3bcbb33",
+    "70d278ec0b1d9338",
+    "7957dfecc55960fe",
+    "49e64acfa51e5686",
+    "7b9a307f12eaba6c"
+   ],
+   "evictable_n": 666,
+   "evictable_importance": {
+    "0.9": 7,
+    "0.5": 551,
+    "0.85": 1,
+    "0.6": 91,
+    "0.8": 4,
+    "0.7": 5,
+    "0.75": 1,
+    "0.65": 5,
+    "0.55": 1
+   }
+  }
+ },
+ "jaccard": {
+  "pairs_over_0.9": 3,
+  "top_pairs": [
+   {
+    "sim": 1.0,
+    "id1": "da06912e700ea9ad",
+    "id2": "12c57c8886a43850",
+    "c1": "2번 진행해보자",
+    "c2": "5번 진행해보자",
+    "t1": "2026-10-07",
+    "t2": "2026-10-07"
+   },
+   {
+    "sim": 0.982,
+    "id1": "ffb7be92a648f42d",
+    "id2": "1d6c5db60b03b6cf",
+    "c1": "방금 전 답변(3-AI v7 검토 종합 보고)을 다시 보내드립니다. --- # 3-AI v7 검토 종합 보고 ## 🚨 최우선 쟁점: b-ai가 소비 2×2 실험(",
+    "c2": "3-AI v7 검토를 전부 읽고 종합했습니다. --- # 3-AI v7 검토 종합 보고 ## 🚨 최우선 쟁점: b-ai가 소비 2×2 실험(stage93/94)의",
+    "t1": "2026-10-08",
+    "t2": "2026-10-08"
+   },
+   {
+    "sim": 0.931,
+    "id1": "992366ebbba93516",
+    "id2": "eaeaaa476f46a52b",
+    "c1": "마지막 답변을 다시 보여드립니다: --- # v3 종합 검토 요청서 작성·커밋·푸시 완료 ✅ (`21ce35a`) 지적하신 대로 기존 버전은 너무 짧았습니다. *",
+    "c2": "**v3 종합 검토 요청서 작성·커밋·푸시 완료** (`21ce35a`). --- # v3 종합 요청서 — 기존 지적 전수 포함 확인 지적하신 대로 기존 버전은 ",
+    "t1": "2026-10-07",
+    "t2": "2026-10-06"
+   }
+  ],
+  "exact_dup_groups": 32,
+  "exact_dup_rows": 100
+ },
+ "adjusted_demotion": {
+  "stage87_op_gold_rank": {
+   "n": 86,
+   "min": 1,
+   "max": 41,
+   "rank>=8": 54,
+   "rank>=8_idx": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    41,
+    42,
+    43,
+    44,
+    46,
+    47,
+    49,
+    50,
+    52,
+    56,
+    58,
+    59,
+    61,
+    62,
+    63,
+    66,
+    67,
+    68,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    78,
+    80,
+    81,
+    82,
+    83,
+    84,
+    86,
+    87,
+    88
+   ],
+   "dist": {
+    "1": 10,
+    "2": 3,
+    "3": 1,
+    "4": 2,
+    "5": 3,
+    "6": 4,
+    "7": 9,
+    "8": 26,
+    "9": 14,
+    "10": 3,
+    "11": 4,
+    "12": 1,
+    "13": 1,
+    "14": 3,
+    "36": 1,
+    "41": 1
+   }
+  },
+  "note": "gold_rank>=8 = JEV choice 후에도 top-7 밖(게이트/RRF 병합/재정렬 누적). stage79~82에서 A/B 기각 — 유병률 확인용."
+ },
+ "trace": {
+  "pool_events": 115,
+  "queries_all": [
+   {
+    "q": "일단",
+    "ts": "2026-10-09T00:01:37",
+    "line": "2026-10-09T00:01:37.864|pool|query=일단 opencode api 인증 관련을 모두 저장해둬. 이게 아직 불확실한 경로라도 보관해두고 내일 사용량이 리셋되면 다시 시도해 봐야겠어 fts=60 vec=53 imp=8 graph=10 pool=104"
+   },
+   {
+    "q": "하나만",
+    "ts": "2026-10-09T00:05:07",
+    "line": "2026-10-09T00:05:07.389|pool|query=하나만 더 테스트해보자. opencode에서 step 5 preview라는 모델을 한시적 무료로 해준다는데 지금 테스트에는 그 모델이 없었지? fts=60 vec=40 imp=8 graph=10 pool=106"
+   },
+   {
+    "q": "한국의",
+    "ts": "2026-10-09T09:24:44",
+    "line": "2026-10-09T09:24:44.899|pool|query=한국의 수도는 어디야? fts=1 vec=60 imp=8 graph=0 pool=68"
+   },
+   {
+    "q": "물의",
+    "ts": "2026-10-09T09:24:46",
+    "line": "2026-10-09T09:24:46.525|pool|query=물의 화학식은? fts=60 vec=60 imp=8 graph=0 pool=124"
+   },
+   {
+    "q": "지구에서",
+    "ts": "2026-10-09T09:24:47",
+    "line": "2026-10-09T09:24:47.394|pool|query=지구에서 가장 가까운 별은? fts=13 vec=60 imp=8 graph=5 pool=82"
+   },
+   {
+    "q": "1+1은?",
+    "ts": "2026-10-09T09:24:48",
+    "line": "2026-10-09T09:24:48.481|pool|query=1+1은? fts=60 vec=60 imp=8 graph=0 pool=125"
+   },
+   {
+    "q": "대한민국의",
+    "ts": "2026-10-09T09:24:49",
+    "line": "2026-10-09T09:24:49.307|pool|query=대한민국의 공용어는? fts=60 vec=60 imp=8 graph=0 pool=126"
+   },
+   {
+    "q": "어제",
+    "ts": "2026-10-09T09:24:50",
+    "line": "2026-10-09T09:24:50.037|pool|query=어제 날씨가 어땠어? fts=60 vec=60 imp=8 graph=0 pool=126"
+   },
+   {
+    "q": "내일",
+    "ts": "2026-10-09T09:24:50",
+    "line": "2026-10-09T09:24:50.766|pool|query=내일 복권 당첨 번호 알려줘 fts=22 vec=60 imp=8 graph=0 pool=86"
+   },
+   {
+    "q": "지금",
+    "ts": "2026-10-09T09:24:51",
+    "line": "2026-10-09T09:24:51.443|pool|query=지금 내 위치에서 맛집 추천해줘 fts=60 vec=60 imp=8 graph=5 pool=127"
+   },
+   {
+    "q": "이",
+    "ts": "2026-10-09T09:24:52",
+    "line": "2026-10-09T09:24:52.611|pool|query=이 컴퓨터의 비밀번호는? fts=60 vec=60 imp=8 graph=0 pool=126"
+   },
+   {
+    "q": "지난주",
+    "ts": "2026-10-09T09:24:53",
+    "line": "2026-10-09T09:24:53.335|pool|query=지난주 금요일 내가 뭘 했는지 말해줘 fts=2 vec=60 imp=8 graph=2 pool=72"
+   },
+   {
+    "q": "설명할",
+    "ts": "2026-10-09T09:24:54",
+    "line": "2026-10-09T09:24:54.184|pool|query=설명할 수 없는 것을 설명해줘 fts=15 vec=60 imp=8 graph=4 pool=81"
+   },
+   {
+    "q": "우주의",
+    "ts": "2026-10-09T09:24:54",
+    "line": "2026-10-09T09:24:54.985|pool|query=우주의 끝은 어디야? fts=1 vec=60 imp=8 graph=0 pool=68"
+   },
+   {
+    "q": "리뷰",
+    "ts": "2026-10-09T09:24:55",
+    "line": "2026-10-09T09:24:55.736|pool|query=리뷰 전용 턴에서 커밋해도 돼? fts=10 vec=60 imp=8 graph=3 pool=80"
+   },
+   {
+    "q": "구현됐다는",
+    "ts": "2026-10-09T09:24:56",
+    "line": "2026-10-09T09:24:56.481|pool|query=구현됐다는 말 믿기 전에 뭘 확인해? fts=16 vec=60 imp=8 graph=4 pool=86"
+   },
+   {
+    "q": "provider가",
+    "ts": "2026-10-09T09:24:57",
+    "line": "2026-10-09T09:24:57.390|pool|query=provider가 뭐지? fts=9 vec=60 imp=8 graph=2 pool=76"
+   },
+   {
+    "q": "전환",
+    "ts": "2026-10-09T09:24:58",
+    "line": "2026-10-09T09:24:58.284|pool|query=전환 전 어떤 문제 있었지? fts=2 vec=60 imp=8 graph=6 pool=74"
+   },
+   {
+    "q": "auto",
+    "ts": "2026-10-09T09:24:59",
+    "line": "2026-10-09T09:24:59.384|pool|query=auto 라우팅이 확률적이라는 결론이었나? fts=37 vec=60 imp=8 graph=2 pool=99"
+   },
+   {
+    "q": "config.yaml에",
+    "ts": "2026-10-09T09:25:00",
+    "line": "2026-10-09T09:25:00.339|pool|query=config.yaml에 18080 프록시 등록 방법? fts=32 vec=60 imp=8 graph=5 pool=93"
+   },
+   {
+    "q": "custom_providers에서",
+    "ts": "2026-10-09T09:25:01",
+    "line": "2026-10-09T09:25:01.141|pool|query=custom_providers에서 Local 프록시 어떻게 설정하지? fts=60 vec=60 imp=8 graph=10 pool=128"
+   },
+   {
+    "q": "gemini",
+    "ts": "2026-10-09T09:25:01",
+    "line": "2026-10-09T09:25:01.868|pool|query=gemini 별칭으로 모델 호출되는 거야? fts=13 vec=60 imp=8 graph=8 pool=78"
+   },
+   {
+    "q": "자동",
+    "ts": "2026-10-09T09:25:02",
+    "line": "2026-10-09T09:25:02.807|pool|query=자동 시작 설정 어떻게 하는 게 원칙이야? fts=60 vec=60 imp=8 graph=8 pool=126"
+   },
+   {
+    "q": "DTO",
+    "ts": "2026-10-09T09:25:03",
+    "line": "2026-10-09T09:25:03.562|pool|query=DTO 분리 어디까지 하면 돼? fts=7 vec=60 imp=8 graph=4 pool=74"
+   },
+   {
+    "q": "camelAI",
+    "ts": "2026-10-09T09:25:04",
+    "line": "2026-10-09T09:25:04.434|pool|query=camelAI auto 라우팅에서 어려운 과제는 어떤 모델로 보내졌어? fts=60 vec=60 imp=8 graph=7 pool=112"
+   },
+   {
+    "q": "92번",
+    "ts": "2026-10-09T09:25:05",
+    "line": "2026-10-09T09:25:05.253|pool|query=92번 호출 실험에서 라우팅 결과 어땠지? fts=28 vec=60 imp=8 graph=9 pool=96"
+   },
+   {
+    "q": "라우팅",
+    "ts": "2026-10-09T09:25:06",
+    "line": "2026-10-09T09:25:06.310|pool|query=라우팅 플립 트리거 패딩 토큰 가설 맞았어? fts=26 vec=60 imp=8 graph=6 pool=92"
+   },
+   {
+    "q": "모델",
+    "ts": "2026-10-09T09:25:07",
+    "line": "2026-10-09T09:25:07.337|pool|query=모델 최종 선택 근거? fts=60 vec=60 imp=8 graph=8 pool=128"
+   },
+   {
+    "q": "koen이랑",
+    "ts": "2026-10-09T09:25:08",
+    "line": "2026-10-09T09:25:08.087|pool|query=koen이랑 bekko 벤치 비교 결과? fts=60 vec=60 imp=8 graph=10 pool=105"
+   },
+   {
+    "q": "S3에서",
+    "ts": "2026-10-09T09:25:08",
+    "line": "2026-10-09T09:25:08.974|pool|query=S3에서 임베딩 모델 최종 선택 근거? fts=60 vec=60 imp=8 graph=10 pool=112"
+   },
+   {
+    "q": "브라우저",
+    "ts": "2026-10-09T09:25:10",
+    "line": "2026-10-09T09:25:10.104|pool|query=브라우저 도구 라우팅 설정 어떻게 돼? fts=60 vec=60 imp=8 graph=6 pool=117"
+   },
+   {
+    "q": "camelai-serial-proxy",
+    "ts": "2026-10-09T09:25:10",
+    "line": "2026-10-09T09:25:10.900|pool|query=camelai-serial-proxy 기능 정리해줘 fts=58 vec=60 imp=8 graph=2 pool=94"
+   },
+   {
+    "q": "deepseek",
+    "ts": "2026-10-09T09:25:11",
+    "line": "2026-10-09T09:25:11.596|pool|query=deepseek 장문 스트림에서 뭐가 문제였어? fts=39 vec=60 imp=8 graph=3 pool=96"
+   },
+   {
+    "q": "pi",
+    "ts": "2026-10-09T09:25:12",
+    "line": "2026-10-09T09:25:12.330|pool|query=pi 에이전트에 등록된 프록시 목록? fts=44 vec=60 imp=8 graph=1 pool=102"
+   },
+   {
+    "q": "[IMPORTANT:",
+    "ts": "2026-10-09T09:30:51",
+    "line": "2026-10-09T09:30:51.046|pool|query=[IMPORTANT: You are running as a scheduled cron job. DELIVERY: Your final response will be automatically delivered to th fts=60 vec=44 imp=8 graph=10 pool=95"
+   },
+   {
+    "q": "[IMPORTANT:",
+    "ts": "2026-10-09T09:35:34",
+    "line": "2026-10-09T09:35:34.249|pool|query=[IMPORTANT: You are running as a scheduled cron job. DELIVERY: Your final response will be automatically delivered to th fts=60 vec=47 imp=8 graph=10 pool=96"
+   },
+   {
+    "q": "9시",
+    "ts": "2026-10-09T09:38:34",
+    "line": "2026-10-09T09:38:34.412|pool|query=9시 30분 지났는데, cron 실행이 안된 거 아냐? fts=60 vec=59 imp=8 graph=5 pool=119"
+   },
+   {
+    "q": "9시",
+    "ts": "2026-10-09T09:46:32",
+    "line": "2026-10-09T09:46:32.644|pool|query=9시 30분 지났는데, cron 실행이 안된 거 아냐? fts=60 vec=59 imp=8 graph=5 pool=119"
+   },
+   {
+    "q": "그래",
+    "ts": "2026-10-09T09:49:41",
+    "line": "2026-10-09T09:49:41.680|pool|query=그래 교차검증을 진행해줘 fts=42 vec=57 imp=8 graph=2 pool=91"
+   },
+   {
+    "q": "[IMPORTANT:",
+    "ts": "2026-10-09T09:56:10",
+    "line": "2026-10-09T09:56:10.563|pool|query=[IMPORTANT: Background process proc_b8b5aa74679f exited (exit code 4294967295)."
+   },
+   {
+    "q": "그래",
+    "ts": "2026-10-09T09:57:33",
+    "line": "2026-10-09T09:57:33.225|pool|query=그래 교차검증을 진행해줘 fts=42 vec=57 imp=8 graph=2 pool=91"
+   },
+   {
+    "q": "[IMPORTANT:",
+    "ts": "2026-10-09T09:57:34",
+    "line": "2026-10-09T09:57:34.391|pool|query=[IMPORTANT: Background process proc_b8b5aa74679f exited (exit code 4294967295)."
+   },
+   {
+    "q": "현재",
+    "ts": "2026-10-09T10:16:05",
+    "line": "2026-10-09T10:16:05.348|pool|query=현재 429 없이 잘 진행되고 있는지 확인해줘 fts=60 vec=57 imp=8 graph=10 pool=124"
+   },
+   {
+    "q": "현재",
+    "ts": "2026-10-09T10:19:33",
+    "line": "2026-10-09T10:19:33.742|pool|query=현재 429 없이 잘 진행되고 있는지 확인해줘 fts=60 vec=57 imp=8 graph=10 pool=124"
+   },
+   {
+    "q": "현재",
+    "ts": "2026-10-09T10:25:06",
+    "line": "2026-10-09T10:25:06.160|pool|query=현재 진행상태를 알려줘 fts=23 vec=57 imp=8 graph=8 pool=90"
+   },
+   {
+    "q": "현재",
+    "ts": "2026-10-09T10:30:34",
+    "line": "2026-10-09T10:30:34.265|pool|query=현재 진행상태를 알려줘 fts=23 vec=57 imp=8 graph=8 pool=90"
+   },
+   {
+    "q": "현재",
+    "ts": "2026-10-09T10:56:18",
+    "line": "2026-10-09T10:56:18.642|pool|query=현재 작업 직행 상태를 확인 후 보고해줘 fts=60 vec=45 imp=8 graph=10 pool=94"
+   },
+   {
+    "q": "현재",
+    "ts": "2026-10-09T11:03:33",
+    "line": "2026-10-09T11:03:33.638|pool|query=현재 작업 직행 상태를 확인 후 보고해줘 fts=60 vec=45 imp=8 graph=10 pool=94"
+   },
+   {
+    "q": "일단",
+    "ts": "2026-10-09T11:10:03",
+    "line": "2026-10-09T11:10:03.450|pool|query=일단 정지하고 체크포인트 보존하자. 하루 제한이 아니더라도 몇 시간 뒤에 다시 되는 경우가 종종 있어 fts=41 vec=59 imp=8 graph=10 pool=111"
+   },
+   {
+    "q": "그런데",
+    "ts": "2026-10-09T11:11:47",
+    "line": "2026-10-09T11:11:47.330|pool|query=그런데 cron을 한다고 해서 이 세션에 보고하진 않는 것 같던데, 어떻게 확인해? 내가 수동으로 cron 메뉴에 가서 확인해야 하나? fts=60 vec=60 imp=8 graph=10 pool=121"
+   },
+   {
+    "q": "아까",
+    "ts": "2026-10-09T11:13:15",
+    "line": "2026-10-09T11:13:15.163|pool|query=아까 시작한 cron은 결과적으로 여러 모델 합의가 안 돼서 정지하지 않았어? fts=23 vec=48 imp=8 graph=10 pool=85"
+   },
+   {
+    "q": "일단",
+    "ts": "2026-10-09T11:14:32",
+    "line": "2026-10-09T11:14:32.787|pool|query=일단 정지하고 체크포인트 보존하자. 하루 제한이 아니더라도 몇 시간 뒤에 다시 되는 경우가 종종 있어 fts=42 vec=59 imp=8 graph=10 pool=111"
+   },
+   {
+    "q": "그런데",
+    "ts": "2026-10-09T11:14:33",
+    "line": "2026-10-09T11:14:33.837|pool|query=그런데 cron을 한다고 해서 이 세션에 보고하진 않는 것 같던데, 어떻게 확인해? 내가 수동으로 cron 메뉴에 가서 확인해야 하나? fts=60 vec=60 imp=8 graph=10 pool=120"
+   },
+   {
+    "q": "아까",
+    "ts": "2026-10-09T11:14:34",
+    "line": "2026-10-09T11:14:34.402|pool|query=아까 시작한 cron은 결과적으로 여러 모델 합의가 안 돼서 정지하지 않았어? fts=24 vec=49 imp=8 graph=10 pool=86"
+   },
+   {
+    "q": "데스크톱",
+    "ts": "2026-10-09T11:18:38",
+    "line": "2026-10-09T11:18:38.736|pool|query=데스크톱 앱 텔레그램 수신 끊김 버그 v0.20.0 _reap_unsupervised_gateway_orphans fts=56 vec=54 imp=8 graph=8 pool=114"
+   },
+   {
+    "q": "KoDialogBench",
+    "ts": "2026-10-09T11:21:59",
+    "line": "2026-10-09T11:21:59.389|pool|query=KoDialogBench fts=15 vec=40 imp=8 graph=0 pool=57"
+   },
+   {
+    "q": "KoDialogBench",
+    "ts": "2026-10-09T11:22:00",
+    "line": "2026-10-09T11:22:00.253|pool|query=KoDialogBench fts=15 vec=40 imp=8 graph=0 pool=57"
+   },
+   {
+    "q": "embed-benchmark-final-report",
+    "ts": "2026-10-09T11:22:22",
+    "line": "2026-10-09T11:22:22.676|pool|query=embed-benchmark-final-report fts=60 vec=57 imp=8 graph=10 pool=119"
+   },
+   {
+    "q": "bekko",
+    "ts": "2026-10-09T11:24:25",
+    "line": "2026-10-09T11:24:25.273|pool|query=bekko X1 외부 데이터셋 KoDialogBench fts=60 vec=53 imp=8 graph=10 pool=104"
+   },
+   {
+    "q": "데스크톱",
+    "ts": "2026-10-09T11:25:33",
+    "line": "2026-10-09T11:25:33.603|pool|query=데스크톱 앱 텔레그램 수신 끊김 버그 v0.20.0 _reap_unsupervised_gateway_orphans fts=56 vec=54 imp=8 graph=8 pool=114"
+   },
+   {
+    "q": "KoDialogBench",
+    "ts": "2026-10-09T11:25:35",
+    "line": "2026-10-09T11:25:35.094|pool|query=KoDialogBench fts=15 vec=40 imp=8 graph=0 pool=57"
+   },
+   {
+    "q": "KoDialogBench",
+    "ts": "2026-10-09T11:25:35",
+    "line": "2026-10-09T11:25:35.958|pool|query=KoDialogBench fts=15 vec=40 imp=8 graph=0 pool=57"
+   },
+   {
+    "q": "bekko",
+    "ts": "2026-10-09T11:25:36",
+    "line": "2026-10-09T11:25:36.971|pool|query=bekko X1 외부 데이터셋 KoDialogBench fts=60 vec=53 imp=8 graph=10 pool=104"
+   },
+   {
+    "q": "그런데",
+    "ts": "2026-10-09T11:29:35",
+    "line": "2026-10-09T11:29:35.561|pool|query=그런데 오늘 space-bunny에 어느 정도의 토큰을 소모한 거야? 테스트에 이 정도 소모되는게 맞나? 불필요한 토큰소모가 있었던거 아니야? fts=60 vec=48 imp=8 graph=10 pool=108"
+   },
+   {
+    "q": "X1",
+    "ts": "2026-10-09T11:29:37",
+    "line": "2026-10-09T11:29:37.352|pool|query=X1 외부 데이터셋 bekko KoDialogBench fts=60 vec=48 imp=8 graph=10 pool=102"
+   },
+   {
+    "q": "X1",
+    "ts": "2026-10-09T11:29:54",
+    "line": "2026-10-09T11:29:54.936|pool|query=X1 외부 데이터셋 bekko KoDialogBench fts=60 vec=48 imp=8 graph=10 pool=102"
+   },
+   {
+    "q": "codex",
+    "ts": "2026-10-09T11:31:56",
+    "line": "2026-10-09T11:31:56.605|pool|query=codex config.toml 훅 설정 fts=60 vec=32 imp=8 graph=10 pool=69"
+   },
+   {
+    "q": "codex",
+    "ts": "2026-10-09T11:33:46",
+    "line": "2026-10-09T11:33:46.111|pool|query=codex config.toml hooks fts=60 vec=40 imp=8 graph=9 pool=77"
+   },
+   {
+    "q": "67차",
+    "ts": "2026-10-09T11:34:42",
+    "line": "2026-10-09T11:34:42.618|pool|query=67차 실험 fts=5 vec=57 imp=8 graph=9 pool=77"
+   },
+   {
+    "q": "experiment",
+    "ts": "2026-10-09T11:35:18",
+    "line": "2026-10-09T11:35:18.262|pool|query=experiment 67 67차 실험 fts=17 vec=56 imp=8 graph=9 pool=87"
+   },
+   {
+    "q": "verifier-pilot",
+    "ts": "2026-10-09T11:35:33",
+    "line": "2026-10-09T11:35:33.765|pool|query=verifier-pilot 67차 fts=42 vec=60 imp=8 graph=6 pool=100"
+   },
+   {
+    "q": "그런데",
+    "ts": "2026-10-09T11:36:32",
+    "line": "2026-10-09T11:36:32.828|pool|query=그런데 오늘 space-bunny에 어느 정도의 토큰을 소모한 거야? 테스트에 이 정도 소모되는게 맞나? 불필요한 토큰소모가 있었던거 아니야? fts=60 vec=48 imp=8 graph=10 pool=107"
+   },
+   {
+    "q": "X1",
+    "ts": "2026-10-09T11:36:33",
+    "line": "2026-10-09T11:36:33.363|pool|query=X1 외부 데이터셋 bekko KoDialogBench fts=60 vec=48 imp=8 graph=10 pool=102"
+   },
+   {
+    "q": "X1",
+    "ts": "2026-10-09T11:36:34",
+    "line": "2026-10-09T11:36:34.531|pool|query=X1 외부 데이터셋 bekko KoDialogBench fts=60 vec=48 imp=8 graph=10 pool=102"
+   },
+   {
+    "q": "codex",
+    "ts": "2026-10-09T11:36:35",
+    "line": "2026-10-09T11:36:35.553|pool|query=codex config.toml 훅 설정 fts=60 vec=32 imp=8 graph=10 pool=69"
+   },
+   {
+    "q": "codex",
+    "ts": "2026-10-09T11:36:36",
+    "line": "2026-10-09T11:36:36.774|pool|query=codex config.toml hooks fts=60 vec=40 imp=8 graph=9 pool=77"
+   },
+   {
+    "q": "67차",
+    "ts": "2026-10-09T11:36:37",
+    "line": "2026-10-09T11:36:37.739|pool|query=67차 실험 fts=5 vec=57 imp=8 graph=9 pool=77"
+   },
+   {
+    "q": "experiment",
+    "ts": "2026-10-09T11:36:38",
+    "line": "2026-10-09T11:36:38.653|pool|query=experiment 67 67차 실험 fts=17 vec=56 imp=8 graph=9 pool=87"
+   },
+   {
+    "q": "verifier-pilot",
+    "ts": "2026-10-09T11:36:39",
+    "line": "2026-10-09T11:36:39.603|pool|query=verifier-pilot 67차 fts=42 vec=60 imp=8 graph=6 pool=100"
+   },
+   {
+    "q": "Codex",
+    "ts": "2026-10-09T11:37:38",
+    "line": "2026-10-09T11:37:38.128|pool|query=Codex CLI Mnemosyne integration hooks config.toml fts=60 vec=45 imp=8 graph=10 pool=98"
+   }
+  ]
+ }
+}

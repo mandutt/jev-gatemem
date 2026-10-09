@@ -1,7 +1,7 @@
-# agentmemory 보류 4건 — 0콜 실측 결과 (2026-10-09)
+# stage104 — agentmemory 보류 4건 0콜 실측 결과 (2026-10-09)
 
-- 러너: `experiments/operational-golden/am_hold_4probe.py` (+ `am_trace_pool_queries.json`)
-- raw: `experiments/operational-golden/data/am_hold_4probe.json`
+- 러너: `experiments/operational-golden/stage104_hold4_probe.py` (+ `data/stage104_trace_queries.json`)
+- raw: `experiments/operational-golden/data/stage104_hold4_raw.json`
 - 방식: 0콜 — 라이브 DB(read-only)·기존 raw(stage87/stage50c)·trace 10-09 재계산
 - 판정 요약: **① 기각(선행 실측 이미 완료) · ② 3쌍 전부 작업 지시 반복 → 채택 근거 부재 · ③ evictable 0건 → 시기상조 · ④ 작업 지시 pool 진입 실측 완료 → slots 후보 유지**
 

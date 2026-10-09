@@ -1,0 +1,101 @@
+[
+ {
+  "label": "plain_no_out",
+  "i": 0,
+  "status": 200,
+  "keep": false,
+  "store": "NO_STORE",
+  "store_conf": 0.63,
+  "type": "event",
+  "type_conf": 0.84,
+  "reason": "skip"
+ },
+ {
+  "label": "plain_no_out",
+  "i": 1,
+  "status": 200,
+  "keep": false,
+  "store": "NO_STORE",
+  "store_conf": 0.67,
+  "type": "event",
+  "type_conf": 0.81,
+  "reason": "skip"
+ },
+ {
+  "label": "plain_with_out",
+  "i": 0,
+  "status": 200,
+  "keep": false,
+  "store": "NO_STORE",
+  "store_conf": 0.81,
+  "type": "event",
+  "type_conf": 0.64,
+  "reason": "skip"
+ },
+ {
+  "label": "plain_with_out",
+  "i": 1,
+  "status": 200,
+  "keep": false,
+  "store": "NO_STORE",
+  "store_conf": 0.69,
+  "type": "event",
+  "type_conf": 0.88,
+  "reason": "skip"
+ },
+ {
+  "label": "fail",
+  "i": 0,
+  "status": 200,
+  "keep": true,
+  "store": "STORE",
+  "store_conf": 0.54,
+  "type": "error",
+  "type_conf": 0.6,
+  "reason": "store"
+ },
+ {
+  "label": "fail",
+  "i": 1,
+  "status": 200,
+  "keep": true,
+  "store": "STORE",
+  "store_conf": 0.92,
+  "type": "error",
+  "type_conf": 0.93,
+  "reason": "store"
+ },
+ {
+  "label": "watch",
+  "i": 0,
+  "status": 200,
+  "keep": false,
+  "store": "NO_STORE",
+  "store_conf": 0.88,
+  "type": "NO_STORE",
+  "type_conf": 0.48,
+  "reason": "skip"
+ },
+ {
+  "label": "watch",
+  "i": 1,
+  "status": 200,
+  "keep": false,
+  "store": "NO_STORE",
+  "store_conf": 0.88,
+  "type": "NO_STORE",
+  "type_conf": 0.47,
+  "reason": "skip"
+ },
+ {
+  "label": "batch",
+  "i": 0,
+  "status": 200,
+  "keep": true,
+  "store": "NO_STORE",
+  "store_conf": 0.59,
+  "type": "NO_STORE",
+  "type_conf": 0.43,
+  "reason": "low-conf"
+ }
+]

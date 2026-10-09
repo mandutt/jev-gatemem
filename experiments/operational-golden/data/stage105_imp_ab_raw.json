@@ -1,0 +1,200 @@
+[
+ {
+  "label": "plain_no_out",
+  "i": 0,
+  "baseline": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 0.69,
+   "type": "event",
+   "type_conf": 0.82,
+   "reason": "type-rescue"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 0.99,
+   "type": "event",
+   "type_conf": 0.81,
+   "reason": "type-rescue"
+  }
+ },
+ {
+  "label": "plain_no_out",
+  "i": 1,
+  "baseline": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 0.68,
+   "type": "event",
+   "type_conf": 0.81,
+   "reason": "type-rescue"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 1.0,
+   "type": "event",
+   "type_conf": 0.85,
+   "reason": "type-rescue"
+  }
+ },
+ {
+  "label": "plain_with_out",
+  "i": 0,
+  "baseline": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 0.8,
+   "type": "event",
+   "type_conf": 0.62,
+   "reason": "type-rescue"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 0.91,
+   "type": "event",
+   "type_conf": 0.58,
+   "reason": "type-rescue"
+  }
+ },
+ {
+  "label": "plain_with_out",
+  "i": 1,
+  "baseline": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 0.71,
+   "type": "event",
+   "type_conf": 0.86,
+   "reason": "type-rescue"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 1.0,
+   "type": "event",
+   "type_conf": 0.86,
+   "reason": "type-rescue"
+  }
+ },
+ {
+  "label": "fail",
+  "i": 0,
+  "baseline": {
+   "status": 200,
+   "keep": true,
+   "store": "STORE",
+   "store_conf": 0.52,
+   "type": "error",
+   "type_conf": 0.54,
+   "reason": "store"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": true,
+   "store": "STORE",
+   "store_conf": 0.64,
+   "type": "error",
+   "type_conf": 0.62,
+   "reason": "store"
+  }
+ },
+ {
+  "label": "fail",
+  "i": 1,
+  "baseline": {
+   "status": 200,
+   "keep": true,
+   "store": "STORE",
+   "store_conf": 0.92,
+   "type": "error",
+   "type_conf": 0.9,
+   "reason": "store"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": true,
+   "store": "STORE",
+   "store_conf": 0.93,
+   "type": "error",
+   "type_conf": 0.92,
+   "reason": "store"
+  }
+ },
+ {
+  "label": "watch",
+  "i": 0,
+  "baseline": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 0.88,
+   "type": "event",
+   "type_conf": 0.47,
+   "reason": "type-rescue"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": true,
+   "store": "NO_STORE",
+   "store_conf": 1.0,
+   "type": "event",
+   "type_conf": 0.46,
+   "reason": "type-rescue"
+  }
+ },
+ {
+  "label": "watch",
+  "i": 1,
+  "baseline": {
+   "status": 200,
+   "keep": false,
+   "store": "NO_STORE",
+   "store_conf": 0.9,
+   "type": "NO_STORE",
+   "type_conf": 0.49,
+   "reason": "skip"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": false,
+   "store": "NO_STORE",
+   "store_conf": 1.0,
+   "type": "NO_STORE",
+   "type_conf": 0.48,
+   "reason": "skip"
+  }
+ },
+ {
+  "label": "batch",
+  "i": 0,
+  "baseline": {
+   "status": 200,
+   "keep": false,
+   "store": "NO_STORE",
+   "store_conf": 0.62,
+   "type": "NO_STORE",
+   "type_conf": 0.43,
+   "reason": "skip"
+  },
+  "with_rule": {
+   "status": 200,
+   "keep": false,
+   "store": "NO_STORE",
+   "store_conf": 0.99,
+   "type": "NO_STORE",
+   "type_conf": 0.42,
+   "reason": "skip"
+  }
+ }
+]
