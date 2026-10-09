@@ -470,6 +470,7 @@ RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
 - **ReBAR 8GB 전체가 HOST_VISIBLE** → llama.cpp의 1순위 요청(`eDeviceLocal|eHostVisible`)이 8GB 힙에서 충족 → 513MB 대형 버퍼도 VRAM 매핑 처리.
 - **시스템 RAM 절감이 실제로 발생** (938→581MB WS). llama.cpp 로그는 여전히 "host"로 표기하나, Windows 커밋 기준 물리 RAM 부담은 감소.
 - **운영 확정 (사용자 결정)**: 추후 gemma2 채택 시 **Vulkan 빌드 + ReBAR + `-c 8192 -ub 512 -ngl 99 -np 1 --no-host` + 프롬프트**로 운영. 상세: `docs/design/gemma2-llamacpp-operations-guide-20261009.md`.
+- **GPU 오프로드 품질 무손실 실측 (CPU vs Vulkan+ReBAR)**: 200문항 정확히 동일 순위 97.5%, ±1 내 100%, Acc@1 0.7250=0.7250, 벡터 cos 0.99986/0.99983. 오프로딩이 검색 품질에 영향 없음 확정.
 
 **총평 (EmbeddingGemma 2 + 파이프라인 정책 전체)**:
 1. EmbeddingGemma 2 (q8/q4f16 768d 교정 후): bekko와 실질 동급 (76~77 vs 78/90), RAM -151MB, abstain 우위 — 채택 여지 있으나 hit@1 2건 손실 + 재인덱싱(~30분/1721행) + ORT 러너 유지보수로 **보류 권고**, 최종 판단은 외부 검토/사용자 위임.
