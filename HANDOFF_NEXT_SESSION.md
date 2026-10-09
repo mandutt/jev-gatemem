@@ -203,6 +203,7 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 > | 한국어 BM25 토크나이저(외부 5편) | ⏸️ 참고 — 토크나이저가 BM25 절반(0.419→0.622). 우리 FTS unicode61 공백분리이지만 retrieval miss 원인은 의역 확정 → 토크나이저 개선은 pool_recall 상한 못 바꿈 (do not re-run 방향) |
 >
 > | AnchorMind (구 Memento-mcp) 검토 (2026-10-08) | ✅ **형태소 보조 벡터 실측 기각** — stage103 (0콜): 현재 pool miss 4/90에서 Kiwi 형태소 보조 gold 구제 **0/4** (miss 원인 = 한영 미스매치 2·쿼리 과단축 1·의역 1 — 형태소는 표면 어휘 정규화라 연결 불가). **do not re-run**, 영문 메모리 증가 시 합성 역질의로 재검토만. 기타: 임계값 보정·랭킹 가중치 정규화는 우리 stage100·fusion과 교차 검증. 상세: `docs/review/2026-10-08_anchormind-review.md` |
+> | **OptMem (VictorTaelin) 검토 (2026-10-09)** | ⏸️ **보류 등록 — 신규 축 '세대별 노출 밀도(age-aware exposure)'** — OptMem = append-only 로그 + 에이전트 작성 이진 병합 요약 트리(LLM 콜 0) + wake 읽기 예산을 세대별 배분(최근=원문·과거=요약). 직접 이식 사항 없음(데몬 구조라 nap 수동 루프 불가·SQLite 상위 호환·regex 열위). **유일한 미실측 축 = '노출 구성에 시간 밀도'** (우리 rows[:5] 순위 고정, hippo decay는 순위 가중치 축으로 기각됨). 채택 전제: production-exact rank>20 gold(stage85) 유실 위험 회피 + 구조 변경 3-run 전체 재현 회귀. **현재 코퍼스 1,584행은 요약 불필요 규모 — 수만 행 시 재검토.** 상세: `docs/review/2026-10-09_optmem-review.md` |
 > 
 > | **pplx-embed-v2-late-0.6b 검토 (2026-10-08)** | ❌ **리젝트 (아키텍처 게이트)** — Perplexity v2 late = **ColBERT(다중벡터 late-interaction, 토큰당 128-dim + MaxSim)**, 340M 활성, 멀티모달. 단일벡터 sqlite-vec 구조와 비호환 (mLateOn·KURE-v2와 동일 사유) → 실측 불필요. '새 출시'로 알려졌으나 **HF createdAt 2026-08-03** (8월 존재). v2는 전부 late 계열, 단일벡터 v2 없음. 상세: 스킬 `embedding-model-selection.md` 기각 목록 |
 > 
