@@ -88,4 +88,6 @@
 
 - [x] **AtomicChat AD-Q6_K vs unsloth Q8_0 프롬프트 적용 비교** — ✅ **동급 확정**: AD-Q6_K 0.684 / unsloth Q8_0 0.686 / AtomicChat Q8_0 0.688 (MRR 0.807/0.809/0.812, 시간 232s/226s/228s). **양자화 수준(Q6 vs Q8)·제작사(unsloth vs AtomicChat) 모두 품질 차이 없음** (차이 0.002~0.004 = 노이즈). AD-Q6_K는 파일 245MB(Q8 310MB 대비 -21%)로 최소 — **GPU 경로 채택 시 AD-Q6_K 권장.**
 - [x] **Q6 vs bekko-a8m X1 비교** — ✅ **완료**: gemma2 AD-Q6_K(Vulkan+프롬프트) **0.684** vs bekko-a8m(운영) **0.583** → **+0.101 압도** (MRR 0.807 vs 0.737, bekko 21s / Q6 232s). 프롬프트 없이도 Q6 0.629 > bekko 0.583. **당장 전환 없음** (jev-mem 개발 중, 모델 동결 시 재평가 — 사용자 결정 2026-10-09).
+- [x] **양자화별 RAM/VRAM 실측** — ✅ **완료**: GGUF(Vulkan, 워밍업 후) 기준 — **Q6 기본 VRAM 53MB/RAM 552MB, Q6 `--no-host` VRAM 184MB/RAM 423MB(최저)**, Q8(AtomicChat·unsloth 동일) 133MB/500MB 고정(-np1·no-host 무효), BF16 315MB/563MB. ONNX CPU 대비 시스템 RAM이 크게 줄지 않는 이유 = compute buffer·KV 캐시·런타임 오버헤드가 llama.cpp 구조상 CPU에 잔류. **Q6+`--no-host`가 RAM 최저 조합.**
 - [ ] jev-mem 파이프라인 프롬프트 적용 지침 반영
+- [ ] gemma2 Q6 운영(live 메모리) 동작 실험 (2026-10-09 진행)

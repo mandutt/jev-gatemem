@@ -340,6 +340,29 @@ RX 580X + R5 7600 환경에서 gemma2 가속 경로 전수 실측:
 - **Vulkan 등장으로 granite의 "빠름" 장점이 상당 부분 무의미해짐** (31분→232s) — 남는 이점은 384d 무마이그레이션 하나뿐.
 - 상세: `docs/design/granite-rerun-report-20261009.md` §6.1
 
+### 8.11 ★ 2026-10-09 — GGUF 양자화별 RAM/VRAM 실측 (워밍업 후)
+
+| 모델 | 파일 | 설정 | VRAM | RAM(WS) | Private |
+|---|---|---|---|---|---|
+| **AD-Q6_K** | 245MB | 기본 | 53MB | 552MB | 515MB |
+| **AD-Q6_K** | 245MB | `--no-host` | **184MB** | **423MB** | 516MB |
+| AtomicChat Q8_0 | 310MB | 기본 | 133MB | 502MB | 530MB |
+| AtomicChat Q8_0 | 310MB | `-np 1` | 133MB | 498MB | 527MB |
+| AtomicChat Q8_0 | 310MB | `--no-host` | 133MB | 501MB | 530MB |
+| unsloth Q8_0 | 310MB | 기본 | 133MB | 501MB | 530MB |
+| unsloth Q8_0 | 310MB | `-np 1`+`--no-host` | 53MB | 576MB | 526MB |
+| BF16 | 558MB | 기본 | 315MB | 563MB | 658MB |
+
+- **Q8(AtomicChat vs unsloth)은 사실상 동일 메모리 프로파일** (133MB/500MB) — Q8은 `-np`·`--no-host` 모두 효과 없음.
+- **Q6만 `--no-host`에서 극적 개선** (VRAM 53→184MB, RAM 552→423MB) — Q6 그래프가 host 버퍼 의존도가 높아 no-host가 컴퓨트 버퍼를 GPU로 이동시킴.
+- unsloth Q8 `-np1+no-host`만 VRAM 53MB로 떨어진 건 Vulkan host 폴백으로 보임 (단일 옵션으론 재현 안 됨) — 3조합 실측이 정답.
+- **시스템 RAM이 ONNX 대비 크게 안 줄어드는 이유**: llama.cpp compute buffer·KV 캐시·런타임이 구조상 CPU 잔류. 모델 가중치(파일 크기)만 GPU로 이동.
+- **RAM 최저 조합 = Q6 + `--no-host` (423MB)** — 단, VRAM 184MB 사용 (RX 580 8GB 대비 2%로 여유).
+
+### 8.12 ★ 2026-10-09 — gemma2 Q6 운영(live 메모리) 동작 실험
+
+(진행 중 — jev-mem 스냅샷 DB에서 실제 검색 호출로 검증)
+
 **총평 (EmbeddingGemma 2 + 파이프라인 정책 전체)**:
 1. EmbeddingGemma 2 (q8/q4f16 768d 교정 후): bekko와 실질 동급 (76~77 vs 78/90), RAM -151MB, abstain 우위 — 채택 여지 있으나 hit@1 2건 손실 + 재인덱싱(~30분/1721행) + ORT 러너 유지보수로 **보류 권고**, 최종 판단은 외부 검토/사용자 위임.
 2. 게이트 재정렬 A/B: 0콜 시뮬레이션의 rank1 4.4배 개선은 실측에서 미실현 (A 동률, B noans 악화) — **둘 다 기각, 현행 유지**.
