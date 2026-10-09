@@ -235,6 +235,20 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 >
 > **남은**: EmbeddingGemma 2 채택 여부 최종 판단 (모델 동결 후, 하네스로 1시간 재실행 가능) — README §9 정책 참조.
 
+> **2026-10-09 — granite R2 재실측 + 전 모델 X1 최종 비교 (텔레그램 세션)**:
+>
+> | 항목 | 결과 |
+> |---|---|
+> | granite "운영 불가" 판정 **철회** | 원인: 10-01 사후탐색이 **클램프 512 미적용** (계획 이탈). 클램프 적용 시 재인덱스 50s 완주, RAM 311MB(q4f16) — **완전 운용 가능**. 상세: `docs/design/granite-rerun-report-20261009.md` |
+> | granite 변형별 | fp32: 재인덱스 50.7s, gold-50 MRR 0.550, RSS 540MB / **q4f16: 49.8s, MRR 0.570, RSS 311MB** — int8(cos 0.955)·quint8은 예비 드리프트 탈락 |
+> | X1 1,200문항 동일 조건 (최종) | **gemma2-q8 0.690 (1위, 1301s)** > gemma2-q4f16 0.683 > koen 0.622 > baseline 0.587 > bekko 0.583 > granite-fp32 0.557 > granite-q4f16 0.541 |
+> | gemma2 q8 vs q4f16 정정 | q8: RAM 466MB(기록 수정 전 q4f16에 오기재) / q4f16: **559MB** (활성화 fp16 버퍼) — q8이 RAM·품질 우위, 속도는 q4f16이 1.5배 빠름 |
+> | MRL 256 절삭 프로브 | 768d vs 256d 임베딩 시간 **무차이** (56.2 vs 57.7 ms/vec) — 절삭은 저장·검색 경량화만 |
+> | **최종 선택지** | 외부 품질 = gemma2-q8(768d 전환 필요) / 경량·무마이그레이션 = granite-q4f16(384d) / 현행 유지 = bekko — **채택은 사용자 우선순위 몫** |
+> | DO-NOT-RE-RUN | granite 클램프 없는 재실험, gemma2 q4f16을 "최소 RAM"으로 표기 |
+>
+> **남은**: 모델 채택 최종 판단 + 보고서 커밋/푸시 (+ `granite-rerun-report-20261009.md` 미커밋 상태).
+
 > **2026-09-30 외부 AI 검토 후속 사이클 완료** — 검토 브리프(`docs/design/multi-agent-implementation-review-brief.md`)에 대한 외부 검토서(`jev-mem-core-implementation-review.md`)의 지적을 전부 처리:
 >
 > | 항목 | 결과 |

@@ -124,6 +124,15 @@ Paired bootstrap 95% CI (MRR delta):
 - 정적 quint8 원본이 배치 4에서는 hang 없이 63.8초간 1,030건 인덱싱 진행(이전 배치 64 무한 hang과 다른 행동) — **그러나 같은 OOM으로 사망: 50.8GB 버퍼 요청** (배치 8의 76.2GB → 정확히 B 비례).
 - 배치 1 extrapolation ≈ 12.7GB/배치 — RAM 15.6GB의 80%를 단건이 요구. **운영 투입 불가 확정, 재시도 종료.**
 
+> **⚠️ 2026-10-09 재실측으로 판정 철회** — 위 확정은 **클램프 512 미적용** 상태(계획 이탈)에서 나온 것. granite 토크나이저 상한 32,768토큰 그대로 10만 자 문서가 attention 버퍼(batch × L²)를 폭발시킨 것. bekko와 동일한 ModernBERT 계열 OOM 패턴이며, bekko는 클램프로 해결된 바 있음.
+>
+> 클램프 512 적용 재실측 결과 (`docs/design/granite-rerun-report-20261009.md`):
+> - **재인덱스 완주: fp32 50.7s / q4f16 49.8s** (1,143건, 배치 4) — bekko(807s)의 16배 빠름
+> - gold-50 MRR: fp32 0.550 / q4f16 0.570 (동급, 노이즈 내)
+> - RSS: fp32 ~540MB / **q4f16 ~311MB** (int8·quint8은 예비 드리프트 탈락)
+> - X1 1,200문항: fp32 0.557 / q4f16 0.541 (중위권)
+> - **"운영 불가" → "완전 운용 가능(클램프 512 조건)"으로 정정**
+
 ## 6. X1 외부 데이터셋 검증 (2026-10-01, KoDialogBench response_selection)
 
 > 동기: 내부 gold(오프닝 라인 파생)는 쿼리-문서 어휘 중복 편향 존재 → 독립 생성 외부 데이터셋으로 순위 재검증.
@@ -137,6 +146,16 @@ Paired bootstrap 95% CI (MRR delta):
 | **koen** | **0.622** | **0.758** | 40s |
 | baseline | 0.587 | 0.741 | 37s |
 | bekko-a8m | 0.583 | 0.737 | **19s** |
+
+> **2026-10-09 확장 (동일 러너·클램프 512·seed 42)** — granite·gemma2 추가 실측. 상세: `docs/design/granite-rerun-report-20261009.md`
+>
+> | 모델 | Acc@1 | MRR | 임베딩 시간 |
+> |---|---|---|---|
+> | **gemma2-q8** | **0.690** | **0.813** | 1301s |
+> | gemma2-q4f16 | 0.683 | 0.806 | 888s |
+> | granite-fp32 | 0.557 | 0.720 | 64s |
+> | granite-q4f16 | 0.541 | 0.713 | 72s |
+> - **외부 도메인에서는 gemma2가 압도적 1위 (+0.068 vs koen, +0.107 vs bekko)** — 내부 gold(어휘 중복 편향) 순위와 반대. granite은 중위권.
 
 서브코퍼스별: koen이 4종 전체에서 baseline 대비 우위·동급, a8m은 empathetic_dialogues에서 특히 약함(0.563 vs koen 0.650).
 

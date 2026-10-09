@@ -212,6 +212,20 @@ stage74(임베딩 교체 실측) 후 lane 분해(stage75)에서 **gemma2 vec_ran
 
 ## 8. ★ 재정렬 정책 시뮬레이션 (stage79, 0콜) — 파이프라인 개선 축
 
+### 8.4 ★ 2026-10-09 보강 — X1 1,200문항 동일 조건 재실측 (q4f16/q8)
+
+기존 §2.4의 KoDialogBench는 400문항이었다. granite 재실측 세션에서 **1,200문항(4 sub × 300, seed 42) 동일 러너·클램프 512**로 q4f16/q8을 재실측:
+
+| 모델 | Acc@1 | MRR | 임베딩 7,200건 |
+|---|---|---|---|
+| **gemma2-q8** | **0.690** | **0.813** | 1301s |
+| gemma2-q4f16 | 0.683 | 0.806 | 888s |
+
+- 서브 (q8): dailydialog 0.743 / empathetic 0.750 / personachat 0.577 / socialdial 0.690 — 4개 전부 1위.
+- **q8 vs q4f16 정정 (RAM)**: q8 466MB / q4f16 **559MB** — q4f16은 활성화 fp16 유지로 중간 버퍼 큼 (파일 크기 157 vs 314MB와 반대). q8이 RAM·품질 우위, 속도는 q4f16이 1.5배 빠름(888s vs 1301s).
+- **X1 전체 7모델 순위**: gemma2-q8 0.690 > gemma2-q4f16 0.683 > koen 0.622 > baseline 0.587 > bekko 0.583 > granite-fp32 0.557 > granite-q4f16 0.541.
+- **운영 결론**: gemma2 채택 시 **q8이 정답** (RAM 최소+품질 최고). 외부 도메인에서 bekko 대비 +0.107로 압도 — 다만 768d 스키마 전환 + 속도(재인덱스 ~31분) 부담. 상세: `docs/design/granite-rerun-report-20261009.md`
+
 ### 8.1 동기
 
 §7.4에서 gemma2가 RRF 1위로 찾은 gold를 `_filter_and_rank`의 adjusted-score 재정렬(score 0.65 + signal 0.35 + importance 0.05)이 8~9위로 강등 확인. **모델 무관 파이프라인 정책 문제** — 0콜 시뮬레이션으로 대안 평가.
