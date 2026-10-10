@@ -222,10 +222,14 @@ def main():
         print(f"⚠️ baseline schema_version {b_sv} ≠ {SCHEMA_VERSION} — 비교 생략, --init으로 재생성 필요")
         return
     alerts = []
-    # L1 abstain율 drift (±20pp → 2콜 플립)
+    # L1 abstain율 drift — ★ 2026-10-10 a-ai 방향 반전: L1(일반지식)은 12/12 abstain이 정상(천장).
+    # "abstain 증가"는 정상이라 경고가 아니라, "abstain 감소(10개 미만)" = 무답 질문에 엉뚱한
+    # 메모리를 추천하기 시작 = drift 신호 (a-ai: '오히려 10개 미만으로 떨어질 때 알림').
     b_a = base["l1"]["abstain"]; c_a = s_l1["abstain"]
-    if abs(c_a - b_a) >= 2:  # 12개 중 2개 = ~17pp
-        alerts.append(f"L1 abstain율: {b_a}/12 → {c_a}/12")
+    if c_a < 10:  # 12개 중 2개 이상 abstain 실패 = 추천 오염 시작
+        alerts.append(f"L1 abstain율: {b_a}/12 → {c_a}/12 (천장 붕괴 — 무답에 메모리 추천 시작 의심)")
+    elif c_a < b_a:
+        alerts.append(f"L1 abstain율: {b_a}/12 → {c_a}/12 (소폭 하락 — 관찰)")
     # L1 abstain_p drift (±0.1)
     b_p = base["l1"]["abstain_p_med"]; c_p = s_l1["abstain_p_med"]
     if abs(c_p - b_p) >= 0.1:

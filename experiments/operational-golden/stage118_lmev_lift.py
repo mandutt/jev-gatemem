@@ -168,12 +168,17 @@ def main():
 
     from stage110_lmev_smoke import check_keys, reader_answer
     from jev_mem_core.pipeline import _jev_client
+    # ★ 2026-10-10 b-ai·c-ai: 하네스-운영 동등성 자동 검증 (운영 위반 시 즉시 중단)
+    from harness_parity import assert_harness_parity
 
     keys = check_keys()
     print(f"[keys] EXPLABS {len(keys)}키 확인", flush=True)
     client = _jev_client()
     assert client
     api = getattr(client, "_jev_api", None)
+    # 러너 자체가 운영 노출([pick]+pool[:4])을 쓰는지 1회 검증: run_choice_lift의 계약 확인
+    assert_harness_parity(pool_n=60, exposure_ids=["x"] * 5, model="jev-latest",
+                          abstain_exposed=None, runner_name="stage118-lmev-lift")
 
     data = json.load(open(DATA, encoding="utf-8"))
     done = set()

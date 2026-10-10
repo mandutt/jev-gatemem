@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>판정 모델 κ 보정 라벨링 (46건)</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 0 auto; padding: 12px 10px 80px; }
+  .header { position: sticky; top: 0; background: #fff; padding: 8px 0; border-bottom: 1px solid #ddd; z-index: 5; }
+  h1 { font-size: 17px; margin: 0 0 4px; }
+  .banner { background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 8px 10px; font-size: 13px; margin: 8px 0; }
+  .cnt { font-weight: bold; color: #2563eb; }
+  .card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; margin: 10px 0; background: #fff; }
+  .qid { font-size: 12px; color: #64748b; margin-bottom: 5px; }
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 11px; background: #dbeafe; color: #1e40af; }
+  .hk { color: #b45309; font-size: 11px; }
+  .q { font-size: 15px; line-height: 1.5; margin-bottom: 6px; }
+  details { margin-bottom: 6px; }
+  summary { font-size: 12px; color: #2563eb; cursor: pointer; }
+  .resp { font-size: 12px; color: #475569; background: #f8fafc; padding: 6px; border-radius: 6px; margin-top: 4px; }
+  .btns { display: flex; gap: 8px; }
+  .lbl { display: flex; align-items: center; gap: 5px; border: 1px solid #cbd5e1; border-radius: 20px; padding: 5px 12px; font-size: 13px; cursor: pointer; }
+  textarea { width: 100%; box-sizing: border-box; margin-top: 6px; border: 1px solid #e2e8f0; border-radius: 6px; padding: 5px; font-size: 12px; }
+  .export { position: fixed; bottom: 12px; right: 12px; background: #2563eb; color: #fff; border: 0; border-radius: 24px; padding: 12px 18px; font-size: 14px; font-weight: bold; z-index: 10; }
+</style></head>
+<body>
+<div class="header"><h1>판정 κ 보정 라벨링 <span class="cnt" id="cnt">0 / 46</span></h1></div>
+<div class="banner"><b>판정 기준:</b> AI 응답이 <b>사용자 고유의 특정 정보</b>(파일 경로·설정 값·실험 수치·과거 사건/결론·사용자 고유 규칙)를 <b>구체적으로 인용했는가</b>?<br>
+· <b>인용함(yes)</b> — 경로·숫자·모델명·규칙 등 사용자만 알 수 있는 정보 포함<br>
+· <b>안 함(no)</b> — 일반 지식/추론으로도 답할 수 있는 내용뿐 (haiku 판정과의 불일치가 κ에 반영됨)</div>
+
+
+    <div class="card" id="c0" data-i="0">
+      <div class="qid">#1 <span class="badge">yes</span> k=2 <span class="hk">haiku: no</span></div>
+      <div class="q">감사 보고서는 어떤 섹션으로 써?</div>
+      <details><summary>응답 원문</summary><div class="resp">감사/리뷰 산출물은 다음 4개 섹션을 기본 골격으로 작성합니다.
+
+## 1. Verified Facts (검증된 사실)
+- 객관적 증거만 기술합니다: `git diff`/`git status`, `pytest`, `mypy`, `ruff`, import graph 등.
+- 추론은 금지하며, 확인된 사실만 나열합니다.
+
+## 2. Inferred Analysis (추론 분석)
+- 사실에 기반한 해석·추론을 별도 섹션으로 분리합니다.
+- 단정하지 </div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v0" value="yes" onclick="setV(0,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v0" value="no" onclick="setV(0,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r0" rows="1" placeholder="비고(선택)" oninput="saveNote(0)"></textarea>
+    </div>
+    <div class="card" id="c1" data-i="1">
+      <div class="qid">#2 <span class="badge">yes</span> k=2 <span class="hk">haiku: no</span></div>
+      <div class="q">리뷰 산출물 형식 규칙?</div>
+      <details><summary>응답 원문</summary><div class="resp">## 리뷰 산출물 형</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v1" value="yes" onclick="setV(1,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v1" value="no" onclick="setV(1,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r1" rows="1" placeholder="비고(선택)" oninput="saveNote(1)"></textarea>
+    </div>
+    <div class="card" id="c2" data-i="2">
+      <div class="qid">#3 <span class="badge">block</span> k=2 <span class="hk">haiku: no</span></div>
+      <div class="q">리뷰 전용 턴에서 커밋해도 돼?</div>
+      <details><summary>응답 원문</summary><div class="resp"></div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v2" value="yes" onclick="setV(2,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v2" value="no" onclick="setV(2,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r2" rows="1" placeholder="비고(선택)" oninput="saveNote(2)"></textarea>
+    </div>
+    <div class="card" id="c3" data-i="3">
+      <div class="qid">#4 <span class="badge">yes</span> k=2 <span class="hk">haiku: no</span></div>
+      <div class="q">commit governance 규칙이 뭐지?</div>
+      <details><summary>응답 원문</summary><div class="resp"></div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v3" value="yes" onclick="setV(3,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v3" value="no" onclick="setV(3,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r3" rows="1" placeholder="비고(선택)" oninput="saveNote(3)"></textarea>
+    </div>
+    <div class="card" id="c4" data-i="4">
+      <div class="qid">#5 <span class="badge">yes</span> k=2 <span class="hk">haiku: no</span></div>
+      <div class="q">evidence 규칙 어땠지?</div>
+      <details><summary>응답 원문</summary><div class="resp"></div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v4" value="yes" onclick="setV(4,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v4" value="no" onclick="setV(4,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r4" rows="1" placeholder="비고(선택)" oninput="saveNote(4)"></textarea>
+    </div>
+    <div class="card" id="c5" data-i="5">
+      <div class="qid">#6 <span class="badge">yes</span> k=2 <span class="hk">haiku: no</span></div>
+      <div class="q">한국어 영어 어떻게 섞어 써?</div>
+      <details><summary>응답 원문</summary><div class="resp">한국어와 영어를 섞어 쓸 때는 **용도에 따라 구분**하시는 것이 좋습니다.  
+
+- **구조·분류·상태·단계(step) 같은 메타데이터**는 한국어로 쓰고,  
+- **코드나 기술 설명**은 영어로 쓰는 방식이 자연스럽습니다.  
+
+예를 들어,  
+- &quot;이 작업은 **step 3**에서 **validation**을 수행합니다.&quot;  
+- &quot;분류는 **category A**로 지정했습니다.&quot;  
+
+이렇게 하면 한국어로 맥락을 이해하기 쉽고, 영어</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v5" value="yes" onclick="setV(5,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v5" value="no" onclick="setV(5,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r5" rows="1" placeholder="비고(선택)" oninput="saveNote(5)"></textarea>
+    </div>
+    <div class="card" id="c6" data-i="6">
+      <div class="qid">#7 <span class="badge">yes</span> k=2 <span class="hk">haiku: no</span></div>
+      <div class="q">Mnemosyne 플러그인 repo 주소 뭐야?</div>
+      <details><summary>응답 원문</summary><div class="resp">Mnemosyne 플러그인 리포지토리 주소는 다음과 같습니다:
+
+**https://github.com/mandutt/Mnemosyne-opencode**
+
+현재 v0.1 버전으로, opencode에 세션 메모리를 자동 기록하는 플러그인입니다. 세션 이벤트를 수집해 다이제스트를 Mnemosyne에 기록하는 방식으로 동작합니다.</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v6" value="yes" onclick="setV(6,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v6" value="no" onclick="setV(6,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r6" rows="1" placeholder="비고(선택)" oninput="saveNote(6)"></textarea>
+    </div>
+    <div class="card" id="c7" data-i="7">
+      <div class="qid">#8 <span class="badge">block</span> k=5 <span class="hk">haiku: no</span></div>
+      <div class="q">데스크톱 앱 띄우면 텔레그램 수신 끊겨?</div>
+      <details><summary>응답 원문</summary><div class="resp">네, 맞습니다. 데스크톱 앱을 띄우면 텔레그램 수신이 끊길 수 있는 **알려진 회귀 버그**가 있습니다.
+
+**원인 요약**  
+- 데스크톱 앱(`HERMES_DESKTOP=1`)이 부팅될 때, 백엔드가 시작되면서 `_reap_unsupervised_gateway_orphans()` 함수를 호출합니다.  
+- 이 함수가 Windows의 **예약 작업(scheduled task)** 또는 macOS의 **launchd**로 실행 중인 정상적인 s</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v7" value="yes" onclick="setV(7,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v7" value="no" onclick="setV(7,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r7" rows="1" placeholder="비고(선택)" oninput="saveNote(7)"></textarea>
+    </div>
+    <div class="card" id="c8" data-i="8">
+      <div class="qid">#9 <span class="badge">yes</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">hermes update 후 cua-driver 왜 실패해?</div>
+      <details><summary>응답 원문</summary><div class="resp">Hermes 업데이트 후 `cua-driver`가 실패하는 패턴은 **설치 스크립트(`install.ps1`)가 High-IL(높은 무결성 레벨)로 실행 중인 stale 데몬을 일반 권한으로 종료하지 못해** 발생합니다.
+
+구체적인 흐름은 이렇습니다:
+
+1. **업데이트 중** `install.ps1`이 기존 cua-driver 데몬을 중지하려고 시도합니다.
+2. 그 데몬이 **관리자 권한(High-IL)**으로 떠 있으면, 일반 권한의 스크립</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v8" value="yes" onclick="setV(8,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v8" value="no" onclick="setV(8,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r8" rows="1" placeholder="비고(선택)" oninput="saveNote(8)"></textarea>
+    </div>
+    <div class="card" id="c9" data-i="9">
+      <div class="qid">#10 <span class="badge">yes</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">설계 확정 후 리팩터 제안해도 돼?</div>
+      <details><summary>응답 원문</summary><div class="resp">아니요. 메모리에 따르면 **설계 확정(ADR Final) 이후 운영 모드에서는 리팩터 제안이 금지**됩니다.
+
+근거:
+
+- **운영 모드 제약**: 설계 확정 후에는 신규 설계/ADR/감사/TD목록 추가·리팩터가 금지됩니다.
+- **Implementation Phase 원칙**: 기존 ADR/Design Final을 SoT(Source of Truth)로만 사용하며, 문제 발견 시 즉시 보고하되 **임의 수정/제안 금지**입니다.
+- **리뷰</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v9" value="yes" onclick="setV(9,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v9" value="no" onclick="setV(9,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r9" rows="1" placeholder="비고(선택)" oninput="saveNote(9)"></textarea>
+    </div>
+    <div class="card" id="c10" data-i="10">
+      <div class="qid">#11 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">shutdown API 어떻게 만들었지?</div>
+      <details><summary>응답 원문</summary><div class="resp">메모리 내용을 바탕으로 답변드리면:
+
+**shutdown API 구현 방식** (2026-08-17 완료):
+
+1. **엔드포인트**: `/api/shutdown` — 대시보드에 &quot;🛑 프록시 종료&quot; 버튼으로 노출
+2. **동작 방식**: 
+   - `call_later(0.5s)`로 0.5초 지연 후 `os._exit` 호출 → 즉시 프로세스 종료
+   - 지연을 둔 이유는 응답이 클라이언트에 전달될 시간을 확보하기 위함
+3. **보안**: `</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v10" value="yes" onclick="setV(10,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v10" value="no" onclick="setV(10,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r10" rows="1" placeholder="비고(선택)" oninput="saveNote(10)"></textarea>
+    </div>
+    <div class="card" id="c11" data-i="11">
+      <div class="qid">#12 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">브라우저 도구 라우팅 설정 어떻게 돼?</div>
+      <details><summary>응답 원문</summary><div class="resp">브라우저 도구 라우팅 설정은 다음과 같이 되어 있습니다:
+
+- **엔진**: Chrome (`agent-browser --engine chrome`)
+- **헤드리스 모드**: 기본적으로 활성화 (`headed=false`)
+- **Camofox 모드**: 비활성화 (`is_camofox_mode()=False`) — `.env`의 `CAMOFOX_URL` 활성 라인은 제거되고 주석만 남아 있습니다.
+- **nodriver MCP 컴패니언(br</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v11" value="yes" onclick="setV(11,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v11" value="no" onclick="setV(11,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r11" rows="1" placeholder="비고(선택)" oninput="saveNote(11)"></textarea>
+    </div>
+    <div class="card" id="c12" data-i="12">
+      <div class="qid">#13 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">프록시에서 특정 모델 강제 지정 기능 있어?</div>
+      <details><summary>응답 원문</summary><div class="resp">네, 있습니다. `camelai-serial-proxy`에 **모델 스위치(`model_override`)** 기능이 추가되어 있습니다.
+
+다만 한 가지 중요한 제약이 있습니다. **내부 모델을 직접 지정하는 방식은 404로 불가**하며, **글로벌 모델 지정만 가능**합니다. 즉, 모델별로 서로 다른 effort를 매핑하는 것은 지원되지 않고, 전체 요청에 대해 하나의 모델을 강제로 지정하는 방식으로 동작합니다.
+
+추가로, 라우팅 표시(`ro</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v12" value="yes" onclick="setV(12,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v12" value="no" onclick="setV(12,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r12" rows="1" placeholder="비고(선택)" oninput="saveNote(12)"></textarea>
+    </div>
+    <div class="card" id="c13" data-i="13">
+      <div class="qid">#14 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">model_override와 effort 주입 기능 언제 추가됐지?</div>
+      <details><summary>응답 원문</summary><div class="resp">메모리에 따르면 **2026-08-26**에 추가되었습니다.
+
+구체적으로는 `18080 camelai-serial-proxy`에 다음 세 가지가 함께 도입되었습니다:
+- **model_override** (모델 스위치)
+- **routed_model** (라우팅 표시)
+- **default_reasoning_effort + effort_injection_mode(respect/force)** (추론 레벨 주입)
+
+이 시점에 10/10 와이어 검</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v13" value="yes" onclick="setV(13,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v13" value="no" onclick="setV(13,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r13" rows="1" placeholder="비고(선택)" oninput="saveNote(13)"></textarea>
+    </div>
+    <div class="card" id="c14" data-i="14">
+      <div class="qid">#15 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">codex config.toml 훅 어떻게 설정했지?</div>
+      <details><summary>응답 원문</summary><div class="resp">Codex CLI와 Mnemosyne 연동을 위해 `~/.codex/config.toml`에 다음과 같이 훅을 설정하셨습니다:
+
+```toml
+[hooks]
+  UserPromptSubmit = &quot;recall.py&quot;   # 사용자 프롬프트 제출 시 기억 회상
+  Stop = &quot;record.py&quot;               # 응답 종료 시 대화 기록 저장
+```
+
+**설정의 핵심 포인트:**
+
+1. **`[hooks]` 블록 사용** — `[fe</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v14" value="yes" onclick="setV(14,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v14" value="no" onclick="setV(14,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r14" rows="1" placeholder="비고(선택)" oninput="saveNote(14)"></textarea>
+    </div>
+    <div class="card" id="c15" data-i="15">
+      <div class="qid">#16 <span class="badge">valid</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">반말 써도 돼?</div>
+      <details><summary>응답 원문</summary><div class="resp">죄송하지만, 현재 프로필에서는 한국어 대화 시 존댓말(합니다체)을 사용하도록 설정되어 있습니다. 반말과 존댓말이 섞이면 어색할 수 있으므로, 일관되게 존댓말로 답변드리겠습니다. 다른 프로필에서는 이 규칙이 적용되지 않을 수 있습니다.</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v15" value="yes" onclick="setV(15,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v15" value="no" onclick="setV(15,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r15" rows="1" placeholder="비고(선택)" oninput="saveNote(15)"></textarea>
+    </div>
+    <div class="card" id="c16" data-i="16">
+      <div class="qid">#17 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">배치 파일 인코딩 문제였어?</div>
+      <details><summary>응답 원문</summary><div class="resp">네, 맞습니다. 문제의 원인은 배치 파일의 인코딩과 줄바꿈 방식이었어요.
+
+구체적으로는:
+- 배치 파일이 **UTF-8 인코딩 + LF 줄바꿈**으로 저장되어 있었습니다.
+- Windows의 `cmd.exe`는 기본적으로 **CP949/OEM** 코드 페이지를 사용하는데, 이 환경에서 UTF-8로 작성된 한글 `rem` 주석이 깨져서 **명령어로 오인**되었습니다.
+- 그 결과 `start_proxy.cmd`가 재부팅 후 정상적으로 실행되지 않</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v16" value="yes" onclick="setV(16,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v16" value="no" onclick="setV(16,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r16" rows="1" placeholder="비고(선택)" oninput="saveNote(16)"></textarea>
+    </div>
+    <div class="card" id="c17" data-i="17">
+      <div class="qid">#18 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">bekko-a8m 채택 이유가 뭐야?</div>
+      <details><summary>응답 원문</summary><div class="resp">bekko-a8m을 조건부 채택 권고한 이유는 다음과 같습니다.
+
+1. **성능 우위**: vec-only gold 기준 MRR 0.780, R@1 0.75로 koen 대안(MRR 0.726)보다 우수했습니다.
+2. **지연 시간**: p95 1.5ms로 실시간 응답에 적합했습니다.
+3. **리소스 효율**: RAM 사용량이 -35%로 절감되었고, 접두어(prefix)가 불필요했습니다.
+4. **게이트 무효화**: baseline 948MB 커</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v17" value="yes" onclick="setV(17,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v17" value="no" onclick="setV(17,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r17" rows="1" placeholder="비고(선택)" oninput="saveNote(17)"></textarea>
+    </div>
+    <div class="card" id="c18" data-i="18">
+      <div class="qid">#19 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">models.json에 어떤 엔드포인트 있지?</div>
+      <details><summary>응답 원문</summary><div class="resp">메모리 기준으로 `~/.pi/agent/models.json`에 등록된 프록시는 두 가지입니다.
+
+1. **combo** — `127.0.0.1:20128`, 40개 이상의 모델 보유
+2. **camelai** — `127.0.0.1:18080`, deepseek-v4-flash 모델, 512K 컨텍스트
+
+두 프록시 모두 `api openai-completions` 방식이며, 키 검증이 없어서 더미 `apiKey(&quot;local&quot;)`을 필수로 넣어</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v18" value="yes" onclick="setV(18,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v18" value="no" onclick="setV(18,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r18" rows="1" placeholder="비고(선택)" oninput="saveNote(18)"></textarea>
+    </div>
+    <div class="card" id="c19" data-i="19">
+      <div class="qid">#20 <span class="badge">valid</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">사용자 언어 습관이 어때?</div>
+      <details><summary>응답 원문</summary><div class="resp">사용자는 **한국어와 영어를 혼용해서 대화하는 습관**이 있습니다. (메모리 중요도 0.90으로 기록된 항목)
+
+즉, 문장 안에서 한국어를 기본으로 하되 영어 단어·표현을 자연스럽게 섞어 쓰는 스타일입니다. 예를 들어 기술 용어나 특정 개념은 영어로, 나머지 설명은 한국어로 하는 식이죠.
+
+참고로 함께 저장된 다른 제약/스타일 항목들도 요약하면:
+- 작업 스케줄러 수정·생성 금지 (안전종료/기동은 `.ps1`/`.bat` + Startup만)
+</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v19" value="yes" onclick="setV(19,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v19" value="no" onclick="setV(19,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r19" rows="1" placeholder="비고(선택)" oninput="saveNote(19)"></textarea>
+    </div>
+    <div class="card" id="c20" data-i="20">
+      <div class="qid">#21 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">custom_providers에서 Local 프록시 어떻게 설정하지?</div>
+      <details><summary>응답 원문</summary><div class="resp">`config.yaml`의 `custom_providers` 배열에서 4번째 항목으로 `Local`을 설정하시면 됩니다. 구체적으로는:
+
+```yaml
+custom_providers:
+  # ... 기타 프로바이더 ...
+  - name: Local
+    base_url: http://127.0.0.1:18080
+```
+
+**중요한 주의사항:**
+
+- `models` 필드는 **반드시 맵핑 형태**로 유지하세요. 예: `{auto: {}}`
+</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v20" value="yes" onclick="setV(20,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v20" value="no" onclick="setV(20,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r20" rows="1" placeholder="비고(선택)" oninput="saveNote(20)"></textarea>
+    </div>
+    <div class="card" id="c21" data-i="21">
+      <div class="qid">#22 <span class="badge">yes</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">Hermes_With_Watchdog.cmd 위치?</div>
+      <details><summary>응답 원문</summary><div class="resp">Hermes_With_Watchdog.cmd 런처의 위치는 다음과 같습니다:
+
+**`C:\Users\mandu\hermes-made\hermes-gateway-watchdog\`**
+
+이 폴더 안에 `Hermes_With_Watchdog.cmd`와 함께 `watchdog.ps1`이 들어 있습니다. 데스크톱에서 Hermes를 실행할 때는 이 런처를 사용해야 워치독이 함께 동작합니다.</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v21" value="yes" onclick="setV(21,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v21" value="no" onclick="setV(21,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r21" rows="1" placeholder="비고(선택)" oninput="saveNote(21)"></textarea>
+    </div>
+    <div class="card" id="c22" data-i="22">
+      <div class="qid">#23 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">stealth 브라우저 언제 써야 해?</div>
+      <details><summary>응답 원문</summary><div class="resp">stealth 브라우저는 **딱 이런 경우에만** 필요해:
+
+1. **로그인/세션이 필요한 페이지** — 예: 인증 후에만 보이는 콘텐츠
+2. **Cloudflare / 403 / CAPTCHA** 가 뜨는 사이트
+3. **`navigator.webdriver` 검사** 등 anti-bot 자바스크립트가 있는 곳
+4. **양식 제출 / 클릭 상호작용** 이 필요한 작업
+5. **대량 수집** (크롤링)
+
+---
+
+**기본 원칙:**
+- 일반적인</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v22" value="yes" onclick="setV(22,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v22" value="no" onclick="setV(22,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r22" rows="1" placeholder="비고(선택)" oninput="saveNote(22)"></textarea>
+    </div>
+    <div class="card" id="c23" data-i="23">
+      <div class="qid">#24 <span class="badge">yes</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">작업 스케줄러 등록해도 돼?</div>
+      <details><summary>응답 원문</summary><div class="resp">죄송합니다만, **작업 스케줄러 등록은 불가능합니다.**
+
+메모리에 명시된 사용자 제약사항에 따르면:
+
+&gt; **작업 스케줄러 수정/생성 금지** (안전종료/기동은 .ps1/.bat + Startup만 허용)
+
+즉, Windows 작업 스케줄러(Task Scheduler)를 통한 등록은 원칙적으로 금지되어 있습니다. 대신 안전종료나 기동 관련 작업이 필요하시다면:
+
+- `.ps1` 또는 `.bat` 스크립트를 작성하고
+- **Startup 폴더*</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v23" value="yes" onclick="setV(23,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v23" value="no" onclick="setV(23,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r23" rows="1" placeholder="비고(선택)" oninput="saveNote(23)"></textarea>
+    </div>
+    <div class="card" id="c24" data-i="24">
+      <div class="qid">#25 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">X1 외부 데이터셋 실험에서 bekko 성능?</div>
+      <details><summary>응답 원문</summary><div class="resp">X1 외부 데이터셋(KoDialogBench) 실험에서 **bekko-a8m**의 성능은 **Accuracy@1 기준 0.583, MRR 0.737**로, 세 모델 중 **최하위**였습니다.
+
+- koen: 0.622 (MRR 0.758)
+- baseline: 0.587 (MRR 0.741)
+- **bekko-a8m: 0.583 (MRR 0.737)**
+
+흥미로운 점은 bekko-a8m이 내부 gold-50 벤치에서는 1위(MRR 0.772)였</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v24" value="yes" onclick="setV(24,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v24" value="no" onclick="setV(24,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r24" rows="1" placeholder="비고(선택)" oninput="saveNote(24)"></textarea>
+    </div>
+    <div class="card" id="c25" data-i="25">
+      <div class="qid">#26 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">그 프로젝트 진짜 목표가 뭐지?</div>
+      <details><summary>응답 원문</summary><div class="resp">verifier-pilot 프로젝트의 진짜 목표는 **“더 나은 답변 품질”**입니다.  
+코딩 품질에만 한정되지 않고, 코드·텍스트·분석·문서 등 모든 산출물의 품질을 높이는 것이 핵심입니다.  
+필요하다면 품질 평가 과정에서 LLM 호출을 사용하는 것도 허용됩니다.</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v25" value="yes" onclick="setV(25,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v25" value="no" onclick="setV(25,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r25" rows="1" placeholder="비고(선택)" oninput="saveNote(25)"></textarea>
+    </div>
+    <div class="card" id="c26" data-i="26">
+      <div class="qid">#27 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">bekko랑 koen 벤치 비교 결과?</div>
+      <details><summary>응답 원문</summary><div class="resp">bekko-a8m 모델이 조건부 채택 권고를 받은 상태입니다. 주요 비교 결과는 다음과 같습니다.
+
+**bekko-a8m (채택 권고)**
+- vec-only gold MRR: 0.780
+- R@1: 0.75
+- p95: 1.5ms
+- RAM: baseline 대비 -35%
+- 접두어 불필요
+
+**koen (대안)**
+- MRR: 0.726
+- T3 부정역전에서 최강 (9/10)
+- RAM: baseline 대비 -37%
+
+**공통 참고사항**</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v26" value="yes" onclick="setV(26,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v26" value="no" onclick="setV(26,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r26" rows="1" placeholder="비고(선택)" oninput="saveNote(26)"></textarea>
+    </div>
+    <div class="card" id="c27" data-i="27">
+      <div class="qid">#28 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">config.yaml에 18080 프록시 등록 방법?</div>
+      <details><summary>응답 원문</summary><div class="resp">config.yaml에 18080 프록시를 등록하는 방법은 다음과 같습니다.
+
+**파일 위치:** `$LOCALAPPDATA/hermes/config.yaml`
+
+**설정 구조:**
+```yaml
+custom_providers:
+  - name: Local (127.0.0.1:18080)
+    base_url: http://127.0.0.1:18080
+    # ... 기타 필요한 필드
+```
+
+**중요한 주의사항:**
+
+1. **models</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v27" value="yes" onclick="setV(27,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v27" value="no" onclick="setV(27,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r27" rows="1" placeholder="비고(선택)" oninput="saveNote(27)"></textarea>
+    </div>
+    <div class="card" id="c28" data-i="28">
+      <div class="qid">#29 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">opencode에서 메모리 자동 기록돼?</div>
+      <details><summary>응답 원문</summary><div class="resp">네, 맞습니다. opencode에서 메모리 자동 기록이 되도록 플러그인을 구축해 두었습니다.
+
+구체적으로는 **Mnemosyne 자동 기록 플러그인(v0.1)**이 `~/.config/opencode/plugin/mnemosyne-session-memory.ts`에 설치되어 있으며, 세션 이벤트(`chat.message`, `tool.execute.after`, `message.part.updated`)를 수집한 뒤 세션이 유휴 상태(`sess</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v28" value="yes" onclick="setV(28,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v28" value="no" onclick="setV(28,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r28" rows="1" placeholder="비고(선택)" oninput="saveNote(28)"></textarea>
+    </div>
+    <div class="card" id="c29" data-i="29">
+      <div class="qid">#30 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">S3에서 임베딩 모델 최종 선택 근거?</div>
+      <details><summary>응답 원문</summary><div class="resp">S3 최종 보고서(2026-10-01) 기준, 임베딩 모델은 **bekko-a8m을 조건부 채택**하는 것으로 권고되었습니다. 주요 근거는 다음과 같습니다.
+
+**1. 성능 우위 (vec-only gold)**
+- MRR 0.780, R@1 0.75로 koen 대안(MRR 0.726)보다 우수했습니다.
+- p95 지연시간 1.5ms로 실시간 서비스에 충분한 수준이었습니다.
+
+**2. 리소스 효율**
+- RAM 사용량이 baseline 대비 -3</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v29" value="yes" onclick="setV(29,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v29" value="no" onclick="setV(29,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r29" rows="1" placeholder="비고(선택)" oninput="saveNote(29)"></textarea>
+    </div>
+    <div class="card" id="c30" data-i="30">
+      <div class="qid">#31 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">KoDialogBench 4종 검증 결과 어땠어?</div>
+      <details><summary>응답 원문</summary><div class="resp">KoDialogBench 1,200건 검증 결과, **koen 모델이 0.622로 가장 높은 성능**을 기록했습니다. 그 뒤를 baseline(0.587), a8m(0.583) 순으로 이었습니다.
+
+다만 중요한 점은, **내부 gold 데이터셋에서 1위를 차지한 모델이 어휘 중복 편향**을 보였다는 것입니다. 즉, 성능 자체는 좋지만 다국어 일반화 관점에서는 한계가 있었습니다. 이 결과는 벤치마크 최종 보고서(`docs/design/embed-</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v30" value="yes" onclick="setV(30,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v30" value="no" onclick="setV(30,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r30" rows="1" placeholder="비고(선택)" oninput="saveNote(30)"></textarea>
+    </div>
+    <div class="card" id="c31" data-i="31">
+      <div class="qid">#32 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">hermes update 중간에 꺼지면 어떻게 해?</div>
+      <details><summary>응답 원문</summary><div class="resp">Hermes 업데이트가 중간에 꺼졌다면, **venv(가상환경)가 손상됐을 가능성이 높습니다.**  
+이미 이 문제를 겪으셨던 기록이 있어요.
+
+**해결 방법:**
+
+1. **Hermes를 완전히 종료**하세요. (트레이 아이콘까지 모두 종료)
+2. **복구 스크립트 실행**:  
+   `C:\Users\mandu\hermes-made\hermes-repair\` 폴더에 있는 복구 도구를 실행하세요.  
+   (정확한 파일명은 `hermes-v</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v31" value="yes" onclick="setV(31,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v31" value="no" onclick="setV(31,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r31" rows="1" placeholder="비고(선택)" oninput="saveNote(31)"></textarea>
+    </div>
+    <div class="card" id="c32" data-i="32">
+      <div class="qid">#33 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">660초 타임아웃 원인 뭐였지?</div>
+      <details><summary>응답 원문</summary><div class="resp">660초 타임아웃의 근본 원인은 **설치 스크립트(install.ps1)가 High-IL(높은 무결성 레벨)로 실행 중인 stale 데몬을 일반 권한으로 종료하지 못해 UAC 프롬프트를 띄우고 무한정 대기**했기 때문입니다.
+
+구체적으로:
+- Hermes 업데이트 시 `cua-driver refresh`가 실행되는데, 이때 이전 데몬이 관리자 권한으로 남아 있으면 일반 권한의 스크립트가 이를 강제 종료할 수 없습니다.
+- 이 과정에서 UAC 확</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v32" value="yes" onclick="setV(32,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v32" value="no" onclick="setV(32,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r32" rows="1" placeholder="비고(선택)" oninput="saveNote(32)"></textarea>
+    </div>
+    <div class="card" id="c33" data-i="33">
+      <div class="qid">#34 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">프록시 대시보드에 종료 버튼 있어?</div>
+      <details><summary>응답 원문</summary><div class="resp">네, 있습니다. 대시보드에 **&quot;🛑 프록시 종료&quot;** 버튼이 추가되어 있어요.  
+이 버튼을 누르면 `/api/shutdown` 엔드포인트를 호출해서 프록시를 종료하며, 내부적으로는 `call_later`로 0.5초 후 `os._exit`를 실행하는 방식입니다.  
+또한 보안을 위해 해당 경로는 `SECRET_PATHS`에 포함되어 있어요.
+
+참고로, 이 종료 버튼은 2026-08-17에 개선된 대시보드 기능 중 하나입니다.</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v33" value="yes" onclick="setV(33,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v33" value="no" onclick="setV(33,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r33" rows="1" placeholder="비고(선택)" oninput="saveNote(33)"></textarea>
+    </div>
+    <div class="card" id="c34" data-i="34">
+      <div class="qid">#35 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">webdriver 숨김이 필요한 경우가 뭐지?</div>
+      <details><summary>응답 원문</summary><div class="resp">메모리에 따르면, Hermes 브라우저에서 **webdriver 숨김(stealth)이 필요한 경우**는 다음과 같습니다:
+
+1. **로그인/세션이 필요한 경우**
+2. **Cloudflare, 403, CAPTCHA 등 anti-bot 차단에 직면한 경우**
+3. **`navigator.webdriver` 검사 등 anti-bot JavaScript가 실행되는 페이지**
+4. **양식 제출 또는 클릭 상호작용이 필요한 경우**
+5. **대량 </div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v34" value="yes" onclick="setV(34,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v34" value="no" onclick="setV(34,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r34" rows="1" placeholder="비고(선택)" oninput="saveNote(34)"></textarea>
+    </div>
+    <div class="card" id="c35" data-i="35">
+      <div class="qid">#36 <span class="badge">valid</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">신규 타입 만드는 게 원칙이야?</div>
+      <details><summary>응답 원문</summary><div class="resp">아니요. 메모리에 따르면 **신규 타입 생성은 원칙이 아니라 오히려 지양 대상**입니다.
+
+핵심 원칙은 이렇습니다:
+
+- **일관성(기존 관례)이 SOLID보다 최우선**입니다.
+- 따라서 **신규 타입 생성은 목표가 아니며, 기존 타입을 확장하는 쪽을 택합니다.**
+- 설계 리뷰에서도 &quot;분리 불필요&quot;라는 판단조차 evidence-based로 재판단하라고 되어 있습니다. 즉 근거 없이 새로 쪼개거나 새 타입을 만드는 건 권장되지 않습니다.
+
+추</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v35" value="yes" onclick="setV(35,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v35" value="no" onclick="setV(35,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r35" rows="1" placeholder="비고(선택)" oninput="saveNote(35)"></textarea>
+    </div>
+    <div class="card" id="c36" data-i="36">
+      <div class="qid">#37 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">commitment FP 필터 실측 결과 어때?</div>
+      <details><summary>응답 원문</summary><div class="resp">commitment FP 필터(v4)의 실측 결과는 아직 확정되지 않았습니다. 현재 운용 관측 중이며, 기준선은 2026-09-28 기준으로 `jev_trace.log`에서 SKIP 0건이 확인된 상태입니다.
+
+다만 gold50(n=50)은 추정치일 뿐이라, 실제 운용 데이터로 검증이 필요합니다. 계획대로라면 1~2주 후 `grep &#x27;commitment-fp-v4&#x27; jev_trace.log | wc -l`로 건수를 세고, SKIP utteran</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v36" value="yes" onclick="setV(36,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v36" value="no" onclick="setV(36,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r36" rows="1" placeholder="비고(선택)" oninput="saveNote(36)"></textarea>
+    </div>
+    <div class="card" id="c37" data-i="37">
+      <div class="qid">#38 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">auto 라우팅이 확률적이라는 결론이었나?</div>
+      <details><summary>응답 원문</summary><div class="resp">네, 맞습니다. 메모리에 따르면 auto 라우팅은 **확률적**으로 동작한다고 결론 내렸습니다.
+
+구체적으로는:
+- 동일한 프롬프트를 반복해도 호출마다 라우팅이 변동했습니다.
+- 다만 균등한 무작위는 아니었고, 조건별로 우선 선택되는 모델이 있었으며 약 10~25%의 이탈률을 보였습니다.
+- 주요 결정 요인은 프롬프트 난이도였습니다. 어려운 퍼즐은 gemini-3.7-flash로, 사소한 프롬프트는 gpt-5.6-luna로 주로 라우팅되었습니다</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v37" value="yes" onclick="setV(37,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v37" value="no" onclick="setV(37,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r37" rows="1" placeholder="비고(선택)" oninput="saveNote(37)"></textarea>
+    </div>
+    <div class="card" id="c38" data-i="38">
+      <div class="qid">#39 <span class="badge">yes</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">orphan gateway reap 회귀 맞아?</div>
+      <details><summary>응답 원문</summary><div class="resp">네, 맞습니다. 메모리에 따르면 이건 **v0.20.0 회귀**로 확인됩니다.
+
+**핵심 요약:**
+- 데스크톱 앱의 serve 백엔드(`HERMES_DESKTOP=1`)가 부팅될 때 `web_server.py` lifespan이 `_reap_unsupervised_gateway_orphans()`를 호출합니다.
+- 이 함수가 **Windows 스케줄 태스크**와 **macOS launchd**로 정상 실행 중인 standalone 게이트웨이를</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v38" value="yes" onclick="setV(38,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v38" value="no" onclick="setV(38,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r38" rows="1" placeholder="비고(선택)" oninput="saveNote(38)"></textarea>
+    </div>
+    <div class="card" id="c39" data-i="39">
+      <div class="qid">#40 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">완전 번역 금지 규칙 뭐지?</div>
+      <details><summary>응답 원문</summary><div class="resp">완전 번역 금지 규칙은 **Mnemosyne Context**에 명시된 언어 사용 원칙 중 하나입니다. 구체적으로는 다음과 같습니다.
+
+- **언어 혼용 원칙**: 한국어와 영어를 구조적으로 구분해서 사용합니다.
+- **한국어 사용 영역**: 분류, 상태, step label 등 구조적/메타데이터적인 부분은 한국어로 작성합니다.
+- **영어 사용 영역**: 코드나 기술 설명은 영어로 유지합니다.
+- **금지 사항**: 이 구분을 무시하고 전체를</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v39" value="yes" onclick="setV(39,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v39" value="no" onclick="setV(39,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r39" rows="1" placeholder="비고(선택)" oninput="saveNote(39)"></textarea>
+    </div>
+    <div class="card" id="c40" data-i="40">
+      <div class="qid">#41 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">P3b 확장 gold MRR 수치?</div>
+      <details><summary>응답 원문</summary><div class="resp">P3b 확장 gold에서의 MRR 수치는 **0.772**입니다 (R@1 0.72, 1위 유지).</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v40" value="yes" onclick="setV(40,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v40" value="no" onclick="setV(40,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r40" rows="1" placeholder="비고(선택)" oninput="saveNote(40)"></textarea>
+    </div>
+    <div class="card" id="c41" data-i="41">
+      <div class="qid">#42 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">best-of-5에 recovery 얹으면 개선돼?</div>
+      <details><summary>응답 원문</summary><div class="resp">아니요, 개선되지 않았습니다.
+
+2026-08-20에 완료된 verifier-pilot 연구 67차 최종 실행 결과, **best-of-5(G3) + selective recovery(D)** 방식은 **best-of-5(G3) 단독(B2)** 대비 품질 개선이 없었습니다.
+
+구체적으로:
+- 평가자 기준 평균 품질 변화 ΔQ = **-0.0176** (신뢰구간 [-0.053, +0.012]) — 사실상 **0과 구분되지 않는 수준**이며, 오히</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v41" value="yes" onclick="setV(41,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v41" value="no" onclick="setV(41,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r41" rows="1" placeholder="비고(선택)" oninput="saveNote(41)"></textarea>
+    </div>
+    <div class="card" id="c42" data-i="42">
+      <div class="qid">#43 <span class="badge">yes</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">설계 리뷰에서 SOLID랑 일관성 중 뭐 우선?</div>
+      <details><summary>응답 원문</summary><div class="resp">설계 리뷰에서는 **일관성(기존 관례)이 SOLID보다 우선**입니다.
+
+메모리에 기록된 리뷰 원칙을 정리하면 다음과 같습니다.
+
+- **일관성 최우선**: 기존 관례를 따르는 것이 SOLID 원칙 준수보다 앞섭니다. 신규 타입을 새로 만드는 것은 목표가 아니며, 기존 타입을 확장하는 쪽을 택합니다.
+- **근거 기반 판단**: SRP/YAGNI/순수함수 원칙을 검토하되, 코드 근거를 반드시 제시해야 합니다. &quot;분리 불필요&quot;라는 판단도 근거를 </div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v42" value="yes" onclick="setV(42,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v42" value="no" onclick="setV(42,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r42" rows="1" placeholder="비고(선택)" oninput="saveNote(42)"></textarea>
+    </div>
+    <div class="card" id="c43" data-i="43">
+      <div class="qid">#44 <span class="badge">block</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">메모리 백엔드 뭐 쓰고 있어?</div>
+      <details><summary>응답 원문</summary><div class="resp">현재 메모리 백엔드는 **Mnemosyne**를 사용하고 있습니다. 로컬 SQLite 기반이라 pip 설치만으로 동작하며, Docker가 필요 없고 2026년 7월경에 전환 예정입니다.</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v43" value="yes" onclick="setV(43,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v43" value="no" onclick="setV(43,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r43" rows="1" placeholder="비고(선택)" oninput="saveNote(43)"></textarea>
+    </div>
+    <div class="card" id="c44" data-i="44">
+      <div class="qid">#45 <span class="badge">yes</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">아키텍처 설계 시 분리 원칙이 뭐였지?</div>
+      <details><summary>응답 원문</summary><div class="resp">기억된 아키텍처 선호 사항에 따르면, 분리 원칙은 다음과 같습니다:
+
+1. **영속성과 비즈니스 로직 분리**  
+2. **Runtime/Middleware DTO 분리**  
+3. **결정 로직은 pure function으로 작성**
+
+추가로, **데이터모델과 불필요한 컴포넌트는 YAGNI 원칙**에 따라 만들지 않는 것도 포함됩니다.
+
+참고로 현재는 **설계 확정(ADR Final) 후 운영 모드**이므로, 이 원칙들은 SoT(Source </div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v44" value="yes" onclick="setV(44,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v44" value="no" onclick="setV(44,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r44" rows="1" placeholder="비고(선택)" oninput="saveNote(44)"></textarea>
+    </div>
+    <div class="card" id="c45" data-i="45">
+      <div class="qid">#46 <span class="badge">valid</span> k=2 <span class="hk">haiku: yes</span></div>
+      <div class="q">코드 설명과 구조 라벨 언어 규칙?</div>
+      <details><summary>응답 원문</summary><div class="resp">메모리 내용을 기준으로 답변드리면, 코드 설명과 구조 라벨의 언어 규칙은 다음과 같습니다.
+
+- **구조/메타데이터 라벨** (분류, 상태, step label 등): **한국어**로 작성합니다.
+- **코드 및 기술 설명**: **영어**로 작성합니다.
+- **완전 번역 금지**: 즉, 한국어 라벨을 영어로 바꾸거나, 영어 코드 설명을 한국어로 바꾸는 일괄 번역은 하지 않습니다.
+- **한국어 출력 말투**: 존댓말(합니다체)로 통일하며, 반</div></details>
+      <div class="btns">
+        <label class="lbl"><input type="radio" name="v45" value="yes" onclick="setV(45,'yes')"> ✅ 인용함</label>
+        <label class="lbl"><input type="radio" name="v45" value="no" onclick="setV(45,'no')"> ❌ 안 함</label>
+      </div>
+      <textarea id="r45" rows="1" placeholder="비고(선택)" oninput="saveNote(45)"></textarea>
+    </div>
+
+<button class="export" onclick="exportJSON()">📤 JSON 내보내기</button>
+<script>
+const PREF = 'jk84_';
+let state = {};
+function loadState(){ try { const s = localStorage.getItem(PREF+'state'); if(s) state = JSON.parse(s); } catch(e){} }
+function saveState(){ try { localStorage.setItem(PREF+'state', JSON.stringify(state)); } catch(e){} }
+function setV(i, v){
+  state[i] = {v: v, r: (state[i]&&state[i].r)||''};
+  saveState();
+  const card = document.getElementById('c'+i);
+  card.style.borderLeft = v==='yes' ? '4px solid #4ade80' : '4px solid #f87171';
+  card.style.background = v==='yes' ? '#f0fdf4' : '#fef2f2';
+  updateCount();
+}
+function saveNote(i){ state[i] = {v:(state[i]&&state[i].v)||'', r: document.getElementById('r'+i).value}; saveState(); }
+function updateCount(){
+  const done = Object.values(state).filter(s=>s&&s.v).length;
+  document.getElementById('cnt').textContent = done + ' / ' + ITEMS;
+}
+function loadPrev(){
+  loadState();
+  Object.keys(state).forEach(i=>{
+    const s = state[i];
+    if(s && s.v){
+      const el = document.querySelector('input[name="v'+i+'"][value="'+s.v+'"]');
+      if(el) el.checked = true;
+      setV(parseInt(i), s.v);
+      const r = document.getElementById('r'+i);
+      if(r && s.r) r.value = s.r;
+    }
+  });
+  updateCount();
+}
+function exportJSON(){
+  loadState();
+  const out = [];
+  for(let i=0;i<ITEMS;i++){
+    const s = state[i]||{};
+    out.push({i, verdict: s.v||'unlabeled', note: s.r||''});
+  }
+  const blob = new Blob([JSON.stringify(out,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'judge_kappa_verdicts.json';
+  a.click();
+}
+const ITEMS = 46;
+window.addEventListener('DOMContentLoaded', loadPrev);
+</script>
+</body></html>
