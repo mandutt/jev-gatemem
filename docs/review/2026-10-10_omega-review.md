@@ -11,7 +11,7 @@
 | source | github.com/omega-memory/omega-memory (218★, 331 commits) |
 | 검토 근거 | 벤치 페이지(omegamax.co/benchmarks)의 LongMemEval 95.4% + 소스 대조 |
 | 검토 비용 | 0콜 (소스 fetch 26파일 + 라이브 DB/trace 프로브, JEV 호출 없음) |
-| 판정 | ❌ **직접 반영 없음 — 정합 1건·참고 2건·기각 4건·보류 1건·트래킹 1건** |
+| 판정 | ❌ **직접 반영 없음 — 정합 2건·기각 5건·트래킹 1건** (near-tie 보류 → stage119 실측 기각) |
 
 **한 줄 결론**: 벤치 페이지가 광고하는 95.4%와 "RRF k=60 + semantic dedup" 구조는 실제 소스와 다르다(RRF는 dead code, 임베딩 dedup은 제거됨, 문항 타입별 가중치가 벤치 점수에 맞춰 하드코딩됨). 우리가 과거에 실측·기각한 레버(시간 decay·priority/access boost·LLM 쿼리 확장·타입 가중치)를 대부분 재사용하나, **near-tie bounded metadata**(±0.0025 이내로 제한된 메타데이터 기여)만은 우리 "기각"과 다른 설계로 남아 유일한 신규 레버 후보다.
 
@@ -83,7 +83,7 @@
 |---|---|---|---|
 | 1 | RRF k=60 | ✅ **정합 (변경 없음)** | 우리 `_rrf_fuse` k=60과 상수 일치. Honcho·agentmemory k=60과 함께 후보 풀 표준성 지지 |
 | 2 | 임베딩 유사도 dedup 금지 | ✅ **정합 (변경 없음)** | OMEGA가 소스 주석으로 "재도입 금지" — 우리도 시도 안 함(실측: dedup은 JEV 게이트·supersede로 처리) |
-| 3 | near-tie bounded metadata (priority/access ±0.0025 한정) | ⏸️ **보류 — 신규 후보** | 우리는 priority/access boost를 "도배 행 자기 강화"로 실측 기각했으나, OMEGA는 **semantic near-tie(≤SEMANTIC_NEAR_TIE_DELTA)일 때만 ±0.0025 이내로 제한**해 "boost가 관련성을 만든다"는 우리 기각 근거(도배 행이 캡1 실측에서 abstain을 유도한 것, stage66)와 다른 설계. 채택 전제: production-exact 3-run 전체 재현 회귀(stage85 gold rank 41·36 유실 방지) + 도배 행 실측 재확인 |
+| 3 | near-tie bounded metadata (priority/access ±0.0025 한정) | ❌ **기각 (stage119 0콜 실측)** | near-tie(Δ≤0.002) 43/150(28.7%)에서 boost 0.0025만으로 flip 43/43 — RRF 스케일에선 'bounded' 무의미. gold 1위 강등 8건·노출 요동 17건·importance 단독 도배 행 20%와 결합 시 도배 승격. JEV winner 무영향(Run R)이라 노출만 요동 — do not re-run. 러너: `stage119_near_tie_sim.py`·raw `data/stage119_near_tie_raw_v2.json` |
 | 4 | 시간 decay (타입별 λ, floor 0.15) | ❌ **기각 (do not re-run)** | 완곡어 실측 1.3%(MemPalace)·시간 부스트 검토에서 우리가 같은 축을 실측 기각. 코퍼스 시간 분포에 의존하고 drift 위험. 단 OMEGA는 "near-tie + bounded 0.05" 제한을 두어 우리 "완전 무시간" 대비 완화된 설계 — fail-open 원칙과 충돌 없음 |
 | 5 | feedback_score boost | ❌ **기각 (do not re-run)** | tigerless "읽기 횟수 boost" 4단계 기각과 동일: recall_count 상위 40건 중 50% 도배 + 자기 강화 루프 + boost가 도배를 강화 |
 | 6 | LLM 쿼리 확장 (lex/vec/HyDE) | ❌ **기각 (do not re-run)** | 우리 stage18(read-path 쿼리 확장) 기각 + AnchorMind 합성 역질문 0/4 — "표면 어휘 정규화일 뿐 의역/한영 단절 연결 못 함"과 동일 한계. HyDE도 LLM 호출이 read-path에 추가됨(우리 0콜 원칙 위반) |
@@ -127,6 +127,6 @@
 ## 7. 결론
 
 - **직접 반영 없음** — 우리가 실측·기각한 레버(시간 decay·feedback·쿼리 확장·타입 가중치)의 재사용이며, 벤치 페이지 광고(95.4%·RRF·semantic dedup)는 소스와 불일치해 신뢰 불가.
-- **보류 1건**: near-tie bounded metadata — 우리 기각(priority/access boost)과 다른 설계 제약(±0.0025·near-tie 한정)으로 **유일한 신규 후보**. 채택 여부는 production-exact 3-run 재현과 사용자 판단 필요.
+- **near-tie bounded metadata — ❌ 기각 확정 (stage119 0콜 실측, 2026-10-10)**: 우리 RRF 점수 스케일에서 OMEGA의 "bounded ±0.0025"가 전혀 bounded가 아님 — near-tie(Δ≤0.002) 43/150건에서 boost 0.0025만으로 **flip 43/43 (100%)**. gold 1위 강등 위험 8건·노출 요동 17건·importance 단독 도배 행이 top1/2의 20%로 boost와 결합 시 도배 승격. JEV winner는 순서 변경 무영향(Run R)이라 **노출만 요동** — tigerless 기각 4단계와 동일 메커니즘. do not re-run.
 - **정합 2건**: RRF k=60, 임베딩 dedup 금지 — 우리 설계의 표준성 재확인.
 - **트래킹 1건**: OMEGA의 벤치 수치는 "자체 보고 + 문항 타입별 튜닝"으로 분리 표기하고, 재현 가능한 공식 벤치가 나올 때까지 외부 인용 금지.
