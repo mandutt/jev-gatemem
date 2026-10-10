@@ -198,6 +198,20 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 >
 > **남은**: 위 2건은 코드 변경 없음 — 트리거 조건 충족 시 외부 시스템 검토 규약(검토 문서 1벌 + HANDOFF 행 + 스킬 reference)으로 재검토.
 
+> **2026-10-10 — 메모리 솔루션 생태계 스크리닝 + tigerless agent-memory 심층 검토 (0콜, GitHub star·웹·레딧·아카이브)**:
+>
+> | 항목 | 결과 |
+> |---|---|
+> | 생태계 스크리닝 (24개 + 웹 8종) | 기록만 — 확인했던 목록 전체: `docs/review/2026-10-10_memory-ecosystem-survey.md` (README 원문 22종 `reviews_tigerless/survey-sources/`) |
+> | **tigerless-labs/agent-memory 심층 검토** | ⏸️ **보류 2건 등록** — ① **백그라운드 Manage 레이어** (sleep-time merge/supersede/split/delete 제안 + reasoner 판정 + caps · 삭제는 invalid 표시 = fail-open 정합) — 우리 Honcho 보류(백그라운드 합성)의 **구현체**, 코퍼스 2,085행 시기상조 판단 유지 ② **읽기 횟수 boost** — 우리 recall_count **891/2,085(43%) 채움 실측**, 검색 랭킹 미사용 (stage104 `_adjusted` 기각과 교차, 재검토 여지). 정합: RRF k=60·시점 반개구간·삭제 보존·벡터 brute-force 전체 스캔(작은 규모=Vec1 추적과 같은 자리). 직접 이식 없음. 상세: `docs/review/2026-10-10_tigerless-agent-memory-review.md` (소스 미러: `reviews_tigerless/src/`) |
+> | **TencentDB Agent Memory (L0~L3 계층 증류)** | 🔭 **참고 등록·재탐구 트래킹** — 27.9k★, Hermes 플러그인 공식 제공, L0 대화→L1 Atom→L2 Scenario→L3 Persona 4단계 계층 증류 = 우리가 안 해본 축 (우리 consolidated_at 595행은 메타데이터만). 클라우드 SDK 의존으로 지금은 문서만. **재탐구 트리거: ① 코퍼스 수만 행 ② 백그라운드 합성 실험 시작** |
+> | arXiv 2606.24775 Agent-Native Memory | 📋 참고 — "단일 아키텍처가 모든 워크로드 지배 못함, 워크로드 병목 정렬 핵심" · "로컬 유지보수 > 글로벌 재조직" = 우리 선택 근거와 정합 |
+> | arXiv 2606.29914 MemDelta | ✅ 정합 — **임베딩 교체만으로 ±6포인트** = 우리 embedding-fullpath-gate(S4)와 독립 일치 |
+> | benchd.ai·maximem.ai 검증 회의론 | ✅ 실측 우선주의 재확인 — 무메모리 LLM 57.6% > 대부분 메모리 시스템, Mem0 자체 보고 93.4% vs 실측 73.8% (판정 프롬프트 CoT) |
+> | Reddit Signet·Genesys | 🔭 후보 — 비동기 증류(Signet)·인과 그래프(Genesys), 단 자체 보고 수치 |
+>
+> **남은**: 위 항목 코드 변경 없음. tigerless 보류 2건·TencentDB 재탐구는 트리거 조건 충족 시 재검토.
+
 > **2026-10-08 — 외부 문헌 검토: core.today '한국어 검색 스택' 5·6·7·9·10편 + 점수 융합(α) 종결**:
 >
 > | 항목 | 결과 |

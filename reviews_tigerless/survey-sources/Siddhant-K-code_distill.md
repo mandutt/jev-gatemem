@@ -1,0 +1,1336 @@
+# Distill
+
+[![CI](https://github.com/Siddhant-K-code/distill/actions/workflows/ci.yml/badge.svg)](https://github.com/Siddhant-K-code/distill/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Siddhant-K-code/distill)](https://github.com/Siddhant-K-code/distill/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Siddhant-K-code/distill)](https://goreportcard.com/report/github.com/Siddhant-K-code/distill)
+
+
+[![Build with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/siddhant-k-code/distill)
+
+**Your agent remembers what matters.**
+
+Distill gives LLM agents persistent, deduplicated memory that survives across sessions. It prevents repeated re-learning, surfaces conflicting information before it causes mistakes, and compresses aging context so the signal stays high.
+
+> Other tools compress what goes into your agent. Distill controls what your agent *remembers* — across sessions, without conflicts, ranked by what matters now.
+
+**[Learn more →](https://distill.siddhantkhare.com)**
+
+> 📖 Distill implements the 4-layer context engineering stack described in **[The Agentic Engineering Guide](https://agents.siddhantkhare.com/05-context-engineering-stack/)**, a free open book on AI agent infrastructure.
+
+```
+RAG / tools / memory / docs
+          ↓
+        Distill
+  (remember · dedupe · compress · cache)
+          ↓
+         LLM
+```
+
+## The Problem
+
+Agents forget. Every new session starts from zero — the same constraints, preferences, and facts have to be re-established. When context does persist, 30-40% of it is semantically redundant, and contradictory information sits side by side with no signal about which version is current.
+
+This causes non-deterministic outputs, confused reasoning, and failures that only show up at scale. Better prompts don't fix it. The agent needs memory it can trust.
+
+## How It Works
+
+No LLM calls. Fully deterministic. ~12ms overhead.
+
+| Stage | What it does |
+|-------|-------------|
+| **Remember** | Persistent memory across sessions with write-time dedup, expiry, and sensitivity tagging |
+| **Deduplicate** | Cluster semantically similar chunks, keep one representative per cluster |
+| **Compress** | Extractive compression to remove noise and preserve signal |
+| **Summarize** | Progressively condense conversation history as turns age |
+| **Cache** | Annotate stable prefixes with `cache_control`, track TTL per prefix |
+
+All stages chain together via `POST /v1/pipeline` or `distill pipeline` CLI. Memory is available via `--memory` flag.
+
+### Dedup pipeline
+
+```
+Query → Over-fetch (50) → Cluster → Select → MMR Re-rank (8) → LLM
+```
+
+1. **Over-fetch** - retrieve 3-5x more chunks than needed
+2. **Cluster** - group semantically similar chunks (agglomerative clustering)
+3. **Select** - pick the best representative from each cluster
+4. **MMR Re-rank** - balance relevance and diversity
+
+**Result:** Deterministic, diverse context. No LLM calls. Fully auditable.
+
+## Installation
+
+### Binary (Recommended)
+
+After a release is published, replace `vX.Y.Z-alpha.N` below with its tag:
+
+```bash
+set -euo pipefail
+
+TAG=vX.Y.Z-alpha.N
+VERSION=${TAG#v}
+case "$(uname -s)/$(uname -m)" in
+  Darwin/arm64) TARGET=darwin_arm64 ;;
+  Darwin/x86_64) TARGET=darwin_amd64 ;;
+  Linux/x86_64) TARGET=linux_amd64 ;;
+  Linux/aarch64|Linux/arm64) TARGET=linux_arm64 ;;
+  *) echo "Unsupported platform: $(uname -s)/$(uname -m)" >&2; exit 1 ;;
+esac
+
+BASE_URL="https://github.com/Siddhant-K-code/distill/releases/download/${TAG}"
+ARCHIVE="distill_${VERSION}_${TARGET}.tar.gz"
+curl -fLO "${BASE_URL}/${ARCHIVE}"
+curl -fLO "${BASE_URL}/checksums.txt"
+
+CHECKSUM=$(grep "  ${ARCHIVE}$" checksums.txt)
+if command -v sha256sum >/dev/null 2>&1; then
+  printf '%s\n' "$CHECKSUM" | sha256sum --check -
+else
+  printf '%s\n' "$CHECKSUM" | shasum -a 256 --check -
+fi
+
+tar -xzf "$ARCHIVE"
+sudo mkdir -p /usr/local/bin
+sudo install -m 0755 distill /usr/local/bin/distill
+distill handoff --help
+```
+
+Or download directly from the [releases page](https://github.com/Siddhant-K-code/distill/releases).
+
+### Go Install
+
+```bash
+go install github.com/Siddhant-K-code/distill@latest
+```
+
+### Docker
+
+```bash
+docker pull ghcr.io/siddhant-k-code/distill:latest
+docker run -p 8080:8080 -e OPENAI_API_KEY=your-key ghcr.io/siddhant-k-code/distill
+```
+
+### Build from Source
+
+```bash
+git clone https://github.com/Siddhant-K-code/distill.git
+cd distill
+go build -o distill .
+```
+
+## Development
+
+```bash
+make build        # compile ./distill
+make test         # go test ./...
+make check        # fmt + vet + test
+make test-cover   # test with coverage report
+make bench        # run benchmarks
+make distill-lock-demo # deterministic lock/build/verify demo
+make handoff-v0-demo # offline review-only decision handoff demo
+make lint         # golangci-lint (requires golangci-lint in PATH)
+make docker-build # build Docker image
+make help         # list all targets
+```
+
+## Distill Lock v0: context is a build artifact
+
+Runtime prompt assembly hides source drift. Distill Lock freezes a reviewed
+source inventory and configuration, then builds a portable context artifact
+without a model, provider, or network call:
+
+```bash
+distill lock path/to/config.json --output path/to/context.lock.json
+distill build path/to/context.lock.json --output path/to/context-output
+distill verify path/to/context-output
+distill verify path/to/context-output --expected-lock-sha256 <trusted-digest>
+
+# Synthetic fixture: build, offline verify, repeatability, and mutation proof.
+make distill-lock-demo
+```
+
+A configuration explicitly lists selected and excluded UTF-8 text/code files.
+`lock` records original and normalized SHA-256 identities, NFC/LF-normalized
+chunks, exact-duplicate decisions, the deterministic token budget, and every
+inclusion/exclusion reason. `build` refuses any missing, changed, newly
+unexpected, unsafe, or unsupported input; it never relocks automatically.
+`verify` checks the complete allowlisted file set, canonical JSON, schemas,
+lengths, hashes, relationships, and exact bundle regeneration offline.
+Lock output cannot overwrite its configuration. A post-publication directory
+sync failure is reported explicitly as `published but durability unconfirmed`;
+verify the named output instead of retrying blindly.
+Without the optional out-of-band lock digest it proves internal consistency,
+not authenticity; use `--expected-lock-sha256` when the artifact directory may
+be attacker-replaceable.
+
+The fresh output directory contains:
+
+```text
+context.bundle.md
+context.lock.json
+context.manifest.json
+SHA256SUMS
+```
+
+**Guarantee:** the same locked sources, configuration, and supported
+runtime/tool identities produce byte-identical bundle, manifest, lockfile, and
+digests on supported macOS/Linux systems with Go 1.24 through Go 1.26. Other
+Go runtime versions fail closed. Original CRLF/CR hashes remain distinct while
+normalized LF content can deduplicate exactly. Builds use native atomic
+no-replace publication into a nonexistent directory, so failures cannot
+replace a previous valid artifact.
+
+**Non-guarantees and non-goals:** v0 does not provide semantic or
+near-duplicate matching, a vector database, agent framework, model adapter,
+decision replay, dashboard, Jev integration, or deterministic model output.
+The existing semantic Distill pipeline remains available and unchanged.
+
+See [the frozen Distill Lock v0 specification](docs/distill-lock-v0.md) for the
+canonical JSON rules, algorithms, failure behavior, and a complete
+configuration example.
+
+## Handoff v0 alpha: decisions become review artifacts
+
+Handoff freezes one exported Markdown conversation and a local Markdown docs
+tree, then verifies a strict proposal produced by an external coding agent:
+
+```bash
+distill handoff prepare --conversation export.md --docs ./docs --out ./request
+distill handoff verify --request ./request/handoff.request.json \
+  --expected-request-sha256 <digest-printed-by-prepare> \
+  --proposal ./proposal.json --out ./review
+```
+
+Distill makes no model or network call, never changes source docs, never applies
+a patch, and accepts only `require_review` routes. Request and review bundles
+use private `0700` directories and `0600` files, and verification requires the
+trusted request SHA-256 printed by `prepare`. The deterministic guarantee covers
+normalization, identities, evidence checks, patch validation, receipts, review
+rendering, and checksum-bound patch files—not probabilistic extraction or patch
+drafting. This is an experimental Markdown/local-repository alpha, not general
+availability or evidence of adoption. Run `make handoff-v0-demo` or see the
+[tester-ready retrospective pilot](docs/handoff-pilot-kit.md) and
+[bounded protocol](docs/handoff-v0.md).
+
+For Distill Lock, the separate research-only
+[offline excluded-pilot harness](research/context-is-a-build-artifact/pilot/README.md)
+generates synthetic, zero-provider-call protocol fixtures and is not wired into
+the public `distill` CLI.
+
+The research-only
+[Handoff semantic-draft compiler experiment](research/handoff-semantic-draft-compiler/README.md)
+tests semantic model output plus deterministic proposal construction without
+changing Handoff product behavior.
+
+## Quick Start
+
+### 1. Standalone API (No Vector DB Required)
+
+Start the API server and send chunks directly:
+
+```bash
+export OPENAI_API_KEY="your-key"  # For embeddings
+distill api --port 8080
+```
+
+Deduplicate chunks:
+
+```bash
+curl -X POST http://localhost:8080/v1/dedupe \
+  -H "Content-Type: application/json" \
+  -d '{
+    "chunks": [
+      {"id": "1", "text": "React is a JavaScript library for building UIs."},
+      {"id": "2", "text": "React.js is a JS library for building user interfaces."},
+      {"id": "3", "text": "Vue is a progressive framework for building UIs."}
+    ]
+  }'
+```
+
+Response:
+
+```json
+{
+  "chunks": [
+    {"id": "1", "text": "React is a JavaScript library for building UIs.", "cluster_id": 0},
+    {"id": "3", "text": "Vue is a progressive framework for building UIs.", "cluster_id": 1}
+  ],
+  "stats": {
+    "input_count": 3,
+    "output_count": 2,
+    "reduction_pct": 33,
+    "latency_ms": 12
+  }
+}
+```
+
+**With pre-computed embeddings (no OpenAI key needed):**
+
+```bash
+curl -X POST http://localhost:8080/v1/dedupe \
+  -H "Content-Type: application/json" \
+  -d '{
+    "chunks": [
+      {"id": "1", "text": "React is...", "embedding": [0.1, 0.2, ...]},
+      {"id": "2", "text": "React.js is...", "embedding": [0.11, 0.21, ...]},
+      {"id": "3", "text": "Vue is...", "embedding": [0.9, 0.8, ...]}
+    ]
+  }'
+```
+
+### 2. With Vector Database
+
+Connect to Pinecone or Qdrant for retrieval + deduplication:
+
+```bash
+export PINECONE_API_KEY="your-key"
+export OPENAI_API_KEY="your-key"
+
+distill serve --index my-index --port 8080
+```
+
+Query with automatic deduplication:
+
+```bash
+curl -X POST http://localhost:8080/v1/retrieve \
+  -H "Content-Type: application/json" \
+  -d '{"query": "how do I reset my password?"}'
+```
+
+### 3. MCP Integration (AI Assistants)
+
+Works with Claude, Cursor, Amp, and other MCP-compatible assistants:
+
+```bash
+# Dedup only
+distill mcp
+
+# With memory and sessions
+distill mcp --memory --session
+```
+
+Add to Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "distill": {
+      "command": "/path/to/distill",
+      "args": ["mcp", "--memory", "--session"],
+      "env": {
+        "OPENAI_API_KEY": "your-key"
+      }
+    }
+  }
+}
+```
+
+See [mcp/README.md](mcp/README.md) for more configuration options.
+
+## Context Memory
+
+Persistent memory that accumulates knowledge across agent sessions. Memories are deduplicated on write, ranked by relevance + recency on recall, and compressed over time through hierarchical decay.
+
+Enable with the `--memory` flag on `api` or `mcp` commands.
+
+### CLI
+
+```bash
+# Store a memory
+distill memory store --text "Auth uses JWT with RS256 signing" --tags auth --source docs
+
+# Recall relevant memories
+distill memory recall --query "How does authentication work?" --max-results 5
+
+# Remove outdated memories
+distill memory forget --tags deprecated
+
+# View statistics
+distill memory stats
+```
+
+### API
+
+```bash
+# Start API with memory enabled
+distill api --port 8080 --memory
+
+# Store (with auto sensitivity classification)
+curl -X POST http://localhost:8080/v1/memory/store \
+  -H "Content-Type: application/json" \
+  -d '{
+    "session_id": "session-1",
+    "entries": [{"text": "Auth uses JWT with RS256", "tags": ["auth"], "source": "docs", "auto_classify": true}]
+  }'
+
+# Recall (with task-relevance boosting)
+curl -X POST http://localhost:8080/v1/memory/recall \
+  -H "Content-Type: application/json" \
+  -d '{"query": "How does auth work?", "max_results": 5, "boost_tags": ["auth"], "min_relevance": 0.3}'
+
+# Expire a memory (soft delete)
+curl -X POST http://localhost:8080/v1/memory/expire \
+  -H "Content-Type: application/json" \
+  -d '{"id": "memory-id"}'
+
+# Supersede with a newer version
+curl -X POST http://localhost:8080/v1/memory/supersede \
+  -H "Content-Type: application/json" \
+  -d '{"id": "old-memory-id", "new_id": "new-memory-id"}'
+```
+
+### MCP
+
+Memory tools are available in Claude Desktop, Cursor, and other MCP clients when `--memory` is enabled:
+
+```bash
+distill mcp --memory
+```
+
+Tools exposed: `store_memory`, `recall_memory`, `forget_memory`, `memory_expire`, `memory_supersede`, `memory_stats`.
+
+### How Decay Works
+
+Memories compress over time based on access patterns:
+
+```
+Full text → Summary (~20%) → Keywords (~5%) → Evicted
+  (24h)        (7 days)         (30 days)
+```
+
+Accessing a memory resets its decay clock. Configure via `distill.yaml`:
+
+```yaml
+memory:
+  db_path: distill-memory.db
+  dedup_threshold: 0.15
+  conflict_threshold: 0.35
+```
+
+## Session Management
+
+Token-budgeted context windows for long-running agent sessions. Push context incrementally - Distill deduplicates, compresses aging entries, and evicts when the budget is exceeded.
+
+Enable with the `--session` flag on `api` or `mcp` commands.
+
+### CLI
+
+```bash
+# Create a session with 128K token budget
+distill session create --session-id task-42 --max-tokens 128000
+
+# Push context as the agent works
+distill session push --session-id task-42 --role user --content "Fix the JWT validation bug"
+distill session push --session-id task-42 --role tool --content "$(cat auth/jwt.go)" --source file_read --importance 0.8
+
+# Read the current context window
+distill session context --session-id task-42
+
+# Clean up when done
+distill session delete --session-id task-42
+```
+
+### API
+
+```bash
+# Start API with sessions enabled
+distill api --port 8080 --session
+
+# Create session
+curl -X POST http://localhost:8080/v1/session/create \
+  -H "Content-Type: application/json" \
+  -d '{"session_id": "task-42", "max_tokens": 128000}'
+
+# Push entries
+curl -X POST http://localhost:8080/v1/session/push \
+  -H "Content-Type: application/json" \
+  -d '{
+    "session_id": "task-42",
+    "entries": [
+      {"role": "tool", "content": "file contents...", "source": "file_read", "importance": 0.8}
+    ]
+  }'
+
+# Read context window
+curl -X POST http://localhost:8080/v1/session/context \
+  -H "Content-Type: application/json" \
+  -d '{"session_id": "task-42"}'
+```
+
+### MCP
+
+Session tools are available when `--session` is enabled:
+
+```bash
+distill mcp --session
+```
+
+Tools exposed: `create_session`, `push_session`, `session_context`, `delete_session`.
+
+### How Budget Enforcement Works
+
+When a push exceeds the token budget:
+
+1. **Compress** oldest entries (outside the `preserve_recent` window) through levels:
+   - Full text → Summary (~20%) → Single sentence (~5%) → Keywords (~1%)
+2. **Evict** entries that are already at keyword level
+3. Lowest-importance entries are compressed/evicted first
+
+The `preserve_recent` setting (default: 10) keeps the most recent entries at full fidelity.
+
+## CLI Commands
+
+```bash
+distill api        # Start standalone API server
+distill serve      # Start server with vector DB connection
+distill pipeline   # Run full optimisation pipeline (dedup → compress → summarize)
+distill mcp        # Start MCP server for AI assistants
+distill memory     # Store, recall, and manage persistent context memories
+distill session    # Manage token-budgeted context windows for agent sessions
+distill analyze    # Analyze a file for duplicates
+distill sync       # Upload vectors to Pinecone with dedup
+distill query      # Test a query from command line
+distill config     # Manage configuration files
+distill completion # Generate shell completion scripts (bash/zsh/fish/powershell)
+```
+
+### Pipeline command
+
+```bash
+# Run full pipeline on a JSON chunk array
+echo '[{"id":"1","text":"..."}]' | distill pipeline
+
+# From file, with stats
+distill pipeline --input chunks.json --output optimised.json --stats
+
+# Tune individual stages
+distill pipeline --dedup-threshold 0.2 --compress-ratio 0.4 --summarize --summarize-max-tokens 2000
+
+# Disable a stage
+distill pipeline --no-compress
+```
+
+### Shell completions
+
+```bash
+# Bash (one-time)
+distill completion bash > /etc/bash_completion.d/distill
+
+# Zsh
+distill completion zsh > "${fpath[1]}/_distill"
+
+# Fish
+distill completion fish > ~/.config/fish/completions/distill.fish
+
+# PowerShell
+distill completion powershell | Out-String | Invoke-Expression
+```
+
+## API Endpoints
+
+Interactive docs available at `/docs` (Swagger UI). Full OpenAPI 3.1 spec at `/openapi.yaml`.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/v1/dedupe` | Deduplicate chunks |
+| POST | `/v1/dedupe/stream` | SSE streaming dedup with per-stage progress |
+| POST | `/v1/pipeline` | Full optimisation pipeline (dedup → compress → summarize) |
+| POST | `/v1/batch` | Submit async batch job |
+| GET | `/v1/batch/{id}` | Poll batch job status and progress |
+| GET | `/v1/batch/{id}/results` | Retrieve completed batch results |
+| POST | `/v1/retrieve` | Query vector DB with dedup (requires backend) |
+| POST | `/v1/memory/store` | Store memories with write-time dedup and sensitivity tagging (requires `--memory`) |
+| POST | `/v1/memory/recall` | Recall memories by relevance + recency (requires `--memory`) |
+| POST | `/v1/memory/forget` | Remove memories by ID, tag, or age (requires `--memory`) |
+| POST | `/v1/memory/expire` | Mark memories as expired without deleting (requires `--memory`) |
+| POST | `/v1/memory/supersede` | Replace a memory with a newer version (requires `--memory`) |
+| GET | `/v1/memory/stats` | Memory store statistics (requires `--memory`) |
+| POST | `/v1/session/create` | Create a session with token budget (requires `--session`) |
+| POST | `/v1/session/push` | Push entries with dedup + budget enforcement (requires `--session`) |
+| POST | `/v1/session/context` | Read current context window (requires `--session`) |
+| POST | `/v1/session/delete` | Delete a session (requires `--session`) |
+| GET | `/v1/session/get` | Get session metadata (requires `--session`) |
+| GET | `/health` | Health check |
+| GET | `/metrics` | Prometheus metrics |
+
+### Pipeline API
+
+```json
+POST /v1/pipeline
+{
+  "chunks": [{"id": "1", "text": "..."}],
+  "options": {
+    "dedup":     {"enabled": true, "threshold": 0.15},
+    "compress":  {"enabled": true, "target_reduction": 0.5},
+    "summarize": {"enabled": false, "max_tokens": 4000}
+  }
+}
+```
+
+Response includes per-stage token counts, reduction ratios, and latency.
+
+### Batch API
+
+```bash
+# Submit
+curl -X POST /v1/batch -d '{"chunks":[...],"options":{...}}'
+# → {"job_id":"batch_1234","status":"queued"}
+
+# Poll
+curl /v1/batch/batch_1234
+# → {"status":"processing","progress":0.45}
+
+# Results (when completed)
+curl /v1/batch/batch_1234/results
+# → {"chunks":[...],"stats":{...}}
+```
+
+## Logging
+
+Distill uses structured `log/slog` logging. Default output is JSON to stderr.
+
+```go
+import "github.com/Siddhant-K-code/distill/pkg/logging"
+
+// JSON logger (production default)
+logger := logging.New(logging.Config{Level: "info", Format: logging.FormatJSON})
+
+// Text logger for local development
+logger := logging.NewDebug()
+
+// Attach request context
+logger = logging.WithRequestID(logger, requestID)
+logger = logging.WithTraceID(logger, traceID)
+```
+
+Log levels: `debug`, `info` (default), `warn`, `error`.
+
+## Configuration
+
+### Config File
+
+Distill supports a `distill.yaml` configuration file for persistent settings. Generate a template:
+
+```bash
+distill config init              # Creates distill.yaml in current directory
+distill config init --stdout     # Print template to stdout
+distill config validate          # Validate existing config file
+```
+
+Config file search order: `./distill.yaml`, `$HOME/distill.yaml`.
+
+**Priority:** CLI flags > environment variables > config file > defaults.
+
+Example `distill.yaml`:
+
+```yaml
+server:
+  port: 8080
+  host: 0.0.0.0
+  read_timeout: 30s
+  write_timeout: 60s
+
+embedding:
+  provider: openai
+  model: text-embedding-3-small
+  batch_size: 100
+
+dedup:
+  threshold: 0.15
+  method: agglomerative
+  linkage: average
+  lambda: 0.5
+  enable_mmr: true
+
+retriever:
+  backend: pinecone    # pinecone or qdrant
+  index: my-index
+  host: ""             # required for qdrant
+  namespace: ""
+  top_k: 50
+  target_k: 8
+
+auth:
+  api_keys:
+    - ${DISTILL_API_KEY}
+
+memory:
+  db_path: distill-memory.db
+  dedup_threshold: 0.15
+  conflict_threshold: 0.35
+
+session:
+  db_path: distill-sessions.db
+  dedup_threshold: 0.15
+  max_tokens: 128000
+```
+
+Environment variables can be referenced using `${VAR}` or `${VAR:-default}` syntax.
+
+### Environment Variables
+
+```bash
+OPENAI_API_KEY      # For text → embedding conversion (see note below)
+PINECONE_API_KEY    # For Pinecone backend
+QDRANT_URL          # For Qdrant backend (default: localhost:6334)
+DISTILL_API_KEYS    # Optional: protect your self-hosted instance (see below)
+```
+
+### Protecting Your Self-Hosted Instance
+
+If you're exposing Distill publicly, set `DISTILL_API_KEYS` to require authentication:
+
+```bash
+# Generate a random API key
+export DISTILL_API_KEYS="sk-$(openssl rand -hex 32)"
+
+# Or multiple keys (comma-separated)
+export DISTILL_API_KEYS="sk-key1,sk-key2,sk-key3"
+```
+
+Then include the key in requests:
+
+```bash
+curl -X POST http://your-server:8080/v1/dedupe \
+  -H "Authorization: Bearer sk-your-key" \
+  -H "Content-Type: application/json" \
+  -d '{"chunks": [...]}'
+```
+
+If `DISTILL_API_KEYS` is not set, the API is open (suitable for local/internal use).
+
+### About OpenAI API Key
+
+**When you need it:**
+- Sending text chunks without pre-computed embeddings
+- Using text queries with vector database retrieval
+- Using the MCP server with text-based tools
+
+**When you DON'T need it:**
+- Sending chunks with pre-computed embeddings (include `"embedding": [...]` in your request)
+- Using Distill purely for clustering/deduplication on existing vectors
+
+**What it's used for:**
+- Converts text to embeddings using `text-embedding-3-small` model
+- ~$0.00002 per 1K tokens (very cheap)
+- Embeddings are used only for similarity comparison, never stored
+
+**Alternatives:**
+- Bring your own embeddings - include `"embedding"` field in chunks
+- Use Ollama locally - `--embedding-provider ollama` (no API key needed)
+- Use Cohere - `--embedding-provider cohere` with `COHERE_API_KEY`
+
+### Parameters
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `--threshold` | Clustering distance (lower = stricter) | 0.15 |
+| `--lambda` | MMR balance: 1.0 = relevance, 0.0 = diversity | 0.5 |
+| `--over-fetch-k` | Chunks to retrieve initially | 50 |
+| `--target-k` | Chunks to return after dedup | 8 |
+
+## Self-Hosting
+
+### Docker (Recommended)
+
+Use the pre-built image from GitHub Container Registry:
+
+```bash
+# Pull and run
+docker run -p 8080:8080 -e OPENAI_API_KEY=your-key ghcr.io/siddhant-k-code/distill:latest
+
+# Or with a specific version
+docker run -p 8080:8080 -e OPENAI_API_KEY=your-key ghcr.io/siddhant-k-code/distill:v0.1.0
+```
+
+### Docker Compose
+
+```bash
+# Start Distill + Qdrant (local vector DB)
+docker-compose up
+```
+
+### Build from Source
+
+```bash
+docker build -t distill .
+docker run -p 8080:8080 -e OPENAI_API_KEY=your-key distill api
+```
+
+### Fly.io
+
+```bash
+fly launch
+fly secrets set OPENAI_API_KEY=your-key
+fly deploy
+```
+
+### Render
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Siddhant-K-code/distill)
+
+Or manually:
+1. Connect your GitHub repo
+2. Set environment variables (`OPENAI_API_KEY`)
+3. Deploy
+
+### Railway
+
+Connect your repo and set `OPENAI_API_KEY` in environment variables.
+
+## Monitoring
+
+Distill exposes a Prometheus-compatible `/metrics` endpoint on both `api` and `serve` commands.
+
+### Metrics
+
+**Pipeline metrics**
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `distill_requests_total` | Counter | Total requests by endpoint and status code |
+| `distill_request_duration_seconds` | Histogram | Request latency distribution |
+| `distill_chunks_processed_total` | Counter | Chunks processed (input/output) |
+| `distill_reduction_ratio` | Histogram | Chunk reduction ratio per request |
+| `distill_active_requests` | Gauge | Currently processing requests |
+| `distill_clusters_formed_total` | Counter | Clusters formed during deduplication |
+
+**Cache cost metrics**
+
+Record Anthropic API usage with `metrics.RecordCacheUsage(UsageRecord{...})` after each API call to track prompt cache efficiency:
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `distill_cache_creation_tokens_total` | Counter | Tokens written to Anthropic cache (charged at 1.25× input price) |
+| `distill_cache_read_tokens_total` | Counter | Tokens read from Anthropic cache (charged at 0.10× input price) |
+| `distill_uncached_input_tokens_total` | Counter | Uncached input tokens (charged at 1.00×) |
+| `distill_cache_hit_rate` | Gauge | Rolling hit rate: `cache_read / (cache_read + cache_creation + input)` |
+| `distill_cache_write_efficiency` | Gauge | Reads/writes ratio. Values below 1.0 mean cache writes that expire before being read |
+
+**Per-call-site hit rate tracking**
+
+`CallSiteTracker` records Anthropic API usage per call site and surfaces the worst performers first:
+
+```go
+tracker := metrics.NewCallSiteTracker()
+
+// After each Anthropic API call:
+tracker.Record("agent/planner.go:84", metrics.UsageRecord{
+    CacheCreationInputTokens: resp.Usage.CacheCreationInputTokens,
+    CacheReadInputTokens:     resp.Usage.CacheReadInputTokens,
+    InputTokens:              resp.Usage.InputTokens,
+})
+
+// Inspect
+s := tracker.Stats("agent/planner.go:84")
+fmt.Printf("hit rate: %.0f%%  efficiency: %.1fx\n", s.HitRate()*100, s.WriteEfficiency())
+
+// All call sites, worst hit rate first
+for _, s := range tracker.AllStats() {
+    fmt.Printf("%-40s %.0f%%\n", s.CallSite, s.HitRate()*100)
+}
+```
+
+**Cache boundary metrics** (populated by the session boundary manager)
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `distill_cache_boundary_position_tokens` | Gauge | Current boundary position in tokens per session |
+| `distill_cache_boundary_advances_total` | Counter | Times the boundary moved forward (more content became stable) |
+| `distill_cache_boundary_retreats_total` | Counter | Times the boundary retreated (content changed or was evicted) |
+| `distill_cache_estimated_savings_tokens_total` | Counter | Estimated tokens saved by prompt caching |
+
+### Prometheus Scrape Config
+
+```yaml
+scrape_configs:
+  - job_name: distill
+    static_configs:
+      - targets: ['localhost:8080']
+```
+
+### Grafana Dashboard
+
+Import the included dashboard from `grafana/dashboard.json` or use dashboard UID `distill-overview`.
+
+### OpenTelemetry Tracing
+
+Distill supports distributed tracing via OpenTelemetry. Each pipeline stage (embedding, clustering, selection, MMR) is instrumented as a separate span.
+
+Enable via `distill.yaml`:
+
+```yaml
+telemetry:
+  tracing:
+    enabled: true
+    exporter: otlp         # otlp, stdout, or none
+    endpoint: localhost:4317
+    sample_rate: 1.0
+    insecure: true
+```
+
+Or via environment variables:
+
+```bash
+export DISTILL_TELEMETRY_TRACING_ENABLED=true
+export DISTILL_TELEMETRY_TRACING_ENDPOINT=localhost:4317
+```
+
+Spans emitted per request:
+
+| Span | Attributes |
+|------|------------|
+| `distill.request` | endpoint |
+| `distill.embedding` | chunk_count |
+| `distill.clustering` | input_count, threshold |
+| `distill.selection` | cluster_count |
+| `distill.mmr` | input_count, lambda |
+| `distill.retrieval` | top_k, backend |
+
+Result attributes (`distill.result.*`) are added to the root span: input_count, output_count, cluster_count, latency_ms, reduction_ratio.
+
+W3C Trace Context propagation is enabled by default for cross-service tracing.
+
+## Pipeline Modules
+
+### Compression (`pkg/compress`)
+
+Reduces token count while preserving meaning. Three strategies:
+
+- **Extractive** - Scores sentences by position, keyword density, and length; keeps the most salient spans
+- **Placeholder** - Replaces verbose JSON, XML, and table outputs with compact structural summaries
+- **Pruner** - Strips filler phrases, redundant qualifiers, and boilerplate patterns
+
+Strategies can be chained via `compress.Pipeline`. Configure with target reduction ratio (e.g., 0.3 = keep 30% of original).
+
+### Memory (`pkg/memory`)
+
+Persistent context memory across agent sessions. SQLite-backed with write-time deduplication via cosine similarity. Memories decay over time: full text → summary → keywords → evicted. Recall ranked by `(1-w)*similarity + w*recency` with optional task-relevance boosting. Enable with `--memory` flag.
+
+**v0.9.0 additions:**
+
+- **Conflict detection** — on store, entries with cosine distance 0.15–0.35 from existing memories are flagged as conflicts (contradictory information). Returned in `StoreResult.Conflicts`.
+- **Task-relevance ranking** — recall accepts `boost_tags`, `task_context`, and `min_relevance` to re-rank results by what matters for the current task.
+- **Expiry and supersession** — soft-delete via `POST /v1/memory/expire`, or replace with a newer version via `POST /v1/memory/supersede`. Expired entries are excluded from recall by default.
+- **Sensitivity classification** — automatic PII, credential, and internal-IP detection on store via `auto_classify: true`. Recall results include `max_sensitivity` and `sensitive_chunks` metadata.
+
+#### Lifecycle events
+
+The `DecayWorker` emits typed events on every state transition so that cache boundary managers and other subscribers can stay in sync:
+
+| Event | When | Cache boundary action |
+|-------|------|-----------------------|
+| `EventCompressed` | Entry compressed to summary or keywords | Retreat boundary: cached prefix is now stale |
+| `EventEvicted` | Entry removed from store | Retreat boundary: entry no longer exists |
+| `EventStabilized` | Entry promoted to stable | Advance boundary to include entry |
+
+Register a handler on any `Store`:
+
+```go
+store.OnLifecycleEvent(func(e memory.MemoryEvent) {
+    // e.Type, e.EntryID, e.TokensBefore, e.TokensAfter, e.CompressionLevel
+})
+```
+
+Multiple handlers can be registered; they are called in registration order. Handlers must be non-blocking.
+
+#### Cache boundary hint on recall
+
+`RecallResult` now includes a `CacheHint` field. Entries with recall relevance ≥ 0.7 are listed as stable candidates, giving the boundary manager early signal without waiting for the normal stability promotion cycle:
+
+```go
+result, _ := store.Recall(ctx, req)
+if result.CacheHint != nil {
+    // result.CacheHint.StableEntryIDs - IDs likely stable this turn
+    // result.CacheHint.ConfidenceScore - mean relevance of returned entries
+}
+```
+
+### Session (`pkg/session`)
+
+Token-budgeted context windows for long-running tasks. Entries are deduplicated on push, compressed through hierarchical levels when the budget is exceeded, and evicted by importance. The `preserve_recent` setting keeps the N most recent entries at full fidelity. Enable with `--session` flag.
+
+#### Session-aware cache boundary manager
+
+After each push, Distill automatically evaluates the optimal `cache_control` placement for the next request. Entries that have been present for `min_stable_turns` (default: 2) consecutive pushes without modification are considered stable and included in the cached prefix.
+
+`PushResult` now includes a `cache_boundary` field:
+
+```json
+{
+  "session_id": "task-42",
+  "accepted": 2,
+  "current_tokens": 4200,
+  "budget_remaining": 123800,
+  "cache_boundary": {
+    "markers": [
+      {"entry_id": "abc123", "tokens_up_to_here": 3800, "stable_since_turn": 1}
+    ],
+    "total_stable_tokens": 3800,
+    "advanced": true,
+    "retreated": false
+  }
+}
+```
+
+Configure via `distill.yaml`:
+
+```yaml
+session:
+  cache_boundary:
+    enabled: true
+    min_stable_turns: 2     # pushes before an entry is considered stable
+    min_prefix_tokens: 1024 # Anthropic's minimum cacheable prefix size
+    max_markers: 4          # Anthropic allows up to 4 simultaneous markers
+```
+
+### Cache (`pkg/cache`)
+
+KV cache for repeated context patterns (system prompts, tool definitions, boilerplate). Sub-millisecond retrieval for cache hits.
+
+- **MemoryCache** - In-memory LRU with TTL, configurable size limits (entries and bytes), background cleanup
+- **PatternDetector** - Identifies cacheable content and emits `CacheAnnotation` per chunk. Use `AnnotateChunksForCache` to get a `CacheControlPlan` with up to 4 `cache_control` markers (Anthropic's limit) placed at the highest-token-count stable chunks. Auto-placement is skipped when the caller has already set markers manually.
+- **PrefixPartition** - Splits a chunk slice into a frozen cache prefix and a dedup-eligible suffix. Used by the `preserve_cache_prefix` dedup option to prevent Distill from reordering chunks that appear before a `cache_control` breakpoint.
+- **StabilityValidator** - Tracks prefix hashes across requests and detects dynamic content bleeding into cached prefixes. Reports instability with a likely cause and supports static text analysis for pre-flight checks.
+- **RedisCache** - Interface for distributed deployments (requires external Redis)
+
+#### Cache-aware dedup (`preserve_cache_prefix`)
+
+Distill's dedup pipeline can reorder chunks to improve context quality. When prompt caching is active, reordering chunks before the `cache_control` breakpoint changes the prefix hash and causes a cache miss. Use `preserve_cache_prefix` to freeze the prefix:
+
+```json
+POST /v1/dedupe
+{
+  "chunks": [
+    {"id": "sys", "text": "You are a helpful assistant.", "cache_control": "ephemeral"},
+    {"id": "tool1", "text": "Tool schema JSON...", "cache_control": "ephemeral"},
+    {"id": "msg1", "text": "What is the capital of France?"},
+    {"id": "msg2", "text": "What is the capital of Germany?"}
+  ],
+  "options": {"preserve_cache_prefix": true}
+}
+```
+
+Response stats when prefix is frozen:
+
+```json
+{
+  "stats": {
+    "input_count": 4, "output_count": 3,
+    "cache_prefix_frozen": true,
+    "cache_prefix_tokens": 320,
+    "cache_prefix_hash": "a3f2c1d4e5b6",
+    "suffix_input_count": 2,
+    "suffix_output_count": 1
+  }
+}
+```
+
+#### TTL-aware cache tracker
+
+`TTLTracker` monitors Anthropic's 5-minute prompt cache TTL per prefix hash. Use it to detect cold-start penalties and schedule batch requests before the cache expires:
+
+```go
+tracker := cache.NewTTLTracker(0) // 0 = use AnthropicCacheTTL (5 min)
+
+// After each request that carries a cache_control marker:
+wasAlive := tracker.Touch(plan.PrefixHash)
+if !wasAlive {
+    log.Warn("cache cold start: first request or TTL expired")
+}
+
+// For batch workloads: latest safe time to send next request
+deadline := tracker.ScheduleDeadline(plan.PrefixHash, 30*time.Second)
+time.Sleep(time.Until(deadline))
+
+// Inspect expiry state
+entry := tracker.Entry(plan.PrefixHash)
+fmt.Printf("hits: %d  misses: %d  alive: %v\n", entry.HitCount, entry.MissCount, entry.IsAlive())
+```
+
+#### Prefix stability validator
+
+Detects dynamic content (timestamps, request IDs, UUIDs) bleeding into cached prefixes, which is the most common cause of 0% cache hit rates:
+
+```go
+validator := cache.NewStabilityValidator(cache.DefaultStabilityConfig())
+
+// Runtime check, call on every request
+issues := validator.Check("agent/planner.go:84", chunks)
+for _, issue := range issues {
+    log.Warnf("%s", issue) // "cache-prefix-unstable: stability=12%, likely dynamic interpolation: request id"
+}
+
+// Static pre-flight check
+found := validator.ValidateText(systemPromptText)
+// found = ["request id", "timestamp"] if dynamic patterns detected
+```
+
+#### Automatic cache_control placement
+
+```go
+detector := cache.NewPatternDetector()
+plan := detector.AnnotateChunksForCache(chunks)
+// plan.Markers lists which chunk indices should receive cache_control markers
+// plan.ManualMarkersPresent is true if the caller already placed markers
+```
+
+Pattern → annotation mapping:
+
+| Pattern | Recommended | Condition |
+|---------|-------------|-----------|
+| `system_prompt` | Yes | Always |
+| `tool_definition` | Yes | Always |
+| `code_block` | Conditional | Token count ≥ 512 |
+| `document` | Yes | Always |
+| `user_message` | No | Dynamic per turn |
+
+## Architecture
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│                         Your App / Agent                             │
+└──────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│                             Distill                                  │
+│                                                                      │
+│  Dedup Pipeline (shipped)                                            │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌──────────┐  ┌─────────┐  │
+│  │  Cache  │→ │ Cluster │→ │ Select  │→ │ Compress │→ │  MMR    │  │
+│  │  check  │  │  dedup  │  │  best   │  │  prune   │  │ re-rank │  │
+│  └─────────┘  └─────────┘  └─────────┘  └──────────┘  └─────────┘  │
+│     <1ms          6ms         <1ms          2ms           3ms        │
+│                                                                      │
+│  Context Intelligence                                                │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────┐   │
+│  │ Memory Store │  │ Impact Graph │  │ Session Context Windows  │   │
+│  │  (shipped)   │  │  (#30)       │  │  (shipped)               │   │
+│  └──────────────┘  └──────────────┘  └──────────────────────────┘   │
+│                                                                      │
+│  ┌──────────────────────────────────────────────────────────────┐    │
+│  │  /metrics (Prometheus)  ·  OTEL tracing  ·  MCP server      │    │
+│  └──────────────────────────────────────────────────────────────┘    │
+└──────────────────────────────────────────────────────────────────────┘
+                                  │
+                                  ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│                              LLM                                     │
+└──────────────────────────────────────────────────────────────────────┘
+```
+
+## Supported Backends
+
+- **Pinecone** - Fully supported
+- **Qdrant** - Fully supported
+- **Weaviate** - Coming soon
+
+## Use Cases
+
+- **Code Assistants** - Dedupe context from multiple files/repos
+- **RAG Pipelines** - Remove redundant chunks before LLM
+- **Agent Workflows** - Clean up tool outputs + memory + docs
+- **Incident Triage** - Find similar past changes that caused outages
+- **Code Review** - Blast radius analysis for PRs
+- **Enterprise** - Deterministic outputs with source attribution
+
+## Embedding Providers
+
+Distill supports multiple embedding backends via a unified factory. Switch providers with `--embedding-provider` on any command:
+
+```bash
+# Use Ollama (local, no API key)
+distill api --embedding-provider ollama --embedding-base-url http://localhost:11434
+
+# Use Cohere
+distill api --embedding-provider cohere
+
+# Use OpenAI (default)
+distill api --embedding-provider openai
+```
+
+Programmatically, import the provider package to register it, then call `embedding.NewProvider`:
+
+```go
+import (
+    "github.com/Siddhant-K-code/distill/pkg/embedding"
+    _ "github.com/Siddhant-K-code/distill/pkg/embedding/openai"  // register OpenAI
+    _ "github.com/Siddhant-K-code/distill/pkg/embedding/ollama"  // register Ollama
+    _ "github.com/Siddhant-K-code/distill/pkg/embedding/cohere"  // register Cohere
+)
+
+provider, err := embedding.NewProvider(embedding.ProviderConfig{
+    Type:      embedding.ProviderOllama,   // "openai" | "ollama" | "cohere"
+    BaseURL:   "http://localhost:11434",   // optional override
+    Model:     "nomic-embed-text",         // optional override
+    CacheSize: 10000,                      // 0 = default (10k), -1 = disabled
+})
+```
+
+| Provider | Type string | Default model | Notes |
+|----------|-------------|---------------|-------|
+| OpenAI | `openai` | `text-embedding-3-small` | Requires `OPENAI_API_KEY` |
+| Ollama | `ollama` | `nomic-embed-text` | Local server, no API key |
+| Cohere | `cohere` | `embed-english-v3.0` | Requires `COHERE_API_KEY` |
+
+Custom providers can be registered at startup:
+
+```go
+embedding.RegisterFactory("my-provider", func(cfg embedding.ProviderConfig) (embedding.Provider, error) {
+    return myProvider{apiKey: cfg.APIKey}, nil
+})
+```
+
+## Roadmap
+
+Distill is evolving from a dedup utility into a context intelligence layer. Here's what's next:
+
+### Context Memory
+
+| Feature | Issue | Status | Description |
+|---------|-------|--------|-------------|
+| **Context Memory Store** | [#29](https://github.com/Siddhant-K-code/distill/issues/29) | Shipped | Persistent, deduplicated memory across sessions. Write-time dedup, hierarchical decay, token-budgeted recall. See [Context Memory](#context-memory). |
+| **Session Management** | [#31](https://github.com/Siddhant-K-code/distill/issues/31) | Shipped | Stateful context windows with token budgets, hierarchical compression, and importance-based eviction. See [Session Management](#session-management). |
+| **PatternDetector cache_control annotations** | [#53](https://github.com/Siddhant-K-code/distill/issues/53) | Shipped | `PatternDetector` emits `CacheAnnotation` per chunk and `AnnotateChunksForCache` produces a `CacheControlPlan` with up to 4 Anthropic-compatible markers. |
+| **Session-aware cache boundary manager** | [#51](https://github.com/Siddhant-K-code/distill/issues/51) | Shipped | Auto-advances `cache_control` placement as sessions grow. Stable entries (present ≥ 2 turns unmodified) are included in the cached prefix; boundary retreats when content changes. |
+| **Cache write cost accounting** | [#52](https://github.com/Siddhant-K-code/distill/issues/52) | Shipped | 9 new Prometheus metrics covering Anthropic prompt cache token usage, hit rate, write efficiency, and boundary position. Feed API response usage via `RecordCacheUsage`. |
+| **Memory decay lifecycle events** | [#54](https://github.com/Siddhant-K-code/distill/issues/54) | Shipped | `DecayWorker` emits `EventCompressed` and `EventEvicted` on each transition. `RecallResult` includes a `CacheBoundaryHint` for high-relevance entries. |
+| **Cache-aware dedup** | [#50](https://github.com/Siddhant-K-code/distill/issues/50) | Shipped | `preserve_cache_prefix` option freezes chunks before the last `cache_control` marker so dedup cannot reorder them. Prefix hash and token count reported in stats. |
+| **Prefix stability validator** | [#48](https://github.com/Siddhant-K-code/distill/issues/48) | Shipped | `StabilityValidator` tracks prefix hashes across requests and detects dynamic content (timestamps, request IDs, UUIDs) bleeding into cached prefixes. |
+| **Per-call-site hit rate tracking** | [#47](https://github.com/Siddhant-K-code/distill/issues/47) | Shipped | `CallSiteTracker` records Anthropic cache usage per call site; `AllStats()` returns worst performers first. |
+| **TTL-aware cache tracker** | [#49](https://github.com/Siddhant-K-code/distill/issues/49) | Shipped | `TTLTracker` monitors Anthropic's 5-minute cache TTL per prefix hash. `ScheduleDeadline` tells batch jobs the latest safe time to send the next request. |
+| **Multi-provider embedding abstraction** | [#33](https://github.com/Siddhant-K-code/distill/issues/33) | Shipped | `embedding.NewProvider` factory supports OpenAI, Ollama, and Cohere via a unified `ProviderConfig`. Custom providers register via `RegisterFactory`. |
+| **Memory expiry and supersession** | [#79](https://github.com/Siddhant-K-code/distill/issues/79) | Shipped | Soft-delete via `expire`, version replacement via `supersede`. Expired entries excluded from recall. |
+| **Sensitivity classification** | [#82](https://github.com/Siddhant-K-code/distill/issues/82) | Shipped | Regex-based classifier detects PII, credentials, and internal IPs on store. Recall includes sensitivity metadata. |
+| **Conflict detection** | [#77](https://github.com/Siddhant-K-code/distill/issues/77) | Shipped | Entries with cosine distance 0.15–0.35 from existing memories are flagged as conflicts on store. |
+| **Task-relevance ranking** | [#78](https://github.com/Siddhant-K-code/distill/issues/78) | Shipped | Recall supports `boost_tags`, `task_context`, and `min_relevance` for task-aware re-ranking. |
+| **Multi-provider embeddings (CLI)** | [#25](https://github.com/Siddhant-K-code/distill/issues/25) | Shipped | `--embedding-provider` flag on `api`, `serve`, and `memory` commands. Supports `openai`, `ollama`, `cohere`. |
+
+### Code Intelligence
+
+| Feature | Issue | Status | Description |
+|---------|-------|--------|-------------|
+| **Change Impact Graph** | [#30](https://github.com/Siddhant-K-code/distill/issues/30) | Shipped | `pkg/graph`: BFS blast-radius queries over a dependency graph built from Go imports. |
+| **Semantic Commit Analysis** | [#32](https://github.com/Siddhant-K-code/distill/issues/32) | Shipped | `pkg/commits`: Conventional Commits parser, heuristic risk scoring, cosine similarity search over commit embeddings. |
+
+### Infrastructure
+
+| Feature | Issue | Status | Description |
+|---------|-------|--------|-------------|
+| **Multi-Provider Embeddings** | [#33](https://github.com/Siddhant-K-code/distill/issues/33) | Shipped | `embedding.NewProvider` factory: OpenAI, Ollama, Cohere via unified `ProviderConfig`. |
+| **Unified Pipeline** | [#4](https://github.com/Siddhant-K-code/distill/issues/4) | Shipped | `POST /v1/pipeline` + `distill pipeline` CLI: dedup → compress → summarize in one call with per-stage stats. |
+| **Batch API** | [#11](https://github.com/Siddhant-K-code/distill/issues/11) | Shipped | `POST /v1/batch`: async job queue with worker pool, progress polling, 24h result retention. |
+| **Structured Logging** | [#27](https://github.com/Siddhant-K-code/distill/issues/27) | Shipped | `pkg/logging`: JSON/text slog logger with debug/info/warn/error levels, request_id and trace_id helpers. |
+| **Shell Completions** | [#26](https://github.com/Siddhant-K-code/distill/issues/26) | Shipped | `distill completion [bash\|zsh\|fish\|powershell]` generates shell completion scripts. |
+| **Benchmark Suite** | [#24](https://github.com/Siddhant-K-code/distill/issues/24) | Shipped | `go test -bench=. ./...` covers cluster, MMR, selector, and compress with deterministic synthetic data. |
+| **Makefile** | [#28](https://github.com/Siddhant-K-code/distill/issues/28) | Shipped | 20+ targets: build, test, bench, lint, fmt, vet, docker, release. |
+| **OpenAPI Spec** | [#23](https://github.com/Siddhant-K-code/distill/issues/23) | Shipped | OpenAPI 3.1 spec at `/openapi.yaml`, Swagger UI at `/docs`. |
+| **v2.0 Documentation** | [#8](https://github.com/Siddhant-K-code/distill/issues/8) | Shipped | Guides, API reference, configuration reference, LangChain and RAG examples. See [`docs/`](docs/). |
+| **Python SDK** | [#5](https://github.com/Siddhant-K-code/distill/issues/5) | Planned | `pip install distill-ai` with LangChain/LlamaIndex integrations. |
+
+See all open issues: [github.com/Siddhant-K-code/distill/issues](https://github.com/Siddhant-K-code/distill/issues)
+
+## Why not just use an LLM?
+
+LLMs are non-deterministic. Reliability requires deterministic preprocessing.
+
+| | LLM Compression | Distill |
+|---|---|---|
+| Latency | ~500ms | ~12ms |
+| Cost per call | $0.01+ | $0.0001 |
+| Deterministic | No | Yes |
+| Lossless | No | Yes |
+| Auditable | No | Yes |
+
+Use LLMs for reasoning. Use deterministic algorithms for reliability.
+
+## Integrations
+
+Works with your existing AI stack:
+
+- **Embedding Providers:** OpenAI, Ollama (local), Cohere
+- **LLM Providers:** OpenAI, Anthropic
+- **Frameworks:** LangChain, LlamaIndex (SDKs planned: [#5](https://github.com/Siddhant-K-code/distill/issues/5))
+- **Vector DBs:** Pinecone, Qdrant
+- **AI Assistants:** Claude Desktop, Cursor (via MCP)
+- **Observability:** Prometheus, Grafana, OpenTelemetry (Jaeger, Tempo)
+
+## FAQ
+
+<details>
+<summary>Is this just removing exact duplicates?</summary>
+<p>No. Exact dedup is trivial (hash comparison). Distill does <em>semantic</em> dedup - it identifies chunks that convey the same information in different words. Two paragraphs explaining "how JWT auth works" with different wording will be clustered together, and only the best one is kept.</p>
+</details>
+
+<details>
+<summary>Why agglomerative clustering instead of K-Means?</summary>
+<p>K-Means requires specifying K upfront and assumes spherical clusters. Agglomerative clustering adapts to the data - it stops merging when the distance between the closest clusters exceeds the threshold. If your 20 chunks have 8 natural groups, you get 8 clusters. If they have 15, you get 15. No tuning required.</p>
+</details>
+
+<details>
+<summary>What does the threshold of 0.15 mean?</summary>
+<p>Cosine distance of 0.15 means cosine similarity of 0.85. Two chunks with 85%+ similarity are considered "saying the same thing." For code, use 0.10 (stricter). For prose, use 0.20 (looser).</p>
+</details>
+
+<details>
+<summary>Why cosine distance and not Euclidean?</summary>
+<p>OpenAI embeddings (and most embedding models) are normalized to unit length. For unit vectors, cosine distance and Euclidean distance are monotonically related, but cosine is more interpretable: 0 = identical direction, 1 = orthogonal, 2 = opposite. The threshold of 0.15 means "chunks whose embeddings point within ~22 degrees of each other."</p>
+</details>
+
+<details>
+<summary>How does compression work without an LLM?</summary>
+<p>Three rule-based strategies: (1) Extractive - scores sentences by position, length, and keyword signals, keeps the top ones. (2) Placeholder - detects JSON/XML/tables and replaces with structural summaries. (3) Pruner - removes filler phrases and intensifiers. No API calls needed.</p>
+</details>
+
+<details>
+<summary>How does Distill work with LangChain?</summary>
+<p>Three paths: (1) MCP - <code>distill mcp</code> exposes tools that become LangChain tools via <a href="https://github.com/langchain-ai/langchain-mcp-adapters">langchain-mcp-adapters</a>. (2) HTTP API - call <code>POST /v1/dedupe</code> as a post-processing step on retrieval results. (3) Python SDK (planned - <a href="https://github.com/Siddhant-K-code/distill/issues/5">#5</a>) - a <code>DistillRetriever</code> that wraps any LangChain retriever.</p>
+</details>
+
+<details>
+<summary>How is this different from LangChain's built-in MMR?</summary>
+<p>LangChain's <code>search_type="mmr"</code> is a single re-ranking step at the vector DB level. Distill runs a multi-stage pipeline: cache, agglomerative clustering, representative selection, compression, then MMR. The clustering step understands group structure, not just pairwise similarity.</p>
+</details>
+
+<details>
+<summary>What's the time complexity?</summary>
+<p>Distance matrix is O(N² x D) where N = chunks and D = embedding dimension. The merge loop is O(N³) worst case. For typical RAG inputs (N=20-50, D=1536), the full pipeline completes in ~12ms.</p>
+</details>
+
+<details>
+<summary>Why not just increase the context window?</summary>
+<p>Larger context windows don't solve redundancy. If you stuff 50 chunks into a 128K window and 20 say the same thing, the model still processes all of them. This wastes tokens, increases latency, and can confuse the model. Distill ensures the model sees unique, diverse chunks instead of overlapping ones.</p>
+</details>
+
+See [FAQ.md](FAQ.md) for the full list.
+
+## Contributing
+
+Contributions welcome! Check the [open issues](https://github.com/Siddhant-K-code/distill/issues) for things to work on.
+
+```bash
+git clone https://github.com/Siddhant-K-code/distill.git
+cd distill
+go build -o distill .
+go test ./...
+```
+
+## License
+
+MIT - see [LICENSE](LICENSE)
+
+For commercial licensing, contact: siddhantkhare2694@gmail.com
+
+## Links
+
+- [Website](https://distill.siddhantkhare.com)
+- [Playground](https://distill.siddhantkhare.com/playground)
+- [The Agentic Engineering Guide](https://agents.siddhantkhare.com) - the book behind the concepts Distill implements
+- [Documentation](docs/)
+- [FAQ](FAQ.md)
+- [Blog Post](https://dev.to/siddhantkcode/the-engineering-guide-to-context-window-efficiency-202b)
+- [MCP Configuration](mcp/README.md)
+- [Book a Demo](https://meet.siddhantkhare.com)
