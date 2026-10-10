@@ -233,10 +233,22 @@
 4. abstention 100% (Full) — **정직 거부는 우리 설계 강점 유지**
 5. 라이브 환경 차이: 라이브 abstain 7% vs 벤치 52% (filler 중심 haystack) — **JEV는 "답이 단일 메모리에 있는" 라이브에 최적화**
 
+### 재판정 실측 (stage116/117, 2026-10-10 — "판정 모델이 문제" 가설 검증)
+| 판정 모델 | 정확도 | 비고 |
+|---|---|---|
+| deepcombo (기존) | 24.1% | 문서 결과 |
+| claude-haiku (재판정) | 18.6% | abstention 규칙 없음 (29/30 no) |
+| claude-haiku (abstention 보정) | **23.0%** | 규칙 추가 (28/30 yes) |
+| **두 모델 일치율** | **97.2%** | 보정 후 |
+
+- **가설 기각 확정**: 판정 모델 교체로는 점수가 오르지 않음 — **24%는 진짜 read-path 한계**
+- abstention 보정 후 no 2건은 실제 오답 (거부 없이 지어냄) — 판정 품질 정상
+- 문서: `STAGE116_LMEV_REJUDGE_20261010.md`
+
 ### 현재 상태
 - **read-path 구조 변경 불가 판정** (JEV choice 단일-best — 운영 회귀 위험, 사용자 원칙상 보류)
 - 벤치 선택 조정: LongMemEval은 추출형/단일 메모리 중심이라 JEV read-path 평가엔 부적합 → **향후 라이브 쿼리 기반 회귀 셋 지향**
-- 문서: `docs/longmemeval/2026-10-10_longmemeval-results.md`
+- 문서: `docs/longmemeval/2026-10-10_longmemeval-results.md` + `STAGE116_LMEV_REJUDGE_20261010.md`
 
 ### 판단 요청
 1. **"JEV choice 단일-best가 합성/시간 추론에 구조적 한계"** — evidence aggregation 같은 rerank 구조 변경 가치? (운영 회귀 vs 벤치 개선)

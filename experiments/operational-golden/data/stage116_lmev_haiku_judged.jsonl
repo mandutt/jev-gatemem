@@ -1,0 +1,500 @@
+{"question_id": "e47becba", "question_type": "single-session-user", "verdict": "yes", "reason": "정답 'Business Administration'과 같은 학위를 말함"}
+{"question_id": "118b2229", "question_type": "single-session-user", "verdict": "yes", "reason": "정답 '45 minutes each way'와 같은 편도 45분을 말함"}
+{"question_id": "51a45a95", "question_type": "single-session-user", "verdict": "no", "reason": "매장 이름을 알지 못한다고 해서 정답 'Target'을 말하지 않음"}
+{"question_id": "58bf7951", "question_type": "single-session-user", "verdict": "no", "reason": "정보가 없다고 답해 정답 'The Glass Menagerie'를 말하지 않음"}
+{"question_id": "1e043500", "question_type": "single-session-user", "verdict": "no", "reason": "정답 'Summer Vibes'가 아닌 'Chillhop Music'을 제시하며 불확실하다고 함"}
+{"question_id": "5d3d2817", "question_type": "single-session-user", "verdict": "no", "reason": "응답은 이전 직업에 대한 정보가 없다고 하며 정답(마케팅 전문가)을 제시하지 않음"}
+{"question_id": "7527f7e2", "question_type": "single-session-user", "verdict": "no", "reason": "응답은 구매 기록이 없어 금액을 알 수 없다고 하며 정답($800)을 제시하지 않음"}
+{"question_id": "c960da58", "question_type": "single-session-user", "verdict": "no", "reason": "응답은 플레이리스트 개수를 알 수 없다고 하며 정답(20개)을 제시하지 않음"}
+{"question_id": "3b6f954b", "question_type": "single-session-user", "verdict": "no", "reason": "응답은 해외 연수 프로그램 정보가 없다고 하며 정답(University of Melbourne)을 제시하지 않음"}
+{"question_id": "726462e0", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 HTTP 503 오류 메시지이며 할인율에 대한 사실을 전혀 포함하지 않음 (정답 10%와 일치하지 않음)"}
+{"question_id": "94f70d80", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 정보가 없다고 밝히며 시간을 특정하지 않아 정답 4 hours와 일치하지 않음"}
+{"question_id": "66f24dbb", "question_type": "single-session-user", "verdict": "yes", "reason": "정답인 yellow dress를 명시적으로 언급하며 의미가 일치함(추가로 귀걸이를 언급했으나 정답 사실과 모순되지 않음)"}
+{"question_id": "ad7109d1", "question_type": "single-session-user", "verdict": "yes", "reason": "응답이 정답과 같은 500 Mbps를 말함"}
+{"question_id": "af8d2e46", "question_type": "single-session-user", "verdict": "no", "reason": "정보가 없다고 하며 일반적 추정치(5~6벌)만 제시, 정답 7과 일치하지 않음"}
+{"question_id": "dccbc061", "question_type": "single-session-user", "verdict": "no", "reason": "관련 기억이 없다고 답하여 정답 A staunch atheist를 말하지 않음"}
+{"question_id": "c5e8278d", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 이전 성(姓)을 알 수 없다며 메모리가 없다고 했으므로 정답 Johnson과 일치하지 않음"}
+{"question_id": "6ade9755", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 요가 수업 장소를 모른다고 했으므로 정답 Serenity Yoga와 일치하지 않음"}
+{"question_id": "6f9b354f", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 벽 색상에 대한 메모리가 없다고 했으므로 정답 a lighter shade of gray와 일치하지 않음"}
+{"question_id": "58ef2f1c", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 서비스 오류(503)로 실패해 답변이 없으므로 정답 February 14th와 일치하지 않음"}
+{"question_id": "f8c5f88b", "question_type": "single-session-user", "verdict": "yes", "reason": "응답의 'a sports store'는 정답 'the sports store downtown'의 부분 일치로, 같은 사실(스포츠 용품점)을 말함"}
+{"question_id": "c8c3f81d", "question_type": "single-session-user", "verdict": "yes", "reason": "응답이 정답인 Nike를 favorite running shoe brand로 제시함"}
+{"question_id": "8ebdbe50", "question_type": "single-session-user", "verdict": "yes", "reason": "응답이 정답인 Data Science 자격증을 지난달 취득한 것으로 제시함"}
+{"question_id": "6b168ec8", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 자전거 대수를 확인할 수 없다고 하여 정답 three를 제시하지 않음"}
+{"question_id": "75499fd8", "question_type": "single-session-user", "verdict": "yes", "reason": "응답이 정답인 Golden Retriever를 강아지의 품종으로 제시함"}
+{"question_id": "21436231", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 낚시 기록을 확인할 수 없다고 하여 정답 12를 제시하지 않음"}
+{"question_id": "95bcc1c8", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 정보가 없다고 하여 정답 10을 제시하지 않음"}
+{"question_id": "0862e8bf", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 고양이 이름을 모른다고 하여 정답 Luna와 일치하지 않음"}
+{"question_id": "853b0a1d", "question_type": "single-session-user", "verdict": "yes", "reason": "응답의 핵심 사실인 18살이 정답 18과 일치함 (부가 설명은 근거 없이 덧붙여짐)"}
+{"question_id": "a06e4cfe", "question_type": "single-session-user", "verdict": "no", "reason": "응답은 사용자의 선호 비율이 대화에 없다고 하며, 3:1은 일반적 추천으로만 언급하여 정답과 다른 주장임"}
+{"question_id": "37d43f65", "question_type": "single-session-user", "verdict": "yes", "reason": "응답의 16GB가 정답 16GB와 일치함"}
+{"question_id": "60d45044", "question_type": "single-session-user", "verdict": "yes", "reason": "응답이 정답인 Japanese short-grain rice를 favorite rice로 명시함"}
+{"question_id": "3f1e9474", "question_type": "single-session-user", "verdict": "no", "reason": "대화 내용을 기억하지 못한다고 하여 정답 Sarah를 제시하지 않음"}
+{"question_id": "86b68151", "question_type": "single-session-user", "verdict": "no", "reason": "구매처 정보가 없다고 답했으며 정답 IKEA를 말하지 않음"}
+{"question_id": "577d4d32", "question_type": "single-session-user", "verdict": "no", "reason": "사용자의 실제 시간(7 pm)을 모른다고 하고 일반적인 권장 시간만 제시함"}
+{"question_id": "ec81a493", "question_type": "single-session-user", "verdict": "yes", "reason": "응답이 앨범이 전 세계 500장 한정판이었다고 정답 500과 같은 사실을 말함"}
+{"question_id": "15745da0", "question_type": "single-session-user", "verdict": "yes", "reason": "응답의 'three months'가 정답과 같은 사실을 말함"}
+{"question_id": "e01b8e2f", "question_type": "single-session-user", "verdict": "yes", "reason": "응답이 정답인 Hawaii를 명시함"}
+{"question_id": "bc8a6e93", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 생일 케이크 정보를 모른다고 하며 정답(lemon blueberry cake)을 제시하지 않음"}
+{"question_id": "ccb36322", "question_type": "single-session-user", "verdict": "no", "reason": "메모리에서 확인된 정보가 없다고 하며 Spotify를 언급하지 않음"}
+{"question_id": "001be529", "question_type": "single-session-user", "verdict": "no", "reason": "기간을 알 수 없다고 응답하며 정답(over a year)을 제시하지 않음"}
+{"question_id": "b86304ba", "question_type": "single-session-user", "verdict": "yes", "reason": "응답이 '트리플(3배)'이라는 정답의 핵심 사실을 말하지만, 그림과 플리마켓 물건의 동일성에 대해 단정하지 않아 조건부 답변이다."}
+{"question_id": "d52b4f67", "question_type": "single-session-user", "verdict": "yes", "reason": "사촌 결혼식 장소로 정답과 같은 'Grand Ballroom'을 말했다."}
+{"question_id": "25e5aa4f", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 메모리에 정보가 없다고 하여 정답인 UCLA를 제시하지 않았다."}
+{"question_id": "caf9ead2", "question_type": "single-session-user", "verdict": "yes", "reason": "이사에 걸린 시간을 '약 5시간'으로 정답과 같게 답했다."}
+{"question_id": "8550ddae", "question_type": "single-session-user", "verdict": "no", "reason": "정답은 'lavender gin fizz'인데 응답은 'Lavender Dream'이라는 다른 칵테일을 말해 사실이 일치하지 않는다."}
+{"question_id": "b320f3f8", "question_type": "single-session-user", "verdict": "yes", "reason": "정답인 'blue Snaggletooth'와 같은 피규어를 말함(rare는 부가 표현)"}
+{"question_id": "19b5f2b3", "question_type": "single-session-user", "verdict": "yes", "reason": "정답 'two weeks'와 동일한 기간을 말함"}
+{"question_id": "4fd1909e", "question_type": "single-session-user", "verdict": "no", "reason": "장소를 모른다고 응답했으므로 정답 'Xfinity Center'와 일치하지 않음"}
+{"question_id": "545bd2b5", "question_type": "single-session-user", "verdict": "yes", "reason": "정답 '2 hours'와 동일한 사용 시간을 말함"}
+{"question_id": "8a137a7f", "question_type": "single-session-user", "verdict": "yes", "reason": "정답 'Philips LED bulb'와 동일한 전구를 말함"}
+{"question_id": "76d63226", "question_type": "single-session-user", "verdict": "yes", "reason": "응답의 55인치가 정답 55-inch와 같은 사실이다."}
+{"question_id": "86f00804", "question_type": "single-session-user", "verdict": "no", "reason": "현재 읽고 있는 책을 모른다고 했고, 정답인 'The Seven Husbands of Evelyn Hugo'를 말하지 않았다."}
+{"question_id": "8e9d538c", "question_type": "single-session-user", "verdict": "yes", "reason": "응답의 17 skeins가 정답 17과 일치한다."}
+{"question_id": "311778f1", "question_type": "single-session-user", "verdict": "no", "reason": "정보가 없다고 답했으며 정답인 10시간을 제시하지 않았다."}
+{"question_id": "c19f7a0b", "question_type": "single-session-user", "verdict": "no", "reason": "정보가 없다고 답했으며 정답인 6:30 pm을 제시하지 않았다."}
+{"question_id": "4100d0a0", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 민족성을 모른다고 했으므로 정답 'Irish and Italian'과 일치하지 않음"}
+{"question_id": "29f2956b", "question_type": "single-session-user", "verdict": "no", "reason": "사용자의 실제 연습 시간을 말한 것이 아니라 30분을 권장한 것이므로 사실 일치로 볼 수 없음"}
+{"question_id": "1faac195", "question_type": "single-session-user", "verdict": "yes", "reason": "여동생 Emily가 Denver에 산다고 정답과 같은 사실을 말함"}
+{"question_id": "faba32e5", "question_type": "single-session-user", "verdict": "yes", "reason": "Alex가 BBQ 립을 24시간 재웠다고 정답과 같은 사실을 말함"}
+{"question_id": "f4f1d8a4", "question_type": "single-session-user", "verdict": "yes", "reason": "여동생(your sister)이 스탠드 믹서를 생일 선물로 줬다고 정답 'my sister'와 일치함"}
+{"question_id": "c14c00dd", "question_type": "single-session-user", "verdict": "yes", "reason": "정답 브랜드 Trader Joe's를 응답이 명시하고 있음"}
+{"question_id": "36580ce8", "question_type": "single-session-user", "verdict": "yes", "reason": "처음에 감기로 생각한 질환이 bronchitis라고 응답해 정답과 일치함"}
+{"question_id": "3d86fd0a", "question_type": "single-session-user", "verdict": "yes", "reason": "Sophia를 만난 장소로 coffee shop in the city를 명시함"}
+{"question_id": "a82c026e", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 해당 게임 정보가 없다고 답했으며 Dark Souls 3 DLC를 언급하지 않음"}
+{"question_id": "0862e8bf_abs", "question_type": "single-session-user", "verdict": "yes", "reason": "정답은 햄스터 정보가 언급되지 않았다는 것이며, 응답도 저장된 햄스터 정보가 없다고 하여 같은 사실을 말함(정답 자체가 '언급 없음'이므로 규칙의 예외로 판단)"}
+{"question_id": "15745da0_abs", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 빈티지 필름 수집 기간을 모른다고 하며, 정답의 '언급되지 않았다'는 취지와 같더라도 구체적 사실을 말하지 않음"}
+{"question_id": "bc8a6e93_abs", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 조카의 생일 파티에 대한 정보가 없다고 답해 '삼촌 생일에 무엇을 구웠는지'를 말하지 않음"}
+{"question_id": "19b5f2b3_abs", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 한국 체류 기간에 대한 정보가 없다고 하며 기간을 말하지 않음"}
+{"question_id": "29f2956b_abs", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 바이올린 연습 시간을 알 수 없다고 하여 정답과 같은 '언급 없음' 사실을 명시적으로 말하지 않음"}
+{"question_id": "f4f1d8a4_abs", "question_type": "single-session-user", "verdict": "no", "reason": "응답이 아버지가 준 생일 선물을 알 수 없다고 답해 정답의 핵심 취지(아버지 선물 언급 없음)와 일치하는 구체적 진술이 없음"}
+{"question_id": "0a995998", "question_type": "multi-session", "verdict": "no", "reason": "응답은 옷 수량을 알 수 없다고 했으므로 정답 3과 일치하지 않는다."}
+{"question_id": "6d550036", "question_type": "multi-session", "verdict": "no", "reason": "응답은 프로젝트 수에 대한 정보가 없다고 했으므로 정답 2와 일치하지 않는다."}
+{"question_id": "gpt4_59c863d7", "question_type": "multi-session", "verdict": "no", "reason": "응답은 모델 키트 수에 대한 정보가 없다고 했으므로 정답 5개와 일치하지 않는다."}
+{"question_id": "b5ef892d", "question_type": "multi-session", "verdict": "no", "reason": "응답은 캠핑 일수에 대한 정보가 없다고 했으므로 정답 8일과 일치하지 않는다."}
+{"question_id": "e831120c", "question_type": "multi-session", "verdict": "no", "reason": "응답은 MCU 2주만 언급하고 전체 소요 기간은 제시하지 않았으므로 정답 3.5주와 일치하지 않는다."}
+{"question_id": "3a704032", "question_type": "multi-session", "verdict": "no", "reason": "정답은 3개인데 응답은 1개(스네이크 플랜트)라고 하여 다른 사실을 말함"}
+{"question_id": "gpt4_d84a3211", "question_type": "multi-session", "verdict": "no", "reason": "정답은 $185이나 응답은 정보가 없어 알 수 없다고 함"}
+{"question_id": "aae3761f", "question_type": "multi-session", "verdict": "no", "reason": "정답은 총 15시간(왕복 30시간)이나 응답은 알 수 없다고 함"}
+{"question_id": "gpt4_f2262a51", "question_type": "multi-session", "verdict": "no", "reason": "정답은 3명의 의사이나 응답은 관련 기록이 없다고 함"}
+{"question_id": "dd2973ad", "question_type": "multi-session", "verdict": "no", "reason": "정답은 새벽 2시이나 응답은 저장된 메모리가 없어 알 수 없다고 함"}
+{"question_id": "c4a1ceb8", "question_type": "multi-session", "verdict": "no", "reason": "응답은 메모리가 없어 답할 수 없다고 했으므로 정답 3을 제시하지 않았다."}
+{"question_id": "gpt4_a56e767c", "question_type": "multi-session", "verdict": "no", "reason": "응답은 관련 메모리가 없다고 했으므로 정답인 4개 영화제를 제시하지 않았다."}
+{"question_id": "6cb6f249", "question_type": "multi-session", "verdict": "no", "reason": "응답은 휴식 일수에 대한 기록이 없다고 했으므로 정답 17일을 제시하지 않았다."}
+{"question_id": "46a3abf7", "question_type": "multi-session", "verdict": "no", "reason": "응답은 탱크가 2개라고 했으나 정답은 3개이므로 모순된다."}
+{"question_id": "36b9f61e", "question_type": "multi-session", "verdict": "no", "reason": "응답은 지출 내역이 없어 총액을 알 수 없다고 했으므로 정답 $2,500을 제시하지 않았다."}
+{"question_id": "28dc39ac", "question_type": "multi-session", "verdict": "no", "reason": "메모리가 없다며 총 게임 플레이 시간을 알 수 없다고 해 정답 140시간을 제시하지 못함"}
+{"question_id": "gpt4_2f8be40d", "question_type": "multi-session", "verdict": "no", "reason": "메모리 없음을 이유로 결혼식 횟수를 확인할 수 없다고 해 정답 3회를 말하지 못함"}
+{"question_id": "2e6d26dc", "question_type": "multi-session", "verdict": "no", "reason": "아기 수를 4명이라고 답했으나 정답은 5명으로 모순됨"}
+{"question_id": "gpt4_15e38248", "question_type": "multi-session", "verdict": "no", "reason": "메모리가 없어 가구 개수를 알 수 없다고 해 정답 4개를 말하지 못함"}
+{"question_id": "88432d0a", "question_type": "multi-session", "verdict": "no", "reason": "지난 2주간 베이킹을 한 번으로 확인된다고 해 정답 4회와 다른 사실을 말함"}
+{"question_id": "80ec1f4f", "question_type": "multi-session", "verdict": "no", "reason": "응답은 방문 기록이 없어 개수를 알 수 없다고 했으므로 정답 2와 일치하지 않는다."}
+{"question_id": "d23cf73b", "question_type": "multi-session", "verdict": "no", "reason": "응답은 메모리가 없어 요리 종류 수를 알 수 없다고 했으므로 정답 4와 일치하지 않는다."}
+{"question_id": "gpt4_7fce9456", "question_type": "multi-session", "verdict": "no", "reason": "응답은 관련 정보가 없어 답변할 수 없다고 했으며, 정답인 네 개의 매물이라는 사실을 말하지 않았다."}
+{"question_id": "d682f1a2", "question_type": "multi-session", "verdict": "no", "reason": "응답은 사용자의 배달 서비스 이용 기록이 없어 수를 알 수 없다고 했으므로 정답 3과 일치하지 않는다."}
+{"question_id": "7024f17c", "question_type": "multi-session", "verdict": "no", "reason": "응답은 지난주 조깅과 요가 시간을 알 수 없다고 했으므로 정답 0.5시간과 일치하지 않는다."}
+{"question_id": "gpt4_5501fe77", "question_type": "multi-session", "verdict": "no", "reason": "응답이 HTTP 503 오류로 답변을 얻지 못했으며, 정답 TikTok에 대한 사실을 말하지 않았습니다."}
+{"question_id": "gpt4_2ba83207", "question_type": "multi-session", "verdict": "no", "reason": "메모리가 없다며 지출 내역을 알 수 없다고 했으므로 정답 Thrive Market을 말하지 않았습니다."}
+{"question_id": "2318644b", "question_type": "multi-session", "verdict": "no", "reason": "정보가 없어 비교할 수 없다고 했으므로 정답 $270을 제시하지 않았습니다."}
+{"question_id": "2ce6a0f2", "question_type": "multi-session", "verdict": "no", "reason": "관련 정보가 없다고 했으므로 정답 4를 말하지 않았습니다."}
+{"question_id": "gpt4_d12ceb0e", "question_type": "multi-session", "verdict": "no", "reason": "나이 데이터가 없어 평균을 계산할 수 없다고 했으므로 정답 59.6을 말하지 않았습니다."}
+{"question_id": "00ca467f", "question_type": "multi-session", "verdict": "no", "reason": "응답은 진료 횟수 정보가 없다고 했으며 정답 2를 제시하지 않았다."}
+{"question_id": "b3c15d39", "question_type": "multi-session", "verdict": "no", "reason": "응답은 관련 정보를 찾을 수 없다고 했으며 정답 5일을 제시하지 않았다."}
+{"question_id": "gpt4_31ff4165", "question_type": "multi-session", "verdict": "no", "reason": "응답이 503 오류로 실제 답변이 없다."}
+{"question_id": "eeda8a6d", "question_type": "multi-session", "verdict": "no", "reason": "응답은 정보가 없다고 했으며 정답 17마리를 제시하지 않았다."}
+{"question_id": "2788b940", "question_type": "multi-session", "verdict": "no", "reason": "응답은 '최소 3개'라고 했을 뿐 정답 5개를 말하지 않았고, 확정되지 않은 부분 정보만 제시했다."}
+{"question_id": "60bf93ed", "question_type": "multi-session", "verdict": "no", "reason": "응답은 며칠이 걸렸는지 알 수 없다고 했으며, 정답인 5일(또는 6일)을 제시하지 않았다."}
+{"question_id": "9d25d4e0", "question_type": "multi-session", "verdict": "no", "reason": "응답은 장신구 개수를 알 수 없다고 했으며, 정답인 3개를 제시하지 않았다."}
+{"question_id": "129d1232", "question_type": "multi-session", "verdict": "no", "reason": "응답은 총 모금액을 알 수 없다고 했으며, 정답인 $5,850을 제시하지 않았다."}
+{"question_id": "60472f9c", "question_type": "multi-session", "verdict": "no", "reason": "응답은 동시 진행 프로젝트 수를 확인할 수 없다고 했으며, 정답인 2개를 제시하지 않았다."}
+{"question_id": "gpt4_194be4b3", "question_type": "multi-session", "verdict": "no", "reason": "응답은 악기 총 개수를 알 수 없다고 했고 피아노 하나만 언급했으므로, 정답인 4개와 일치하지 않는다."}
+{"question_id": "a9f6b44c", "question_type": "multi-session", "verdict": "no", "reason": "응답은 메모리가 없다고 하며 자전거 대수(2)를 제시하지 않았다."}
+{"question_id": "d851d5ba", "question_type": "multi-session", "verdict": "no", "reason": "응답은 총 모금액을 알 수 없다고 했으며 정답 $3,750을 말하지 않았다."}
+{"question_id": "5a7937c8", "question_type": "multi-session", "verdict": "no", "reason": "응답은 정보가 없다고 했으며 정답인 3일을 제시하지 않았다."}
+{"question_id": "gpt4_ab202e7f", "question_type": "multi-session", "verdict": "no", "reason": "응답은 개수를 알 수 없다고 했고, 선반 수리 한 가지만 언급해 정답의 5개 항목을 맞히지 못했다(부분 일치에 해당하는 사실도 불완전함)."}
+{"question_id": "gpt4_e05b82a6", "question_type": "multi-session", "verdict": "no", "reason": "응답은 횟수 정보가 없다고 했으며 정답인 10회를 제시하지 않았다."}
+{"question_id": "gpt4_731e37d7", "question_type": "multi-session", "verdict": "no", "reason": "응답이 메모리 부재로 금액을 알 수 없다고 했으며 정답 $720을 말하지 않음"}
+{"question_id": "edced276", "question_type": "multi-session", "verdict": "no", "reason": "응답이 총 여행 일수를 알 수 없다고 했으며 정답 15일을 말하지 않음"}
+{"question_id": "10d9b85a", "question_type": "multi-session", "verdict": "no", "reason": "응답은 4월 워크숍 2일이라고 했으나 정답은 3일이며 값이 모순됨"}
+{"question_id": "e3038f8c", "question_type": "multi-session", "verdict": "no", "reason": "응답이 희귀 아이템 총 개수를 알 수 없다고 했으며 정답 99를 말하지 않음"}
+{"question_id": "2b8f3739", "question_type": "multi-session", "verdict": "no", "reason": "응답이 시장 판매 수익을 확인할 수 없다고 했으며 정답 $495를 말하지 않음"}
+{"question_id": "1a8a66a6", "question_type": "multi-session", "verdict": "no", "reason": "메모리가 없다며 구독 수를 알 수 없다고 답해 정답 2와 일치하지 않음"}
+{"question_id": "c2ac3c61", "question_type": "multi-session", "verdict": "no", "reason": "완료한 온라인 강좌를 3개로 답했으나 정답은 5개임"}
+{"question_id": "bf659f65", "question_type": "multi-session", "verdict": "no", "reason": "음악 앨범/EP 구매 수에 대한 정보가 없다고 답해 정답 3과 일치하지 않음"}
+{"question_id": "gpt4_372c3eed", "question_type": "multi-session", "verdict": "no", "reason": "총 교육 기간을 8년으로 답했으나 정답은 10년임"}
+{"question_id": "gpt4_2f91af09", "question_type": "multi-session", "verdict": "no", "reason": "작품 수를 알 수 없다고 답하고 개수를 되묻기만 해 정답 23과 일치하지 않음"}
+{"question_id": "81507db6", "question_type": "multi-session", "verdict": "no", "reason": "정답은 3회이나, 응답은 관련 정보가 없다고 답해 횟수를 제시하지 않음"}
+{"question_id": "88432d0a_abs", "question_type": "multi-session", "verdict": "no", "reason": "정답은 정보 부족(에그타르트 굽기 언급 없음)이지만, 응답은 알 수 없다고 하여 '모른다'에 해당함"}
+{"question_id": "80ec1f4f_abs", "question_type": "multi-session", "verdict": "no", "reason": "정답은 0곳이나, 응답은 정확한 숫자를 알 수 없다고 하여 정답 사실을 말하지 않음"}
+{"question_id": "eeda8a6d_abs", "question_type": "multi-session", "verdict": "no", "reason": "정답은 정보 부족이며, 응답도 개수를 알 수 없다고 하고 일반적 추정치만 제시함"}
+{"question_id": "60bf93ed_abs", "question_type": "multi-session", "verdict": "no", "reason": "정답은 정보 부족(iPad 케이스 구매 언급 없음)이며, 응답도 며칠 걸렸는지 알 수 없다고 함"}
+{"question_id": "edced276_abs", "question_type": "multi-session", "verdict": "no", "reason": "응답은 맥락이 없어 총 일수를 알 수 없다고 했으므로, 하와이 10일만 언급한 정답과 일치하지 않는다."}
+{"question_id": "gpt4_372c3eed_abs", "question_type": "multi-session", "verdict": "no", "reason": "정답은 석사 기간이 언급되지 않아 계산이 불가능하다는 것인데, 응답은 석사 2년을 가정해 총 10년이라고 답했다."}
+{"question_id": "8a2466db", "question_type": "single-session-preference", "verdict": "no", "reason": "정답은 Adobe Premiere Pro 고급 설정 중심의 자료를 원한다는 것인데, 응답은 일반적인 영상 편집 자료 목록을 제시했다."}
+{"question_id": "06878be2", "question_type": "single-session-preference", "verdict": "no", "reason": "정답은 Sony 호환 액세서리나 고품질 장비를 원한다는 것인데, 응답은 캔들 사진용 백드롭과 소품 등 일반 액세서리를 추천했다."}
+{"question_id": "75832dbd", "question_type": "single-session-preference", "verdict": "no", "reason": "정답은 의료 영상 분석을 위한 딥러닝 관련 최신 자료인데, 응답은 맥락이 없다며 분야를 특정하지 못했고 여러 분야의 일반 학회를 나열했다."}
+{"question_id": "0edc2aef", "question_type": "single-session-preference", "verdict": "no", "reason": "사용자의 저장된 선호를 모른다고 밝히고, 정답에 나온 사용자 선호 사실을 말하지 않음"}
+{"question_id": "35a27287", "question_type": "single-session-preference", "verdict": "yes", "reason": "사용자가 언어 교환 등 언어 연습과 관련된 행사에 관심이 있다고 보는 점이 정답의 언어 연습 선호와 부분적으로 일치함"}
+{"question_id": "32260d93", "question_type": "single-session-preference", "verdict": "no", "reason": "과거 선호를 기억하지 못한다고 하고, 정답의 스탠드업 코미디 스페셜 추천과 다른 장르의 영화를 추천함"}
+{"question_id": "195a1a1b", "question_type": "single-session-preference", "verdict": "no", "reason": "저녁 선호에 대한 구체적 정보가 없다고 밝히며, 정답의 휴대폰·TV 회피 및 저녁 9시 30분 이전 활동 선호를 언급하지 않음"}
+{"question_id": "afdc33df", "question_type": "single-session-preference", "verdict": "yes", "reason": "이전 대화에서 주방 도구 정리 조언을 했다고 언급해 기존 노력을 바탕으로 한다는 정답의 핵심과 부분적으로 일치함"}
+{"question_id": "caf03d32", "question_type": "single-session-preference", "verdict": "no", "reason": "응답은 사용자의 소고기 스튜 경험이나 요거트 관심사를 반영하지 않은 일반적인 팁이라 정답과 맞지 않음"}
+{"question_id": "54026fce", "question_type": "single-session-preference", "verdict": "yes", "reason": "가상 커피 브레이크, 정기적 모임 등 원격 근무 중 가상 팀 활동과 정기 소통을 제안해 정답의 핵심과 부분 일치함"}
+{"question_id": "06f04340", "question_type": "single-session-preference", "verdict": "yes", "reason": "직접 키운 재료(토마토 등)를 활용한 저녁 메뉴를 제시해 부분 일치하나, 정답의 바질·민트 대신 로즈마리·타임을 언급함"}
+{"question_id": "6b7dfb22", "question_type": "single-session-preference", "verdict": "no", "reason": "응답이 사용자의 과거 대화나 스타일을 알지 못한다고 명시해, 정답의 인스타그램 계정·튜토리얼·꽃 주제 등을 반영하지 않음"}
+{"question_id": "1a1907b4", "question_type": "single-session-preference", "verdict": "yes", "reason": "메모리를 참고해 Pimm's와 자몽 시럽을 활용한 응용 칵테일을 추천해 정답의 응용형 칵테일 선호와 부분 일치함 (정답이 잘려 있어 확정은 어려움)"}
+{"question_id": "09d032c9", "question_type": "single-session-preference", "verdict": "yes", "reason": "정답의 핵심인 휴대용 배터리 팩 언급은 없지만, 배터리 절약 기능 활용이라는 부분 내용은 일치한다."}
+{"question_id": "38146c39", "question_type": "single-session-preference", "verdict": "yes", "reason": "정답과 같이 이전 대화에서 언급된 터비나도 설탕을 중심으로 조언하고 있다."}
+{"question_id": "d24813b1", "question_type": "single-session-preference", "verdict": "no", "reason": "정답은 레몬 포피시드 케이크의 성공 경험을 언급하지만, 응답은 초콜릿 칩 쿠키를 이전 언급으로 든다."}
+{"question_id": "57f827a0", "question_type": "single-session-preference", "verdict": "no", "reason": "정답은 기존 서랍장 교체 계획과 미드센추리 모던 취향을 언급하지만, 응답에는 이에 관한 내용이 없다."}
+{"question_id": "95228167", "question_type": "single-session-preference", "verdict": "no", "reason": "정답은 Fender Stratocaster와 Gibson Les Paul 비교를 언급하지만, 응답은 일반적인 기타 선택 팁만 말한다."}
+{"question_id": "b6025781", "question_type": "single-session-preference", "verdict": "yes", "reason": "퀴노아, 구운 채소, 단백질 종류의 다양화 등 정답의 핵심 선호와 일치한다."}
+{"question_id": "a89d7624", "question_type": "single-session-preference", "verdict": "yes", "reason": "라이브 음악에 대한 관심을 반영해 공연장을 추천하는 부분 일치이나, 이전 경험(Brandon Flowers)은 언급하지 않았다."}
+{"question_id": "b0479f84", "question_type": "single-session-preference", "verdict": "yes", "reason": "Our Planet 같은 자연 다큐 선호를 반영한 부분 일치이나, Free Solo와 Tiger King은 언급하지 않았다."}
+{"question_id": "1d4e3b97", "question_type": "single-session-preference", "verdict": "no", "reason": "정답의 핵심인 체인·카세트 교체와 Garmin 자전거 컴퓨터를 언급하지 않고 일반적인 드래프팅 효과만 설명했다."}
+{"question_id": "07b6f563", "question_type": "single-session-preference", "verdict": "yes", "reason": "iPhone 13 Pro 호환 액세서리로 보호필름, 지갑형 케이스, 보조배터리를 추천해 정답과 일치한다."}
+{"question_id": "505af2f5", "question_type": "single-session-preference", "verdict": "no", "reason": "에이전트 응답이 오류(HTTP 503)로 실패하여 정답과 일치하는 내용이 없음"}
+{"question_id": "75f70248", "question_type": "single-session-preference", "verdict": "no", "reason": "에이전트 응답이 오류(HTTP 503)로 실패하여 정답과 일치하는 내용이 없음"}
+{"question_id": "d6233ab6", "question_type": "single-session-preference", "verdict": "no", "reason": "응답은 '메모리에 특별한 정보가 없다'고 하며 토론 동아리, AP 수업 등 정답의 핵심 개인 경험을 언급하지 않음"}
+{"question_id": "1da05512", "question_type": "single-session-preference", "verdict": "no", "reason": "응답은 이전 맥락을 알 수 없다고 하며 현재 스토리지 문제나 외장 하드 사용 등 정답의 핵심 사실을 언급하지 않음"}
+{"question_id": "fca70973", "question_type": "single-session-preference", "verdict": "yes", "reason": "디즈니랜드·노트베리팜 등 과거 방문 경험을 참고하고, 스릴 라이드와 특별 이벤트가 있는 유니버설·식스 플래그를 추천하여 정답의 핵심 방향과 부분적으로 일치함"}
+{"question_id": "1c0ddc50", "question_type": "single-session-preference", "verdict": "no", "reason": "정답은 역사 등 팟캐스트·오디오북 위주 추천을 원하고 자기계발은 제외한다는 점인데, 응답은 자기계발 팟캐스트를 추천하고 시각적 활동 배제도 반영하지 않았다."}
+{"question_id": "0a34ad58", "question_type": "single-session-preference", "verdict": "no", "reason": "정답은 사용자가 이미 가진 Suica 카드와 TripIt 앱을 활용한 맞춤 팁인데, 응답은 Suica를 새로 구매할 것으로 가정한 일반적 팁을 제시하고 TripIt은 언급하지 않았다."}
+{"question_id": "d3ab962e", "question_type": "multi-session", "verdict": "no", "reason": "정답은 총 8마일인데, 응답은 메모리에 정보가 없다며 계산할 수 없다고 답했다."}
+{"question_id": "2311e44b", "question_type": "multi-session", "verdict": "no", "reason": "정답은 190페이지인데, 응답은 440페이지 표준판을 가정해 323페이지라고 답해 사실과 다르다."}
+{"question_id": "cc06de0d", "question_type": "multi-session", "verdict": "no", "reason": "정답은 택시가 $6 더 비쌌다는 것인데, 응답은 기차 요금과 택시 요금이 기록에 없어 계산할 수 없다고 답했다."}
+{"question_id": "e6041065", "question_type": "multi-session", "verdict": "no", "reason": "응답이 지난 여행의 신발 사용 비율을 알 수 없다고 하며 정답 40%를 제시하지 않았다."}
+{"question_id": "51c32626", "question_type": "multi-session", "verdict": "no", "reason": "응답이 논문 제출 기록이 없다고 하여 정답 February 1st를 제시하지 않았다."}
+{"question_id": "d905b33f", "question_type": "multi-session", "verdict": "no", "reason": "응답이 할인율을 알 수 없다고 하여 정답 20%를 제시하지 않았다."}
+{"question_id": "7405e8b1", "question_type": "multi-session", "verdict": "no", "reason": "응답이 어느 할인율이 더 높았는지 비교할 수 없다고 하여 정답 Yes와 일치하지 않는다."}
+{"question_id": "f35224e0", "question_type": "multi-session", "verdict": "no", "reason": "응답이 청취 에피소드 수를 알 수 없다고 하여 정답 27을 제시하지 않았다."}
+{"question_id": "a11281a2", "question_type": "multi-session", "verdict": "no", "reason": "응답은 팔로워 증가 수치를 확인할 수 없다고 하여 정답 100을 제시하지 않음"}
+{"question_id": "4f54b7c9", "question_type": "multi-session", "verdict": "no", "reason": "응답은 정확한 개수를 알 수 없다고 하며 'a few'와 세 가지 품목만 언급하고 정답 5를 말하지 않음"}
+{"question_id": "85fa3a3f", "question_type": "multi-session", "verdict": "no", "reason": "응답은 가격 정보가 없어 총액을 계산할 수 없다고 하여 정답 $50을 제시하지 않음"}
+{"question_id": "9aaed6a3", "question_type": "multi-session", "verdict": "no", "reason": "응답은 캐시백 금액을 확인할 수 없다고 하여 정답 $0.75를 제시하지 않음"}
+{"question_id": "1f2b8d4f", "question_type": "multi-session", "verdict": "no", "reason": "응답은 가격 차이를 계산할 수 없다고 하며, 언급한 $200–$250 예산은 정답 $750과 무관함"}
+{"question_id": "e25c3b8d", "question_type": "multi-session", "verdict": "no", "reason": "응답은 대화 기록이 없어 금액을 알 수 없다고 했으며, 정답 $300을 제시하지 않음"}
+{"question_id": "4adc0475", "question_type": "multi-session", "verdict": "no", "reason": "골 3개만 확인되고 어시스트는 모른다고 했으므로 정답 합계 5를 제시하지 않음"}
+{"question_id": "4bc144e2", "question_type": "multi-session", "verdict": "no", "reason": "세차비 $15/월만 언급하고 주차 위반 금액은 찾을 수 없다고 했으므로 정답 $65와 불일치"}
+{"question_id": "ef66a6e5", "question_type": "multi-session", "verdict": "no", "reason": "수영 1개만 확인된다고 했고 정확한 개수는 알 수 없다고 했으므로 정답 two와 불일치"}
+{"question_id": "5025383b", "question_type": "multi-session", "verdict": "no", "reason": "검색된 맥락이 없다고 했으며 정답인 사진과 요리를 언급하지 않음"}
+{"question_id": "a1cc6108", "question_type": "multi-session", "verdict": "no", "reason": "응답이 나이를 알 수 없다고 하여 정답 11을 제시하지 않음"}
+{"question_id": "9ee3ecd6", "question_type": "multi-session", "verdict": "no", "reason": "정답은 100포인트인데 응답은 200포인트라고 하여 모순됨"}
+{"question_id": "3fdac837", "question_type": "multi-session", "verdict": "no", "reason": "정답은 11~12일인데 응답은 총 일수를 계산할 수 없다고 함"}
+{"question_id": "91b15a6e", "question_type": "multi-session", "verdict": "no", "reason": "정답 $5,150을 제시하지 않고 정보가 없다고 응답함"}
+{"question_id": "27016adc", "question_type": "multi-session", "verdict": "no", "reason": "정답 10%를 제시하지 않고 필요한 정보가 없다고 응답함"}
+{"question_id": "720133ac", "question_type": "multi-session", "verdict": "no", "reason": "응답이 관련 정보가 없다며 비용을 계산할 수 없다고 해서 정답 $75를 제시하지 않았다."}
+{"question_id": "77eafa52", "question_type": "multi-session", "verdict": "no", "reason": "응답이 503 오류로 실제 답변이 없어 정답 $300과 일치하는 사실이 없다."}
+{"question_id": "8979f9ec", "question_type": "multi-session", "verdict": "no", "reason": "응답이 개인 기록에 접근할 수 없어 총 식사 수를 알 수 없다고 했으며 정답 8 meals를 말하지 않았다."}
+{"question_id": "0100672e", "question_type": "multi-session", "verdict": "no", "reason": "응답이 지출 금액을 알 수 없다고 했으며 정답 $12를 제시하지 않았다."}
+{"question_id": "a96c20ee", "question_type": "multi-session", "verdict": "no", "reason": "응답이 대학 정보가 없다고 했으며 정답 Harvard University를 제시하지 않았다."}
+{"question_id": "0ea62687", "question_type": "multi-session", "verdict": "no", "reason": "응답이 메모리 부재를 이유로 비교가 불가능하다고 하여 정답인 2 MPG 차이를 제시하지 않음"}
+{"question_id": "67e0d0f2", "question_type": "multi-session", "verdict": "no", "reason": "응답이 503 오류 메시지이며 정답인 20개에 대한 내용이 없음"}
+{"question_id": "bb7c3b45", "question_type": "multi-session", "verdict": "no", "reason": "응답이 원래 가격을 알 수 없다고 하여 정답인 $300 절약액을 제시하지 않음"}
+{"question_id": "ba358f49", "question_type": "multi-session", "verdict": "no", "reason": "응답이 나이와 결혼 날짜를 알 수 없다고 하여 정답인 33살을 제시하지 않음"}
+{"question_id": "61f8c8f8", "question_type": "multi-session", "verdict": "no", "reason": "응답이 비교 불가능하다고 하며 예시로 든 기록(27분 30초, 25분 10초)은 가정일 뿐 정답인 10분 단축과 다름"}
+{"question_id": "60159905", "question_type": "multi-session", "verdict": "no", "reason": "정답은 3회인데 응답은 '최소 1회'만 언급해 개수 사실이 일치하지 않음"}
+{"question_id": "ef9cf60a", "question_type": "multi-session", "verdict": "no", "reason": "응답이 선물 비용 정보를 찾을 수 없다고 하여 정답 $300을 말하지 않음"}
+{"question_id": "73d42213", "question_type": "multi-session", "verdict": "no", "reason": "응답이 관련 정보를 찾을 수 없다고 하여 정답 9:00 AM을 말하지 않음"}
+{"question_id": "bc149d6b", "question_type": "multi-session", "verdict": "no", "reason": "응답이 총 중량 정보가 없다고 하여 정답 70파운드를 말하지 않음"}
+{"question_id": "099778bb", "question_type": "multi-session", "verdict": "no", "reason": "응답은 회사의 구체적 수치를 모른다고 하며, 언급한 20~30%는 일반 기업 평균이라 정답 20%와 같은 사실이 아님"}
+{"question_id": "92a0aa75", "question_type": "multi-session", "verdict": "no", "reason": "현재 역할과 근무 기간 정보가 없다고 응답하여 정답(1년 5개월)을 제시하지 않음"}
+{"question_id": "3fe836c9", "question_type": "multi-session", "verdict": "no", "reason": "사전 승인 금액과 최종 판매가를 알 수 없다고 하며, 예시 수치만 가정으로 제시함"}
+{"question_id": "1c549ce4", "question_type": "multi-session", "verdict": "no", "reason": "자동차 커버와 스프레이 가격이 없어 총액을 알 수 없다고 응답함"}
+{"question_id": "6c49646a", "question_type": "multi-session", "verdict": "no", "reason": "로드트립 총 이동 거리를 알 수 없다고 응답함"}
+{"question_id": "1192316e", "question_type": "multi-session", "verdict": "no", "reason": "준비 시간 약 1시간만 언급하고 총 소요 시간은 결정할 수 없다고 하여 정답(1시간 30분)과 일치하지 않음"}
+{"question_id": "09ba9854", "question_type": "multi-session", "verdict": "no", "reason": "응답은 메모리 정보가 없다고 하며 구체적 절약 금액을 제시하지 않고 일반적 추정(30~70달러 이상)만 말해 정답 $50과 일치하지 않는다."}
+{"question_id": "d6062bb9", "question_type": "multi-session", "verdict": "no", "reason": "응답은 해당 조회수 정보가 없다고 하여 정답 1,998을 제시하지 않았다."}
+{"question_id": "157a136e", "question_type": "multi-session", "verdict": "no", "reason": "응답은 나이 정보가 없다고 하며 정답 43년 차이를 말하지 않았고, 예시로 든 50년은 정답과 다르다."}
+{"question_id": "c18a7dc8", "question_type": "multi-session", "verdict": "no", "reason": "응답은 졸업 연도 정보가 없다고 하여 정답 7년을 제시하지 않았다."}
+{"question_id": "a3332713", "question_type": "multi-session", "verdict": "no", "reason": "응답은 지출 정보가 없다고 하며 정답 $200을 제시하지 않았다."}
+{"question_id": "a346bb18", "question_type": "multi-session", "verdict": "no", "reason": "응답이 정보를 알 수 없다고 하며 초과 시간을 제시하지 않았다."}
+{"question_id": "37f165cf", "question_type": "multi-session", "verdict": "no", "reason": "두 책의 페이지 수(440, 416)는 언급했지만 정답인 합계 856을 제시하지 않고 월 확인을 요청하며 답을 보류했다."}
+{"question_id": "8e91e7d9", "question_type": "multi-session", "verdict": "no", "reason": "형제자매 수를 모른다고 답했고 정답 4를 제시하지 않았다."}
+{"question_id": "87f22b4a", "question_type": "multi-session", "verdict": "no", "reason": "계란 판매 금액을 알 수 없다고 답했고 정답 $120을 제시하지 않았다."}
+{"question_id": "e56a43b9", "question_type": "multi-session", "verdict": "no", "reason": "응답은 $1 할인이라고 했으나 정답은 $5이므로 사실이 모순된다."}
+{"question_id": "55241a1f", "question_type": "multi-session", "verdict": "no", "reason": "응답은 숫자를 특정하지 못하고 정보 부족을 말하므로 정답 33과 일치하지 않음"}
+{"question_id": "a08a253f", "question_type": "multi-session", "verdict": "no", "reason": "응답은 주당 참석 일수를 알 수 없다고 하며 정답 4일을 제시하지 않음"}
+{"question_id": "f0e564bc", "question_type": "multi-session", "verdict": "no", "reason": "응답은 지출 총액을 확인할 수 없다고 하며 정답 $1,300을 제시하지 않음"}
+{"question_id": "078150f1", "question_type": "multi-session", "verdict": "no", "reason": "응답은 모금액 차이를 알 수 없다고 하며 정답 $50을 제시하지 않음"}
+{"question_id": "8cf4d046", "question_type": "multi-session", "verdict": "no", "reason": "응답은 평균 GPA를 알 수 없다고 하며 정답 3.83을 제시하지 않음"}
+{"question_id": "efc3f7c2", "question_type": "multi-session", "verdict": "no", "reason": "정답은 30분이지만 응답은 관련 정보가 없다고 하여 차이를 말하지 않음"}
+{"question_id": "21d02d0d", "question_type": "multi-session", "verdict": "no", "reason": "정답은 2회이지만 응답은 관련 정보가 없어 놓친 횟수를 알 수 없다고 함"}
+{"question_id": "2311e44b_abs", "question_type": "multi-session", "verdict": "yes", "reason": "정답의 '남은 페이지를 알 수 없다(정보 부족)'와 응답의 '관련 정보가 없어 남은 페이지를 알려줄 수 없다'가 같은 사실을 말함"}
+{"question_id": "6456829e_abs", "question_type": "multi-session", "verdict": "yes", "reason": "토마토 5포기는 정답과 일치하고, 고추에 대해 정보가 없다는 점도 정답과 일치함"}
+{"question_id": "e5ba910e_abs", "question_type": "multi-session", "verdict": "no", "reason": "정답은 헤드폰 구매는 언급되었다고 하지만, 응답은 구매 내역 자체를 확인할 수 없다고 하여 정답의 핵심 사실을 말하지 않음"}
+{"question_id": "a96c20ee_abs", "question_type": "multi-session", "verdict": "no", "reason": "응답은 메모리가 없어 정보를 알 수 없다고 했으므로 '모른다'에 해당한다."}
+{"question_id": "ba358f49_abs", "question_type": "multi-session", "verdict": "no", "reason": "응답은 Rachel의 나이와 결혼 시점에 대한 정보가 없어 답할 수 없다고 했으므로 '모른다'에 해당한다."}
+{"question_id": "09ba9854_abs", "question_type": "multi-session", "verdict": "no", "reason": "응답은 구체적 금액을 알 수 없다고 한 뒤 일반적 추정치(35~40달러 절약)를 제시하며, 정답이 요구하는 버스 요금 정보와 일치하지 않는다."}
+{"question_id": "gpt4_59149c77", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 방문 날짜 정보가 없어 일수를 계산할 수 없다고 했으므로 정답(7일)과 일치하지 않는다."}
+{"question_id": "gpt4_f49edff3", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 순서를 알 수 있는 정보가 없다고 했으므로 정답의 사건 순서와 일치하지 않는다."}
+{"question_id": "71017276", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 메모리에서 정보를 찾을 수 없다고 하여 정답 4주를 제시하지 않았다."}
+{"question_id": "b46e15ed", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 필요한 정보가 없어 답할 수 없다고 하여 정답 2개월을 제시하지 않았다."}
+{"question_id": "gpt4_fa19884c", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 기억이 없어 일수를 알 수 없다고 하여 정답 6일(또는 7일)을 제시하지 않았다."}
+{"question_id": "0bc8ad92", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 친구와 박물관 방문 기록이 없어 개월 수를 알 수 없다고 하여 정답 5개월을 제시하지 않았다."}
+{"question_id": "af082822", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 관련 정보를 찾을 수 없다고 하여 정답 2주를 제시하지 않았다."}
+{"question_id": "gpt4_4929293a", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답(Michael의 약혼 파티가 먼저)을 말하지 않고 순서를 알 수 없다고 답함"}
+{"question_id": "gpt4_b5700ca9", "question_type": "temporal-reasoning", "verdict": "no", "reason": "참석 날짜 정보가 없다고 하여 정답(4일 전)을 제시하지 않음"}
+{"question_id": "9a707b81", "question_type": "temporal-reasoning", "verdict": "no", "reason": "케이크 제작 날짜를 알 수 없다고 하여 정답(21일 전)을 제시하지 않음"}
+{"question_id": "gpt4_1d4ab0c9", "question_type": "temporal-reasoning", "verdict": "no", "reason": "날짜 정보가 없어 계산할 수 없다고 하여 정답(24일)을 제시하지 않음"}
+{"question_id": "gpt4_e072b769", "question_type": "temporal-reasoning", "verdict": "no", "reason": "사용 시작 시점을 알 수 없다고 하여 정답(3주 전)을 제시하지 않음"}
+{"question_id": "0db4c65d", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 날짜 정보가 없어 일수를 계산할 수 없다고 했으므로 정답(18일)과 일치하지 않는다."}
+{"question_id": "gpt4_1d80365e", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 캠핑 여행에 대한 정보가 없다고 했으므로 정답(2일)과 일치하지 않는다."}
+{"question_id": "gpt4_7f6b06db", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 여행 기록이 없어 순서를 알 수 없다고 했으므로 정답 순서를 말하지 않았다."}
+{"question_id": "gpt4_6dc9b45b", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 방문 날짜를 알 수 없어 개월 수를 계산할 수 없다고 했으므로 정답(4개월 전)과 일치하지 않는다."}
+{"question_id": "gpt4_8279ba02", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 스모커 구매 날짜를 확인할 수 없다고 했으므로 정답(10일 전)과 일치하지 않는다."}
+{"question_id": "gpt4_18c2b244", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 순서를 판단할 정보가 없다고 했으며, 정답의 순서(BOGO 쿠폰 → Ibotta 캐시백 → ShopRite 가입)를 제시하지 않았다."}
+{"question_id": "gpt4_a1b77f9c", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 기록이 없어 총 주 수를 알 수 없다고 했으며, 정답의 총 8주를 제시하지 않았다."}
+{"question_id": "gpt4_1916e0ea", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 날짜를 알 수 없다고 했으며, 정답의 54일(또는 55일)을 제시하지 않았다."}
+{"question_id": "gpt4_7a0daae1", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 구매일과 수령일 정보가 없다고 했으며, 정답의 1주를 제시하지 않았다."}
+{"question_id": "gpt4_468eb063", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 Emma를 만난 기억이 없다고 했으며, 정답의 9일 전(또는 10일)을 제시하지 않았다."}
+{"question_id": "gpt4_7abb270c", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 방문한 박물관 정보가 없다고 밝혀 정답의 순서를 제시하지 않았으므로 불일치."}
+{"question_id": "gpt4_1e4a8aeb", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 해당 기간 정보가 없다고 하여 정답인 6일을 제시하지 않았으므로 불일치."}
+{"question_id": "gpt4_4fc4f797", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 일수를 알 수 없다고 하여 정답인 38일을 제시하지 않았으므로 불일치."}
+{"question_id": "4dfccbf7", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 정확한 날짜를 알 수 없다고 하여 정답인 24일을 제시하지 않았으므로 불일치."}
+{"question_id": "gpt4_61e13b3c", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 기록이 없다고 하여 정답인 3주를 제시하지 않았으므로 불일치."}
+{"question_id": "gpt4_45189cb4", "question_type": "temporal-reasoning", "verdict": "no", "reason": "메모리가 없다고 하며 스포츠 경기 순서에 대한 정답을 제시하지 않음"}
+{"question_id": "2ebe6c90", "question_type": "temporal-reasoning", "verdict": "no", "reason": "메모리가 없다고 하며 읽은 일수에 대한 답을 제시하지 않음"}
+{"question_id": "gpt4_e061b84f", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정보가 없다고 하며 이벤트 순서를 제시하지 않음"}
+{"question_id": "370a8ff4", "question_type": "temporal-reasoning", "verdict": "no", "reason": "메모리가 없어 주 수를 알 수 없다고 하며 숫자 답을 제시하지 않음"}
+{"question_id": "gpt4_d6585ce8", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정보가 없다고 하며 콘서트 순서를 제시하지 않음"}
+{"question_id": "gpt4_4ef30696", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 독서 시작일과 완독일 정보가 없어 일수를 계산할 수 없다고 했으므로 정답과 일치하지 않음"}
+{"question_id": "gpt4_ec93e27f", "question_type": "temporal-reasoning", "verdict": "yes", "reason": "응답이 가장 최근 이용한 교통수단을 train으로 명시해 정답과 일치함"}
+{"question_id": "6e984301", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 해당 주 수 정보가 없다고 하며 정답 3주를 제시하지 않음"}
+{"question_id": "8077ef71", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 네트워킹 이벤트 참석 시점에 대한 정보가 없다고 하여 정답 26일과 일치하지 않음"}
+{"question_id": "gpt4_f420262c", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 항공사 탑승 기록이 없다고 하여 정답 순서를 제시하지 않음"}
+{"question_id": "gpt4_8e165409", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 날짜를 알 수 없다고 하여 정답인 14일(또는 15일)을 제시하지 못함."}
+{"question_id": "gpt4_74aed68e", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 정보가 없어 계산할 수 없다고 하여 정답인 29일을 제시하지 못함."}
+{"question_id": "bcbe585f", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 날짜 정보가 없다고 하여 정답인 4주를 제시하지 못함."}
+{"question_id": "gpt4_21adecb5", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 날짜 정보가 없어 개월 수를 계산할 수 없다고 하여 정답인 6개월을 제시하지 못함."}
+{"question_id": "5e1b23de", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 정확한 개월 수를 알 수 없다고 하며 '0개월 전'이라는 추정을 제시했고, 이는 정답인 3과 다름."}
+{"question_id": "gpt4_98f46fc6", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 메모리에 정보가 없다고 하며 어느 행사에 먼저 참여했는지 밝히지 않았다."}
+{"question_id": "gpt4_af6db32f", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 Super Bowl 시청 날짜를 알 수 없다고 했고 정답인 17일 전을 제시하지 않았다."}
+{"question_id": "eac54adc", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 필요한 날짜 정보가 없어 일수를 계산할 수 없다고 했고 정답인 19일 전을 제시하지 않았다."}
+{"question_id": "gpt4_7ddcf75f", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 오류 메시지(HTTP 503)뿐이어서 정답에 대한 사실을 전혀 말하지 않았다."}
+{"question_id": "gpt4_a2d1d1f6", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 수확 기록이 없어 며칠 전인지 알 수 없다고 했고 정답인 3일 전을 제시하지 않았다."}
+{"question_id": "gpt4_85da3956", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 메모리에 정보가 없다며 몇 주 전인지 알 수 없다고 해서 정답 '3 weeks ago'와 일치하지 않음"}
+{"question_id": "gpt4_b0863698", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 날짜를 알 수 없다고 했고, 완주 기록만 언급해 정답 '7 days ago'와 일치하지 않음"}
+{"question_id": "gpt4_68e94287", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 두 사건의 순서를 확인할 수 없다고 해서 정답(비건 칠리 게시가 먼저)과 일치하지 않음"}
+{"question_id": "gpt4_e414231e", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 날짜가 저장되어 있지 않아 계산할 수 없다고 해서 정답 '4 days'와 일치하지 않음"}
+{"question_id": "gpt4_7ca326fa", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 졸업 순위를 알 수 없다고 해서 정답(Emma, Rachel, Alex 순)과 일치하지 않음"}
+{"question_id": "gpt4_7bc6cf22", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 12일 전이지만, 응답은 날짜 정보가 없어 계산할 수 없다고 답했다."}
+{"question_id": "2ebe6c92", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 'The Nightingale'이지만, 응답은 관련 정보가 없다고 답했다."}
+{"question_id": "gpt4_e061b84g", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 회사 자선 축구 대회이지만, 응답은 관련 정보를 찾을 수 없다고 답했다."}
+{"question_id": "71017277", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 이모(my aunt)이지만, 응답은 해당 정보가 없다고 답했다."}
+{"question_id": "b46e15ee", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 'Walk for Hunger' 자선 행사이지만, 응답은 정보를 찾을 수 없다고 답했다."}
+{"question_id": "gpt4_d6585ce9", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 누구와 갔는지 모른다고 하여 정답 'my parents'를 말하지 않음"}
+{"question_id": "gpt4_1e4a8aec", "question_type": "temporal-reasoning", "verdict": "no", "reason": "검색된 메모리가 없다고 하여 정답 'planting 12 new tomato saplings'를 말하지 않음"}
+{"question_id": "gpt4_f420262d", "question_type": "temporal-reasoning", "verdict": "no", "reason": "항공사를 알 수 없다고 하여 정답 'American Airlines'를 말하지 않음"}
+{"question_id": "gpt4_59149c78", "question_type": "temporal-reasoning", "verdict": "no", "reason": "행사 장소를 'City Art Museum'이라 하여 정답 'The Metropolitan Museum of Art'와 모순됨"}
+{"question_id": "gpt4_e414231f", "question_type": "temporal-reasoning", "verdict": "no", "reason": "어떤 자전거를 수리했는지 알 수 없다고 하여 정답 'road bike'를 말하지 않음"}
+{"question_id": "gpt4_4929293b", "question_type": "temporal-reasoning", "verdict": "no", "reason": "친척의 생애 사건(결혼식)을 찾을 수 없다고 답했으므로 정답과 일치하지 않는다."}
+{"question_id": "gpt4_468eb064", "question_type": "temporal-reasoning", "verdict": "no", "reason": "지난주 화요일 점심에 만난 사람에 대한 정보가 없다고 답했으므로 정답 'Emma'와 일치하지 않는다."}
+{"question_id": "gpt4_fa19884d", "question_type": "temporal-reasoning", "verdict": "no", "reason": "메모리가 없어 아티스트를 확인할 수 없다고 답했으므로 정답과 일치하지 않는다."}
+{"question_id": "9a707b82", "question_type": "temporal-reasoning", "verdict": "no", "reason": "친구를 위해 요리한 음식을 알 수 없다고 답했으므로 정답 'a chocolate cake'와 일치하지 않는다."}
+{"question_id": "eac54add", "question_type": "temporal-reasoning", "verdict": "no", "reason": "비즈니스 마일스톤을 찾을 수 없다고 답했으므로 정답 '첫 고객과 계약'과 일치하지 않는다."}
+{"question_id": "4dfccbf8", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 정보가 없다고 하며 Rachel과 한 활동을 밝히지 않았다."}
+{"question_id": "0bc8ad93", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 친구와 방문하지 않았다는 것인데, 응답은 친구와 Science Museum에 갔다고 하여 모순된다."}
+{"question_id": "6e984302", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 메모리가 없어 구매 물품을 알 수 없다고 했다."}
+{"question_id": "gpt4_8279ba03", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 정보가 없다고 했고 주방 가전 품목을 제시하지 않았다."}
+{"question_id": "gpt4_b5700ca0", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 관련 정보가 없다고 했고 장소(Episcopal Church)를 언급하지 않았다."}
+{"question_id": "0bb5a684", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 workshop 날짜만 있고 회의 날짜를 몰라 일수를 계산할 수 없다고 하여 정답 7일을 제시하지 않았다."}
+{"question_id": "08f4fc43", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 필요한 날짜 정보가 없어 계산할 수 없다고 했으며, 정답 30일을 말하지 않았다."}
+{"question_id": "2c63a862", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 소요 기간을 알 수 없다고 했으며, 정답 14일을 제시하지 않았다."}
+{"question_id": "gpt4_385a5000", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 파종 순서를 알 수 없다고 했으며, 정답인 토마토가 먼저라는 사실을 말하지 않았다."}
+{"question_id": "2a1811e2", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 필요한 날짜 정보가 없다고 했으며, 정답 21일을 제시하지 않았다."}
+{"question_id": "gpt4_68e94288", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 5일 전 소셜 미디어 활동 정보가 메모리에 없다고 답해 정답을 제시하지 않음"}
+{"question_id": "gpt4_2655b836", "question_type": "temporal-reasoning", "verdict": "no", "reason": "새 차의 첫 서비스 후 첫 문제에 대한 정보가 없다고 답해 정답인 GPS 오작동을 말하지 않음"}
+{"question_id": "gpt4_2487a7cb", "question_type": "temporal-reasoning", "verdict": "no", "reason": "웨비나를 두 달 전에 참석했다고는 했지만, 어느 행사를 먼저 참석했는지는 확인할 수 없다고 명시하여 순서에 대한 정답을 주장하지 않음"}
+{"question_id": "gpt4_76048e76", "question_type": "temporal-reasoning", "verdict": "yes", "reason": "2월에 자전거를 먼저(유일하게) 수리했다고 하여 정답인 bike와 일치함"}
+{"question_id": "gpt4_2312f94c", "question_type": "temporal-reasoning", "verdict": "no", "reason": "두 기기 중 먼저 구매한 기기에 대한 기록이 없다고 답해 정답인 Samsung Galaxy S22를 말하지 않음"}
+{"question_id": "bbf86515", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 메모리가 없어 날짜 차이를 알 수 없다고 했으므로 정답 4일을 말하지 않음"}
+{"question_id": "gpt4_5dcc0aab", "question_type": "temporal-reasoning", "verdict": "yes", "reason": "응답이 지난달 청소한 신발이 흰색 Adidas 운동화라고 정답과 같은 사실을 말함"}
+{"question_id": "gpt4_0b2f1d21", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 메모리가 없어 어느 사건이 먼저인지 알 수 없다고 함"}
+{"question_id": "f0853d11", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 맥락이 없어 기간을 확인할 수 없다고 하여 14일을 제시하지 않음"}
+{"question_id": "gpt4_6ed717ea", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 구매 내역이 없어 순서를 알 수 없다고 하여 훈련 패드가 먼저라는 정답과 일치하지 않음"}
+{"question_id": "gpt4_70e84552", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 해당 작업의 기록이 없어 순서를 알 수 없다고 했으므로 정답 'Fixing the fence'와 일치하지 않음"}
+{"question_id": "a3838d2b", "question_type": "temporal-reasoning", "verdict": "no", "reason": "이전 행사 참여 횟수를 알 수 없다고 했으며 정답 '4'를 제시하지 않음"}
+{"question_id": "gpt4_93159ced", "question_type": "temporal-reasoning", "verdict": "no", "reason": "관련 메모리가 없어 근무 기간을 알 수 없다고 했으므로 정답 '4 years and 9 months'와 불일치"}
+{"question_id": "gpt4_2d58bcd6", "question_type": "temporal-reasoning", "verdict": "no", "reason": "어느 책을 먼저 읽었는지 알 수 없다고 했으므로 정답 'The Hate U Give'와 불일치"}
+{"question_id": "gpt4_65aabe59", "question_type": "temporal-reasoning", "verdict": "no", "reason": "메시literal 응답은 mesh network system을 먼저 설정했다고 하여 정답 'Smart thermostat'과 모순됨"}
+{"question_id": "982b5123", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 예약 정보가 없다고 했으며 정답인 'Five months ago'를 제시하지 않음"}
+{"question_id": "b9cfe692", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 소요 시간 정보가 없다고 했으며 정답인 5.5 weeks를 제시하지 않음"}
+{"question_id": "gpt4_4edbafa2", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 날짜 정보가 없다고 했으며 정답인 June 3rd를 제시하지 않음"}
+{"question_id": "c8090214", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 구매일과 행사일을 알 수 없다고 했으며 정답인 7일(또는 8일)을 제시하지 않음"}
+{"question_id": "gpt4_483dd43c", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 'The Crown'을 먼저 봤다고 했으나 정답은 'Game of Thrones'이므로 모순됨"}
+{"question_id": "e4e14d04", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 2주인데 응답은 3주라고 하여 다른 사실을 말함"}
+{"question_id": "c9f37c46", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 2개월인데 응답은 약 3개월이라고 하여 정답과 모순됨"}
+{"question_id": "gpt4_2c50253f", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 관련 메모리가 없어 기상 시간을 모른다고 답함"}
+{"question_id": "dcfa8644", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답이 날짜 정보가 없어 며칠이 지났는지 계산할 수 없다고 답함"}
+{"question_id": "gpt4_b4a80587", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정답은 새 단렌즈 도착이 먼저지만 응답은 여행이 먼저였다고 하여 순서가 반대임"}
+{"question_id": "gpt4_9a159967", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 항공사 이용 기록을 찾을 수 없다고 했으며 United Airlines를 언급하지 않았다."}
+{"question_id": "cc6d1ec1", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 버드워칭 시작 기간에 대한 정보가 없다고 했으며 'Two months'를 언급하지 않았다."}
+{"question_id": "gpt4_8c8961ae", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 어느 여행이 먼저인지 확인할 수 없다고 했고, 유럽 여행이 먼저였을 가능성을 추측만 했으며 태국 여행이 먼저라는 정답과 맞지 않는다."}
+{"question_id": "gpt4_d9af6064", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 어느 기기를 먼저 설정했는지 알 수 없다고 했으며 'new router'를 언급하지 않았다."}
+{"question_id": "gpt4_7de946e7", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 어떤 건강 문제를 먼저 겪었는지 정보가 없다고 했으며 'Persistent cough'를 특정하지 않았다."}
+{"question_id": "d01c6aa8", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 메모리가 없어 나이를 알 수 없다고 했으므로 정답 27과 일치하지 않는다."}
+{"question_id": "993da5e2", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 해당 정보가 없다고 했으므로 정답 '일주일'과 일치하지 않는다."}
+{"question_id": "a3045048", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 관련 기억이 없다며 날짜를 모른다고 했으므로 정답 7일과 일치하지 않는다."}
+{"question_id": "gpt4_d31cdae3", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 어느 여행이 먼저였는지 알 수 없다고 했으므로 정답인 미국 남서부 가족 여행과 일치하지 않는다."}
+{"question_id": "gpt4_cd90e484", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 쌍안경 사용 기간을 찾을 수 없다고 했으므로 정답 2주와 일치하지 않는다."}
+{"question_id": "gpt4_88806d6e", "question_type": "temporal-reasoning", "verdict": "no", "reason": "메모리가 없다며 Tom을 먼저 만났는지 알 수 없다고 답했다."}
+{"question_id": "gpt4_4cd9eba1", "question_type": "temporal-reasoning", "verdict": "no", "reason": "관련 정보가 없다며 주 수를 답하지 못했다."}
+{"question_id": "gpt4_93f6379c", "question_type": "temporal-reasoning", "verdict": "no", "reason": "가입 순서에 대한 기록이 없다고 답했다."}
+{"question_id": "b29f3365", "question_type": "temporal-reasoning", "verdict": "no", "reason": "기타 레슨 기간에 대한 정보가 없다고 답했다."}
+{"question_id": "gpt4_2f56ae70", "question_type": "temporal-reasoning", "verdict": "no", "reason": "가장 최근 스트리밍 서비스에 대한 기록이 없다고 답했다."}
+{"question_id": "gpt4_213fd887", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 순서를 알 수 없다고 하며 배구 리그가 먼저라는 사실을 말하지 않아 정답과 일치하지 않는다."}
+{"question_id": "gpt4_5438fa52", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 두 사건의 선후를 알 수 없다고 했으므로 스페인어 수업이 먼저라는 정답과 일치하지 않는다."}
+{"question_id": "gpt4_c27434e8", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 Ferrari 프로젝트 정보가 없어 순서를 판단할 수 없다고 하여 Zero 전투기 모델이 먼저라는 정답을 말하지 않았다."}
+{"question_id": "gpt4_fe651585", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 메모리에 정보가 없어 누가 먼저 부모가 되었는지 알 수 없다고 했으므로 Alex라는 정답과 일치하지 않는다."}
+{"question_id": "8c18457d", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 메모리가 없어 답할 수 없다고 했으며 7일(또는 8일)이라는 일수를 제시하지 않았다."}
+{"question_id": "gpt4_70e84552_abs", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 정보가 없어 답할 수 없다고 했으며, 정답과 같은 사실(울타리 수리가 먼저 언급되고 소 구매는 언급되지 않았다는 점)을 말하지 않음"}
+{"question_id": "gpt4_93159ced_abs", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 근무 이력 정보가 없어 답할 수 없다고 했으며, 구글 입사 전 아직 근무를 시작하지 않았다는 정답 사실을 말하지 않음"}
+{"question_id": "982b5123_abs", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 예약 정보가 없어 날짜를 알 수 없다고 했으며, 샌프란시스코 예약만 언급되었다는 정답 사실을 말하지 않음"}
+{"question_id": "c8090214_abs", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 구매 날짜와 방문 날짜를 알 수 없다고 했으며, iPad 구매가 언급되지 않았다는 정답 사실을 말하지 않음"}
+{"question_id": "gpt4_c27434e8_abs", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 저장된 정보가 없어 순서를 알 수 없다고 했으며, 포르쉐 모델 시작이 언급되지 않았다는 정답 사실을 말하지 않음"}
+{"question_id": "gpt4_fe651585_abs", "question_type": "temporal-reasoning", "verdict": "no", "reason": "정보가 부족하다는 점은 같지만, 응답은 '알 수 없다'고 답해 '모른다'는 응답에 해당합니다."}
+{"question_id": "6a1eabeb", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 개인 최고 기록을 알 수 없다고 했으므로 정답인 25분 50초를 말하지 않았습니다."}
+{"question_id": "6aeb4375", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 4곳인데 응답은 3곳이라고 해서 사실이 다릅니다."}
+{"question_id": "830ce83f", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 Rachel의 이사 목적지를 모른다고 했으므로 정답인 교외(the suburbs)를 말하지 않았습니다."}
+{"question_id": "852ce960", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 $400,000인데 응답은 $350,000이라고 해서 금액이 다릅니다."}
+{"question_id": "9ea5eabc", "question_type": "knowledge-update", "verdict": "yes", "reason": "응답의 'Paris'가 정답과 동일하다."}
+{"question_id": "07741c44", "question_type": "knowledge-update", "verdict": "yes", "reason": "'under the bed'는 정답 'under my bed'와 같은 장소를 말한다."}
+{"question_id": "a1eacc2a", "question_type": "knowledge-update", "verdict": "yes", "reason": "'seven short stories'로 정답 'seven'과 일치한다."}
+{"question_id": "184da446", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 페이지 수를 알 수 없다고 하여 정답 220을 제시하지 않았다."}
+{"question_id": "031748ae", "question_type": "knowledge-update", "verdict": "no", "reason": "초기 4명은 맞지만, 현재도 4명이라고 하여 정답의 현재 5명과 모순된다."}
+{"question_id": "4d6b87c8", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 to-watch 목록 정보가 없다고 하여 정답 25개를 제시하지 못함"}
+{"question_id": "0f05491a", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 300개, 정답은 120개로 수치가 다름"}
+{"question_id": "08e075c7", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 6개월, 정답은 9개월로 기간이 다름"}
+{"question_id": "f9e8c073", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 3회, 정답은 5회로 횟수가 다름"}
+{"question_id": "41698283", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 50mm 단焦点 렌즈, 정답은 70-200mm 줌 렌즈로 다른 렌즈를 말함"}
+{"question_id": "945e3d21", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 해당 정보가 없다고 하며 요가 수업 빈도를 답하지 않았다."}
+{"question_id": "d7c942c3", "question_type": "knowledge-update", "verdict": "yes", "reason": "어머니가 같은 식료품 목록 방법을 쓴다는 정답 'Yes'와 일치한다."}
+{"question_id": "71315a70", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 시간 정보가 없다고 했으며 정답인 10-12시간을 제시하지 않았다."}
+{"question_id": "89941a93", "question_type": "knowledge-update", "verdict": "yes", "reason": "자전거 4대를 소유한다고 답해 정답 4와 일치하며, 세부 설명의 추측은 핵심 사실과 무관하다."}
+{"question_id": "ce6d2d27", "question_type": "knowledge-update", "verdict": "yes", "reason": "칵테일 만들기 수업이 금요일이라는 정답과 일치한다."}
+{"question_id": "2698e78f", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 정확한 상담 빈도를 알 수 없다고 하며, 주 단위로 만나는 것으로 보인다는 추정만 제시해 'every week'라는 정답과 일치하지 않음"}
+{"question_id": "b6019101", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 5편이지만 응답은 4편이라고 해서 다른 사실을 말함"}
+{"question_id": "45dc21b6", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 Emma의 레시피를 몇 개 시도했는지 특정할 수 없다고 하며, 정답 3개를 제시하지 않음"}
+{"question_id": "5a4f22c0", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 메모리가 없어 Rachel의 현재 회사를 알 수 없다고 하며, 정답 TechCorp를 말하지 않음"}
+{"question_id": "6071bd76", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 이전 비율을 알 수 없다고 하며 더 많은 물/더 적은 물 두 경우만 나열해 정답(물을 덜 넣었다)을 확정하지 않음"}
+{"question_id": "e493bb7c", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 그림의 위치를 알 수 없다고 했으므로 정답 'in my bedroom'과 일치하지 않는다."}
+{"question_id": "618f13b2", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 착용 횟수를 알 수 없다고 했으므로 정답 'six'와 일치하지 않는다."}
+{"question_id": "72e3ee87", "question_type": "knowledge-update", "verdict": "yes", "reason": "응답의 50 episodes가 정답 50과 같은 사실이다."}
+{"question_id": "c4ea545c", "question_type": "knowledge-update", "verdict": "yes", "reason": "응답이 이전보다 더 자주 간다고 긍정했으므로 정답 Yes와 일치한다."}
+{"question_id": "01493427", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 17 postcards라고 했으나 정답은 25이므로 다른 사실이다."}
+{"question_id": "e61a7584", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 Luna를 키운 기간을 모른다고 했으므로 정답 9개월과 일치하지 않는다."}
+{"question_id": "1cea1afa", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 500명, 정답은 600명으로 사실이 다르다."}
+{"question_id": "ed4ddc30", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 달걀 개수를 알 수 없다고 했으며 정답 20 다즌과 일치하지 않는다."}
+{"question_id": "8fb83627", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 3권, 정답은 5권으로 수가 다르다."}
+{"question_id": "b01defab", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 완독 여부가 불분명하다고 했으며, 정답 'Yes'와 일치하지 않는다."}
+{"question_id": "22d2cb42", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 기타 수리 장소에 대한 정보가 없다고 했으며, 정답인 'Main St. 음악 상점'을 말하지 않았다."}
+{"question_id": "0e4e4c46", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 최고 점수를 확인할 수 없다고 했고, 언급한 '124점'은 정답 '132점'과 다르다."}
+{"question_id": "4b24c848", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 H&M 상의를 세 벌 샀다고 했으나 정답은 다섯 벌이다."}
+{"question_id": "7e974930", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 수입을 $220이라고 했으나 정답은 $420이다."}
+{"question_id": "603deb26", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 시도 횟수에 대한 정보가 없다고 했으며, 정답인 10번을 말하지 않았다."}
+{"question_id": "6a27ffc2", "question_type": "knowledge-update", "verdict": "yes", "reason": "응답의 30개 영상 완료 수가 정답 30과 일치한다."}
+{"question_id": "2133c1b5", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 3개월이지만 응답은 약 1개월이라고 하여 다른 사실을 말한다."}
+{"question_id": "18bc8abd", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 사용자가 집착하는 BBQ 소스 브랜드를 모른다고 했으므로 정답 Kansas City Masterpiece를 제시하지 않았다."}
+{"question_id": "db467c8c", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 체류 기간을 특정할 수 없다고 했으므로 정답 nine months와 일치하지 않는다."}
+{"question_id": "7a87bd0c", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 3주라고 했지만 정답은 4주이므로 모순된다."}
+{"question_id": "59524333", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 방문 시각(6:00 pm)인데 응답은 요일(월·수·금)만 말하고 시각은 언급하지 않음"}
+{"question_id": "5831f84d", "question_type": "knowledge-update", "verdict": "yes", "reason": "응답과 정답 모두 Crash Course 시청 횟수가 15개로 일치함"}
+{"question_id": "eace081b", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 숙소 정보를 모른다고 했으며 정답인 Oahu를 제시하지 않음"}
+{"question_id": "affe2881", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 32종인데 응답은 27종이라고 하여 수치가 다름"}
+{"question_id": "50635ada", "question_type": "knowledge-update", "verdict": "no", "reason": "응답은 이전 등급 정보가 없다고 했으며 정답인 Premier Silver를 제시하지 않음"}
+{"question_id": "e66b632c", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 개인 기록을 알 수 없다고 하여 정답 27분 45초를 제시하지 않음"}
+{"question_id": "0ddfec37", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 정보가 없다고 하여 정답 15개를 제시하지 않음"}
+{"question_id": "f685340e", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 메모리 없음을 이유로 빈도를 제시하지 않으며, 정답인 주 1회(과거)와 격주(현재)를 말하지 않음"}
+{"question_id": "cc5ded98", "question_type": "knowledge-update", "verdict": "yes", "reason": "정답 '약 2시간'과 동일하게 하루 두 시간이라고 답함"}
+{"question_id": "dfde3500", "question_type": "knowledge-update", "verdict": "yes", "reason": "정답 '수요일'과 일치하게 매주 수요일 저녁이라고 답함"}
+{"question_id": "06db6396", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 5개인데 응답은 4개라고 해서 개수가 다릅니다."}
+{"question_id": "3ba21379", "question_type": "knowledge-update", "verdict": "yes", "reason": "응답이 정답과 같은 Ford F-150 픽업트럭 모델을 제시했고, 추정이라는 단서만 붙어 있습니다."}
+{"question_id": "9bbe84a2", "question_type": "knowledge-update", "verdict": "no", "reason": "이전 목표를 모른다고 했고, 맥락에 나온 level 100은 변경 후 목표라서 정답과 다릅니다."}
+{"question_id": "10e09553", "question_type": "knowledge-update", "verdict": "no", "reason": "맥락에 정보가 없다고 하며 답을 하지 않았습니다. 정답은 7마리입니다."}
+{"question_id": "dad224aa", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 7:30 am인데 응답은 8:00 am이라고 해서 시간이 다릅니다."}
+{"question_id": "ba61f0b9", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 6명이지만 응답은 여성이 5명이라고 말해 정답과 모순됩니다."}
+{"question_id": "42ec0761", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 'Yes'인데 응답은 스크루드라이버 보유 여부를 알 수 없다고 답해 정답을 말하지 않습니다."}
+{"question_id": "5c40ec5b", "question_type": "knowledge-update", "verdict": "yes", "reason": "정답과 응답 모두 Alex와 두 번 만났다는 같은 사실을 말합니다."}
+{"question_id": "c6853660", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 커피 잔 수 제한을 늘렸다는 것이지만 응답은 그런 변경 정보가 없다고 답합니다."}
+{"question_id": "26bdc477", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 5회인데 응답은 관련 정보가 없다고 답해 정답을 말하지 않습니다."}
+{"question_id": "69fee5aa", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 38개인데 응답은 37개라고 해서 수치가 다릅니다."}
+{"question_id": "7401057b", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 2박인데 응답은 1박만 가능하다고 해서 모순됩니다."}
+{"question_id": "cf22b7bf", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 10파운드 감량이지만 응답은 체중 정보가 없어 답할 수 없다고 합니다."}
+{"question_id": "a2f3aa27", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 1300명인데 응답은 1,250명을 언급하며 현재 수는 확인할 수 없다고 합니다."}
+{"question_id": "c7dc5443", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 5-2 전적인데 응답은 정보를 확인할 수 없다고 합니다."}
+{"question_id": "0ddfec37_abs", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 관련 정보가 없다며 정확한 답을 알 수 없다고 해서 '모른다/없다' 응답에 해당함"}
+{"question_id": "f685340e_abs", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 탁구 빈도에 대한 정보가 없다고 해서 '모른다/없다' 응답에 해당함"}
+{"question_id": "89941a94", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 직접적인 정보가 없다고 하며 추가 자전거 보유 여부를 확정하지 않음(로드바이크 언급 없음, 응답도 잘림)"}
+{"question_id": "07741c45", "question_type": "knowledge-update", "verdict": "no", "reason": "응답이 해당 정보를 기억하지 못한다고 해서 '모른다/없다' 응답에 해당함"}
+{"question_id": "7161e7e2", "question_type": "single-session-assistant", "verdict": "no", "reason": "응답이 근무 순번 정보를 확인할 수 없다고 해서 '모른다/없다' 응답에 해당함"}
+{"question_id": "0977f2af", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 Instant Pot인데 응답은 관련 정보가 없다며 모른다고 답함"}
+{"question_id": "6aeb4375_abs", "question_type": "knowledge-update", "verdict": "yes", "reason": "정답이 정보 부족 응답이고, 응답도 메모리 정보가 없어 답할 수 없다고 같은 취지로 답함"}
+{"question_id": "031748ae_abs", "question_type": "knowledge-update", "verdict": "no", "reason": "정답은 정보 부족인데, 응답은 근거 없이 4명이라는 구체적 인원수를 단정함"}
+{"question_id": "2698e78f_abs", "question_type": "knowledge-update", "verdict": "yes", "reason": "정답이 정보 부족 응답이고, 응답도 Dr. Johnson 진료 주기에 대한 저장된 정보가 없다고 같은 취지로 답함"}
+{"question_id": "2133c1b5_abs", "question_type": "knowledge-update", "verdict": "yes", "reason": "정답이 정보 부족 응답이고, 응답도 거주 기간에 대한 메모리가 없어 알 수 없다고 같은 취지로 답함"}
+{"question_id": "7e00a6cb", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 'International Budget Hostel'을 그대로 제시함"}
+{"question_id": "1903aded", "question_type": "single-session-assistant", "verdict": "no", "reason": "7번째 직업을 모른다고 했고, 제시한 목록의 7번 항목은 정답 'Transcriptionist'와 다름"}
+{"question_id": "ceb54acb", "question_type": "single-session-assistant", "verdict": "no", "reason": "기억하지 못한다고 했고, 'sexual fixations'만 정답에 포함되며 나머지 제안 용어는 정답과 다름"}
+{"question_id": "f523d9fe", "question_type": "single-session-assistant", "verdict": "no", "reason": "이전 대화 내용을 기억하지 못한다고 답하여 정답 'Doc Martin'을 언급하지 않음"}
+{"question_id": "0e5e2d1a", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 '38 subjects'와 같은 38명이라고 말함"}
+{"question_id": "c4f10528", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 'Miss Bee Providore'와 동일한 레스토랑명을 제시함"}
+{"question_id": "89527b6b", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답은 파란색인데, 응답은 기억이 없다고 하며 청회색이나 녹색 계열을 추측할 뿐 파란색을 말하지 않음"}
+{"question_id": "e9327a54", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 'The Sugar Factory at Icon Park'와 같은 가게를 제시함"}
+{"question_id": "4c36ccef", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 'Roscioli'와 동일한 레스토랑명을 제시함"}
+{"question_id": "6ae235be", "question_type": "single-session-assistant", "verdict": "no", "reason": "응답이 이전 대화를 기억할 수 없다고 명시하며, 공정 목록도 일반적 추정으로 제시함. 정답의 네 공정이 포함되어 있으나 '모른다'는 취지의 응답이므로 기준에 따라 no"}
+{"question_id": "58470ed2", "question_type": "single-session-assistant", "verdict": "yes", "reason": "이전 대화 메모리는 없다고 했지만, 중심은 임의의 육각형이고 둘레는 접근 불가능하다는 정답 사실을 명확히 제시함"}
+{"question_id": "8cf51dda", "question_type": "single-session-assistant", "verdict": "yes", "reason": "세 목표 중 임상·생물학적 의의 규명은 일치하고, subtype 식별도 일치하며, 세 번째(검증/재현성)도 바이오마커 개발과 부분적으로 겹침"}
+{"question_id": "1d4da289", "question_type": "single-session-assistant", "verdict": "yes", "reason": "생체인증(지문·얼굴)과 OTP를 2차 인증 방법으로 명시하여 정답과 일치함"}
+{"question_id": "8464fc84", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정육·치즈 전문 델리로 Roscioli를 명시적으로 추천하며 정답을 포함함(다른 후보도 함께 언급해 일부 모호함)"}
+{"question_id": "8aef76bc", "question_type": "single-session-assistant", "verdict": "no", "reason": "이전 대화에서 추천한 실란트를 알 수 없다고 명시하고, Mod Podge는 일반적 선택지로만 언급해 정답의 사실을 확인해 주지 않음"}
+{"question_id": "71a3fd6b", "question_type": "single-session-assistant", "verdict": "no", "reason": "응답은 전화번호를 제공하지 않았고 모른다고 답함"}
+{"question_id": "2bf43736", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답과 같은 Book 1의 Chapter 4, 'vocal prayer and meditation'을 제시함"}
+{"question_id": "70b3e69b", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답은 Manolo García인데 응답은 Joan Manuel Serrat를 제시함"}
+{"question_id": "8752c811", "question_type": "single-session-assistant", "verdict": "no", "reason": "응답은 목록을 기억하지 못한다고 하며 27번째 항목을 알 수 없다고 함"}
+{"question_id": "3249768e", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답은 Absinthe인데 응답은 sweet vermouth를 제시함"}
+{"question_id": "1b9b7252", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답은 Mindful.org이나, 응답은 UCLA Mindful Awareness Research Center(marc.ucla.edu)를 제시하여 다른 사이트이다."}
+{"question_id": "1568498a", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답은 28. Kg3이나, 응답은 해당 수를 모른다고 하고 28. f3 또는 28. Kh1을 추측했다."}
+{"question_id": "6222b6eb", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답과 같이 SIAC_GEE에 6S 알고리즘이 구현되어 있다고 명확히 말했다."}
+{"question_id": "e8a79c70", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 2-3개 범위 안에 있는 3개라고 답했으므로 부분적으로 일치한다."}
+{"question_id": "d596882b", "question_type": "single-session-assistant", "verdict": "no", "reason": "이전 대화를 기억할 수 없다고 하고, By CHLOE를 포함한 여러 후보를 나열할 뿐 정답을 특정하지 않아 확답이 없다."}
+{"question_id": "e3fc4d6e", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답이 정답인 Dr. Arati Prabhakar를 같은 인물로 제시함"}
+{"question_id": "51b23612", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답이 정답인 'Nu, pogodi!'를 같은 만화로 제시함"}
+{"question_id": "3e321797", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 10분을 포함하는 '10~15분'으로 부분 일치함"}
+{"question_id": "e982271f", "question_type": "single-session-assistant", "verdict": "no", "reason": "마지막 장소를 모른다고 했고 정답인 Revolution Hall이 언급되지 않음"}
+{"question_id": "352ab8bd", "question_type": "single-session-assistant", "verdict": "no", "reason": "정확한 수치를 모른다고 한 뒤 정답과 다른 약 1.5~2배라는 추정치를 제시함"}
+{"question_id": "fca762bc", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답이 정답과 동일한 앱인 Memrise를 명시함"}
+{"question_id": "7a8d0b71", "question_type": "single-session-assistant", "verdict": "no", "reason": "배정 금액을 모른다고 답하고 일반적인 비율(10~20%)만 제시함"}
+{"question_id": "a40e080f", "question_type": "single-session-assistant", "verdict": "no", "reason": "두 회사 이름을 모른다고 답했고, Patagonia는 새 예시로만 언급했으며 Southwest Airlines는 없음"}
+{"question_id": "8b9d4367", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답인 Jaipur Rugs를 언급하지 않고 Chaudhary Group, Nepal Carpet Industries 등 다른 기업을 제시함"}
+{"question_id": "5809eb10", "question_type": "single-session-assistant", "verdict": "no", "reason": "착공 연도를 정확히 알 수 없다고 답했고 2014라는 정답을 제시하지 않음"}
+{"question_id": "41275add", "question_type": "single-session-assistant", "verdict": "no", "reason": "응답은 해당 동영상 추천 기록을 확인할 수 없다고 하며, 정답의 동영상 제목과 링크를 제시하지 않았다."}
+{"question_id": "4388e9dd", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답은 더럽고 얼룩진 흰 셔츠인데, 응답은 옷차림을 특정하지 않고 위생 상태만 언급했다."}
+{"question_id": "4baee567", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답과 정답 모두 Arrowhead Stadium에서 Chiefs와 Jaguars의 경기가 12회였다고 말한다."}
+{"question_id": "561fabcd", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답과 정답 모두 최종 이름이 'Fissionator'로 정해졌다고 말한다."}
+{"question_id": "b759caee", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답과 정답 모두 Instagram 핸들이 @jessica_poole_jewellery라고 말한다."}
+{"question_id": "c7cf7dfd", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 Nostalgia와 동일한 온라인 상점을 제시함"}
+{"question_id": "e48988bc", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 Patagonia(파타고니아)와 동일한 회사를 제시함"}
+{"question_id": "1de5cff2", "question_type": "single-session-assistant", "verdict": "yes", "reason": "정답 Veja와 동일한 브랜드를 제시함"}
+{"question_id": "65240037", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답은 1:10인데, 응답은 정확한 비율이 명시되지 않았다고 하고 1~2방울/큰술 등 다른 비율을 제시함"}
+{"question_id": "778164c6", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답은 Grilled Snapper with Mango Salsa인데, 응답은 Escovitch Fish라는 다른 요리를 제시함"}
+{"question_id": "ac031881", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답이 정답 'LIV'를 명시하며, 추가 설명(로마 숫자 54)은 정답과 모순되지 않는다."}
+{"question_id": "28bcfaac", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답이 정답 MusicTheory.net을 그대로 제시한다."}
+{"question_id": "16c90bf4", "question_type": "single-session-assistant", "verdict": "no", "reason": "응답은 이전에 특정 맥주 스타일을 말하지 않았다고 부정하며, 라거는 언급하지만 밀도 있는 주된 답이 아니고 밀맥주 등 다른 제안도 섞여 있어 정답(Pilsner 또는 Lager 추천)과 일치하지 않는다."}
+{"question_id": "c8f1aeed", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답이 정답 Pennsylvania를 명시하고, 모니터링 요건도 질문 내용과 일치하게 설명한다."}
+{"question_id": "eaca4986", "question_type": "single-session-assistant", "verdict": "no", "reason": "응답은 이전 대화를 기억하지 못한다고 하며 정답인 코드 진행을 전혀 제시하지 않는다."}
+{"question_id": "6613b389", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 메모리가 없어 답할 수 없다고 했으며, 정답 2개월을 제시하지 않았습니다."}
+{"question_id": "gpt4_78cf46a3", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 휴대폰 충전기를 먼저 잃어버렸다고 했으나, 정답은 새 휴대폰 케이스를 먼저 받았다는 것이므로 모순됩니다."}
+{"question_id": "gpt4_0a05b494", "question_type": "temporal-reasoning", "verdict": "yes", "reason": "응답은 잼 판매 여성을 먼저 만났다고 했으며, 이는 정답과 같습니다."}
+{"question_id": "gpt4_1a1dc16d", "question_type": "temporal-reasoning", "verdict": "yes", "reason": "응답은 Rachel과의 만남이 먼저였다고 했으며, 이는 정답과 같습니다."}
+{"question_id": "gpt4_2f584639", "question_type": "temporal-reasoning", "verdict": "no", "reason": "응답은 관련 정보가 없어 구매 순서를 알 수 없다고 했으며, 정답인 엄마 포토앨범을 먼저 샀다는 사실을 말하지 않았습니다."}
+{"question_id": "6456829e", "question_type": "multi-session", "verdict": "no", "reason": "토마토 5그루만 언급하고 토마토와 오이의 총 개수(8)를 말하지 않아 정답과 다릅니다."}
+{"question_id": "a4996e51", "question_type": "multi-session", "verdict": "no", "reason": "정보가 없다고 답했고, 일반적인 근무 시간 언급은 사용자의 정답(50시간)과 일치하지 않습니다."}
+{"question_id": "3c1045c8", "question_type": "multi-session", "verdict": "no", "reason": "정보가 없어 계산할 수 없다고 답했으므로 정답(2.5년)을 말하지 않았습니다."}
+{"question_id": "60036106", "question_type": "multi-session", "verdict": "no", "reason": "데이터가 없다고 답했으므로 정답(12,000명)을 말하지 않았습니다."}
+{"question_id": "681a1674", "question_type": "multi-session", "verdict": "no", "reason": "영화 한 편(Spider-Man: No Way Home)이라고 답했으나 정답은 2편이므로 모순됩니다."}
+{"question_id": "fea54f57", "question_type": "single-session-assistant", "verdict": "yes", "reason": "응답이 Fifth Album에서 가장 잘 보여준 곡으로 'Evolution'을 명시하며 정답과 일치하지만, 이후 정정 내용을 언급해 다소 모호함"}
+{"question_id": "cc539528", "question_type": "single-session-assistant", "verdict": "no", "reason": "이전 추천 내용을 기억하지 못한다고 밝히고, 일반적인 추천 목록(JavaScript, Python, Java, Go 등)을 제시해 정답(Ruby, Python, PHP)을 특정 추천으로 확인하지 않음"}
+{"question_id": "dc439ea3", "question_type": "single-session-assistant", "verdict": "no", "reason": "정답인 Hoop Dance를 언급하지 않고, 이전 대화에서 게임을 말한 적이 없다고 하며 Fancy Dance, Grass Dance, Stick Game 등 다른 항목을 제시함"}
+{"question_id": "18dcd5a5", "question_type": "single-session-assistant", "verdict": "no", "reason": "이전 대화 내용을 알 수 없다고 하며 미라 수를 특정하지 않고 일반적인 추정치(3~5구 등)만 제시함"}
+{"question_id": "488d3006", "question_type": "single-session-assistant", "verdict": "yes", "reason": "추천한 등산로가 GR-90이라고 명시하며 정답과 같은 사실을 말함"}
