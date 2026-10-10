@@ -189,6 +189,15 @@ C:\Users\mandu\hermes-made\jev-memory-middleware\
 
 ## 8. 다음 단계 (남은 작업 우선순위)
 
+> **2026-10-10 (후속) — SQLite 기술 뉴스 트래킹 등록: Vec1 + sqlite-multiwriter (0콜, X 트윗 @ohmypy·@_marcobambini 발단)**:
+>
+> | 항목 | 결과 |
+> |---|---|
+> | **SQLite Vec1 (sqlite.org/vec1 — SQLite 코어 팀 네이티브 ANN)** | 🔭 **트래킹 등록 (채택 아님)** — IVFADC+OPQ·L2/코사인·AVX2/NEON SIMD·단일 C 파일(현재 0.7, 기능 완성·1.0 전 테스트/최적화만 남음). 우리 vec lane은 sqlite-vec(vec0) vtab 구조 (실측: `vec_working`/`vec_facts` 등이 `no such module: vec0` = 가상 테이블, `vec_working_vector_chunks00` 청크 포맷) → **같은 자리의 교체 후보**. 현재 규모(working_memory 2,085·embeddings 2,104행)에선 ANN 불필요(선형 스캔 밀리초). **재검토 트리거: ① Vec1 1.0 릴리스 ② 코퍼스 ~10만 행 도달** — 이때 0콜 스모크 벤치(현행 vec0 vs vec1 recall/지연, S4 게이트 규약 적용). 우리 `_filter_and_rank`(벡터 스캔 후 메타 필터)는 Vec1의 필터 push 함정(WHERE push → 조용히 K 미만 행·recall 저하, @shahidcodes 리플)에 안전한 구조. |
+> | **sqlite-multiwriter (sqliteai/sqlite-multiwriter — VFS 프라이빗 WAL)** | 🔭 **트래킹 등록 (도입 아님)** — 커스텀 VFS로 SQLite 무수정 다중 프로세스 동시 쓰기 (16쓰레드 8,630→49,277 tps 5.7x·16프로세스 3.0x, 퍼스트 커미터 승리 + 페이지 레벨 리베이스, Apache 2.0). 09-29 판단 유지: 현재 데스크톱+게이트웨이 2프로세스 쓰기지만 주파수 낮고 busy_timeout(30s) 직렬화 충분 — **lock 에러 실측 0건** (errors.log.1 5건 매치는 전부 브라우저 프로필 잠금/라우팅 오류). **재검토 트리거: Core-as-Writer 다중 에이전트(P1~P5 이후)로 수십~수백 세션 동시 기록이 현실화될 때** — 발단 트윗(Peter Steinberger: 에이전트 50세션 병렬)과 정확히 같은 상황. 도입 부담: 커스텀 VFS 검증·충돌 재시도 로직. |
+>
+> **남은**: 위 2건은 코드 변경 없음 — 트리거 조건 충족 시 외부 시스템 검토 규약(검토 문서 1벌 + HANDOFF 행 + 스킬 reference)으로 재검토.
+
 > **2026-10-08 — 외부 문헌 검토: core.today '한국어 검색 스택' 5·6·7·9·10편 + 점수 융합(α) 종결**:
 >
 > | 항목 | 결과 |
