@@ -1,0 +1,352 @@
+[
+  {
+    "i": 0,
+    "query": "좋아 진행해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-05T13:12",
+    "verdict": "work"
+  },
+  {
+    "i": 1,
+    "query": "1번부터 진행하자",
+    "bucket": "작업지시",
+    "ts": "2026-10-07T20:39",
+    "verdict": "work"
+  },
+  {
+    "i": 2,
+    "query": "같이 커밋해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-10T19:35",
+    "verdict": "work"
+  },
+  {
+    "i": 3,
+    "query": "1번부터 진행해 보자",
+    "bucket": "작업지시",
+    "ts": "2026-10-07T10:24",
+    "verdict": "work"
+  },
+  {
+    "i": 4,
+    "query": "일단 이 결과를 문서화 및 커밋하고 a정책 180콜 실측을 진행해보자",
+    "bucket": "작업지시",
+    "ts": "2026-10-07T11:52",
+    "verdict": "work"
+  },
+  {
+    "i": 5,
+    "query": "그래 진행해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-07T12:36",
+    "verdict": "work"
+  },
+  {
+    "i": 6,
+    "query": "g 검증을 이어서 실측해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-07T17:32",
+    "verdict": "work"
+  },
+  {
+    "i": 7,
+    "query": "5번 진행해보자",
+    "bucket": "작업지시",
+    "ts": "2026-10-07T21:12",
+    "verdict": "work"
+  },
+  {
+    "i": 8,
+    "query": "그렇다면 source_timestamp는 backfilled_at이 있을 때만 의미있는 속성이 되겠네",
+    "bucket": "작업지시",
+    "ts": "2026-10-05T12:17",
+    "verdict": "need"
+  },
+  {
+    "i": 9,
+    "query": "② 3차 외부 검토 지시문(2×2 설계 확정 + 후회율 감사 프로토콜) 초안을 작성해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-05T19:26",
+    "verdict": "work"
+  },
+  {
+    "i": 10,
+    "query": "그래 커밋 후 실측해보자",
+    "bucket": "작업지시",
+    "ts": "2026-10-08T01:36",
+    "verdict": "work"
+  },
+  {
+    "i": 11,
+    "query": "1~2번을 바로 실행해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-05T17:36",
+    "verdict": "work"
+  },
+  {
+    "i": 12,
+    "query": "일단 검증부터 진행해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-06T12:45",
+    "verdict": "work"
+  },
+  {
+    "i": 13,
+    "query": "그래 진행상황 요약해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-10T19:24",
+    "verdict": "work"
+  },
+  {
+    "i": 14,
+    "query": "일단 3번 진행해 줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-10T19:35",
+    "verdict": "work"
+  },
+  {
+    "i": 15,
+    "query": "3번 실제로 진행해 보자",
+    "bucket": "작업지시",
+    "ts": "2026-10-08T01:25",
+    "verdict": "work"
+  },
+  {
+    "i": 16,
+    "query": "[The user sent a text document: 'b-ai-검토요청서v4-검토.md'. Its content has been included below. The file is also saved at: C:\\Users\\mandu\\AppData\\Local\\hermes\\cache\\documents\\doc_433f2197a1f6_b-ai-검토요청서v4-검토.md]\n\n[Content of b-ai-검토요청서v4-검토.md]:\nv4와 저장소의 `STAGE60_63_ABSTAIN_MYSTERY_20261007.md`, `stage61_base_recheck.py`를 읽었습니다. stage64~66과 stage74~82의 러너는 열지 않았고, 이들은 문서 서술만 보고 판단했습니다. 근거 표기는 [코드], [문서], [계산], [추측]입니다.\n\n## 결론부터\n\n**\"10-07에 abstain이 작동한다 / JEV 모델이 바뀌었다\"는 결론은 아직 못 받아들입니다. stage60 이후 러너가 JEV에 후보 5개만 보여주고 있어서, 어제 60개 후보와 비교할 수 없습니다.** 따라서 사안 4·6·8의 전략 전환(노출 확대, 규칙 행 캡 1, 혼합 노출)은 모두 재측정이 끝날 때까지 보류하세요.\n\n## 근거\n\n1. **[코드] stage61 러너가 후보를 5개로 자릅니다.**\n   - `run_choice`에서 `labels = [... for c in rows[:5]]`, `build_state(q, rows[:5])`입니다. `build_pool`이 60개를 만들어도 JEV에는 5개만 갑니다.\n   - docstring은 \"어제 stage48 cur과 동일 조건\"이라고 하지만, 후보 수가 60→5로 다릅니다. stage48이 60개를 썼다면(운영이 60이고 stage56도 그랬습니다. stage48 러너는 열지 않았습니다) 동일 조건이 아닙니다.\n   - stage60이 \"노출 k=5/3/2\" 실험이었는데, 노출 k는 JEV가 고른 뒤의 출력 크기입니다. 이를 JEV 입력 후보 수로 구현한 것이 설계 혼동입니다.\n2. **5개 후보에서 abstain이 올라가는 것은 자연스럽습니다.** 닫힌 집합에서 후보 5개가 전부 규칙/프로필 행이면 \"해당 없음\"에 질량이 몰립니다. 이는 pool 60→20에서 FP가 줄어든 것과 같은 방향의 효과입니다. 후보 수가 abstain 민감도를 지배한다는 것입니다. [추측]\n3. **어제의 hit와 정면으로 충돌합니다.** stage63에서 abstain된 사실 질문 4건의 gold rank가 8·14·36·41입니다. #80(rank 41)과 #87(rank 36)은 10-06 base(60 후보)에서 맞힌 쿼리입니다. 후보에 있으면 고르고 없으면 abstain하는 것뿐입니다.\n4. **\"어제 hit 78은 규칙 행 오답 포함 과대평가\"는 근거가 없습니다.** hit는 gold id 일치로 세는 것이라 규칙 행을 골랐다고 hit가 되지 않습니다. 규칙 질문의 gold가 규칙 행인 경우만 해당합니다.\n5. **\"bl",
+    "bucket": "작업지시",
+    "ts": "2026-10-07T13:09",
+    "verdict": "noopen"
+  },
+  {
+    "i": 17,
+    "query": "좋아 그렇게 해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-07T12:14",
+    "verdict": "work"
+  },
+  {
+    "i": 18,
+    "query": "1번 진행해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-06T01:40",
+    "verdict": "work"
+  },
+  {
+    "i": 19,
+    "query": "그래 진행해줘",
+    "bucket": "작업지시",
+    "ts": "2026-10-05T17:25",
+    "verdict": "work"
+  },
+  {
+    "i": 20,
+    "query": "일단 기록하고, abstention 규칙 보정 재판정은 별개의 콜이 필요한가? haiku나 jev?",
+    "bucket": "질문",
+    "ts": "2026-10-10T20:41",
+    "verdict": "need"
+  },
+  {
+    "i": 21,
+    "query": "설계된 동작이긴 한데 실제로 메모리의 기억이 필요했던 상황인 것도 맞는 것 같아. 현 구조에선 개선이 힘든 부분일까?",
+    "bucket": "질문",
+    "ts": "2026-10-05T12:17",
+    "verdict": "need"
+  },
+  {
+    "i": 22,
+    "query": "방금 전 답변을 텔레그램에 다시 보여줄래? pc에서 답변을 받아서  텔레그램에서는 안 보이네.",
+    "bucket": "질문",
+    "ts": "2026-10-08T09:45",
+    "verdict": "work"
+  },
+  {
+    "i": 23,
+    "query": "그렇다면 메모리에 저장되는 기록은 채팅 시점의 시간이 기록돼 아니면 내가 재판정한 시점의 시간이 기록돼?",
+    "bucket": "질문",
+    "ts": "2026-10-05T12:05",
+    "verdict": "need"
+  },
+  {
+    "i": 24,
+    "query": "기존 문서에도 실측 내용과 추후 검토할 부분을 반영해야 하지 않을까?",
+    "bucket": "질문",
+    "ts": "2026-10-05T12:28",
+    "verdict": "work"
+  },
+  {
+    "i": 25,
+    "query": "아래와 같이 나왔어. 내 주관에 의한 답변이니 너도 한번 확인해 볼래?\n\n—-\n\n{\"1\":\"irrelevant\",\"2\":\"irrelevant\",\"3\":\"irrelevant\",\"4\":\"spoiled\",\"5\":\"spoiled\",\"6\":\"irrelevant\",\"7\":\"irrelevant\",\"8\":\"irrelevant\",\"9\":\"spoiled\",\"10\":\"irrelevant\",\"11\":\"related\",\"12\":\"related\",\"13\":\"spoiled\",\"14\":\"related\",\"15\":\"irrelevant\",\"16\":\"irrelevant\",\"17\":\"irrelevant\",\"18\":\"spoiled\",\"19\":\"related\",\"20\":\"spoiled\",\"21\":\"irrelevant\",\"22\":\"irrelevant\",\"23\":\"irrelevant\"}",
+    "bucket": "질문",
+    "ts": "2026-10-06T10:22",
+    "verdict": "work"
+  },
+  {
+    "i": 26,
+    "query": "[The user sent a text document: 'a-ai-외부 ai 검토 v6.md'. Its content has been included below. The file is also saved at: C:\\Users\\mandu\\AppData\\Local\\hermes\\cache\\documents\\doc_b7439a2a57ab_a-ai-외부 ai 검토 v6.md]\n\n[Content of a-ai-외부 ai 검토 v6.md]:\n제공해주신 v6 검토 요청서(stage83~92 전수 실측 데이터 및 사안별 배경·출처 자족 명시)를 면밀히 분석했습니다.\r\n\r\n귀 팀이 stage83~92를 통해 **\"10-07 abstain 폭증이 모델 변경이 아닌 후보 수 $k=5$의 인공물이었음\"을 규명(stage83)**하고, **\"라이브 IRREL 방어의 16개 레버 소진(stage89~92 2질문 분리 기각 포함)\"**을 확정한 것은 파이프라인의 불확실성을 걷어낸 결정적 성과입니다.\r\n\r\n요청하신 형식(① 판정 ② 근거 ③ 권장 다음 단계, [실측] vs [추측] 명시)에 맞춰 **보류 6건(사안 A~F)**에 대한 최종 판정과 세부 질의 답변을 보고합니다.\r\n\r\n---\r\n\r\n## 사안 A: 노출 k=2 (유일한 채택 후보)\r\n\r\n### ① 판정: **즉시 채택 (Production Adopt 확정)**\r\n\r\n### ② 근거 (본문 실측 인용)\r\n1. **[실측: 정답 회수율 100% 보존]**:\r\n   - stage57(0콜) 및 stage87(200콜 JEV 실측)에서 $k=2$와 $k=5$의 회수 지표는 완전히 동일했습니다:\r\n     - **op hit@1: 78 (동일)**\r\n     - **op hit@3: 79 (동일, 보존)**\r\n     - **valid 오차단: 0건 (동일)**\r\n2. **[실측: 오주입 노출 행 수 60% 급감]**:\r\n   - block 쿼리 38건 기준, Hermes 에이전트에 노출되는 무관 메모리 행 수가 **190행 → 76행으로 114행(−60.0%) 감소**했습니다(stage87).\r\n3. **[판단 질의 1: FP율이 동일한데 노출 행 감소가 왜 실질 가치인가?]**:\r\n   - **[추측 및 에이전트 인지 구조]**: Hermes(소비 LLM)에게 컨텍스트 주입은 이진(Binary) 신호가 아닙니다. 무답 쿼리($u_{\\text{true}} = 29.8\\%$) 발생 시 5개 행(~1,500자)이 들어가면 에이전트는 '주의 분산(Lost in the Middle)'과 '환각 앵커링(Hallucinatory Priming)'을 일으켜 무관한 메모리를 사실로 단정하고 엉뚱한 답을 지어낼 확률이 급증합니다.\r\n   - 반면 $k=2$(~600자)로 축소되면 주입 텍스트가 컴팩트해져, 에이전트가 두 개를 빠르게 대조한 뒤 \"질문과 무관함\"을 인지하고 기각하기가 훨씬 용이해집니다.\r\n4. **[판단 질의 2: hit@3 79→78 (-1) 우려 여부]**:\r\n   - stage87 실측 표에서 보듯 $k=",
+    "bucket": "질문",
+    "ts": "2026-10-07T19:22",
+    "verdict": "noopen"
+  },
+  {
+    "i": 27,
+    "query": "recall 배제는 메모리에 저장하는 의미가 없지 않아? jev 장애 중에는 별도 태그를 붙여놓고, 나중에 jev 회복 시 메모리 재분류가 가능한 구조로는 불가능할까?",
+    "bucket": "질문",
+    "ts": "2026-10-05T19:48",
+    "verdict": "need"
+  },
+  {
+    "i": 28,
+    "query": "EXPERLABS 키 전환 과정이 어떻게 됐지?",
+    "bucket": "질문",
+    "ts": "2026-10-05T12:17",
+    "verdict": "need"
+  },
+  {
+    "i": 29,
+    "query": "세 ai로부터의 v4 검토에서 아직 실측이 필요하거나 수행하지 않은 지적사항이 있을까?",
+    "bucket": "질문",
+    "ts": "2026-10-07T15:54",
+    "verdict": "need"
+  },
+  {
+    "i": 30,
+    "query": "이제 해볼 일이 뭐가 있었지?",
+    "bucket": "질문",
+    "ts": "2026-10-10T21:36",
+    "verdict": "need"
+  },
+  {
+    "i": 31,
+    "query": "텔레그램에서 메세지를 보내도 헤르메스에서 응답이 없는 것 같은데 확인해줄래?",
+    "bucket": "질문",
+    "ts": "2026-10-08T14:20",
+    "verdict": "work"
+  },
+  {
+    "i": 32,
+    "query": "6번은 지금 진행할 수 있어? 아니면 3번을 먼저 진행해야해?",
+    "bucket": "질문",
+    "ts": "2026-10-06T10:00",
+    "verdict": "work"
+  },
+  {
+    "i": 33,
+    "query": "그런데 지금 검토 요청서에 기존 세 ai가 지적했던 부분 관련 작업이나 실측 정보가 모두 들어갔어? 뭔가 내용이 짧은 것 같아",
+    "bucket": "질문",
+    "ts": "2026-10-07T00:20",
+    "verdict": "work"
+  },
+  {
+    "i": 34,
+    "query": "일단 지금은 텔레그램으로 전송해서 답변이 오는 걸 확인했어",
+    "bucket": "질문",
+    "ts": "2026-10-08T14:20",
+    "verdict": "work"
+  },
+  {
+    "i": 35,
+    "query": "https://hindsight.vectorize.io/blog/2026/09/24/adding-jev-reranker-what-we-learned\n이 페이지는 내 jev-mem과 비슷하게 메모리 솔루션에 jev를 적용하려 했을 때 사례를 나타낸 것 같아.\n여기서 내 jev-mem 프로젝트에 참고할 만한 사항이 있을까?",
+    "bucket": "질문",
+    "ts": "2026-10-08T01:14",
+    "verdict": "need"
+  },
+  {
+    "i": 36,
+    "query": "그런데 아까도 조금 진행하다 또 429가 났던 거 같아. 일단 근본적으로 인증 문제를 해결해보는게 좋겠어. CA 설치는 승인했어",
+    "bucket": "질문",
+    "ts": "2026-10-08T23:30",
+    "verdict": "need"
+  },
+  {
+    "i": 37,
+    "query": "9시 30분 지났는데, cron 실행이 안된 거 아냐?",
+    "bucket": "질문",
+    "ts": "2026-10-09T09:46",
+    "verdict": "need"
+  },
+  {
+    "i": 38,
+    "query": "완료 알림이 안 오는 현상이 있는 것 같은데?",
+    "bucket": "질문",
+    "ts": "2026-10-06T16:25",
+    "verdict": "work"
+  },
+  {
+    "i": 39,
+    "query": "일단 opencode 인증 문제를 더 파보자. 원래의 opencode 소스에 관련 사항이 없을까?",
+    "bucket": "질문",
+    "ts": "2026-10-08T23:41",
+    "verdict": "work"
+  },
+  {
+    "i": 40,
+    "query": "auto routing",
+    "bucket": "모호",
+    "ts": "2026-10-08T13:03",
+    "verdict": "work"
+  },
+  {
+    "i": 41,
+    "query": "[IMPORTANT: Background process proc_5fd884fac917 exited (exit code 127).\nCommand: cd \"C:/Users/mandu/hermes-made/jev-memory-middleware\" && \"C:/Users/mandu/AppData/Local/jev-mem/venv/Scripts/python.exe\" -u experiments/operational-golden/run_audit_tier2_full.py\nOutput:\n전체 1589 행\r\n체크포인트: 600건 완료 — 이어가기\r\n대상 989건\r\n  [100/989] ok=92 stale=8 skip=0 err=0 23s (4.4/s)\r\n  [200/989] ok=190 stale=10 skip=0 err=0 40s (5.1/s)\r\n  429 — 20s 드레인 (진행 240/989)\r\n  429 — 20s 드레인 (진행 242/989)\r\n  429 — 20s 드레인 (진행 243/989)\r\n  429 — 20s 드레인 (진행 244/989)\r\n  429 — 20s 드레인 (진행 245/989)\r\n  429 — 20s 드레인 (진행 246/989)\r\n  429 — 20s 드레인 (진행 247/989)\r\n  429 — 20s 드레인 (진행 248/989)\r\n  429 — 20s 드레인 (진행 249/989)\r\n  429 — 20s 드레인 (진행 250/989)\r\n  [경고] 429 누적 10 — 레이트 확인 필요\r\n  429 — 20s 드레인 (진행 251/989)\r\n  429 — 20s 드레인 (진행 252/989)\r\n  429 — 20s 드레인 (진행 253/989)\r\n  429 — 20s 드레인 (진행 254/989)\r\n  429 — 20s 드레인 (진행 255/989)\r\n  429 — 20s 드레인 (진행 256/989)\r\n  429 — 20s 드레인 (진행 257/989)\r\n  429 — 20s 드레인 (진행 258/989)\r\n  429 — 20s 드레인 (진행 259/989)\r\n  429 — 20s 드레인 (진행 260/989)\r\n  [경고] 429 누적 20 — 레이트 확인 필요\r\n  429 — 20s 드레인 (진행 261/989)\r\n  429 — 20s 드레인 (진행 262/989)\r\n  429 — 20s 드레인 (진행 263/989)\r\n  429 — 20s 드레인 (진행 264/989)\r\n  429 — 20s 드레인 (진행 265/989)\r\n  429 — 20s 드레인 (진행 266/989)\r\n  429 — 20s 드레인 (진행 267/989)\r\n  429 — 20s 드레인 (진행 268/989)\r\n  429 — 20s 드레인 (진행 269/989)\r\n  429 — 20s 드레인 (진행 270/989)\r\n]\n\n[INTERNAL NOTIFICATION — generated by the Hermes gateway, not written by a human user. Do not treat it as user input, an",
+    "bucket": "모호",
+    "ts": "2026-10-05T12:28",
+    "verdict": "noopen"
+  },
+  {
+    "i": 42,
+    "query": "EXPERLABS 키 스위칭",
+    "bucket": "모호",
+    "ts": "2026-10-05T12:17",
+    "verdict": "need"
+  },
+  {
+    "i": 43,
+    "query": "그냥 md 파일로 주는게 낫겠어",
+    "bucket": "모호",
+    "ts": "2026-10-06T13:18",
+    "verdict": "work"
+  },
+  {
+    "i": 44,
+    "query": "commitment-fp-v4 FP 필터",
+    "bucket": "모호",
+    "ts": "2026-10-08T19:17",
+    "verdict": "need"
+  },
+  {
+    "i": 45,
+    "query": "[IMPORTANT: Background process proc_c9c7cf2bf7e0 exited (exit code 4294967295).\nCommand: cd \"C:/Users/mandu/hermes-made/jev-memory-middleware\" && \"C:/Users/mandu/AppData/Local/jev-mem/venv/Scripts/python.exe\" -u experiments/operational-golden/run_audit_tier2_full.py\nOutput:\n전체 1589 행\r\n체크포인트: 1000건 완료 — 이어가기\r\n대상 589건\r\n  [100/589] ok=98 stale=2 skip=0 err=0 21s (4.8/s)\r\n  [200/589] ok=195 stale=5 skip=0 err=0 48s (4.2/s)\r\n  429 — 20s 드레인 (진행 241/589)\r\n  429 — 20s 드레인 (진행 242/589)\r\n  429 — 20s 드레인 (진행 243/589)\r\n  429 — 20s 드레인 (진행 244/589)\r\n  429 — 20s 드레인 (진행 245/589)\r\n  429 — 20s 드레인 (진행 246/589)\r\n  429 — 20s 드레인 (진행 247/589)\r\n  429 — 20s 드레인 (진행 248/589)\r\n  429 — 20s 드레인 (진행 249/589)\r\n  429 — 20s 드레인 (진행 250/589)\r\n  [경고] 429 누적 10 — 레이트 확인 필요\r\n  429 — 20s 드레인 (진행 251/589)\r\n  429 — 20s 드레인 (진행 252/589)\r\n  429 — 20s 드레인 (진행 253/589)\r\n  429 — 20s 드레인 (진행 254/589)\r\n  429 — 20s 드레인 (진행 255/589)\r\n  429 — 20s 드레인 (진행 256/589)\r\n  429 — 20s 드레인 (진행 257/589)\r\n  429 — 20s 드레인 (진행 258/589)\r\n  429 — 20s 드레인 (진행 259/589)\r\n  429 — 20s 드레인 (진행 260/589)\r\n  [경고] 429 누적 20 — 레이트 확인 필요\r\n  429 — 20s 드레인 (진행 261/589)\r\n  429 — 20s 드레인 (진행 262/589)\r\n  429 — 20s 드레인 (진행 263/589)\r\n  429 — 20s 드레인 (진행 264/589)\r\n  429 — 20s 드레인 (진행 265/589)\r\n  429 — 20s 드레인 (진행 266/589)\r\n  429 — 20s 드레인 (진행 267/589)\r\n  429 — 20s 드레인 (진행 268/589)\r\n]\n\n[INTERNAL NOTIFICATION — generated by the Hermes gateway, not written by a human user. Do not treat it as user input, and do not reply to any earlier chat message because of",
+    "bucket": "모호",
+    "ts": "2026-10-05T12:28",
+    "verdict": "noopen"
+  },
+  {
+    "i": 46,
+    "query": "일단 현재까지 작업한 내용을 문서에 반영해 줘",
+    "bucket": "모호",
+    "ts": "2026-10-10T20:19",
+    "verdict": "work"
+  },
+  {
+    "i": 47,
+    "query": "@file:Downloads/stage2_row_verdicts.json\n\n이런 결과가 나왔어. 다만 내 주관에 의한 판정이니 네가 한번 더 검토해줘\n\n--- Attached Context ---\n\n📄 @file:Downloads/stage2_row_verdicts.json (535 tokens)\n```json\n[\n {\n  \"idx\": 0,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 1,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 2,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 3,\n  \"v_row\": \"VALID\",\n  \"v_mid\": \"YES\"\n },\n {\n  \"idx\": 4,\n  \"v_row\": \"VALID\",\n  \"v_mid\": \"YES\"\n },\n {\n  \"idx\": 5,\n  \"v_row\": \"VALID\",\n  \"v_mid\": \"YES\"\n },\n {\n  \"idx\": 6,\n  \"v_row\": \"IRREL\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 7,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 8,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 9,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 10,\n  \"v_row\": \"VALID\",\n  \"v_mid\": \"YES\"\n },\n {\n  \"idx\": 11,\n  \"v_row\": \"VALID\",\n  \"v_mid\": \"YES\"\n },\n {\n  \"idx\": 12,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 13,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 14,\n  \"v_row\": \"VALID\",\n  \"v_mid\": \"YES\"\n },\n {\n  \"idx\": 15,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 16,\n  \"v_row\": \"VALID\",\n  \"v_mid\": \"YES\"\n },\n {\n  \"idx\": 17,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 18,\n  \"v_row\": \"IRREL\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 19,\n  \"v_row\": \"IRREL\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 20,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 21,\n  \"v_row\": \"VALID\",\n  \"v_mid\": \"YES\"\n },\n {\n  \"idx\": 22,\n  \"v_row\": \"PLAUS\",\n  \"v_mid\": null\n },\n {\n  \"idx\": 23,\n  \"v_row\": \"VALID\",",
+    "bucket": "모호",
+    "ts": "2026-10-05T16:52",
+    "verdict": "work"
+  },
+  {
+    "i": 48,
+    "query": "아까 제시했던 '- 2. JEV 판정 경로 실측 (400콜+, 비용) — 임베딩 교체 시 pool 구성 변화 → abstain/pick 변화 측정'를 해 보자",
+    "bucket": "모호",
+    "ts": "2026-10-07T10:35",
+    "verdict": "need"
+  },
+  {
+    "i": 49,
+    "query": "일단 보류. 현 시점까지의 작업과 실측을 기록하고, 기존 문서에도 남겨줘.  나중에 다른 ai에게 문의해야겠어",
+    "bucket": "모호",
+    "ts": "2026-10-06T21:46",
+    "verdict": "work"
+  }
+]

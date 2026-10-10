@@ -107,11 +107,14 @@ print(pn)
 # 이상 징후 감지
 no_rate = g_all.get("NO", 0) / total if total else 0
 yes_rate = g_all.get("YES", 0) / total if total else 0
+# ★ 2026-10-10 사용자 라벨링 실측: NO 64%가 작업지시(work) — "NO=과다거부" 경고 기준은
+#   작업지시 비율(약 2/3)을 감안해 0.30 → 0.75로 상향 (a-ai 권고 0.60보다 보수적).
+#   실제 과다거부 신호는 NO율이 아니라 L2_YES (canary 정답 abstain) + need 비율로 본다.
 print()
-if no_rate > 0.3:
-    print("⚠️ 경고: gate NO율 30% 초과 — 과다거부 의심 (운영 영향 검토 필요)")
-elif no_rate > 0.15:
-    print("ℹ️ 참고: gate NO율 15% 초과 — 모니터링 지속")
+if no_rate > 0.75:
+    print("⚠️ 경고: gate NO율 75% 초과 — 과다거부 의심 (운영 영향 검토 필요)")
+elif no_rate > 0.5:
+    print("ℹ️ 참고: gate NO율 50% 초과 — 작업지시 밀집 구간일 수 있음 (라벨 감사 시점 확인)")
 else:
     print("✅ gate NO율 정상 범위")
 if flip / total > 0.3 if total else False:
