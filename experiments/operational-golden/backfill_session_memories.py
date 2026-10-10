@@ -26,6 +26,12 @@ from datetime import datetime
 REPO = r"C:\Users\mandu\hermes-made\jev-memory-middleware"
 STATE_DB = r"C:\Users\mandu\AppData\Local\hermes\state.db"
 MNEMO_DB = r"C:\Users\mandu\AppData\Local\hermes\mnemosyne\data\mnemosyne.db"
+# Hermes venv 발견 로직 (하드코딩 경로는 업데이트 시 무효화됨 — find로 탐색)
+import glob
+_HERMES = r"C:\Users\mandu\AppData\Local\hermes"
+_venv_candidates = sorted(glob.glob(_HERMES + r"\installs\*\environments\*\venv\Lib\site-packages"))
+if _venv_candidates:
+    sys.path.insert(0, _venv_candidates[-1])
 
 sys.path.insert(0, REPO)
 
@@ -119,7 +125,6 @@ def main():
         return
 
     # 저장 — mnemosyne DB 직접 (데몬 경유 없이, 재주입 전용)
-    sys.path.insert(0, r"C:\Users\mandu\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages")
     from mnemosyne.core import beam as bm
 
     b = bm.BeamMemory(session_id=f"hermes_{args.session}")
