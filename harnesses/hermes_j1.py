@@ -24,6 +24,29 @@ from pathlib import Path
 # JevMemClient auto_start가 발동 기회를 잃는 사고(10-09~10, 30h)가 발생했다.
 # Hermes installs/*/environments/*/venv에서 mnemosyne_hermes를 가진 venv를 탐색해
 # sys.path에 추가하는 폴백을 둔다 (업데이트로 venv hash가 바뀌어도 glob으로 자동 추적).
+# 2026-10-10 v8 3-AI(b·c) 보강:
+#  - 선택 후보의 pyvenv.cfg 파이썬 버전이 현재 인터프리터와 호환될 때만 사용 (컴파일된 휠 충돌 방지)
+#  - 디렉토리 실존(is_dir) + __init__.py 존재까지 확인 (a-ai)
+#  - 선택 경로를 경고 로그에 명시 (b-ai) — 실패 시 조용히 넘어가지 않는다
+def _pyvenv_compatible(sp: Path) -> bool:
+    """후보 site-packages의 venv pyvenv.cfg 버전이 현재 파이썬 메이저·마이너와 호환되는지."""
+    try:
+        cfg = sp.parents[1] / "pyvenv.cfg"  # site-packages → Lib → venv
+        if not cfg.is_file():
+            return True  # cfg 없으면 구버전 — 시도는 허용
+        ver = None
+        for line in cfg.read_text(encoding="utf-8", errors="ignore").splitlines():
+            if line.strip().startswith("version"):
+                ver = line.split("=")[1].strip()
+                break
+        if not ver:
+            return True
+        cur = f"{sys.version_info.major}.{sys.version_info.minor}"
+        return ver.startswith(cur)
+    except Exception:
+        return True  # 판정 불가 시 시도 허용 (fail-closed 금지 — import 실패는 다음 후보로)
+
+
 def _ensure_mnemosyne_hermes() -> None:
     try:
         import mnemosyne_hermes  # noqa: F401
@@ -38,17 +61,32 @@ def _ensure_mnemosyne_hermes() -> None:
         reverse=True,
     )
     import importlib.util
+    tried = []
     for sp in candidates:
         candidate = sp / "mnemosyne_hermes"
-        if candidate.is_dir() and (candidate / "__init__.py").is_file():
-            sys.path.insert(0, str(sp))
-            try:
-                import mnemosyne_hermes  # noqa: F401
-                log_early = logging.getLogger(__name__)
-                log_early.info("mnemosyne_hermes recovered from %s", sp)
-                return
-            except ImportError:
-                sys.path.pop(0)
+        if not candidate.is_dir() or not (candidate / "__init__.py").is_file():
+            continue
+        if not _pyvenv_compatible(sp):
+            tried.append(f"{sp} (pyvenv 버전 불일치)")
+            continue
+        sys.path.insert(0, str(sp))
+        try:
+            import mnemosyne_hermes  # noqa: F401
+            log_early = logging.getLogger(__name__)
+            log_early.warning(
+                "mnemosyne_hermes recovered from %s (fallback)"
+                " — 게이트웨이가 tools python으로 실행됨. pyvenv 호환 확인됨.", sp)
+            print(f"[hermes_j1] mnemosyne_hermes 폴백 로드: {sp}",
+                  file=sys.stderr, flush=True)
+            return
+        except ImportError as e:
+            sys.path.pop(0)
+            tried.append(f"{sp} (import 실패: {e})")
+    if tried:
+        log_early = logging.getLogger(__name__)
+        log_early.error("mnemosyne_hermes 폴백 전부 실패: %s", "; ".join(tried))
+        print(f"[hermes_j1] 폴백 전부 실패: {'; '.join(tried)}",
+              file=sys.stderr, flush=True)
 
 
 _ensure_mnemosyne_hermes()

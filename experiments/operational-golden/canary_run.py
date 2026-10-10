@@ -138,6 +138,28 @@ def summarize(recs, prefix):
             "pick_med": sorted(picks)[len(picks)//2] if picks else None,
             "latency_med_ms": lat_med, "errs": errs}
 
+def check_daemon_health():
+    """데몬 /v1/health probe — 실패 시 알림(게이트웨이와 독립 채널) 후 종료.
+    2026-10-10 v8 3-AI(G·D) 대응: canary는 JEV 직결이라 데몬 부재를 못 봄."""
+    import urllib.request
+    try:
+        with urllib.request.urlopen("http://127.0.0.1:47821/v1/health", timeout=5) as r:
+            ok = r.status == 200 and b"ready" in r.read()
+        if ok:
+            print("[health] 데몬 OK", flush=True)
+            return True
+        print("[health] 데몬 응답 비정상", flush=True)
+    except Exception as e:
+        print(f"[health] 데몬 연결 실패: {e}", flush=True)
+    try:
+        subprocess.run(["hermes", "send", "-t", "telegram", "-m",
+                        "⚠️ JEV 데몬 health 실패 — 47821 응답 없음. 로그 확인 필요"],
+                       capture_output=True, timeout=60)
+    except Exception:
+        pass
+    return False
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--init", action="store_true", help="기준선 수집 (첫 실행)")
@@ -145,6 +167,10 @@ def main():
     args = ap.parse_args()
 
     print("canary 실행:", "INIT" if args.init else "CHECK", flush=True)
+
+    if not check_daemon_health():
+        print("⚠️ 데몬 비정상 — canary 중단 (알림 전송됨)", flush=True)
+        return
 
     # L1
     l1 = [run_choice(q) for q in L1_QUERIES]
