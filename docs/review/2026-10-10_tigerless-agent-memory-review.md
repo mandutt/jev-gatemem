@@ -5,7 +5,7 @@
 | 축 | 판정 |
 |---|---|
 | 백그라운드 Manage 레이어 (merge/supersede/split/delete 제안+reasoner 판정) | ⏸️ **보류 등록** — 우리 Honcho 보류(백그라운드 합성)의 **구체 구현체**. 우리 코퍼스 2,085행으로 시기상조 판단 유지하되, 구현 참고로 가치 |
-| 읽기 횟수 기반 가중치 boost (access_log → weight) | ⏸️ **보류 등록** — 우리 recall_count 891/2,085(43%) 채움 실측 → 재검토 여지. 단 stage104 `_adjusted` 기각 축과 교차 |
+| 읽기 횟수 기반 가중치 boost (access_log → weight) | ❌ **기각 (0콜 실측)** — 우리 recall_count 891/2,085(43%) 채움 확인했으나, **상위 행이 도배 군집이고 boost가 자기 강화 루프** (아래 §5 참조). **do not re-run** |
 | RRF k=60 · 시점 반개구간 · 파일 SoT · 검색 무LLM | ✅ **정합** — 외부 독립 구현 일치 (agentmemory·Honcho와 함께 표준성 지지) |
 | 가치 기반 망각 (idle decay / weight floor 0.05) | ⏸️ 보류 — 우리 시간 축 유병률 실측(시간 참조 1.3%)과 충돌 여지, 발동률 낮아 후순위 |
 | 삭제는 proposal로만 (pending 승인) | ✅ 실측 정합 — 우리 fail-open 원칙과 일치 |
@@ -86,7 +86,7 @@ if self._idle_days(record, last_access, now) >= self._config.weight.decay_after_
 | read-time 시점 | `as_of` 파라미터 | `valid_until > now` SQL 필터 | **정합 (반개구간)** |
 | 삭제 | invalid 표시 (보존) | fail-open 원칙 (KEEP) | 정합 |
 
-## 5. 0콜 실측 (DB 프로브)
+## 5. 0콜 실측 (DB 프로브 + 코드 대조)
 
 ```sql
 -- working_memory 2,085행
@@ -98,15 +98,27 @@ valid_until 채움      : 159
 pinned               : 0
 ```
 
-- **우리도 recall_count를 수집하고 있다** (891/2,085 = 43%) — 다만 **검색 랭킹에 미사용** (stage104 `_adjusted` 기각 이후)
+- **우리도 recall_count를 수집하고 있다** (891/2,085 = 43%) — 다만 **검색 랭킹에 미사용** (grep: gateway/j1_pipeline.py·core/j1_engine.py·gateway.py 전체에서 recall_count 참조 0건). recall_count는 **Hermes 내장 `get_context()`(beam.py)가 노출(returned items) 시에만 bump** — pick/선택과 무관.
 - tigerless의 읽기 boost 레버 = 우리 recall_count를 랭킹에 쓰는 **가장 간단한 구조** (access_log 대신 recall_count 컬럼 존재)
+
+### 5.1 ★ recall_count 상위 행 성격 (0콜, 2026-10-10)
+
+**recall_count ≥ 30 전체 40건 중 20건(50%)이 `[USER] 다른 ai에서 이런 답변이 나왔어...`(과거 설계 토론 복사), codex worker 작업 지시가 다수** — **stage57~66 '도배 행'과 정확히 동일 군집** (default 프로필 규칙 행이 아니라, 토론/작업 지시 대량 메모리).
+
+**도배 메커니즘 (자기 강화 루프)**: get_context()가 노출(returned)하는 행만 recall_count가 오른다 → 현재 노출은 importance 우선이라 도배 행(imp=0.5)은 노출에 안 들어가지만, **recall_count boost를 랭킹에 넣으면 imp=0.5 도배 행이 노출로 올라온다** → 노출되면 recall_count 증가 → boost로 재노출. **자기 강화 루프 확정.**
+
+가상 재정렬 실측(importance DESC, rc DESC): 현재 노출 상위 10과 비교 시 rc=29(도배)가 4위로 올라옴, 순서 변화 미미하나 **도배 행 상승 방향 확인**.
+
+### 5.2 ★ stage85 gold rank 41·36 실측과의 충돌
+
+stage85 production-exact에서 **gold rank 41·36** 실측 (rank>20 gold 2건, pool20/30/40 어느 값도 못 살림 → pool 60 유지 확정). **recall_count lane 추가 시 이 gold들이 더 밀린다** — 도배 행이 lane 상위를 차지하면 RRF로 gold가 60 밖으로 밀려남. pool60 유지 확정과 동일 논리.
 
 ## 6. 판정
 
 | 항목 | 판정 | 근거 |
 |---|---|---|
 | ① 백그라운드 Manage (merge/supersede 제안) | ⏸️ **보류 등록** | 우리 Honcho 보류(백그라운드 합성)와 동일 레버. 코퍼스 2,085행 시기상조 (OptMem/Honcho 보류와 동일 논리). 단 **구현 지침으로 가치**: reasoner 메뉴 제한·caps·invalid 표시 |
-| ② 읽기 횟수 부스트 (recall_count 활용) | ⏸️ **보류 등록** | 우리 recall_count 43% 채움 실측 → '가장 간단한 랭킹 레버'로 재검토 여지. 단 stage104 `_adjusted`(기각) 축과 교차 → 별도 실험이라면 3-run 회귀 필요 |
+| ② 읽기 횟수 부스트 (recall_count 활용) | ❌ **기각 (0콜 실측)** | JEV 파이프라인 grep 0건(도입 시 코드 추가 필요) + recall_count 상위 = 도배 군집(50% 토론 복사) + **자기 강화 루프**(노출→bump→재노출) + stage85 gold rank 41·36 밀림 위험. **do not re-run** |
 | ③ RRF·시점 필터·삭제 보존 | ✅ 정합 | 외부 독립 구현 일치 |
 | ④ idle decay (시간 축) | ⏸️ 보류 | 우리 시간 유병률 실측(상대시간 참조 1.3%·MemPalace 5/374)과 충돌 여지, 발동률 낮아 후순위 |
 | ⑤ 벡터 전체 스캔 | ✅ 정합 | 우리와 같은 '작은 규모 = brute-force' 접근, Vec1 추적과 같은 자리 |

@@ -2,7 +2,7 @@
 
 > GitHub star 상위·웹·레딧·아카이브에서 메모리 솔루션을 스캔한 기록.
 > **참고할 만한 사항이 있었던 경우만 문서화** — 아래는 확인했던 목록만 남긴다.
-> 심층 검토: `2026-10-10_tigerless-agent-memory-review.md` (보류 2건 등록)
+> 심층 검토: `2026-10-10_tigerless-agent-memory-review.md` (보류 1건·기각 1건)
 > 재탐구 트래킹: TencentDB Agent Memory (L0~L3 계층 증류) — §3 참고
 
 ## 1. GitHub star 검색 (agent memory / llm memory / memory layer / long-term memory)
@@ -58,12 +58,12 @@
 - **재탐구 트리거**: ① 코퍼스가 수만 행으로 성장 ② 백그라운드 합성(Manage) 실험이 시작될 때 — 이때 L2/L3 계층 증류를 우리 스키마로 매핑할 가치.
 - 판정: **참고 등록 (보류 아님)** — 지금은 문서만, 재탐구 시점 인식용.
 
-## 4. 보류 등록 요약 (심층 검토 2건)
+## 4. 보류 등록 요약 (심층 검토 2건 → 기각 1건·보류 1건으로 확정)
 
 | 항목 | 판정 | 근거 |
 |---|---|---|
 | tigerless 백그라운드 Manage (merge/supersede/split/delete 제안) | ⏸️ 보류 | Honcho 보류(백그라운드 합성)와 동일 레버, 코퍼스 2,085행 시기상조 |
-| tigerless 읽기 횟수 boost (recall_count 43% 채움 실측) | ⏸️ 보류 | 우리 recall_count 891/2,085 채움 — 간단 랭킹 레버 재검토 여지, 단 stage104 기각 축과 교차 |
+| tigerless 읽기 횟수 boost (recall_count 활용) | ❌ **기각 (0콜 실측)** | recall_count 상위 = 도배 군집(50% 토론 복사) + **자기 강화 루프**(노출→bump→재노출) + stage85 gold rank 41·36 밀림 위험. **do not re-run** |
 
 ## 5. 원본 소스
 
