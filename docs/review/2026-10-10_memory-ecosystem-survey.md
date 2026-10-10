@@ -41,6 +41,7 @@
 
 | 출처 | 내용 | 판정 |
 |---|---|---|
+| agentmemorybenchmark.ai LongMemEval leaderboard (2026-10-10) | 등재 솔루션 5종 신규 검토 — **참고 2·정합 2·기각 3, 직접 반영 없음** (reranker=JEV 순서 무영향 Run R·시간 캘린더=발동률 1.1~1.3%·dynamic prompting=0콜 원칙 위반). TiMem 계층 통합 경계는 백그라운드 합성 재검토 트리거로 참고 등록. 상세: `2026-10-10_longmemeval-leaderboard-review.md` | 📋 참고 — 검토 문서 1벌 완료, 보류 신규 0 |
 | arXiv 2606.24775 "Are We Ready For An Agent-Native Memory System?" | 12개 메모리 시스템·5벤치·11데이터셋 실증 — **"단일 아키텍처가 모든 워크로드 지배 못함, 워크로드 병목 정렬이 핵심"**, "로컬라이즈드 유지보수 > 글로벌 재조직" | 📋 참고 — 우리 선택 근거와 정합 |
 | arXiv 2606.29914 MemDelta | **임베딩 모델만 교체해도 정확도 ±6포인트** — 승자가 뒤집힘 | ✅ 정합 — 우리 embedding-fullpath-gate(S4)와 독립 일치, "임베딩 고정 비교" 규칙 |
 | benchd.ai 벤치마크 가이드 | 무메모리 LLM 기준선 57.6% > 대부분 메모리 시스템 (Mem0 OSS 32.4% 검증) — 자체 보고와 검증 격차 | ✅ 우리 실측 우선주의 재확인 (자체 보고 수치 분리 표기 규칙) |
