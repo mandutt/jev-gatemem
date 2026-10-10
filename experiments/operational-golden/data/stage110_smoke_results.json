@@ -1,0 +1,113 @@
+[
+  {
+    "question_id": "e47becba",
+    "question_type": "single-session-user",
+    "ingest_turns": 550,
+    "ingest_s": 24.56,
+    "jev": {
+      "q": "What degree did I graduate with?",
+      "idx": 1,
+      "abstain_p": 0.0,
+      "abstain": false,
+      "pool_n": 41,
+      "latency_s": 3.57,
+      "rows": [
+        {
+          "rank": 0,
+          "content": "assistant: Congratulations on your degree in Business Administration! That's a great foundation for your new role. Staying organized with paperwork a..."
+        },
+        {
+          "rank": 1,
+          "content": "user: I graduated with a degree in Business Administration, which has definitely helped me in my new role. Do you have any advice on how to stay orga..."
+        },
+        {
+          "rank": 2,
+          "content": "assistant: The episode with Naval Ravikant is one of the most popular and highly-recommended episodes of \"The Tim Ferriss Show\"! Naval Ravikant is a..."
+        },
+        {
+          "rank": 3,
+          "content": "assistant: Slow-cooked ribs are a BBQ lover's dream! I'm happy to help you with tips on achieving that perfect smoky flavor. **Wood Chips for Smoking..."
+        },
+        {
+          "rank": 4,
+          "content": "t room into a home office! Creating a comfortable and functional workspace is essential for productivity and overall well-being. I'd be happy to help..."
+        }
+      ]
+    },
+    "hypothesis": "Based on the retrieved context, you graduated with a degree in **Business Administration**."
+  },
+  {
+    "question_id": "0862e8bf_abs",
+    "question_type": "single-session-user",
+    "ingest_turns": 523,
+    "ingest_s": 22.88,
+    "jev": {
+      "q": "What is the name of my hamster?",
+      "idx": 6,
+      "abstain_p": 0.99,
+      "abstain": true,
+      "pool_n": 6,
+      "latency_s": 0.61,
+      "rows": [
+        {
+          "rank": 0,
+          "content": "our area: 1. **American Animal Hospital Association (AAHA)**: Visit the AAHA website to find accredited veterinary hospitals in your area. 2. **Ameri..."
+        },
+        {
+          "rank": 1,
+          "content": "user: By the way, my cat's name is Luna, and she's been such a sweetie throughout all the changes we've been making to her environment. I'm just glad..."
+        },
+        {
+          "rank": 2,
+          "content": "can either: 1. Subset the financial data dataframe to only include the rows that match the date range of the price data dataframe. You can do this by..."
+        },
+        {
+          "rank": 3,
+          "content": "as the expertise to treat your condition, and you're willing to wait if necessary to get the best care. This can also give you an idea of the clinic'..."
+        },
+        {
+          "rank": 4,
+          "content": "rity and human rights, including the reasons why certain rights are being restricted. 2. adopting legal and policy safeguards: governments should dev..."
+        }
+      ]
+    },
+    "hypothesis": "죄송합니다. 제공된 맥락에는 햄스터의 이름에 대한 정보가 없습니다. 언급된 반려동물은 고양이 **루나(Luna)**뿐입니다. 햄스터의 이름을 알려주시면 기억해 두겠습니다."
+  },
+  {
+    "question_id": "15745da0_abs",
+    "question_type": "single-session-user",
+    "ingest_turns": 547,
+    "ingest_s": 22.7,
+    "jev": {
+      "q": "How long have I been collecting vintage films?",
+      "idx": 60,
+      "abstain_p": 0.77,
+      "abstain": true,
+      "pool_n": 60,
+      "latency_s": 0.62,
+      "rows": [
+        {
+          "rank": 0,
+          "content": "user: I've been collecting vintage cameras for three months now, and I've already amassed a pretty impressive collection. Do you have any advice on h..."
+        },
+        {
+          "rank": 1,
+          "content": "assistant: In Germany, the appreciation for the Japanese umami taste of food has also been increasing in recent years. The German cuisine has a long..."
+        },
+        {
+          "rank": 2,
+          "content": "assistant: A wonderful hobby! Congratulations on building a collection of vintage cameras. Proper storage and maintenance are crucial to preserve the..."
+        },
+        {
+          "rank": 3,
+          "content": "user: I'm looking for some advice on how to properly store and maintain my growing collection of vintage cameras. Do you have any tips on how to keep..."
+        },
+        {
+          "rank": 4,
+          "content": "user: I'm planning to attend some of the documentary screenings as well, and I'm curious to know more about the films that are being showcased. Do yo..."
+        }
+      ]
+    },
+    "hypothesis": "You haven't mentioned collecting vintage **films**—you've mentioned collecting vintage **cameras** for about three months. If you meant cameras, you've been collecting them for three months. If you're asking about films specifically, I don't have any information about that in your memory."
+  }
+]

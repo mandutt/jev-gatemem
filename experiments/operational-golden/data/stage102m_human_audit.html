@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인간 감사 (Human Audit) — 판정자 비교 16건</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', 'Malgun Gothic', sans-serif; background: #f5f6f8; color: #1a1a2e; padding: 24px; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .sub { color: #666; font-size: 13px; margin-bottom: 20px; }
+  .card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 20px; margin-bottom: 16px; }
+  .q-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .num { background: #1a1a2e; color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  .badge { font-size: 11px; padding: 3px 8px; border-radius: 10px; font-weight: 600; }
+  .badge.block { background: #ffe8e8; color: #c0392b; }
+  .badge.valid { background: #e8f4e8; color: #27ae60; }
+  .badge.yes { background: #e8f0fe; color: #1a73e8; }
+  .badge.k { background: #f0f0f0; color: #555; }
+  .q { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .resp { background: #fafbfc; border: 1px solid #eee; border-radius: 8px; padding: 12px; font-size: 13px; color: #333; margin-bottom: 12px; line-height: 1.5; }
+  .judges { display: flex; gap: 16px; margin-bottom: 12px; font-size: 13px; }
+  .judge-item { display: flex; align-items: center; gap: 6px; background: #f8f9fa; border-radius: 6px; padding: 6px 10px; }
+  .judge-item .v { font-weight: 700; }
+  .v-yes { color: #c0392b; }
+  .v-no { color: #27ae60; }
+  .audit { display: flex; gap: 12px; margin-top: 8px; padding-top: 12px; border-top: 1px dashed #ddd; align-items: center; }
+  .audit label { font-size: 13px; font-weight: 600; }
+  .audit input[type=radio] { accent-color: #1a73e8; width: 16px; height: 16px; }
+  .audit-options { display: flex; gap: 16px; }
+  .audit-options label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  .result-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a2e; color: #fff; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; z-index: 100; }
+  .result-bar .count { font-weight: 700; }
+  .result-bar button { background: #1a73e8; border: none; color: #fff; padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .result-bar button:hover { background: #1557b0; }
+  .result-bar button:disabled { background: #555; cursor: not-allowed; }
+  body { padding-bottom: 80px; }
+  .note { background: #fffbe6; border: 1px solid #f0e68c; border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-bottom: 20px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<h1>🧑‍⚖️ 인간 감사 — 판정자 비교</h1>
+<div class="sub">16건 (불일치 405건 중 샘플) · 기준: <b>응답이 메모리 컨텍스트를 "근거로 인용"했는가?</b> (yes=인용, no=일반 추론)</div>
+
+<div class="note">
+  📌 <b>판정 기준</b>: 응답이 특정 메모리(파일 경로, 설정, 과거 결론, 사용자 규칙 등)를 구체적으로 인용하며 답하면 <b>yes</b>, 일반 지식/추론으로만 답하면 <b>no</b>.<br>
+  📌 아래에서 각 항목의 <b>인간 판정</b>을 클릭하고, 마지막에 <b>결과 내보내기</b>를 누르면 JSON이 다운로드됩니다.
+</div>
+
+<div id="cards"></div>
+
+<div class="result-bar">
+  <div>판정 완료: <span class="count" id="doneCount">0</span> / 16</div>
+  <button id="exportBtn" onclick="exportResult()" disabled>결과 내보내기 (JSON)</button>
+</div>
+
+<script>
+const DATA = [
+  {q:"start_proxy.cmd 재부팅 후 왜 안 돌아가?", cls:"block", k:5, f:"True", resp:"start_proxy.cmd가 재부팅 후 실행되지 않는 원인은 **배치 파일 인코딩과 줄바꿈 방식** 때문이었습니다. 파일이 **UTF-8 인코딩 + LF(Unix-style) 줄바꿈**으로 저장...", prev:"nemotron-3-ultra", pv:"yes", sb:"no"},
+  {q:"verifier-pilot은 코딩 품질만 보면 돼?", cls:"block", k:2, f:"True", resp:"아니요, verifier-pilot의 진짜 목표는 **코딩 품질이 아니라 \"더 나은 답변 품질\"**입니다. 도메인에 한정되지 않아서 코드·텍스트·분석·문서 등 모든 산출물이 대상이에요.", prev:"nemotron-3-ultra", pv:"no", sb:"yes"},
+  {q:"CAMOFOX_URL 제거한 이유?", cls:"block", k:2, f:"True", resp:"CAMOFOX_URL 관련 흔적을 제거한 이유는 사용자님께서 **camofox 관련 흔적을 없애고 싶다고 하셨기 때문**입니다.", prev:"nemotron-3.5", pv:"no", sb:"yes"},
+  {q:"start_proxy.cmd 재부팅 후 왜 안 돌아가?", cls:"block", k:3, f:"False", resp:"start_proxy.cmd가 재부팅 후 실행되지 않았던 원인은 **배치 파일 인코딩 문제** 때문입니다. 해당 배치 파일이 **UTF-8 인코딩 + LF(Unix) 줄바꿈**으로 저장...", prev:"nemotron-3-ultra", pv:"no", sb:"yes"},
+  {q:"ADR Final 이후에 뭐 하면 안 돼?", cls:"yes", k:3, f:"True", resp:"ADR Final(설계 확정) 이후 운영 모드에서는 신규 설계(문서 작성 금지), 신규 ADR(추가 발행 금지) 등을 하시면 안 됩니다.", prev:"nemotron-3.5", pv:"yes", sb:"no"},
+  {q:"CAMOFOX_URL 제거한 이유?", cls:"block", k:5, f:"True", resp:"CAMOFOX_URL 제거에 대한 직접적인 정보는 메모리에서 확인되지 않습니다. 다만, 검색된 맥락에서 camofox 관련 흔적 제거를 요청하신 기록이 있습니다.", prev:"nemotron-3.5", pv:"no", sb:"yes"},
+  {q:"DTO 분리 어디까지 하면 돼?", cls:"yes", k:0, f:"None", resp:"DTO 분리, 정말 고민되는 부분이죠. **\"무조건 다 분리\"가 아니라, 변경 이유와 사용 계층이 다를 때 분리**하는 게 정답입니다.", prev:"nemotron-3-ultra", pv:"yes", sb:"no"},
+  {q:"67차 실험 최종 결론 뭐였지?", cls:"block", k:2, f:"True", resp:"67차 실험(verifier-pilot 연구)의 최종 결론은 다음과 같습니다: **best-of-5(G3) + selective recovery(D)** 방식은 best-of-5(G3)만 사용하는 방식(B2)보다...", prev:"nemotron-3.5", pv:"no", sb:"yes"},
+  {q:"skill_manage create 파라미터 뭐 써야 하지?", cls:"block", k:2, f:"False", resp:"skill_manage 액션으로 스킬을 생성하실 때는 반드시 `content` 파라미터를 사용하셔야 합니다. `file_content`로 보내시면 계속 \"content is required\" 오류가 발생합니다.", prev:"nemotron-3.5", pv:"no", sb:"yes"},
+  {q:"스킬 만들 때 file_content로 보내면 돼?", cls:"block", k:3, f:"True", resp:"아니요, `file_content`로 보내면 안 됩니다. 스킬 생성 시에는 반드시 `content` 파라미터로 스킬 본문을 전달해야 합니다.", prev:"nemotron-3-ultra", pv:"no", sb:"yes"},
+  {q:"한국어 말투 규칙 뭐지?", cls:"yes", k:2, f:"False", resp:"한국어 말투 규칙은 다음과 같습니다: 한국어와 영어를 혼용하되, 구조적/메타데이터(분류·상태·step label)는 한국어로, code/기술 설명은 영어로 작성합니다. 완전 번역은 금지됩니다.", prev:"nemotron-3.5", pv:"yes", sb:"no"},
+  {q:"Hermes 데스크톱 워치독 런처 어디 있어?", cls:"yes", k:2, f:"True", resp:"Hermes 데스크톱 워치독 런처는 아래 경로에 있습니다: C:\\Users\\mandu\\hermes-made\\hermes-gateway-watchdog\\ 안에 Hermes_With_Wa...", prev:"nemotron-3.5", pv:"yes", sb:"no"},
+  {q:"codex CLI에서 메모리 기록되나?", cls:"block", k:5, f:"False", resp:"네, 기록됩니다. **Codex CLI ↔ Mnemosyne 연동이 완료·검증된 상태**입니다. 설정 위치: ~/.codex/config.toml의 [hooks]...", prev:"space-bunny", pv:"no", sb:"yes"},
+  {q:"자동 시작 설정 어떻게 하는 게 원칙이야?", cls:"valid", k:2, f:"False", resp:"## 자동 시작 설정 원칙 (메모리 기준): 1. 작업 스케줄러(Task Scheduler)는 쓰지 않는다 (수정/생성 금지). 안전 종료/기동은 .ps1...", prev:"longcat", pv:"yes", sb:"no"},
+  {q:"codex CLI에서 메모리 기록되나?", cls:"block", k:2, f:"False", resp:"네, Codex CLI에서 메모리 기록이 정상적으로 동작합니다. ~/.codex/config.toml 파일에 hooks 블록이 설정되어 있습니다.", prev:"space-bunny", pv:"yes", sb:"no"},
+  {q:"ADR Final 이후에 뭐 하면 안 돼?", cls:"yes", k:3, f:"False", resp:"ADR Final(설계 확정) 이후 운영 모드에서 하면 안 되는 것: 신규 설계·ADR 추가 금지, 이미 확정된 설계를 뒤집거나 새...", prev:"longcat", pv:"yes", sb:"no"}
+];
+
+const cards = document.getElementById('cards');
+const doneCount = document.getElementById('doneCount');
+const exportBtn = document.getElementById('exportBtn');
+const answers = {};
+
+function render() {
+  DATA.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="num">${i+1}</div>
+        <span class="badge ${item.cls}">${item.cls}</span>
+        <span class="badge k">k=${item.k} · framing=${item.f}</span>
+      </div>
+      <div class="q">${item.q}</div>
+      <div class="resp">${item.resp}</div>
+      <div class="judges">
+        <div class="judge-item">어제(${item.prev}): <span class="v ${item.pv==='yes'?'v-yes':'v-no'}">${item.pv}</span></div>
+        <div class="judge-item">space-bunny: <span class="v ${item.sb==='yes'?'v-yes':'v-no'}">${item.sb}</span></div>
+      </div>
+      <div class="audit">
+        <label>🧑‍⚖️ 인간 판정:</label>
+        <div class="audit-options">
+          <label><input type="radio" name="audit_${i}" value="yes" onchange="mark(${i},'yes')"> yes (메모리 인용)</label>
+          <label><input type="radio" name="audit_${i}" value="no" onchange="mark(${i},'no')"> no (일반 추론)</label>
+        </div>
+      </div>
+    `;
+    cards.appendChild(card);
+  });
+}
+
+function mark(i, v) {
+  answers[i] = v;
+  const done = Object.keys(answers).length;
+  doneCount.textContent = done;
+  exportBtn.disabled = (done < DATA.length);
+}
+
+function exportResult() {
+  const result = DATA.map((item, i) => ({
+    query: item.q, cls: item.cls, k: item.k, framing: item.f,
+    prev_judge: item.prev, prev_verdict: item.pv, sb_verdict: item.sb,
+    human_verdict: answers[i] || null
+  }));
+  const blob = new Blob([JSON.stringify(result, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'stage102m_human_audit_result.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+render();
+</script>
+</body>
+</html>
