@@ -107,10 +107,24 @@ def run_choice(q):
     st = j1p.build_state(q, pool)
     qs = {"best": {"type": "choice", "instructions": INSTR,
                    "criteria": {f"c{i}": jl[i] for i in range(len(jl))}}}
-    t0 = time.time()
-    resp = CLIENT.post(_API, json={"state": st, "questions": qs, "model": "jev-latest"}, timeout=5)
-    lat = (time.time() - t0) * 1000
-    if resp.status_code != 200:
+    # ★ 2026-10-10 b-ai D-3: timeout/503은 1회 재시도 (canary는 매일 1회라 부담 0)
+    for attempt in range(2):
+        t0 = time.time()
+        try:
+            resp = CLIENT.post(_API, json={"state": st, "questions": qs,
+                                           "model": "jev-latest"}, timeout=5)
+        except Exception as e:
+            lat = (time.time() - t0) * 1000
+            if attempt == 0:
+                time.sleep(2)
+                continue
+            return {"q": q, "err": f"exc:{type(e).__name__}", "latency_ms": lat}
+        lat = (time.time() - t0) * 1000
+        if resp.status_code == 200:
+            break
+        if attempt == 0 and resp.status_code in (503, 502, 504, 408):
+            time.sleep(2)
+            continue
         return {"q": q, "err": f"http{resp.status_code}", "latency_ms": lat}
     ans = (resp.json().get("answers") or {}).get("best") or {}
     probs = ans.get("probabilities") or {}
@@ -160,6 +174,8 @@ def check_daemon_health():
     return False
 
 
+SCHEMA_VERSION = 2  # ★ 2026-10-10 b-ai D-2: baseline 스키마 버전 (abstain_p_gt03 추가로 1→2)
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--init", action="store_true", help="기준선 수집 (첫 실행)")
@@ -184,7 +200,8 @@ def main():
     s_l2n = summarize(l2n, "L2_NOANS")
     s_l2y = summarize(l2y, "L2_YES")
 
-    entry = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "l1": s_l1, "l2_noans": s_l2n, "l2_yes": s_l2y}
+    entry = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "schema_version": SCHEMA_VERSION,
+             "l1": s_l1, "l2_noans": s_l2n, "l2_yes": s_l2y}
     with open(LOG, "a", encoding="utf-8") as f:
         f.write(json.dumps(entry, ensure_ascii=False) + "\n")
     print(json.dumps(entry, ensure_ascii=False, indent=2))
@@ -199,6 +216,11 @@ def main():
         return
 
     base = json.load(open(BASELINE, encoding="utf-8"))
+    # ★ b-ai D-2: baseline 스키마 버전 불일치 시 비교 중단 (조용한 0→N 경고 방지)
+    b_sv = base.get("schema_version")
+    if b_sv is not None and b_sv != SCHEMA_VERSION:
+        print(f"⚠️ baseline schema_version {b_sv} ≠ {SCHEMA_VERSION} — 비교 생략, --init으로 재생성 필요")
+        return
     alerts = []
     # L1 abstain율 drift (±20pp → 2콜 플립)
     b_a = base["l1"]["abstain"]; c_a = s_l1["abstain"]

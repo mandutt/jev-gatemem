@@ -1,1 +1,37 @@
-{"ts": "2026-10-10T21:46:00", "l1": {"prefix": "L1", "n": 12, "abstain": 12, "chose_abstain": 12, "abstain_p_med": 1.0, "abstain_p_gt03": 12, "pick_med": 60, "latency_med_ms": 490.78989028930664, "errs": 0}, "l2_noans": {"prefix": "L2_NOANS", "n": 10, "abstain": 0, "chose_abstain": 0, "abstain_p_med": 0.03, "abstain_p_gt03": 0, "pick_med": 8, "latency_med_ms": 476.22013092041016, "errs": 0}, "l2_yes": {"prefix": "L2_YES", "n": 10, "abstain": 1, "chose_abstain": 1, "abstain_p_med": 0.01, "abstain_p_gt03": 0, "pick_med": 7, "latency_med_ms": 516.8707370758057, "errs": 0}}
+{
+  "ts": "2026-10-10T21:46:00",
+  "l1": {
+    "prefix": "L1",
+    "n": 12,
+    "abstain": 12,
+    "chose_abstain": 12,
+    "abstain_p_med": 1.0,
+    "abstain_p_gt03": 12,
+    "pick_med": 60,
+    "latency_med_ms": 490.78989028930664,
+    "errs": 0
+  },
+  "l2_noans": {
+    "prefix": "L2_NOANS",
+    "n": 10,
+    "abstain": 0,
+    "chose_abstain": 0,
+    "abstain_p_med": 0.03,
+    "abstain_p_gt03": 0,
+    "pick_med": 8,
+    "latency_med_ms": 476.22013092041016,
+    "errs": 0
+  },
+  "l2_yes": {
+    "prefix": "L2_YES",
+    "n": 10,
+    "abstain": 1,
+    "chose_abstain": 1,
+    "abstain_p_med": 0.01,
+    "abstain_p_gt03": 0,
+    "pick_med": 7,
+    "latency_med_ms": 516.8707370758057,
+    "errs": 0
+  },
+  "schema_version": 2
+}

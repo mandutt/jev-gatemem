@@ -96,6 +96,23 @@ except Exception as e:
 print("=== jev-mem shadow 일일 요약 ===")
 print(f"누적 총 {total}건 | 최근 24h {n_24h}건")
 print()
+
+# ★ 2026-10-10 c-ai: op-snapshot gold 고정 쿼리 통과율 경보 (고정 입력 기준 — NO율과 무관)
+try:
+    gold = conn.execute("SELECT gate_verdict, COUNT(*) c FROM shadow_log "
+                        "WHERE source='op-snapshot' GROUP BY gate_verdict").fetchall()
+    gold_map = {r["gate_verdict"] or "NULL": r["c"] for r in gold}
+    gold_total = sum(gold_map.values())
+    if gold_total:
+        gold_inject = gold_map.get("YES", 0)
+        gold_rate = gold_inject / gold_total
+        gold_note = (f"\n[op-snapshot gold] 주입(YES) {gold_inject}/{gold_total} = {gold_rate*100:.0f}%"
+                     f" (NO {gold_map.get('NO',0)} · ABSTAIN {gold_map.get('ABSTAIN',0)})")
+        if gold_rate < 0.85:
+            gold_note += "\n⚠️ 경고: op-snapshot gold 통과율 85% 미만 — 회귀/과다거부 의심"
+        print(gold_note)
+except Exception as e:
+    print(f"[op-snapshot gold] 계산 실패: {e}")
 print(f"[게이트 분포 - 전체] YES {g_all.get('YES', 0)} | NO {g_all.get('NO', 0)} | ABSTAIN {g_all.get('ABSTAIN', 0)}")
 if n_24h:
     print(f"[게이트 분포 - 24h]  YES {g_24h.get('YES', 0)} | NO {g_24h.get('NO', 0)} | ABSTAIN {g_24h.get('ABSTAIN', 0)}")
