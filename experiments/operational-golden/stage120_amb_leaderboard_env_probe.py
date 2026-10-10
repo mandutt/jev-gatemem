@@ -43,7 +43,7 @@ scores = [
     ("SmartSearch", "88.4%", "GPT-4.1-mini"),
     ("Memora", "87.4%", "GPT-4.1-mini"),
     ("EMem-G", "84.9%", "GPT-4.1-mini"),
-    ("TiMem", "76.9%", "GPT-4o"),
+    ("TiMem", "78.96%", "GPT-4o"),
 ]
 for name, acc, backbone in scores:
     print(f"  {name}: {acc} = {backbone}")
