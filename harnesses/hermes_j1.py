@@ -15,7 +15,43 @@ from __future__ import annotations
 
 import logging
 import os
+import sys
 import threading
+from pathlib import Path
+
+# P5+ (2026-10-10): mnemosyne_hermes는 Hermes 정식 venv에만 설치됨. 게이트웨이가
+# tools python(3.14, virtualenv 아님)으로 실행되면 import 실패 → provider 로드 실패 →
+# JevMemClient auto_start가 발동 기회를 잃는 사고(10-09~10, 30h)가 발생했다.
+# Hermes installs/*/environments/*/venv에서 mnemosyne_hermes를 가진 venv를 탐색해
+# sys.path에 추가하는 폴백을 둔다 (업데이트로 venv hash가 바뀌어도 glob으로 자동 추적).
+def _ensure_mnemosyne_hermes() -> None:
+    try:
+        import mnemosyne_hermes  # noqa: F401
+        return
+    except ImportError:
+        pass
+    hermes_home = Path(os.environ.get("HERMES_HOME") or
+                       os.path.expandvars(r"%LOCALAPPDATA%\hermes"))
+    candidates = sorted(
+        hermes_home.glob("installs/*/environments/*/venv/Lib/site-packages"),
+        key=lambda p: p.stat().st_mtime if p.exists() else 0,
+        reverse=True,
+    )
+    import importlib.util
+    for sp in candidates:
+        candidate = sp / "mnemosyne_hermes"
+        if candidate.is_dir() and (candidate / "__init__.py").is_file():
+            sys.path.insert(0, str(sp))
+            try:
+                import mnemosyne_hermes  # noqa: F401
+                log_early = logging.getLogger(__name__)
+                log_early.info("mnemosyne_hermes recovered from %s", sp)
+                return
+            except ImportError:
+                sys.path.pop(0)
+
+
+_ensure_mnemosyne_hermes()
 
 from mnemosyne_hermes import MnemosyneMemoryProvider
 

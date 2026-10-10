@@ -16,6 +16,23 @@ from datetime import datetime, timedelta
 sys.stdout.reconfigure(encoding="utf-8")
 CORE_DB = os.path.join(os.environ.get("LOCALAPPDATA", ""), "jev-mem", "core_state.db")
 
+# ---- 2026-10-10: 90일 보존 정책 (무한 축적 방지, 사용자 승인) ----
+# shadow_log·query_log 모두 90일(created_at/received_at 기준) 이전 행 삭제.
+try:
+    prune_cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%dT%H:%M:%S")
+    wconn = sqlite3.connect(CORE_DB, timeout=15)
+    for table, col in (("shadow_log", "created_at"), ("query_log", "received_at")):
+        try:
+            n = wconn.execute(f"DELETE FROM {table} WHERE {col} < ?", (prune_cutoff,)).rowcount
+            if n:
+                print(f"[보존] {table}: {n}건 삭제 (90일 초과)")
+        except Exception as e:
+            print(f"[보존] {table} 정리 실패: {e}")
+    wconn.commit()
+    wconn.close()
+except Exception as e:
+    print(f"[보존] 정리 건너뜀: {e}")
+
 conn = sqlite3.connect(f"file:{CORE_DB}?mode=ro", uri=True)
 conn.row_factory = sqlite3.Row
 

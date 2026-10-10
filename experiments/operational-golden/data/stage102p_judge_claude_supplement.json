@@ -1,0 +1,227 @@
+[
+ {
+  "query": "gemini 별칭으로 모델 호출되나?",
+  "k": 2,
+  "framing": false,
+  "sample": 0,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 JSON 파싱 오류 메시지이며 사용자 고유 정보를 인용하지 않음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "gemini 별칭으로 모델 호출되나?",
+  "k": 2,
+  "framing": false,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 JSON 파싱 오류 메시지이며 사용자 고유 정보를 인용하지 않음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "gemini 별칭으로 모델 호출되나?",
+  "k": 2,
+  "framing": false,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 JSON 파싱 오류 메시지이며 사용자 고유 정보를 인용하지 않음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "gemini 별칭으로 모델 호출되나?",
+  "k": 2,
+  "framing": true,
+  "sample": 0,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 JSON 파싱 오류 메시지이며 사용자 고유 정보를 인용하지 않음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "gemini 별칭으로 모델 호출되나?",
+  "k": 2,
+  "framing": true,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 JSON 파싱 오류 메시지이며 사용자 고유 정보를 인용하지 않음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "gemini 별칭으로 모델 호출되나?",
+  "k": 2,
+  "framing": true,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "HTTP 503 오류 메시지만 있고 사용자 고유의 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+  "k": 2,
+  "framing": false,
+  "sample": 0,
+  "judge_verdict": "no",
+  "judge_reason": "JSON 파싱 오류 메시지만 있고 사용자 고유의 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+  "k": 2,
+  "framing": false,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "JSON 파싱 오류 메시지만 있고 사용자 고유의 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+  "k": 2,
+  "framing": false,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "JSON 파싱 오류 메시지만 있고 사용자 고유의 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+  "k": 2,
+  "framing": true,
+  "sample": 0,
+  "judge_verdict": "no",
+  "judge_reason": "JSON 파싱 오류 메시지만 있고 사용자 고유의 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+  "k": 2,
+  "framing": true,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 파싱 오류(ERR)만 있고 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "upstream 404 뜨는 별칭이 어느 것들이었지?",
+  "k": 2,
+  "framing": true,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 파싱 오류(ERR)만 있고 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "model_override와 effort 주입 기능 언제 추가됐지?",
+  "k": 2,
+  "framing": false,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류만 있고 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "model_override와 effort 주입 기능 언제 추가됐지?",
+  "k": 2,
+  "framing": true,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류만 있고 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "감사 보고서는 어떤 섹션으로 써?",
+  "k": 2,
+  "framing": false,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류만 있고 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "감사 보고서는 어떤 섹션으로 써?",
+  "k": 2,
+  "framing": true,
+  "sample": 0,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류뿐이라 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "감사 보고서는 어떤 섹션으로 써?",
+  "k": 2,
+  "framing": true,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류뿐이라 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "DTO 분리 어디까지 하면 돼?",
+  "k": 2,
+  "framing": false,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류뿐이라 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "commitment FP 필터 실측 결과 어때?",
+  "k": 2,
+  "framing": false,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류뿐이라 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "start_proxy.cmd 재부팅 후 왜 안 돌아가?",
+  "k": 2,
+  "framing": true,
+  "sample": 0,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류뿐이라 사용자 고유 정보를 인용한 내용이 없음",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "start_proxy.cmd 재부팅 후 왜 안 돌아가?",
+  "k": 2,
+  "framing": true,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류 메시지뿐이며 사용자 고유 정보를 인용하지 않았습니다.",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "start_proxy.cmd 재부팅 후 왜 안 돌아가?",
+  "k": 2,
+  "framing": true,
+  "sample": 2,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류 메시지뿐이며 사용자 고유 정보를 인용하지 않았습니다.",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "codex CLI에서 메모리 기록되나?",
+  "k": 2,
+  "framing": false,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류 메시지뿐이며 사용자 고유 정보를 인용하지 않았습니다.",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "S3에서 임베딩 모델 최종 선택 근거?",
+  "k": 2,
+  "framing": true,
+  "sample": 0,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류 메시지뿐이며 사용자 고유 정보를 인용하지 않았습니다.",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ },
+ {
+  "query": "CAMOFOX_URL 제거한 이유?",
+  "k": 2,
+  "framing": false,
+  "sample": 1,
+  "judge_verdict": "no",
+  "judge_reason": "응답이 HTTP 503 오류 메시지뿐이며 사용자 고유 정보를 인용하지 않았습니다.",
+  "judge_model": "tokenharbor/claude-haiku-5.5:free"
+ }
+]
