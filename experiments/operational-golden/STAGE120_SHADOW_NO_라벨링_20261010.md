@@ -42,3 +42,12 @@
 
 - `shadow_daily_summary.py`: 경고 기준 0.30→0.75 상향 + 0.50 참고 레벨 추가 ✅
 - 실측 검증: `shadow_daily_summary.py` 실행 → "✅ gate NO율 정상 범위" (현재 NO율 340/774=44%, 개선 전이면 30% 초과 경고였을 것)
+
+## 6. ★ shadow "96% 통과" 표기 수정 (2026-10-10, v8 3-AI(b) 지적 + 실측)
+
+- **오류**: v8·v7 요청서가 "op-snapshot gold 90건 중 YES 81 + ABSTAIN 5 = **96% 통과**"라고 기록
+- **수정**: shadow_log 실측에서 NO 4 + ABSTAIN 5는 **컨텍스트 미주입**이므로,
+  **실제 주입(YES) 통과율은 81/90 = 90%** (96%는 오기재)
+- **경보 반영**: `shadow_daily_summary.py`에 **op-snapshot gold 통과율 <85% → ⚠️ 경고** 추가
+  (고정 입력 기준 — NO율(작업 내용에 좌우)과 무관한 회귀/과다거부 감지)
+- 실행 검증: `[op-snapshot gold] 주입(YES) 81/90 = 90% (NO 4 · ABSTAIN 5)` — 정상 범위
