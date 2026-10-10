@@ -272,15 +272,18 @@ c. stdlib shim(1-E) 대체 판단(폴백 보강으로 충분)이 타당한가?
 
 | 파일 | 내용 |
 |---|---|
-| `STAGE119_QA_재집계_운영형식_20261010.md` | §1-A·B 재집계 |
-| `STAGE120_SHADOW_NO_라벨링_20261010.md` | §1-D 50건 라벨 |
-| `STAGE121_JUDGE_KAPPA_20261010.md` | §2 κ 실측 |
-| `data/judge_kappa_label{84,_fulltexts,ed62}.json` · `_sheet.html` | κ 보정 셋 |
+| `STAGE119_QA_재집계_운영형식_20261010.md` | §1-A·B 재집계 + stage104 해석 철회 |
+| `STAGE120_SHADOW_NO_라벨링_20261010.md` | §1-D 50건 라벨 + 96%→90% 수정 |
+| `STAGE121_JUDGE_KAPPA_20261010.md` | §2 κ 1차 실측 (0.355) |
+| **`STAGE122_JUDGE_KAPPA_2차_20261010.md`** | **§2 κ 2차·통합 실측 (0.157) — 신규** |
+| `data/judge_kappa_label{84,_fulltexts,ed62}.json` · `_sheet.html` | κ 1차 보정 셋 |
+| **`data/judge_kappa_label54_stage104.json` · `judge_kappa_verdicts2.json` · `judge_kappa_labeled_2nd.json` · `_sheet2.html`** | **κ 2차 보정 셋 — 신규** |
 | `data/shadow_no_label_sample50.json` · `_verdicts_labeled.json` | shadow NO 라벨 |
 | `harness_parity.py` · `stage118_lmev_lift.py` | §1-F·H |
 | `canary_run.py` · `canary_baseline.json` · `canary_log.jsonl` | §1-C |
 | `shadow_daily_summary.py` | §1-D |
 | `hermes_j1.py` (pyvenv 호환) | §1-E |
+| `STAGE106_DAEMON_OUTAGE_20261010.md` | §1-E (13h 정정·쓰기 유실) |
 | `docs/review/2026-10-10_판정기준-개선-설계_일반지식대체+구체성신호.md` | §3 설계 상세 |
 
 ## 부록 B: v8 확정·기각 사안 (상태 유지, 재검토 불필요)
